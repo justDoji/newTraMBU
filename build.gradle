@@ -11,6 +11,7 @@ sourceCompatibility = 1.8
 
 repositories {
     mavenCentral()
+    jcenter()
 }
 
 dependencies {
@@ -23,12 +24,10 @@ dependencies {
     testCompile group: 'org.powermock', name: 'powermock-api-mockito2', version: '2.0.2'
 }
 
-test.finalizedBy jacocoTestReport
-
 jacocoTestReport {
     reports {
         xml.enabled true
-        xml.destination file("${buildDir}/reports/jacocoXml.xml")
+        xml.destination file("${buildDir}/reports/jacoco.xml")
         csv.enabled false
         html.destination file("${buildDir}/reports/jacocoHtml")
     }
@@ -37,12 +36,13 @@ jacocoTestReport {
 
 sonarqube {
     properties {
-        property "sonar.branch.name", "ddd_redesign"
+        //property "sonar.branch.name", "ddd_redesign"
         property "sonar.sourceEncoding", "UTF-8"
-        property "sonar.projectKey", "be.doji.productivity:trambu"
+        property "sonar.projectKey", "be.doji.productivity:newtrambu"
         property "sonar.language", "java"
         property "sonar.sources", './src/main/java'
         property "sonar.tests", './src/test/java'
-        property "sonar.coverage.jacoco.xmlReportPaths", "build/reports/jacocoXml.xml"
+        property "sonar.coverage.jacoco.xmlReportPaths", "build/reports/jacoco.xml"
+        property "sonar.junit.reportPaths", "trambu-domain/build/test-results/test"
     }
 }
