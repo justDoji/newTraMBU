@@ -2,6 +2,7 @@ plugins {
 	id 'org.springframework.boot' version '2.1.4.RELEASE'
 	id 'java'
 	id 'jacoco'
+	id "com.github.hierynomus.license"
 }
 
 apply plugin: 'io.spring.dependency-management'
@@ -32,4 +33,9 @@ jacocoTestReport {
 		csv.enabled false
 		html.destination file("${buildDir}/reports/jacocoHtml")
 	}
+}
+
+license {
+	header rootProject.file('LICENSE')
+	strictCheck true
 }

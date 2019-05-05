@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'jacoco'
     id "org.sonarqube" version "2.7"
+    id "com.github.hierynomus.license" version"0.15.0"
 }
 
 group 'be.doji.productivity.trambu'
@@ -45,4 +46,9 @@ sonarqube {
         property "sonar.coverage.jacoco.xmlReportPaths", "build/reports/jacoco.xml"
         property "sonar.junit.reportPaths", "trambu-domain/build/test-results/test"
     }
+}
+
+license {
+    header rootProject.file('LICENSE')
+    strictCheck true
 }
