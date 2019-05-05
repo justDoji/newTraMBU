@@ -15,6 +15,15 @@ repositories {
 	mavenCentral()
 }
 
+afterEvaluate { project ->
+	project.tasks.bootJar {
+		onlyIf  {
+			println 'Skipping...'
+			return false
+		}
+	}
+}
+
 dependencies {
 	compile project(':trambu-domain')
 	implementation 'org.springframework.boot:spring-boot-starter'
