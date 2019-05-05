@@ -1,6 +1,7 @@
 plugins {
 	id 'org.springframework.boot' version '2.1.4.RELEASE'
 	id 'java'
+	id 'jacoco'
 }
 
 apply plugin: 'io.spring.dependency-management'
@@ -17,4 +18,15 @@ dependencies {
 	compile project(':trambu-domain')
 	implementation 'org.springframework.boot:spring-boot-starter'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+test.finalizedBy jacocoTestReport
+
+jacocoTestReport {
+	reports {
+		xml.enabled true
+		xml.destination file("${buildDir}/reports/jacoco.xml")
+		csv.enabled false
+		html.destination file("${buildDir}/reports/jacocoHtml")
+	}
 }
