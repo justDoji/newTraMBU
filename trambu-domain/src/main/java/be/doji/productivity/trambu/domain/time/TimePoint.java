@@ -1,5 +1,6 @@
 package be.doji.productivity.trambu.domain.time;
 
+import com.google.re2j.Pattern;
 import java.time.Clock;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -9,7 +10,6 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.regex.Pattern;
 
 /**
  * Wrapper class for date/time representation as I am very frustrated with Java's built in
