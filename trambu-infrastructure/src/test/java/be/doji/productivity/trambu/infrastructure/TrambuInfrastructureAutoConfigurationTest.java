@@ -11,14 +11,16 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class TrambuInfrastructureApplicationTests {
+public class TrambuInfrastructureAutoConfigurationTest {
 
-	@Autowired
-	private ActivityRepository autowiredService;
 
-	@Test
-	public void contextLoads() {
-		assertThat(autowiredService).isNotNull();
-	}
+  @Autowired
+  @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
+  private ActivityRepository autowiredService;
+
+  @Test
+  public void autowiringWorks() {
+    assertThat(autowiredService).isNotNull();
+  }
 
 }
