@@ -2,8 +2,8 @@ package be.doji.productivity.trambu.infrastructure.parser;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import com.google.re2j.Matcher;
+import com.google.re2j.Pattern;
 import org.apache.commons.lang3.StringUtils;
 
 public final class ParserUtils {
@@ -12,7 +12,7 @@ public final class ParserUtils {
   private ParserUtils() {
   }
 
-  public static List<String> findAllMatches(String regex, String lineToSearch) {
+  static List<String> findAllMatches(String regex, String lineToSearch) {
     if (StringUtils.isBlank(regex)) {
       throw new IllegalArgumentException("I will not search for an empty String");
     }
@@ -29,7 +29,7 @@ public final class ParserUtils {
     return allMatches;
   }
 
-  public static String escape(String input) {
+  static String escape(String input) {
     if (input == null) {
       throw new IllegalArgumentException("I will not escape a null value");
     }
