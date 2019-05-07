@@ -20,12 +20,30 @@
  */
 package be.doji.productivity.trambu.infrastructure.transfer;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import org.hibernate.annotations.Type;
+
 /**
  * Pure data object.
  */
+@Entity
+@Table(name = "activities")
 public class ActivityData {
 
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private Long id;
+
+  @Type(type = "org.hibernate.type.NumericBooleanType")
+  @Column(name = "completed", nullable = false)
   private boolean completed;
+
+  @Column(name = "title", nullable = false)
   private String title;
 
   public boolean isCompleted() {
