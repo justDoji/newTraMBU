@@ -60,13 +60,13 @@ public class ActivityParserTest {
   @Test
   public void parse_ActivityCompleted_upperCaseIndicator() {
     ActivityData parsedData = ActivityParser.parse(COMPLETED_ACTIVITY);
-    assertThat(parsedData.completed).isTrue();
+    assertThat(parsedData.isCompleted()).isTrue();
   }
 
   @Test
   public void parse_ActivityCompleted_lowerCaseIndicator() {
     ActivityData parsedData = ActivityParser.parse(COMPLETED_ACTIVITY);
-    assertThat(parsedData.completed).isTrue();
+    assertThat(parsedData.isCompleted()).isTrue();
   }
 
 }

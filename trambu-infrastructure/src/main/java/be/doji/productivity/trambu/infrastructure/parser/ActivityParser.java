@@ -39,7 +39,7 @@ public final class ActivityParser {
     }
     ActivityData activity = new ActivityData();
 
-    activity.completed = ParserUtils.matches(PropertyRegex.COMPLETED_REGEX, line);
+    activity.setCompleted(ParserUtils.matches(PropertyRegex.COMPLETED_REGEX, line));
 
     return activity;
   }

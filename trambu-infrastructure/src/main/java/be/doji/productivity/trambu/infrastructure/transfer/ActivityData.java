@@ -24,11 +24,17 @@
 package be.doji.productivity.trambu.infrastructure.transfer;
 
 /**
- * Pure data object. No need to encapsulate fields, as they would be accessible through
- * getters/setters anyway
+ * Pure data object. 
  */
 public class ActivityData {
 
-  public boolean completed;
+  private boolean completed;
 
+  public boolean isCompleted() {
+    return completed;
+  }
+
+  public void setCompleted(boolean completed) {
+    this.completed = completed;
+  }
 }
