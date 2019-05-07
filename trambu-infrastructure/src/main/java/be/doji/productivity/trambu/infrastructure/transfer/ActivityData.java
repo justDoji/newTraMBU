@@ -24,7 +24,7 @@
 package be.doji.productivity.trambu.infrastructure.transfer;
 
 /**
- * Pure data object. 
+ * Pure data object.
  */
 public class ActivityData {
 

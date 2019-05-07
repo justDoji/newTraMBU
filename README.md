@@ -1,4 +1,6 @@
 # newTraMBU
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=be.doji.productivity%3Anewtrambu&metric=alert_status)](https://sonarcloud.io/dashboard?id=be.doji.productivity%3Anewtrambu)
+
 
 Since creating the initial version of TraMBU a few years have passed. 
 I have changed jobs, I moved to a different city, and I have a new girlfriend. 
@@ -13,13 +15,6 @@ and having to make changes to it.
 
 This project revamp is meant to be a case study in clean project set-up, and usage of good coding practices.
 I've talked about this project on my personal blog: [Doji's Colony](http://www.doji.be/2019-05-04-pet-project-redesign/)
-
-## Quality metrics
-
-My SonarQube metrics can be found [here](https://sonarcloud.io/dashboard?id=be.doji.productivity%3Anewtrambu)
-
-Other metrics are less tangible as they are my subjective feeling of happiness when working in this codebase compared
-to the old codebase.
 
 ## Mission
 
