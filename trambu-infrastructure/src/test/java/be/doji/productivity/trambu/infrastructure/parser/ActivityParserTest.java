@@ -30,9 +30,9 @@ import org.junit.Test;
 
 public class ActivityParserTest {
 
-  private static final String ACTIVITY_DATA_LINE = "(A) 2017-10-21:14:13.000 TaskTitle  +OverarchingProject @Tag @Tag2 due:2017-12-21:16:15:00.000 index:0 blocksNext:yes skill:SkillName uuid:283b6271-b513-4e89-b757-10e98c9078ea";
-  private static final String COMPLETED_ACTIVITY = "X (B) Buy thunderbird plugin license";
-  private static final String COMPLETED_ACTIVITY_LOWERCASE = "x (B) Buy thunderbird plugin license";
+  private static final String ACTIVITY_DATA_LINE = "(A) 2017-10-21:14:13.000 [TaskTitle]  +OverarchingProject @Tag @Tag2 due:2017-12-21:16:15:00.000 index:0 blocksNext:yes skill:SkillName uuid:283b6271-b513-4e89-b757-10e98c9078ea";
+  private static final String COMPLETED_ACTIVITY = "X (B) [Buy thunderbird plugin license]";
+  private static final String COMPLETED_ACTIVITY_LOWERCASE = "x (B) [Buy thunderbird plugin license]";
 
   @Test
   public void mapStringToActivity_givesOutput() {
@@ -68,5 +68,19 @@ public class ActivityParserTest {
     ActivityData parsedData = ActivityParser.parse(COMPLETED_ACTIVITY);
     assertThat(parsedData.isCompleted()).isTrue();
   }
+
+  @Test
+  public void parse_activityTitle_singleWordTitle() {
+    ActivityData parsedActivity = ActivityParser.parse(ACTIVITY_DATA_LINE);
+    assertThat(parsedActivity.getTitle()).isEqualTo("TaskTitle");
+  }
+
+  @Test
+  public void parse_activityTitle_multipleWordTitle() {
+    ActivityData parsedActivity = ActivityParser.parse(COMPLETED_ACTIVITY);
+    assertThat(parsedActivity.getTitle()).isEqualTo("Buy thunderbird plugin license");
+  }
+
+
 
 }

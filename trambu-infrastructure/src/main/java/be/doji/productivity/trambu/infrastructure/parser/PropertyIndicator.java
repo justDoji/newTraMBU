@@ -31,6 +31,8 @@ public final class PropertyIndicator {
 
   static final String INDICATOR_DONE = "x";
   static final String INDICATOR_DONE_UPPERCASE = "X";
+  static final String INDICATOR_TITLE_START = "[";
+  static final String INDICATOR_TITLE_END = "]";
   static final String INDICATOR_PROJECT = "+";
   static final String INDICATOR_TAG = "@";
   static final String INDICATOR_DEADLINE = "due:";
