@@ -18,26 +18,14 @@
  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package be.doji.productivity.trambu.infrastructure.parser;
+package be.doji.productivity.trambu.infrastructure.transfer;
 
-import be.doji.productivity.trambu.infrastructure.transfer.ActivityData;
-import org.apache.commons.lang3.StringUtils;
+/**
+ * Pure data object. No need to encapsulate fields, as they would be accessible through
+ * getters/setters anyway
+ */
+public class ActivityData {
 
-public final class ActivityParser {
+  public boolean completed;
 
-  /* Utility classes should not have a public or default constructor */
-  private ActivityParser() {
-  }
-
-  public static ActivityData parse(String line) {
-    if (StringUtils.isBlank(line)) {
-      throw new IllegalArgumentException(
-          "Failure during parsing: empty String or null value not allowed");
-    }
-    ActivityData activity = new ActivityData();
-
-    activity.completed = ParserUtils.matches(PropertyRegex.COMPLETED_REGEX, line);
-
-    return activity;
-  }
 }

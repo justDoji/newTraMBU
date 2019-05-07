@@ -42,9 +42,19 @@ public class ParserUtilsTest {
   }
 
   @Test
+  public void matches_withMatches() {
+    assertThat(ParserUtils.matches("(l|L)orem", LOREM_IPSUM)).isTrue();
+  }
+
+  @Test
   public void findAllMatches_noMatches() {
     List<String> lorem = ParserUtils.findAllMatches("Jos is machtig", LOREM_IPSUM);
     assertThat(lorem).isEmpty();
+  }
+
+  @Test
+  public void matches_noMatches() {
+    assertThat(ParserUtils.matches("Jos is machtig", LOREM_IPSUM)).isFalse();
   }
 
   @Test

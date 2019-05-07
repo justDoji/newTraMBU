@@ -59,4 +59,7 @@ public final class ParserUtils {
     return "\"" + input + "\"";
   }
 
+  static boolean matches(String regex, String line) {
+    return !findAllMatches(regex, line).isEmpty();
+  }
 }

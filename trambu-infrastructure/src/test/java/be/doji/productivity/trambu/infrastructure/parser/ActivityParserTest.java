@@ -25,17 +25,18 @@ package be.doji.productivity.trambu.infrastructure.parser;
 
 import static org.assertj.core.api.Assertions.*;
 
-import be.doji.productivity.trambu.infrastructure.transfer.ActivityTO;
-import java.text.ParseException;
+import be.doji.productivity.trambu.infrastructure.transfer.ActivityData;
 import org.junit.Test;
 
 public class ActivityParserTest {
 
-  public static final String ACTIVITY_DATA_LINE = "(A) 2017-10-21:14:13.000 TaskTitle  +OverarchingProject @Tag @Tag2 due:2017-12-21:16:15:00.000 index:0 blocksNext:yes skill:SkillName uuid:283b6271-b513-4e89-b757-10e98c9078ea";
+  private static final String ACTIVITY_DATA_LINE = "(A) 2017-10-21:14:13.000 TaskTitle  +OverarchingProject @Tag @Tag2 due:2017-12-21:16:15:00.000 index:0 blocksNext:yes skill:SkillName uuid:283b6271-b513-4e89-b757-10e98c9078ea";
+  private static final String COMPLETED_ACTIVITY = "X (B) Buy thunderbird plugin license";
+  private static final String COMPLETED_ACTIVITY_LOWERCASE = "x (B) Buy thunderbird plugin license";
 
   @Test
-  public void mapStringToActivity() {
-    ActivityTO parsedActivity = ActivityParser.parse(ACTIVITY_DATA_LINE);
+  public void mapStringToActivity_givesOutput() {
+    ActivityData parsedActivity = ActivityParser.parse(ACTIVITY_DATA_LINE);
 
     assertThat(parsedActivity).isNotNull();
   }
@@ -53,4 +54,19 @@ public class ActivityParserTest {
         .isInstanceOf(IllegalArgumentException.class)
         .hasMessageContaining("Failure during parsing: empty String or null value not allowed");
   }
+
+  // Data Parsing test
+
+  @Test
+  public void parse_ActivityCompleted_upperCaseIndicator() {
+    ActivityData parsedData = ActivityParser.parse(COMPLETED_ACTIVITY);
+    assertThat(parsedData.completed).isTrue();
+  }
+
+  @Test
+  public void parse_ActivityCompleted_lowerCaseIndicator() {
+    ActivityData parsedData = ActivityParser.parse(COMPLETED_ACTIVITY);
+    assertThat(parsedData.completed).isTrue();
+  }
+
 }
