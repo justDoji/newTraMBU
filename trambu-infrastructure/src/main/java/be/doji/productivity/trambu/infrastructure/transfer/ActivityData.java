@@ -25,6 +25,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import org.hibernate.annotations.Type;
 
@@ -32,18 +33,19 @@ import org.hibernate.annotations.Type;
  * Pure data object.
  */
 @Entity
-@Table(name = "activities")
+@Table(name = "ACTIVITY")
 public class ActivityData {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "activity_seq")
+  @SequenceGenerator(name = "activity_seq", sequenceName = "SEQ_ACTIVITY")
   private Long id;
 
   @Type(type = "org.hibernate.type.NumericBooleanType")
-  @Column(name = "completed", nullable = false)
+  @Column(name = "COMPLETED", nullable = false)
   private boolean completed;
 
-  @Column(name = "title", nullable = false)
+  @Column(name = "TITLE", nullable = false)
   private String title;
 
   public boolean isCompleted() {
@@ -60,5 +62,9 @@ public class ActivityData {
 
   public void setTitle(String title) {
     this.title = title;
+  }
+
+  public Long getId() {
+    return this.id;
   }
 }
