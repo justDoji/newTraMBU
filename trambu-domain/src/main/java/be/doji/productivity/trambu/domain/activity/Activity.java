@@ -31,8 +31,7 @@ import org.apache.commons.lang3.StringUtils;
 /**
  * An activity is something you do at a certain time. Activities have a link to times spent on it
  *
- * An be.doji.productivity.Activity has a configurable set of properties. These can be
- * configured.
+ * An be.doji.productivity.Activity has a configurable set of properties. These can be configured.
  */
 public class Activity {
 
@@ -41,6 +40,7 @@ public class Activity {
   private TimePoint plannedEnd;
   private Importance importance;
   private TimePoint deadline;
+  private boolean completed;
 
   void setName(String activityName) {
     this.name = activityName;
@@ -93,6 +93,13 @@ public class Activity {
     return this.plannedStart == null ? Optional.empty() : Optional.of(this.plannedStart);
   }
 
+  public boolean isCompleted() {
+    return completed;
+  }
+
+  public void setCompleted(boolean completed) {
+    this.completed = completed;
+  }
 
   public boolean isDeadlineExceeded() {
     return TimePoint.isBefore(TimePoint.now(), this.deadline);
@@ -106,6 +113,7 @@ public class Activity {
     private TimePoint plannedEnd;
     private Importance importance = Importance.NORMAL;
     private TimePoint deadline;
+    private boolean completed;
 
     public ActivityBuilder name(String activityName) {
       this.activityName = activityName;
@@ -136,6 +144,7 @@ public class Activity {
       result.setPlannedEnd(this.plannedEnd);
       result.setImportance(this.importance);
       result.setDeadline(this.deadline);
+      result.setCompleted(this.completed);
 
       return result;
     }
@@ -151,6 +160,11 @@ public class Activity {
 
     public ActivityBuilder deadline(TimePoint deadline) {
       this.deadline = deadline;
+      return this;
+    }
+
+    public ActivityBuilder completed(boolean completed) {
+      this.completed = completed;
       return this;
     }
   }

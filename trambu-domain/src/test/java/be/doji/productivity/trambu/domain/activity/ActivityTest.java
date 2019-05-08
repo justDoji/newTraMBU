@@ -28,6 +28,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import be.doji.productivity.trambu.domain.time.TimePoint;
+import org.assertj.core.api.Assertions;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -48,6 +49,7 @@ public class ActivityTest {
         activity.getAssignedTimeSlot().endsOn(TimePoint.fromString("31/05/2019")));
     Assert.assertEquals("Created activity has wrong title", "Start design practise",
         activity.getName());
+    assertThat(activity.isCompleted()).isFalse();
   }
 
   @Test
@@ -109,6 +111,15 @@ public class ActivityTest {
         .importance(Importance.NORMAL)
         .build();
     assertThat(activity.isDeadlineExceeded()).isFalse();
+  }
+
+  @Test
+  public void builder_completed() {
+    Activity activity = Activity.builder()
+        .name("Start design practise")
+        .completed(true)
+        .build();
+    assertThat(activity.isCompleted()).isTrue();
   }
 
   /**

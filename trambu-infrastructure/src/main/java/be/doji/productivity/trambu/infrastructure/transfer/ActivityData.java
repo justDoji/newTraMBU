@@ -23,6 +23,7 @@
  */
 package be.doji.productivity.trambu.infrastructure.transfer;
 
+import be.doji.productivity.trambu.domain.activity.Activity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -69,5 +70,13 @@ public class ActivityData {
 
   public Long getId() {
     return this.id;
+  }
+
+  public Activity toDomainObject() {
+    return Activity.builder()
+        .name(this.title)
+        .completed(this.completed)
+        .build();
+
   }
 }
