@@ -21,44 +21,19 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package be.doji.productivity.trambu.infrastructure.transfer;
+package be.doji.productivity.trambu.application;
 
-import be.doji.productivity.trambu.domain.activity.Activity;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-import lombok.Data;
-import org.hibernate.annotations.Type;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
-/**
- * Pure data object.
- */
-@Data
-@Entity
-@Table(name = "ACTIVITY")
-public class ActivityData {
+@RunWith(SpringRunner.class)
+@SpringBootTest
+public class ApplicationTests {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "activity_seq")
-  @SequenceGenerator(name = "activity_seq", sequenceName = "SEQ_ACTIVITY")
-  private Long id;
+	@Test
+	public void contextLoads() {
+	}
 
-  @Type(type = "org.hibernate.type.NumericBooleanType")
-  @Column(name = "COMPLETED", nullable = false)
-  private boolean completed;
-
-  @Column(name = "TITLE", nullable = false)
-  private String title;
-
-  public Activity toDomainObject() {
-    return Activity.builder()
-        .name(this.title)
-        .completed(this.completed)
-        .build();
-
-  }
 }
