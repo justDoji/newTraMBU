@@ -60,17 +60,17 @@ public class PersistenceConfiguration {
   private String showSql;
 
   @Value("${hibernate.hbm2ddl.auto}")
-  private String hbm2Ddl_Auto;
+  private String hbm2DdlAuto;
 
   @Value("${entitymanager.packagesToScan}")
   private String packagesToScan;
 
-  @Value("${hibernate.max_fetch_depth}")
-  private String jdbc_batch_size;
+  @Value("${hibernate.maxFetchDepth}")
+  private String jdbcBatchSize;
   @Value("${hibernate.fetch.size}")
-  private String jdbc_fetch_size;
-  @Value("${hibernate.max_fetch_depth}")
-  private String max_fetch_depth;
+  private String jdbcFetchSize;
+  @Value("${hibernate.maxFetchDepth}")
+  private String maxFetchDepth;
 
   private static final String PROPERTY_NAME_HIBERNATE_MAX_FETCH_DEPTH = "hibernate.max_fetch_depth";
   private static final String PROPERTY_NAME_HIBERNATE_JDBC_FETCH_SIZE = "hibernate.jdbc.fetch_size";
@@ -92,7 +92,7 @@ public class PersistenceConfiguration {
     Properties hibernateProperties = new Properties();
     hibernateProperties.put("hibernate.dialect", dialect);
     hibernateProperties.put("hibernate.show_sql", showSql);
-    hibernateProperties.put("hibernate.hbm2ddl.auto", hbm2Ddl_Auto);
+    hibernateProperties.put("hibernate.hbm2ddl.auto", hbm2DdlAuto);
     return hibernateProperties;
   }
 
@@ -125,9 +125,9 @@ public class PersistenceConfiguration {
 
     Properties properties = new Properties();
 
-    properties.put(PROPERTY_NAME_HIBERNATE_MAX_FETCH_DEPTH, max_fetch_depth);
-    properties.put(PROPERTY_NAME_HIBERNATE_JDBC_FETCH_SIZE, jdbc_fetch_size);
-    properties.put(PROPERTY_NAME_HIBERNATE_JDBC_BATCH_SIZE, jdbc_batch_size);
+    properties.put(PROPERTY_NAME_HIBERNATE_MAX_FETCH_DEPTH, maxFetchDepth);
+    properties.put(PROPERTY_NAME_HIBERNATE_JDBC_FETCH_SIZE, jdbcFetchSize);
+    properties.put(PROPERTY_NAME_HIBERNATE_JDBC_BATCH_SIZE, jdbcBatchSize);
     properties.put(PROPERTY_NAME_HIBERNATE_SHOW_SQL, showSql);
 
     return properties;
