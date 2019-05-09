@@ -55,7 +55,7 @@ public class ActivityData {
   @Column(name = "TITLE", nullable = false)
   private String title;
 
-  @Column(name = "DEADLINE", nullable = false)
+  @Column(name = "DEADLINE")
   private String deadline;
 
   public Activity toDomainObject() {
