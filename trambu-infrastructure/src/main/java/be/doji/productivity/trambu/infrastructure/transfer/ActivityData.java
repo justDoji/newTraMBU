@@ -24,6 +24,7 @@
 package be.doji.productivity.trambu.infrastructure.transfer;
 
 import be.doji.productivity.trambu.domain.activity.Activity;
+import be.doji.productivity.trambu.domain.time.TimePoint;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -54,11 +55,14 @@ public class ActivityData {
   @Column(name = "TITLE", nullable = false)
   private String title;
 
+  @Column(name = "DEADLINE", nullable = false)
+  private String deadline;
+
   public Activity toDomainObject() {
     return Activity.builder()
         .title(this.title)
         .completed(this.completed)
+        .deadline(this.deadline)
         .build();
-
   }
 }

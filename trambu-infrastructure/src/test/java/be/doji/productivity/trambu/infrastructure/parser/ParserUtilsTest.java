@@ -26,6 +26,7 @@ package be.doji.productivity.trambu.infrastructure.parser;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import com.google.re2j.PatternSyntaxException;
 import java.util.List;
 import java.util.Optional;
 import org.junit.Test;
@@ -34,6 +35,8 @@ public class ParserUtilsTest {
 
 
   public static final String LOREM_IPSUM = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
+  public static final String REGEX_ATTACK_LINE = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaac";
+  public static final String REGEX_ATTACK_REGEX = "(a+)++";
 
   @Test
   public void findAllMatches_withMatches() {
@@ -95,6 +98,11 @@ public class ParserUtilsTest {
     assertThat(lorem).isEmpty();
   }
 
+  @Test(expected = PatternSyntaxException.class)
+  public void findAllMatches_regexAttack() {
+    ParserUtils.findAllMatches(REGEX_ATTACK_REGEX, REGEX_ATTACK_LINE);
+  }
+
   @Test
   public void escape_default() {
     assertThat(ParserUtils.escape("test")).isEqualTo("\"test\"");
@@ -110,4 +118,23 @@ public class ParserUtilsTest {
     assertThatThrownBy(() -> ParserUtils.escape(null)).hasMessage("I will not escape a null value");
   }
 
+  @Test
+  public void replaceFirst_replacesFirstOccurence() {
+    assertThat(ParserUtils.replaceFirst("aa", "aaaaaaaaa", "bb")).isEqualTo("bbaaaaaaa");
+  }
+
+  @Test
+  public void replaceFirst_doesntReplace_noMatch() {
+    assertThat(ParserUtils.replaceFirst("aa", "cccccccccccc", "bb")).isEqualTo("cccccccccccc");
+  }
+
+  @Test
+  public void replaceLast_replacesFirstOccurence() {
+    assertThat(ParserUtils.replaceLast("aa", "aaaaaaaaa", "bb")).isEqualTo("aaaaaaabb");
+  }
+
+  @Test
+  public void replaceLast_doesntReplace_noMatch() {
+    assertThat(ParserUtils.replaceLast("aa", "cccccccccccc", "bb")).isEqualTo("cccccccccccc");
+  }
 }

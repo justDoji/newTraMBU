@@ -26,7 +26,9 @@ package be.doji.productivity.trambu.domain.activity;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.catchThrowable;
 
+import be.doji.productivity.trambu.domain.activity.Activity.ActivityBuilder;
 import be.doji.productivity.trambu.domain.time.TimePoint;
 import org.junit.Assert;
 import org.junit.Test;
@@ -133,6 +135,49 @@ public class ActivityTest {
         .deadline(TimePoint.fromString("01/01/1865"))
         .build();
     assertThat(activity.isDeadlineExceeded()).isFalse();
+  }
+
+  @Test
+  public void builder_deadlineFromString_empy() {
+    Activity activity = Activity.builder()
+        .title("Start design practise")
+        .importance(Importance.NORMAL)
+        .deadline("")
+        .build();
+    assertThat(activity.getDeadline()).isNotPresent();
+  }
+
+  @Test
+  public void builder_deadlineFromString_null() {
+    Activity activity = Activity.builder()
+        .title("Start design practise")
+        .importance(Importance.NORMAL)
+        .deadline("")
+        .build();
+    assertThat(activity.getDeadline()).isNotPresent();
+  }
+
+  @Test
+  public void builder_deadlineFromString_isConverted() {
+    Activity activity = Activity.builder()
+        .title("Start design practise")
+        .importance(Importance.NORMAL)
+        .deadline("01/01/1865")
+        .build();
+    assertThat(activity.getDeadline()).isPresent();
+    //noinspection OptionalGetWithoutIsPresent
+    assertThat(TimePoint.isSameDate(activity.getDeadline().get(),TimePoint.fromString("01/01/1865"))).isTrue();
+  }
+
+  @Test
+  public void builder_deadlineFromStringThrowsException_notADate() {
+    ActivityBuilder builder = Activity.builder()
+        .title("Start design practise")
+        .importance(Importance.NORMAL);
+
+    Throwable thrown = catchThrowable(() -> builder.deadline("tralalalalala"));
+    assertThat(thrown).isInstanceOf(IllegalArgumentException.class)
+                      .hasMessageContaining("No matching parsers");
   }
 
 }

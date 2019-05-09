@@ -68,4 +68,31 @@ public final class ParserUtils {
     List<String> matches = findAllMatches(regex, line);
     return matches.isEmpty() ? Optional.empty() : Optional.of(matches.get(0));
   }
+
+  public static String replaceFirst(String regex, String line, String replacement) {
+    Optional<String> firstMatch = findFirstMatch(regex, line);
+    if(firstMatch.isPresent()) {
+      String toReplace = firstMatch.get();
+      int pos = line.indexOf(toReplace);
+      return line.substring(0, pos)
+          + replacement
+          + line.substring(pos + toReplace.length());
+    } else {
+      return line;
+    }
+  }
+
+  public static String replaceLast(String regex, String line, String replacement) {
+    Optional<String> firstMatch = findFirstMatch(regex, line);
+    if(firstMatch.isPresent()) {
+      String toReplace = firstMatch.get();
+      int pos = line.lastIndexOf(toReplace);
+      return line.substring(0, pos)
+          + replacement
+          + line.substring(pos + toReplace.length());
+    } else {
+      return line;
+    }
+  }
+
 }

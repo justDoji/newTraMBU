@@ -163,5 +163,12 @@ public class Activity {
       this.completed = completed;
       return this;
     }
+
+    public ActivityBuilder deadline(String deadline) {
+      if (StringUtils.isNotBlank(deadline)) {
+        this.deadline = TimePoint.fromString(deadline);
+      }
+      return this;
+    }
   }
 }
