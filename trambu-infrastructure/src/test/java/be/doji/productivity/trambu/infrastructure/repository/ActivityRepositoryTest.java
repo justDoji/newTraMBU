@@ -56,7 +56,7 @@ public class ActivityRepositoryTest {
   @Test
   public void addActivity() {
     Activity activityToSave = Activity.builder()
-        .name("Implement infrastructure layer")
+        .title("Implement infrastructure layer")
         .plannedStartAt(TimePoint.fromString("05/05/2019 10:00:00"))
         .plannedEndAt(TimePoint.fromString("12/05/2019 18:00:00"))
         .importance(Importance.NORMAL)

@@ -3,23 +3,20 @@
  *
  * Copyright (c) 2019 Stijn Dejongh
  *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
+ * associated documentation files (the "Software"), to deal in the Software without restriction,
+ * including without limitation the rights to use, copy, modify, merge, publish, distribute,
+ * sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in all copies or
+ * substantial portions of the Software.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
+ * NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 package be.doji.productivity.trambu.domain.activity;
 
@@ -35,15 +32,15 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class Activity {
 
-  private String name;
+  private String title;
   private TimePoint plannedStart;
   private TimePoint plannedEnd;
   private Importance importance;
   private TimePoint deadline;
   private boolean completed;
 
-  void setName(String activityName) {
-    this.name = activityName;
+  void setTitle(String activityName) {
+    this.title = activityName;
   }
 
   void setPlannedStart(TimePoint plannedStart) {
@@ -73,8 +70,8 @@ public class Activity {
     return new TimeSlot(plannedStart, plannedEnd);
   }
 
-  public String getName() {
-    return this.name;
+  public String getTitle() {
+    return this.title;
   }
 
   Importance getImportance() {
@@ -97,7 +94,7 @@ public class Activity {
     return completed;
   }
 
-  public void setCompleted(boolean completed) {
+  void setCompleted(boolean completed) {
     this.completed = completed;
   }
 
@@ -105,18 +102,17 @@ public class Activity {
     return TimePoint.isBefore(TimePoint.now(), this.deadline);
   }
 
-
   public static class ActivityBuilder {
 
-    private String activityName;
+    private String activityTitle;
     private TimePoint plannedStart;
     private TimePoint plannedEnd;
     private Importance importance = Importance.NORMAL;
     private TimePoint deadline;
     private boolean completed;
 
-    public ActivityBuilder name(String activityName) {
-      this.activityName = activityName;
+    public ActivityBuilder title(String activityName) {
+      this.activityTitle = activityName;
       return this;
     }
 
@@ -139,7 +135,7 @@ public class Activity {
       throwExceptionIfInvalidParameters();
 
       Activity result = new Activity();
-      result.setName(this.activityName);
+      result.setTitle(this.activityTitle);
       result.setPlannedStart(this.plannedStart);
       result.setPlannedEnd(this.plannedEnd);
       result.setImportance(this.importance);
@@ -150,8 +146,8 @@ public class Activity {
     }
 
     private void throwExceptionIfInvalidParameters() {
-      if (StringUtils.isBlank(this.activityName)) {
-        throw new IllegalStateException("The activity name can not be empty");
+      if (StringUtils.isBlank(this.activityTitle)) {
+        throw new IllegalStateException("The activity title can not be empty");
       }
       if (TimePoint.isBefore(this.plannedEnd, this.plannedStart)) {
         throw new IllegalStateException("The activity end date must be after the start date");

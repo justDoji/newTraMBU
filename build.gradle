@@ -38,7 +38,7 @@ jacocoTestReport {
 }
 
 
-sonarqube {
+sonarqube{
     properties {
         //property "sonar.branch.name", "ddd_redesign"
         property "sonar.sourceEncoding", "UTF-8"
@@ -62,3 +62,15 @@ build {
         licenseFormatMain
     }
 }
+
+task buildAndAnalyze(type: DefaultTask) {
+    dependsOn 'licenseFormatTest'
+    dependsOn 'licenseFormatMain'
+    dependsOn 'build'
+    dependsOn 'sonarqube'
+
+    tasks.findByName('licenseFormatMain').mustRunAfter 'licenseFormatTest'
+    tasks.findByName('build').mustRunAfter 'licenseFormatMain'
+    tasks.findByName('sonarqube').mustRunAfter 'build'
+}
+buildAndAnalyze.setGroup("build")

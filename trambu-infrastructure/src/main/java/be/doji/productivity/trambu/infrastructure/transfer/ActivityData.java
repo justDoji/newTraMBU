@@ -56,7 +56,7 @@ public class ActivityData {
 
   public Activity toDomainObject() {
     return Activity.builder()
-        .name(this.title)
+        .title(this.title)
         .completed(this.completed)
         .build();
 

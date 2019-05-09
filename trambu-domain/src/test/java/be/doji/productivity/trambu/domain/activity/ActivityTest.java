@@ -28,7 +28,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import be.doji.productivity.trambu.domain.time.TimePoint;
-import org.assertj.core.api.Assertions;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -37,7 +36,7 @@ public class ActivityTest {
   @Test
   public void activityBuilderBasic() {
     Activity activity = Activity.builder()
-        .name("Start design practise")
+        .title("Start design practise")
         .plannedStartAt(TimePoint.fromString("01/05/2019"))
         .plannedEndAt(TimePoint.fromString("31/05/2019"))
         .build();
@@ -48,28 +47,28 @@ public class ActivityTest {
     Assert.assertTrue("Created activity has wrong start date",
         activity.getAssignedTimeSlot().endsOn(TimePoint.fromString("31/05/2019")));
     Assert.assertEquals("Created activity has wrong title", "Start design practise",
-        activity.getName());
+        activity.getTitle());
     assertThat(activity.isCompleted()).isFalse();
   }
 
   @Test
   public void builder_noParameters() {
     assertThatThrownBy(() -> Activity.builder().build())
-        .hasMessage("The activity name can not be empty");
+        .hasMessage("The activity title can not be empty");
   }
 
   @Test
   public void builder_noName() {
     assertThatThrownBy(
         () -> Activity.builder().plannedStartAt(TimePoint.fromString("01/05/2019")).build())
-        .hasMessage("The activity name can not be empty");
+        .hasMessage("The activity title can not be empty");
   }
 
   @Test
   public void builder_endBeforeStart() {
     assertThatThrownBy(
         () -> Activity.builder()
-            .name("Invalid start/end combination")
+            .title("Invalid start/end combination")
             .plannedStartAt(TimePoint.fromString("01/05/2019"))
             .plannedEndAt(TimePoint.fromString("01/01/2018"))
             .build())
@@ -82,7 +81,7 @@ public class ActivityTest {
   @Test
   public void builder_has_defaultPriority() {
     Activity activity = Activity.builder()
-        .name("Start design practise")
+        .title("Start design practise")
         .build();
     assertThat(activity.getImportance()).isNotNull();
   }
@@ -93,7 +92,7 @@ public class ActivityTest {
   @Test
   public void builder_has_customPriority() {
     Activity activity = Activity.builder()
-        .name("Start design practise")
+        .title("Start design practise")
         .importance(Importance.NORMAL)
         .build();
     assertThat(activity.getImportance()).isNotNull();
@@ -107,7 +106,7 @@ public class ActivityTest {
   @Test
   public void isDeadlineExceeded_default() {
     Activity activity = Activity.builder()
-        .name("Start design practise")
+        .title("Start design practise")
         .importance(Importance.NORMAL)
         .build();
     assertThat(activity.isDeadlineExceeded()).isFalse();
@@ -116,7 +115,7 @@ public class ActivityTest {
   @Test
   public void builder_completed() {
     Activity activity = Activity.builder()
-        .name("Start design practise")
+        .title("Start design practise")
         .completed(true)
         .build();
     assertThat(activity.isCompleted()).isTrue();
@@ -129,7 +128,7 @@ public class ActivityTest {
   @Test
   public void isDeadlineExceeded_withDeadlineIn1900() {
     Activity activity = Activity.builder()
-        .name("Start design practise")
+        .title("Start design practise")
         .importance(Importance.NORMAL)
         .deadline(TimePoint.fromString("01/01/1865"))
         .build();

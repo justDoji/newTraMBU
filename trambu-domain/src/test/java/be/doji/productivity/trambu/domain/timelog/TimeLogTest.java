@@ -36,7 +36,7 @@ public class TimeLogTest {
   @Test
   public void construction() {
     Activity activity = Activity.builder()
-        .name("Start design practise")
+        .title("Start design practise")
         .plannedStartAt(TimePoint.fromString("01/05/2019"))
         .plannedEndAt(TimePoint.fromString("31/05/2019"))
         .build();
@@ -49,7 +49,7 @@ public class TimeLogTest {
   public void registerTime_manual() {
     TimeLog log = new TimeLog(
         Activity.builder()
-            .name("Start design practise")
+            .title("Start design practise")
             .build()
     );
 

@@ -56,7 +56,7 @@ public class ExpectedEndPriorityCalculatorTest {
   @Test
   public void calculate_happyFlow() {
     Activity activity = Activity.builder()
-        .name("Start design practise")
+        .title("Start design practise")
         .importance(Importance.NORMAL)
         .deadline(TimePoint.fromString("20/12/2020"))
         .plannedEndAt(TimePoint.fromString("20/12/2020"))
