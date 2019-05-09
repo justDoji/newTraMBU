@@ -24,14 +24,18 @@
 package be.doji.productivity.trambu.infrastructure;
 
 import java.util.Properties;
+import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
 import org.hibernate.jpa.HibernatePersistenceProvider;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.jdbc.datasource.init.DatabasePopulatorUtils;
+import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
@@ -91,14 +95,6 @@ public class PersistenceConfiguration {
     return dataSource;
   }
 
-  private Properties getHibernateProperties() {
-    Properties hibernateProperties = new Properties();
-    hibernateProperties.put("hibernate.dialect", dialect);
-    hibernateProperties.put("hibernate.show_sql", showSql);
-    hibernateProperties.put("hibernate.hbm2ddl.auto", hbm2DdlAuto);
-    return hibernateProperties;
-  }
-
   @Bean
   public JpaTransactionManager transactionManager() {
     JpaTransactionManager transactionManager = new JpaTransactionManager();
@@ -116,6 +112,15 @@ public class PersistenceConfiguration {
     entityManagerFactory.setJpaProperties(jpaHibernateProperties());
 
     return entityManagerFactory;
+  }
+
+  @PostConstruct
+  public void initializeDatabase() {
+    ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
+    ClassPathResource createActivityDataTable = new ClassPathResource(
+        "repository/DML_create_activity.sql");
+    populator.addScript(createActivityDataTable);
+    DatabasePopulatorUtils.execute(populator, dataSource());
   }
 
   private HibernateJpaVendorAdapter vendorAdaptor() {
