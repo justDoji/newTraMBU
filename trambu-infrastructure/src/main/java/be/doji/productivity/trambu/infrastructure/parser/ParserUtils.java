@@ -34,6 +34,7 @@ public final class ParserUtils {
 
   /*Utility classes should not have a public or default constructor */
   private ParserUtils() {
+    throw new UnsupportedOperationException();
   }
 
   static List<String> findAllMatches(String regex, String lineToSearch) {

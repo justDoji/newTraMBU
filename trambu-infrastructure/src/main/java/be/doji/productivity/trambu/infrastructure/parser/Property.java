@@ -24,12 +24,14 @@ final class Property {
 
   /*Utility classes should not have a public or default constructor */
   private Property() {
+    throw new UnsupportedOperationException();
   }
 
   final class Regex {
 
     /*Utility classes should not have a public or default constructor */
     private Regex() {
+      throw new UnsupportedOperationException();
     }
 
     static final String REGEX_DATE = "[0-9\\-\\:\\.]*";
@@ -47,6 +49,7 @@ final class Property {
 
     /*Utility classes should not have a public or default constructor */
     private Indicator() {
+      throw new UnsupportedOperationException();
     }
 
     static final String DONE = "x";
