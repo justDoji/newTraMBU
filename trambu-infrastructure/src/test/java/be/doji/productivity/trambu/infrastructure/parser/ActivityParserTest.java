@@ -91,8 +91,8 @@ public class ActivityParserTest {
     ActivityData parsedActivity = ActivityParser.parse(ACTIVITY_DATA_LINE);
     assertThat(parsedActivity.getTags()).isNotEmpty();
     assertThat(parsedActivity.getTags()).hasSize(2);
-    assertThat(parsedActivity.getTags().get(0)).isEqualTo("Tag");
-    assertThat(parsedActivity.getTags().get(1)).isEqualTo("Tag with multiple words");
+    assertThat(parsedActivity.getTags().get(0).getValue()).isEqualTo("Tag");
+    assertThat(parsedActivity.getTags().get(1).getValue()).isEqualTo("Tag with multiple words");
   }
 
   @Test
@@ -100,5 +100,19 @@ public class ActivityParserTest {
     ActivityData parsedActivity = ActivityParser.parse(COMPLETED_ACTIVITY);
 
     assertThat(parsedActivity.getTags()).isEmpty();
+  }
+
+  @Test
+  public void parse_activityProject() {
+    ActivityData parsedActivity = ActivityParser.parse(ACTIVITY_DATA_LINE);
+    assertThat(parsedActivity.getProjects()).isNotEmpty();
+    assertThat(parsedActivity.getProjects()).hasSize(1);
+    assertThat(parsedActivity.getProjects().get(0).getValue()).isEqualTo("Overarching Project");
+  }
+
+  @Test
+  public void parse_activityProject_noProject() {
+    ActivityData parsedActivity = ActivityParser.parse(COMPLETED_ACTIVITY);
+    assertThat(parsedActivity.getProjects()).isEmpty();
   }
 }

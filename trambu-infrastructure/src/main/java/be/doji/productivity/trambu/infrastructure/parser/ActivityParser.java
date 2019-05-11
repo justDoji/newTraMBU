@@ -23,6 +23,8 @@ package be.doji.productivity.trambu.infrastructure.parser;
 import be.doji.productivity.trambu.infrastructure.parser.Property.Indicator;
 import be.doji.productivity.trambu.infrastructure.parser.Property.Regex;
 import be.doji.productivity.trambu.infrastructure.transfer.ActivityData;
+import be.doji.productivity.trambu.infrastructure.transfer.ActivityProjectData;
+import be.doji.productivity.trambu.infrastructure.transfer.ActivityTagData;
 import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
@@ -48,6 +50,7 @@ public final class ActivityParser {
         .assembleStep(ActivityParser::parseTitle, ActivityData::setTitle)
         .assembleStep(ActivityParser::parseDeadline, ActivityData::setDeadline)
         .assembleStep(ActivityParser::parseTags, ActivityData::setTags)
+        .assembleStep(ActivityParser::parseProjects, ActivityData::setProjects)
         .getAssembledData();
   }
 
@@ -64,13 +67,25 @@ public final class ActivityParser {
     return findAndStripIndicators(Indicator.DEADLINE, Regex.DEADLINE, line);
   }
 
-  private static List<String> parseTags(String line) {
+  private static List<ActivityTagData> parseTags(String line) {
     List<String> tagMatches = ParserUtils.findAllMatches(Regex.TAG, line);
 
     return tagMatches.stream()
         .map(ActivityParser::stripIndicators)
         .map(tag -> ParserUtils.replaceFirst(Indicator.TAG, tag, ""))
         .map(String::trim)
+        .map(ActivityTagData::new)
+        .collect(Collectors.toList());
+  }
+
+  private static List<ActivityProjectData> parseProjects(String line) {
+    List<String> projectMatches = ParserUtils.findAllMatches(Regex.PROJECT, line);
+
+    return projectMatches.stream()
+        .map(ActivityParser::stripIndicators)
+        .map(project -> ParserUtils.replaceFirst(regexEscape(Indicator.PROJECT), project, ""))
+        .map(String::trim)
+        .map(ActivityProjectData::new)
         .collect(Collectors.toList());
   }
 

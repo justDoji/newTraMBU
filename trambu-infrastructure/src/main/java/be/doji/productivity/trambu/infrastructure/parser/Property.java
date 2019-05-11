@@ -55,6 +55,12 @@ final class Property {
                               + "(.*?)"
                               + GROUP_END
                               + TERMINATOR;
+
+    static final String PROJECT = "\\" + Indicator.PROJECT
+        + GROUP_START
+        + "(.*?)"
+        + GROUP_END
+        + TERMINATOR;
   }
 
   final class Indicator {

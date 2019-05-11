@@ -39,6 +39,10 @@ import lombok.Data;
 @Table(name = "ACTIVITY_TAG")
 public class ActivityTagData {
 
+  public ActivityTagData(String value) {
+    this.value = value;
+  }
+
   @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tag_seq")
   @SequenceGenerator(name = "tag_seq", sequenceName = "SEQ_TAG")
