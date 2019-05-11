@@ -96,8 +96,8 @@ emulate that within a few days.
     * data representation
     * logging
   * top-level module for business logical
-    ** converters, combinations, etc
-    ** preprocessors
+    * converters, combinations, etc
+    * preprocessors
   * top-level module per domain
-    ** Core concepts only => clinically clean
-    *** No toString() shizzle in the domain object, as this is a representation concern
+    * Core concepts only => clinically clean
+    * No toString() shizzle in the domain object, as this is a representation concern
