@@ -3,23 +3,20 @@
  *
  * Copyright (c) 2019 Stijn Dejongh
  *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
+ * associated documentation files (the "Software"), to deal in the Software without restriction,
+ * including without limitation the rights to use, copy, modify, merge, publish, distribute,
+ * sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in all copies or
+ * substantial portions of the Software.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
+ * NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 package be.doji.productivity.trambu.infrastructure.parser;
 
@@ -27,7 +24,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import be.doji.productivity.trambu.infrastructure.transfer.ActivityData;
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class ActivityParserTest {
@@ -91,10 +87,18 @@ public class ActivityParserTest {
   }
 
   @Test
-  @Ignore
   public void parse_activityTags() {
     ActivityData parsedActivity = ActivityParser.parse(ACTIVITY_DATA_LINE);
     assertThat(parsedActivity.getTags()).isNotEmpty();
     assertThat(parsedActivity.getTags()).hasSize(2);
+    assertThat(parsedActivity.getTags().get(0)).isEqualTo("Tag");
+    assertThat(parsedActivity.getTags().get(1)).isEqualTo("Tag with multiple words");
+  }
+
+  @Test
+  public void parse_activityTags_noTags() {
+    ActivityData parsedActivity = ActivityParser.parse(COMPLETED_ACTIVITY);
+
+    assertThat(parsedActivity.getTags()).isEmpty();
   }
 }
