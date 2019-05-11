@@ -15,7 +15,7 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "ACTIVITY_TAG")
-public class ActivityTagData {
+class ActivityTagData {
 
   @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tag_seq")
@@ -28,5 +28,5 @@ public class ActivityTagData {
 
   @Column(name = "VALUE")
   private String value;
-  
+
 }
