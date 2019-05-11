@@ -30,7 +30,7 @@ import org.junit.Test;
 
 public class ActivityParserTest {
 
-  private static final String ACTIVITY_DATA_LINE = "(A) 2017-10-21:14:13.000 [TaskTitle] +OverarchingProject @Tag @Tag2 due:2017-12-21:16:15:00.000 uuid:283b6271-b513-4e89-b757-10e98c9078ea";
+  private static final String ACTIVITY_DATA_LINE = "(A) 2017-10-21:14:13.000 [TaskTitle] +[Overarching Project] @[Tag] @[Tag with multiple words] due:2017-12-21:16:15:00.000 uuid:283b6271-b513-4e89-b757-10e98c9078ea";
   private static final String COMPLETED_ACTIVITY = "X (B) [Buy thunderbird plugin license]";
   private static final String COMPLETED_ACTIVITY_LOWERCASE = "x (B) [Buy thunderbird plugin license]";
 
@@ -86,5 +86,12 @@ public class ActivityParserTest {
   public void parse_activityDeadline() {
     ActivityData parsedActivity = ActivityParser.parse(ACTIVITY_DATA_LINE);
     assertThat(parsedActivity.getDeadline()).isEqualTo("2017-12-21:16:15:00.000");
+  }
+
+  @Test
+  public void parse_activityTags() {
+    ActivityData parsedActivity = ActivityParser.parse(ACTIVITY_DATA_LINE);
+    assertThat(parsedActivity.getTags()).isNotEmpty();
+    assertThat(parsedActivity.getTags()).hasSize(2);
   }
 }

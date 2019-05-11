@@ -54,7 +54,7 @@ public final class ActivityParser {
 
   private static String parseTitle(String line) {
     return stripIndicators(
-        ParserUtils.findFirstMatch(Regex.TITLE, line).orElse(DEFAULT_TITLE));
+        ParserUtils.findFirstMatch(Regex.TITLE, line).orElse(DEFAULT_TITLE)).trim();
   }
 
   private static String parseDeadline(String line) {
@@ -90,8 +90,10 @@ public final class ActivityParser {
 
   private static String findAndStripIndicators(String escapedIndicator, String regex,
       String line) {
-    return ParserUtils.findFirstMatch(regex, line)
-        .map(s -> stripIndicators(s, escapedIndicator).trim()).orElse(null);
+    return ParserUtils
+        .findFirstMatch(regex, line)
+        .map(s -> stripIndicators(s, escapedIndicator).trim())
+        .orElse(null);
   }
 
   private static String stripIndicators(String toStrip, String escapedIndicator) {

@@ -21,11 +21,13 @@
 package be.doji.productivity.trambu.infrastructure.transfer;
 
 import be.doji.productivity.trambu.domain.activity.Activity;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import lombok.Data;
@@ -51,6 +53,9 @@ public class ActivityData {
   @Column(name = "DEADLINE")
   private String deadline;
 
+  @OneToMany(targetEntity = ActivityTagData.class, mappedBy = "activity")
+  private List<String> tags;
+
   public Long getId() {
     return id;
   }
@@ -61,5 +66,13 @@ public class ActivityData {
         .completed(this.completed)
         .deadline(this.deadline)
         .build();
+  }
+
+  public List<String> getTags() {
+    return this.tags;
+  }
+
+  public void setTags(List<String> tags) {
+    this.tags = tags;
   }
 }

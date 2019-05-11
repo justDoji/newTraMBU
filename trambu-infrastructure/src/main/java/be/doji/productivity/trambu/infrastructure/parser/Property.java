@@ -36,12 +36,12 @@ final class Property {
 
     static final String REGEX_DATE = "[0-9\\-\\:\\.]*";
 
-    static final String REGEX_SINGLE_WORD_TERMINATOR = "(\\s|$)";
+    static final String WORD_TERMINATOR = "(\\s|$)";
     static final String REGEX_UUID = "([a-f0-9]{8}(-[a-f0-9]{4}){3}-[a-f0-9]{12})";
 
     static final String COMPLETED = "^[" + Indicator.DONE + Indicator.DONE_UPPERCASE + "]";
-    static final String TITLE = "\\" + Indicator.TITLE_START + ".*" + "\\" + Indicator.TITLE_END;
-    static final String DEADLINE = Indicator.DEADLINE + REGEX_DATE + REGEX_SINGLE_WORD_TERMINATOR;
+    static final String TITLE = "\\" + Indicator.TITLE_START + ".*?" + "\\" + Indicator.TITLE_END + WORD_TERMINATOR;
+    static final String DEADLINE = Indicator.DEADLINE + REGEX_DATE + WORD_TERMINATOR;
 
   }
 
