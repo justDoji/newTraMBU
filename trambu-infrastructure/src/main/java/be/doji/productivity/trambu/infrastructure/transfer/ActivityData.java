@@ -21,7 +21,9 @@
 package be.doji.productivity.trambu.infrastructure.transfer;
 
 import be.doji.productivity.trambu.domain.activity.Activity;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -54,10 +56,10 @@ public class ActivityData {
   private String deadline;
 
   @OneToMany(targetEntity = ActivityTagData.class, mappedBy = "activity")
-  private List<ActivityTagData> tags;
+  private List<ActivityTagData> tags = new ArrayList<>();
 
   @OneToMany(targetEntity = ActivityProjectData.class, mappedBy = "activity")
-  private List<ActivityProjectData> projects;
+  private List<ActivityProjectData> projects = new ArrayList<>();
 
   public Long getId() {
     return id;
@@ -68,6 +70,8 @@ public class ActivityData {
         .title(this.title)
         .completed(this.completed)
         .deadline(this.deadline)
+        .tags(tags.stream().map(ActivityTagData::getValue).collect(Collectors.toList()))
+        .projects(projects.stream().map(ActivityProjectData::getValue).collect(Collectors.toList()))
         .build();
   }
 }

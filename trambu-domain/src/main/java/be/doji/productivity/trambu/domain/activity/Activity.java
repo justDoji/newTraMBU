@@ -3,29 +3,30 @@
  *
  * Copyright (c) 2019 Stijn Dejongh
  *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
+ * associated documentation files (the "Software"), to deal in the Software without restriction,
+ * including without limitation the rights to use, copy, modify, merge, publish, distribute,
+ * sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in all copies or
+ * substantial portions of the Software.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
+ * NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 package be.doji.productivity.trambu.domain.activity;
 
 import be.doji.productivity.trambu.domain.time.TimePoint;
 import be.doji.productivity.trambu.domain.time.TimeSlot;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -35,32 +36,14 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class Activity {
 
-  private String title;
-  private TimePoint plannedStart;
-  private TimePoint plannedEnd;
-  private Importance importance;
-  private TimePoint deadline;
-  private boolean completed;
-
-  void setTitle(String activityName) {
-    this.title = activityName;
-  }
-
-  void setPlannedStart(TimePoint plannedStart) {
-    this.plannedStart = plannedStart;
-  }
-
-  void setPlannedEnd(TimePoint plannedEnd) {
-    this.plannedEnd = plannedEnd;
-  }
-
-  void setImportance(Importance importance) {
-    this.importance = importance;
-  }
-
-  void setDeadline(TimePoint deadline) {
-    this.deadline = deadline;
-  }
+  @Getter @Setter private String title;
+  @Setter private TimePoint plannedStart;
+  @Setter private TimePoint plannedEnd;
+  @Setter private Importance importance;
+  @Setter private TimePoint deadline;
+  @Getter @Setter private boolean completed;
+  @Getter @Setter private List<String> projects;
+  @Getter @Setter private List<String> tags;
 
   private Activity() {
   }
@@ -71,10 +54,6 @@ public class Activity {
 
   public TimeSlot getAssignedTimeSlot() {
     return new TimeSlot(plannedStart, plannedEnd);
-  }
-
-  public String getTitle() {
-    return this.title;
   }
 
   Importance getImportance() {
@@ -93,14 +72,6 @@ public class Activity {
     return this.plannedStart == null ? Optional.empty() : Optional.of(this.plannedStart);
   }
 
-  public boolean isCompleted() {
-    return completed;
-  }
-
-  void setCompleted(boolean completed) {
-    this.completed = completed;
-  }
-
   public boolean isDeadlineExceeded() {
     return TimePoint.isBefore(TimePoint.now(), this.deadline);
   }
@@ -113,6 +84,8 @@ public class Activity {
     private Importance importance = Importance.NORMAL;
     private TimePoint deadline;
     private boolean completed;
+    private List<String> projects = new ArrayList<>();
+    private List<String> tags = new ArrayList<>();
 
     public ActivityBuilder title(String activityName) {
       this.activityTitle = activityName;
@@ -144,6 +117,8 @@ public class Activity {
       result.setImportance(this.importance);
       result.setDeadline(this.deadline);
       result.setCompleted(this.completed);
+      result.setTags(tags);
+      result.setProjects(projects);
 
       return result;
     }
@@ -171,6 +146,16 @@ public class Activity {
       if (StringUtils.isNotBlank(deadline)) {
         this.deadline = TimePoint.fromString(deadline);
       }
+      return this;
+    }
+
+    public ActivityBuilder tags(List<String> tags) {
+      this.tags.addAll(tags);
+      return this;
+    }
+
+    public ActivityBuilder projects(List<String> projects) {
+      this.projects.addAll(projects);
       return this;
     }
   }
