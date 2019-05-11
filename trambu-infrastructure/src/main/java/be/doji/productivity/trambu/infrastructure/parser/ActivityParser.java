@@ -23,6 +23,8 @@ package be.doji.productivity.trambu.infrastructure.parser;
 import be.doji.productivity.trambu.infrastructure.parser.Property.Indicator;
 import be.doji.productivity.trambu.infrastructure.parser.Property.Regex;
 import be.doji.productivity.trambu.infrastructure.transfer.ActivityData;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 import org.apache.commons.lang3.StringUtils;
 
 public final class ActivityParser {
@@ -38,16 +40,46 @@ public final class ActivityParser {
       throw new IllegalArgumentException(
           "Failure during parsing: empty String or null value not allowed");
     }
-    ActivityData activity = new ActivityData();
 
-    activity.setCompleted(ParserUtils.matches(Regex.COMPLETED, line));
-    activity
-        .setTitle(
-            stripIndicators(
-                ParserUtils.findFirstMatch(Regex.TITLE, line).orElse(DEFAULT_TITLE)));
-    activity.setDeadline(findAndStripIndicators(Indicator.DEADLINE, Regex.DEADLINE, line));
+    return new ActivityAssembler(line)
+        .assembleStep(ActivityParser::parseCompleted, ActivityData::setCompleted)
+        .assembleStep(ActivityParser::parseTitle, ActivityData::setTitle)
+        .assembleStep(ActivityParser::parseDeadline, ActivityData::setDeadline)
+        .getAssembledData();
+  }
 
-    return activity;
+  private static boolean parseCompleted(String line) {
+    return ParserUtils.matches(Regex.COMPLETED, line);
+  }
+
+  private static String parseTitle(String line) {
+    return stripIndicators(
+        ParserUtils.findFirstMatch(Regex.TITLE, line).orElse(DEFAULT_TITLE));
+  }
+
+  private static String parseDeadline(String line) {
+    return findAndStripIndicators(Indicator.DEADLINE, Regex.DEADLINE, line);
+  }
+
+  private static class ActivityAssembler {
+
+    private ActivityData activityData;
+    private String line;
+
+    ActivityAssembler(String lineToParse) {
+      this.line = lineToParse;
+      activityData = new ActivityData();
+    }
+
+    public <T> ActivityAssembler assembleStep(Function<String, T> parsingFunction,
+        BiConsumer<ActivityData, T> setter) {
+      setter.accept(activityData, parsingFunction.apply(line));
+      return this;
+    }
+
+    public ActivityData getAssembledData() {
+      return activityData;
+    }
   }
 
   private static String stripIndicators(String toStrip) {

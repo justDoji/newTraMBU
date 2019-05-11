@@ -28,11 +28,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import lombok.Data;
 import org.hibernate.annotations.Type;
 
-/**
- * Pure data object.
- */
+@Data
 @Entity
 @Table(name = "ACTIVITY")
 public class ActivityData {
@@ -54,30 +53,6 @@ public class ActivityData {
 
   public Long getId() {
     return id;
-  }
-
-  public boolean isCompleted() {
-    return completed;
-  }
-
-  public void setCompleted(boolean completed) {
-    this.completed = completed;
-  }
-
-  public String getTitle() {
-    return title;
-  }
-
-  public void setTitle(String title) {
-    this.title = title;
-  }
-
-  public String getDeadline() {
-    return deadline;
-  }
-
-  public void setDeadline(String deadline) {
-    this.deadline = deadline;
   }
 
   public Activity toDomainObject() {
