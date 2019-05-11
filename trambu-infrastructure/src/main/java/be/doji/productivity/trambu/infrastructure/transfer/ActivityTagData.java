@@ -15,7 +15,7 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "ACTIVITY_TAG")
-class ActivityTagData {
+public class ActivityTagData {
 
   @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tag_seq")
@@ -24,7 +24,7 @@ class ActivityTagData {
 
   @ManyToOne
   @JoinColumn(name = "FK_ACTIVITY_ID")
-  private Activity activity;
+  private ActivityData activity;
 
   @Column(name = "VALUE")
   private String value;
