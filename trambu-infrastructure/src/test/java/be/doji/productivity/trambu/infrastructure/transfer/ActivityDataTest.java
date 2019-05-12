@@ -58,9 +58,9 @@ public class ActivityDataTest {
     activityData.setDeadline("09/05/2019");
 
     Assertions.assertThat(activityData.toDomainObject()).isNotNull();
+    Assertions.assertThat(activityData.toDomainObject().getDeadline()).isPresent();
     Assertions.assertThat(TimePoint.isSameDate(activityData.toDomainObject().getDeadline().get(),
         TimePoint.fromString("09/05/2019"))).isTrue();
-
   }
 
   @Test
