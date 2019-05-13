@@ -32,11 +32,16 @@ import java.util.Optional;
 import org.assertj.core.api.Assertions;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
+@RunWith(SpringRunner.class)
+@SpringBootTest
 public class LogParserTest {
 
   private static final String TIMELOG_ENTRY = "STARTTIME:2018-12-05:18:48:33.130 ENDTIME:2018-12-05:18:48:36.021";
@@ -45,7 +50,7 @@ public class LogParserTest {
 
   @Mock private ActivityDatabaseRepository activityRepositoryMock;
 
-  @InjectMocks @Autowired private LogParser logParser;
+  private LogParser logParser;
 
   @Before
   public void setUp() {
@@ -59,6 +64,8 @@ public class LogParserTest {
     activityData.setTitle("Some kind of title");
     when(activityRepositoryMock.findById(activityData.getId()))
         .thenReturn(Optional.of(activityData));
+
+    logParser = new LogParser(activityRepositoryMock);
   }
 
   @Test
