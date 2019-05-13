@@ -53,7 +53,8 @@ jacocoTestReport {
 
 license {
     header rootProject.file('LICENSE')
-    strictCheck true
+    strictCheck false
+    exclude('**/*.txt')
 }
 
 build {
