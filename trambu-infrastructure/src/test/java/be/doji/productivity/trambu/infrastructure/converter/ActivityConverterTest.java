@@ -24,6 +24,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import be.doji.productivity.trambu.domain.activity.Activity;
+import be.doji.productivity.trambu.domain.time.TimePoint;
+import java.util.Arrays;
+import org.assertj.core.api.Assertions;
 import org.junit.Test;
 
 public class ActivityConverterTest {
@@ -82,7 +85,9 @@ public class ActivityConverterTest {
   @Test
   public void parse_activityDeadline() {
     Activity parsedActivity = ActivityConverter.parse(ACTIVITY_DATA_LINE);
-    assertThat(parsedActivity.getDeadline()).isEqualTo("2017-12-21:16:15:00.000");
+    assertThat(parsedActivity.getDeadline()).isPresent();
+    assertThat(TimePoint.isSameDate(TimePoint.fromString("2017-12-21:16:15:00.000"),
+        parsedActivity.getDeadline().get())).isTrue();
   }
 
   @Test
@@ -113,5 +118,69 @@ public class ActivityConverterTest {
   public void parse_activityProject_noProject() {
     Activity parsedActivity = ActivityConverter.parse(COMPLETED_ACTIVITY);
     assertThat(parsedActivity.getProjects()).isEmpty();
+  }
+
+  @Test
+  public void write_activityTitle() {
+    Activity activity = Activity.builder()
+        .title("name")
+        .build();
+
+    String toString = ActivityConverter.write(activity);
+    Assertions.assertThat(toString).startsWith("[name]");
+  }
+
+  @Test
+  public void write_completed() {
+    Activity activity = Activity.builder()
+        .title("name")
+        .completed(true)
+        .build();
+
+    String toString = ActivityConverter.write(activity);
+    Assertions.assertThat(toString).startsWith("x [name]");
+  }
+
+  @Test
+  public void write_activityTitle_multipleWords() {
+    Activity activity = Activity.builder()
+        .title("name is @ cool g_y")
+        .build();
+
+    String toString = ActivityConverter.write(activity);
+    Assertions.assertThat(toString).contains("[name is @ cool g_y]");
+  }
+
+  @Test
+  public void write_deadline() {
+    Activity activity = Activity.builder()
+        .title("name")
+        .deadline("2017-10-21:14:13:00.000")
+        .build();
+
+    String toString = ActivityConverter.write(activity);
+    Assertions.assertThat(toString).startsWith("[name] due:2017-10-21:14:13:00.000");
+  }
+
+  @Test
+  public void write_tags() {
+    Activity activity = Activity.builder()
+        .title("name")
+        .tags(Arrays.asList("tagOne", "tagTwo"))
+        .build();
+
+    String toString = ActivityConverter.write(activity);
+    Assertions.assertThat(toString).startsWith("[name] @[tagOne] @[tagTwo]");
+  }
+
+  @Test
+  public void write_projects() {
+    Activity activity = Activity.builder()
+        .title("name")
+        .projects(Arrays.asList("projectOne", "projectTwo"))
+        .build();
+
+    String toString = ActivityConverter.write(activity);
+    Assertions.assertThat(toString).startsWith("[name] +[projectOne] +[projectTwo]");
   }
 }

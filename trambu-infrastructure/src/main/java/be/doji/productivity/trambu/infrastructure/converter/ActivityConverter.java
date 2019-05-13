@@ -21,10 +21,11 @@
 package be.doji.productivity.trambu.infrastructure.converter;
 
 import be.doji.productivity.trambu.domain.activity.Activity;
+import be.doji.productivity.trambu.domain.time.TimePoint;
 import be.doji.productivity.trambu.infrastructure.converter.Property.Indicator;
 import be.doji.productivity.trambu.infrastructure.converter.Property.Regex;
-import be.doji.productivity.trambu.infrastructure.transfer.ActivityData;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import org.apache.commons.lang3.StringUtils;
 
@@ -90,11 +91,53 @@ public final class ActivityConverter {
         .collect(Collectors.toList());
   }
 
+  private static class ActivityToStringConverter extends Converter<Activity, StringBuilder> {
 
-  public String toString(ActivityData activityToWrite) {
-
-    return "";
+    ActivityToStringConverter(Activity source) {
+      super(source, StringBuilder.class);
+    }
   }
+
+  public static String write(Activity activityToParse) {
+    return new ActivityToStringConverter(activityToParse)
+        .conversionStep(ActivityConverter::writeCompleted, StringBuilder::append)
+        .conversionStep(ActivityConverter::writeTitle, StringBuilder::append)
+        .conversionStep(ActivityConverter::writeDeadline, StringBuilder::append)
+        .conversionStep(ActivityConverter::writeTags, StringBuilder::append)
+        .conversionStep(ActivityConverter::writeProjects, StringBuilder::append)
+        .getConvertedData()
+        .toString();
+  }
+
+  private static String writeCompleted(Activity activity) {
+    return activity.isCompleted() ? Indicator.DONE + " " : "";
+  }
+
+  private static String writeTitle(Activity activity) {
+    return Indicator.GROUP_START + activity.getTitle() + Indicator.GROUP_END + " ";
+  }
+
+  private static String writeDeadline(Activity activity) {
+    Optional<TimePoint> deadline = activity.getDeadline();
+    return deadline.map(timePoint -> Indicator.DEADLINE + Property.LEGACY_FORMATTER
+        .format(timePoint.toLocalDateTime())
+        + " ").orElse("");
+  }
+
+  private static String writeTags(Activity activity) {
+    return activity.getTags().stream()
+        .map(s -> Indicator.TAG + Indicator.GROUP_START + s + Indicator.GROUP_END + " ").collect(
+            Collectors.joining());
+  }
+
+  private static String writeProjects(Activity activity) {
+    return activity.getProjects().stream()
+        .map(s -> Indicator.PROJECT + Indicator.GROUP_START + s + Indicator.GROUP_END + " ")
+        .collect(
+            Collectors.joining());
+  }
+
+
 
   /* UTILITY METHODS */
 

@@ -1,7 +1,5 @@
 package be.doji.productivity.trambu.infrastructure.converter;
 
-import static org.junit.Assert.*;
-
 import be.doji.productivity.trambu.domain.activity.Activity;
 import be.doji.productivity.trambu.infrastructure.transfer.ActivityData;
 import java.util.Arrays;

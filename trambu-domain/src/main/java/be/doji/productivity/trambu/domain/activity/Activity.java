@@ -45,7 +45,7 @@ public class Activity {
   @Getter @Setter private List<String> projects;
   @Getter @Setter private List<String> tags;
 
-  private Activity() {
+  public Activity() {
   }
 
   public static ActivityBuilder builder() {
