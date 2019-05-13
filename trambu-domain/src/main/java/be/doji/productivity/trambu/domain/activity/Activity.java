@@ -49,6 +49,7 @@ public class Activity {
   @Getter @Setter private List<String> tags;
 
   public Activity() {
+    /* Empty default constructor for use in reflection by Converter classes */
   }
 
   public static ActivityBuilder builder() {
