@@ -22,6 +22,7 @@ package be.doji.productivity.trambu.infrastructure.parser;
 
 final class Property {
 
+
   /*Utility classes should not have a public or default constructor */
   private Property() {
     throw new UnsupportedOperationException();
@@ -35,6 +36,7 @@ final class Property {
     }
 
     static final String DATE = "[0-9\\-\\:\\.]*";
+    static final String ANYTHING = "(.*?)";
 
     static final String TERMINATOR = "(\\s|$)";
     static final String GROUP_START = "\\" + Indicator.GROUP_START;
@@ -43,7 +45,7 @@ final class Property {
     static final String COMPLETED = "^[" + Indicator.DONE + Indicator.DONE_UPPERCASE + "]";
 
     static final String TITLE = GROUP_START
-        + "(.*?)"
+        + ANYTHING
         + GROUP_END
         + TERMINATOR;
     static final String DEADLINE = Indicator.DEADLINE
@@ -51,22 +53,24 @@ final class Property {
         + TERMINATOR;
     static final String TAG = "\\" + Indicator.TAG
         + GROUP_START
-        + "(.*?)"
+        + ANYTHING
         + GROUP_END
         + TERMINATOR;
 
     static final String PROJECT = "\\" + Indicator.PROJECT
         + GROUP_START
-        + "(.*?)"
+        + ANYTHING
         + GROUP_END
         + TERMINATOR;
 
 
     static final String LOGPOINT_START = Indicator.LOGPOINT_START + DATE + TERMINATOR;
     static final String LOGPOINT_END = Indicator.LOGPOINT_END + DATE + TERMINATOR;
+    static final String LOGPOINT_ACTIVITY = Indicator.LOGPOINT_ACTIVITY + ANYTHING + TERMINATOR;
   }
 
   final class Indicator {
+
 
     /*Utility classes should not have a public or default constructor */
     private Indicator() {
@@ -83,8 +87,7 @@ final class Property {
     static final String WARNING_PERIOD = "warningPeriod:";
     static final String UUID = "uuid:";
 
-    static final String LOG_START = "LOG_START";
-    static final String LOG_END = "LOG_END";
+    static final String LOGPOINT_ACTIVITY = "ACTIVITY:";
     static final String LOGPOINT_START = "STARTTIME:";
     static final String LOGPOINT_END = "ENDTIME:";
 
