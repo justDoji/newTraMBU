@@ -37,15 +37,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class FileLoader {
 
-  private final String logFileLocation;
   private final String todoFileLocation;
   private final ActivityDatabaseRepository activityDatabaseRepository;
 
-  public FileLoader(@Value("${trambu.file.log}") String logFileLocation,
-      @Value("${trambu.file.todo}") String todoFileLocation,
+  public FileLoader(@Value("${trambu.file.todo}") String todoFileLocation,
       @Autowired ActivityDatabaseRepository activityDatabaseRepository) {
     this.activityDatabaseRepository = activityDatabaseRepository;
-    this.logFileLocation = logFileLocation;
     this.todoFileLocation = todoFileLocation;
   }
 
