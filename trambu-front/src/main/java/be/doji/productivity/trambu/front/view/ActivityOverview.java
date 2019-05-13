@@ -24,16 +24,13 @@ public class ActivityOverview {
 
   @PostConstruct
   public void init() {
-    System.out.println("Init restarted");
     if (this.model == null) {
       repository.save(createMockData());
 
       this.model = repository.findAll().stream()
-          .map(ActivityData::toDomainObject)
-          .map(ActivityModel::new)
+          .map(db -> new ActivityModel(db.toDomainObject(), db.getId()))
           .collect(Collectors.toList());
     }
-
   }
 
   public ActivityData createMockData() {

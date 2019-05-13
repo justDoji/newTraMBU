@@ -35,7 +35,6 @@ public class ActivityParserTest {
   private static final String COMPLETED_ACTIVITY = "X (B) [Buy thunderbird plugin license]";
   private static final String COMPLETED_ACTIVITY_LOWERCASE = "x (B) [Buy thunderbird plugin license]";
 
-
   @Test
   public void mapStringToActivity_givesOutput() {
     ActivityData parsedActivity = ActivityParser.parse(ACTIVITY_DATA_LINE);
