@@ -43,19 +43,12 @@ dependencyManagement {
 test.finalizedBy jacocoTestReport
 
 jacocoTestReport {
-    afterEvaluate {
-        classDirectories = files(classDirectories.files.collect {
-            fileTree(dir: it, exclude: '**/*Data.*')
-        })
-    }
-
     reports {
-        xml.enabled
+        xml.enabled true
         xml.destination file("${buildDir}/reports/jacoco.xml")
-        csv.enabled
+        csv.enabled false
         html.destination file("${buildDir}/reports/jacocoHtml")
     }
-
 }
 
 license {

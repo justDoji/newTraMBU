@@ -53,11 +53,12 @@ sonarqube{
         property "sonar.sources", './src/main/java'
         property "sonar.tests", './src/test/java'
         property "sonar.coverage.jacoco.xmlReportPaths", "build/reports/jacoco.xml"
-        property "sonar.junit.reportPaths", "trambu-domain/build/test-results/test"
+        property "sonar.jacoco.reportPaths", "build/jacoco/test.exec"
+        property "sonar.junit.reportPaths", "build/test-results/test"
 
         //Ignore the front-end in the sonar analysis
-        property 'sonar.coverage.exclusions', "**/be/doji/productivity/trambu/front**"
-        property 'sonar.exclusions', "**/be/doji/productivity/trambu/front**"
+        property 'sonar.coverage.exclusions', "**/trambu/infrastructure/transfer/**, **/be/doji/productivity/trambu/front/**"
+        property 'sonar.exclusions', "**/be/doji/productivity/trambu/front/**,**/trambu/infrastructure/transfer/**"
     }
 }
 

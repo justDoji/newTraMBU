@@ -35,10 +35,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class LogParser {
 
-
   private ActivityDatabaseRepository activityDatabase;
 
-  /*  Being fancy with injects into static fields   */
   public LogParser(@Autowired ActivityDatabaseRepository repository) {
     this.activityDatabase = repository;
   }
