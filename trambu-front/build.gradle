@@ -50,24 +50,6 @@ dependencies {
     compile group: 'org.hibernate', name: 'hibernate-core', version: '5.4.2.Final'
 }
 
-test.finalizedBy jacocoTestReport
-
-jacocoTestReport {
-    afterEvaluate {
-        classDirectories = files(classDirectories.files.collect {
-            fileTree(dir: it, exclude: '**/*Data.*')
-        })
-    }
-
-    reports {
-        xml.enabled
-        xml.destination file("${buildDir}/reports/jacoco.xml")
-        csv.enabled
-        html.destination file("${buildDir}/reports/jacocoHtml")
-    }
-
-}
-
 license {
     header rootProject.file('LICENSE')
     strictCheck true

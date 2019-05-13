@@ -39,7 +39,7 @@ public class LogParser {
   private static ActivityDatabaseRepository activityDatabase;
 
   /*  Being fancy with injects into static fields   */
-  private LogParser(@Autowired ActivityDatabaseRepository repository) {
+  public LogParser(@Autowired ActivityDatabaseRepository repository) {
     LogParser.activityDatabase = repository;
   }
 
