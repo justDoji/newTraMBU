@@ -23,26 +23,35 @@
  */
 package be.doji.productivity.trambu.infrastructure.transfer;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-import lombok.Data;
+import javax.persistence.Inheritance;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
 @Entity
-@Table(name = "ACTIVITY_TAG")
-public class ActivityTagData extends ActivityPropertyData {
-
-  public ActivityTagData(String value) {
-    super(value);
-  }
+@Inheritance
+@EqualsAndHashCode
+/* SO on JPA inherritance:
+https://stackoverflow.com/questions/27543771/best-way-of-handling-entities-inheritance-in-spring-data-jpa
+*/
+public abstract class ActivityPropertyData {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tag_seq")
-  @SequenceGenerator(name = "tag_seq", sequenceName = "SEQ_TAG")
-  private Long id;
+  @GeneratedValue
+  protected Long id;
 
+  @Column(name = "VALUE") @Getter @Setter protected String value;
+
+  @ManyToOne
+  @JoinColumn(name = "FK_ACTIVITY_ID")
+  @Getter @Setter
+  protected ActivityData activity;
+
+  public ActivityPropertyData(String value) {this.value = value;}
 }

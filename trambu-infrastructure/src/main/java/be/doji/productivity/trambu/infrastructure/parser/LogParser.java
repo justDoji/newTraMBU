@@ -36,32 +36,32 @@ import org.springframework.stereotype.Service;
 public class LogParser {
 
 
-  private static ActivityDatabaseRepository activityDatabase;
+  private ActivityDatabaseRepository activityDatabase;
 
   /*  Being fancy with injects into static fields   */
   public LogParser(@Autowired ActivityDatabaseRepository repository) {
-    LogParser.activityDatabase = repository;
+    this.activityDatabase = repository;
   }
 
-  public static LogPointData parse(String line) {
+  public LogPointData parse(String line) {
     return new LogConverter(line)
-        .conversionStep(LogParser::parseStart, LogPointData::setStart)
-        .conversionStep(LogParser::parseEnd, LogPointData::setEnd)
-        .conversionStep(LogParser::parseActivity, LogPointData::setActivity)
+        .conversionStep(this::parseStart, LogPointData::setStart)
+        .conversionStep(this::parseEnd, LogPointData::setEnd)
+        .conversionStep(this::parseActivity, LogPointData::setActivity)
         .getConvertedData();
   }
 
-  private static String parseStart(String logline) {
+  private String parseStart(String logline) {
     Optional<String> match = ParserUtils.findFirstMatch(Regex.LOGPOINT_START, logline);
     return ParserUtils.replaceFirst(Indicator.LOGPOINT_START, match.orElse(""), "").trim();
   }
 
-  private static String parseEnd(String logline) {
+  private String parseEnd(String logline) {
     Optional<String> match = ParserUtils.findFirstMatch(Regex.LOGPOINT_END, logline);
     return ParserUtils.replaceFirst(Indicator.LOGPOINT_END, match.orElse(""), "").trim();
   }
 
-  private static ActivityData parseActivity(String logline) {
+  private ActivityData parseActivity(String logline) {
     Optional<String> match = ParserUtils.findFirstMatch(Regex.LOGPOINT_ACTIVITY, logline);
     if (match.isPresent()) {
       String trimmedMatch = ParserUtils.replaceFirst(Indicator.LOGPOINT_ACTIVITY, match.get(), "")
@@ -73,7 +73,7 @@ public class LogParser {
     return null;
   }
 
-  private static class LogConverter extends Converter<String, LogPointData> {
+  private class LogConverter extends Converter<String, LogPointData> {
 
     LogConverter(String source) {
       super(source, LogPointData.class);

@@ -57,19 +57,20 @@ public class LogParserTest {
     ActivityData activityData = new ActivityData();
     activityData.setId(123L);
     activityData.setTitle("Some kind of title");
-    when(activityRepositoryMock.findById(activityData.getId())).thenReturn(Optional.of(activityData));
+    when(activityRepositoryMock.findById(activityData.getId()))
+        .thenReturn(Optional.of(activityData));
   }
 
   @Test
   public void parse_startDate() {
-    LogPointData parsedLog = LogParser.parse(TIMELOG_ENTRY);
+    LogPointData parsedLog = logParser.parse(TIMELOG_ENTRY);
     Assertions.assertThat(parsedLog).isNotNull();
     Assertions.assertThat(parsedLog.getStart()).isEqualTo("2018-12-05:18:48:33.130");
   }
 
   @Test
   public void parse_endDate() {
-    LogPointData parsedLog = LogParser.parse(TIMELOG_ENTRY);
+    LogPointData parsedLog = logParser.parse(TIMELOG_ENTRY);
     Assertions.assertThat(parsedLog).isNotNull();
     Assertions.assertThat(parsedLog.getEnd()).isNotNull();
     Assertions.assertThat(parsedLog.getEnd()).isEqualTo("2018-12-05:18:48:36.021");
@@ -77,7 +78,7 @@ public class LogParserTest {
 
   @Test
   public void parse_endDate_noEnd() {
-    LogPointData parsedLog = LogParser.parse(TIMELOG_ENTRY_NO_END);
+    LogPointData parsedLog = logParser.parse(TIMELOG_ENTRY_NO_END);
     Assertions.assertThat(parsedLog).isNotNull();
     Assertions.assertThat(parsedLog.getStart()).isEqualTo("2018-12-05:18:48:33.130");
     Assertions.assertThat(parsedLog.getEnd()).isEmpty();
@@ -85,7 +86,7 @@ public class LogParserTest {
 
   @Test
   public void parse_activity() {
-    LogPointData parsedLog = LogParser.parse(TIMELOG_ENTRY_WITH_ACTIVITY);
+    LogPointData parsedLog = logParser.parse(TIMELOG_ENTRY_WITH_ACTIVITY);
     Assertions.assertThat(parsedLog).isNotNull();
     Assertions.assertThat(parsedLog.getActivity()).isNotNull();
     Assertions.assertThat(parsedLog.getActivity().getTitle()).isEqualTo("Some kind of title");
