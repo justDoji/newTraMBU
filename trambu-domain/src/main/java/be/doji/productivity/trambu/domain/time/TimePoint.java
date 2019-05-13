@@ -53,6 +53,9 @@ public class TimePoint {
   private static final String EXTENDED_DATE_TIME_PATTERN = "dd/MM/uuuu HH:mm:ss:SSS";
   private static final String EXTENDED_DATE_TIME_REGEX = "\\d\\d/\\d\\d/\\d\\d\\d\\d \\d\\d:\\d\\d:\\d\\d:\\d\\d\\d";
 
+  private static final String LEGACY_DATE_TIME_PATTERN = "uuuu-MM-dd:HH:mm:ss.SSS";
+  private static final String LEGACY_DATE_TIME_REGEX = "\\d\\d\\d\\d-\\d\\d-\\d\\d:\\d\\d:\\d\\d:\\d\\d.\\d\\d\\d";
+
   private static final Map<Pattern, DateTimeFormatter> DATE_CONVERTERS = createDateConverters();
   private static final Map<Pattern, DateTimeFormatter> DATE_TIME_CONVERTERS = createDateTimeConverters();
 
@@ -78,6 +81,8 @@ public class TimePoint {
         DateTimeFormatter.ofPattern(BASIC_DATE_TIME_PATTERN, Locale.FRANCE));
     converters.put(Pattern.compile(EXTENDED_DATE_TIME_REGEX),
         DateTimeFormatter.ofPattern(EXTENDED_DATE_TIME_PATTERN, Locale.FRANCE));
+    converters.put(Pattern.compile(LEGACY_DATE_TIME_REGEX),
+        DateTimeFormatter.ofPattern(LEGACY_DATE_TIME_PATTERN, Locale.FRANCE));
 
     return converters;
   }

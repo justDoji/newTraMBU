@@ -23,7 +23,12 @@
  */
 package be.doji.productivity.trambu.infrastructure.repository;
 
+import static org.assertj.core.api.Java6Assertions.assertThat;
+
 import be.doji.productivity.trambu.infrastructure.transfer.ActivityData;
+import be.doji.productivity.trambu.infrastructure.transfer.ActivityTagData;
+import java.util.ArrayList;
+import java.util.List;
 import javax.sql.DataSource;
 import org.assertj.core.api.Assertions;
 import org.junit.After;
@@ -61,6 +66,28 @@ public class ActivityDatabaseRepositoryTest {
     ActivityData savedActivity = repository.findById(saved.getId()).get();
     Assertions.assertThat(savedActivity.getTitle()).isEqualTo("Save me");
     Assertions.assertThat(savedActivity.isCompleted()).isTrue();
+  }
+
+  @Test
+  public void addActivity_withTags() {
+    ActivityData activityData = new ActivityData();
+
+    List<ActivityTagData> tagList = new ArrayList<>();
+    tagList.add(new ActivityTagData("TestTag", activityData));
+    tagList.add(new ActivityTagData("TestTagTwo", activityData));
+
+    activityData.setTitle("Save me");
+    activityData.setCompleted(true);
+    activityData.setTags(tagList);
+
+    assertThat(repository.findAll()).isEmpty();
+
+    repository.save(activityData);
+
+    assertThat(repository.findAll()).hasSize(1);
+    assertThat(repository.findAll().get(0).getTitle()).isEqualTo("Save me");
+    assertThat(repository.findAll().get(0).getTags()).isNotEmpty();
+    assertThat(repository.findAll().get(0).getTags()).hasSize(2);
   }
 
   @After

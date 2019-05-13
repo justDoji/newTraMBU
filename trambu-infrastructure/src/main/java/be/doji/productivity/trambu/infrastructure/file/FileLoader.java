@@ -21,45 +21,44 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package be.doji.productivity.trambu.front.view;
+package be.doji.productivity.trambu.infrastructure.file;
 
-import be.doji.productivity.trambu.front.elements.ActivityModel;
+import be.doji.productivity.trambu.infrastructure.parser.ActivityParser;
 import be.doji.productivity.trambu.infrastructure.repository.ActivityDatabaseRepository;
 import be.doji.productivity.trambu.infrastructure.transfer.ActivityData;
-import be.doji.productivity.trambu.infrastructure.transfer.ActivityProjectData;
-import be.doji.productivity.trambu.infrastructure.transfer.ActivityTagData;
-import java.util.ArrayList;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
-import java.util.stream.Collectors;
-import javax.annotation.PostConstruct;
-import javax.inject.Named;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.context.annotation.SessionScope;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
-@SessionScope
-@Named
-public class ActivityOverview {
+@Service
+public class FileLoader {
 
-  @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
-  @Autowired ActivityDatabaseRepository repository;
+  private final String logFileLocation;
+  private final String todoFileLocation;
+  private final ActivityDatabaseRepository activityDatabaseRepository;
 
-  private List<ActivityModel> model;
+  public FileLoader(@Value("${trambu.file.log}") String logFileLocation,
+      @Value("${trambu.file.todo}") String todoFileLocation,
+      @Autowired ActivityDatabaseRepository activityDatabaseRepository) {
+    this.activityDatabaseRepository = activityDatabaseRepository;
+    this.logFileLocation = logFileLocation;
+    this.todoFileLocation = todoFileLocation;
+  }
 
-  @PostConstruct
-  public void init() {
-    if (this.model == null) {
-      this.model = repository.findAll().stream()
-          .map(db -> new ActivityModel(db.toDomainObject(), db.getId()))
-          .collect(Collectors.toList());
+  public void loadFileContents() throws IOException {
+    loadTodoFileContents();
+  }
+
+  private void loadTodoFileContents() throws IOException {
+    List<String> todoFileLines = Files.readAllLines(Paths.get(todoFileLocation));
+    for (String line : todoFileLines) {
+      ActivityData parsedActivity = ActivityParser.parse(line);
+      activityDatabaseRepository.save(parsedActivity);
     }
-  }
-
-  public List<ActivityModel> getActivities() {
-    return this.model;
-  }
-
-  public List<String> getTagsForActivity(ActivityModel activityModel) {
-    return activityModel.getTags();
   }
 
 }

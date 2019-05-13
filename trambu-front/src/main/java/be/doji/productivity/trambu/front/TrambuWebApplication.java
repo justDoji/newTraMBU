@@ -24,16 +24,30 @@
 package be.doji.productivity.trambu.front;
 
 import be.doji.productivity.trambu.infrastructure.TrambuInfrastructureAutoConfiguration;
+import be.doji.productivity.trambu.infrastructure.file.FileLoader;
+import java.io.IOException;
+import javax.annotation.PostConstruct;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.PropertySource;
 
 @SpringBootApplication
+@PropertySource(value = {"classpath:application.properties"})
 @ImportAutoConfiguration({TrambuInfrastructureAutoConfiguration.class})
 public class TrambuWebApplication {
 
   public static void main(String[] args) {
     SpringApplication.run(TrambuWebApplication.class, args);
+  }
+
+  @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection") @Autowired
+  private FileLoader fileLoader;
+
+  @PostConstruct
+  public void loadFileData() throws IOException {
+    fileLoader.loadFileContents();
   }
 
 }

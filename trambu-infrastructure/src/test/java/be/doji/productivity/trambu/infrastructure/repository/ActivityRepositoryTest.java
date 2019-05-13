@@ -29,6 +29,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import be.doji.productivity.trambu.domain.activity.Activity;
 import be.doji.productivity.trambu.domain.activity.Importance;
 import be.doji.productivity.trambu.domain.time.TimePoint;
+import java.util.ArrayList;
 import java.util.List;
 import org.junit.After;
 import org.junit.Test;
@@ -66,6 +67,28 @@ public class ActivityRepositoryTest {
     repository.save(activityToSave);
 
     assertThat(repository.getAll()).hasSize(1);
+  }
+
+  @Test
+  public void addActivity_withTags() {
+    List<String> tagList = new ArrayList<>();
+    tagList.add("TestTag");
+    tagList.add("TestTagTwo");
+    Activity activityToSave = Activity.builder()
+        .title("Implement infrastructure layer")
+        .plannedStartAt(TimePoint.fromString("05/05/2019 10:00:00"))
+        .plannedEndAt(TimePoint.fromString("12/05/2019 18:00:00"))
+        .importance(Importance.NORMAL)
+        .tags(tagList)
+        .build();
+    assertThat(repository.getAll()).isEmpty();
+
+    repository.save(activityToSave);
+
+    assertThat(repository.getAll()).hasSize(1);
+    assertThat(repository.getAll().get(0).getTitle()).isEqualTo("Implement infrastructure layer");
+    assertThat(repository.getAll().get(0).getTags()).isNotEmpty();
+    assertThat(repository.getAll().get(0).getTags()).hasSize(2);
   }
 
   @After

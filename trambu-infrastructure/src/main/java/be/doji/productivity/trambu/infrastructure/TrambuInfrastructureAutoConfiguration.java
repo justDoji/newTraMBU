@@ -56,5 +56,4 @@ public class TrambuInfrastructureAutoConfiguration {
     log.info("Configuring AuthTokenService");
     return new ActivityRepository();
   }
-
 }

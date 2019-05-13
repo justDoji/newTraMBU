@@ -27,6 +27,7 @@ import be.doji.productivity.trambu.domain.activity.Activity;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -36,6 +37,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import lombok.Data;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.annotations.Type;
 
 @Data
@@ -58,11 +61,29 @@ public class ActivityData {
   @Column(name = "DEADLINE")
   private String deadline;
 
-  @OneToMany(targetEntity = ActivityTagData.class, mappedBy = "activity")
+  @OneToMany(targetEntity = ActivityTagData.class, mappedBy = "activity", cascade = {
+      CascadeType.ALL})
+  @LazyCollection(LazyCollectionOption.FALSE)
   private List<ActivityTagData> tags = new ArrayList<>();
 
-  @OneToMany(targetEntity = ActivityProjectData.class, mappedBy = "activity")
+  public void setTags(List<ActivityTagData> tagsToSet) {
+    for (ActivityTagData tag : tagsToSet) {
+      tag.setActivity(this);
+      this.tags.add(tag);
+    }
+  }
+
+  @OneToMany(targetEntity = ActivityProjectData.class, mappedBy = "activity", cascade = {
+      CascadeType.ALL})
+  @LazyCollection(LazyCollectionOption.FALSE)
   private List<ActivityProjectData> projects = new ArrayList<>();
+
+  public void setProjects(List<ActivityProjectData> projectsToSet) {
+    for (ActivityProjectData project : projectsToSet) {
+      project.setActivity(this);
+      this.projects.add(project);
+    }
+  }
 
   public Long getId() {
     return id;

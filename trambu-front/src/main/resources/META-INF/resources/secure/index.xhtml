@@ -52,54 +52,54 @@
                               status="status"
                               rendered="true">
                         <div class="activity" id="activity_#{activity.frontId}">
-                                <div class="activity-header">
-                                    <div class="activity-item">
-                                        <b:commandLink id="input"
-                                                       value="#{activity.completed ?'Done' :'Todo'}"
-                                                       glyphicon="#{activity.completed ?'glyphicon glyphicon-check' :'glyphicon glyphicon-unchecked'}"
-                                                       styleClass="btn #{activity.completed ?'btn-primary' :'btn-warning'}"
-                                                       ajaxDisableLinkOnRequest="true"
-                                                       ajaxShowWaitingDotsOnRequest="true"
-                                                       ajaxHideGlyphiconOnRequest="false"
-                                                       ajaxDisableRenderRegionsOnRequest="true"
-                                                       ajaxProcessingGlyphicon="fa fa-refresh fa-spin"
-                                                       action="#{activity.toggleCompleted}"
-                                                       rendered="true">
-                                            <f:ajax execute="@this" render="formId:repeat"/>
-                                        </b:commandLink>
-                                    </div>
-                                    <div class="activity-item">
-                                        <b>#{activity.title}</b>
-                                    </div>
-                                    <div class="align-clear">
-                                    </div>
+                            <div class="activity-header">
+                                <div class="activity-item">
+                                    <b:commandLink id="input"
+                                                   value="#{activity.completed ?'Done' :'Todo'}"
+                                                   glyphicon="#{activity.completed ?'glyphicon glyphicon-check' :'glyphicon glyphicon-unchecked'}"
+                                                   styleClass="btn #{activity.completed ?'btn-primary' :'btn-warning'}"
+                                                   ajaxDisableLinkOnRequest="true"
+                                                   ajaxShowWaitingDotsOnRequest="true"
+                                                   ajaxHideGlyphiconOnRequest="false"
+                                                   ajaxDisableRenderRegionsOnRequest="true"
+                                                   ajaxProcessingGlyphicon="fa fa-refresh fa-spin"
+                                                   action="#{activity.toggleCompleted}"
+                                                   rendered="true">
+                                        <f:ajax execute="@this" render="formId:repeat"/>
+                                    </b:commandLink>
+                                </div>
+                                <div class="activity-item">
+                                    <b>#{activity.title}</b>
+                                </div>
+                                <div class="align-clear">
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="activity-content">
+                                Deadline: #{activity.deadline}
+                                <hr/>
+                                <div class="activity-tags">
+                                    tags:
+                                    <ui:repeat value="#{activity.tags}"
+                                              var="value"
+                                              varStatus="status"
+                                              rendered="true">
+
+                                        <button type="button" class="btn btn-outline-secondary">#{activity.tags[status.index]}</button>
+                                    </ui:repeat>
                                 </div>
                                 <br/>
-                                <div class="activity-content">
-                                    Deadline: #{activity.deadline}
-                                    <hr />
-                                    <div class="activity-tags">
-                                    tags:
-                                    <b:repeat value="#{activity.tags}"
-                                              var="tag"
-                                              status="status"
-                                              rendered="true">
-                                        <button type="button" class="btn btn-outline-secondary">#{tag}</button>
-                                    </b:repeat>
-                                    </div>
-                                    <br />
-                                    <div class="activity-projects">
+                                <div class="activity-projects">
                                     projects:
-                                    <b:repeat value="#{activity.projects}"
+                                    <ui:repeat value="#{activity.projects}"
                                               var="project"
-                                              status="status"
+                                              varStatus="status"
                                               rendered="true">
-                                        <button type="button" class="btn btn-outline-success">#{project}</button>
-                                    </b:repeat>
-                                    </div>
+                                        <button type="button" class="btn btn-outline-success">#{activity.projects[status.index]}</button>
+                                    </ui:repeat>
                                 </div>
+                            </div>
                         </div>
-
                     </b:repeat>
                 </h:panelGroup>
             </h:form>

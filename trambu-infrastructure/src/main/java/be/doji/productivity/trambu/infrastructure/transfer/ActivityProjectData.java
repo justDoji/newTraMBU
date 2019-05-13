@@ -41,6 +41,13 @@ import lombok.Setter;
 @Table(name = "ACTIVITY_PROJECT")
 public class ActivityProjectData {
 
+  private ActivityProjectData() {}
+
+  public ActivityProjectData(String value, ActivityData parent) {
+    this.value = value;
+    this.activity = parent;
+  }
+
   public ActivityProjectData(String value) {
     this.value = value;
   }

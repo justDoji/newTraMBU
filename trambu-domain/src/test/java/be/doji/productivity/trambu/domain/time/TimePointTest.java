@@ -214,6 +214,15 @@ public class TimePointTest {
   }
 
   @Test
+  public void fromString_legacyNotation() {
+    String timeString = "2018-12-05:00:00:00.000";
+    TimePoint date = TimePoint.fromString(timeString);
+    TimePoint day2 = TimePoint.fromString("05/12/2018 00:00:00");
+    Assert.assertTrue(TimePoint.isSameDate(date, day2));
+
+  }
+
+  @Test
   public void now_isToday() {
     assertThat(TimePoint.now().toLocalDateTime()).isEqualTo(NOW);
   }
