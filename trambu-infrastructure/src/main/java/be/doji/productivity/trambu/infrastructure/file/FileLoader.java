@@ -20,7 +20,9 @@
  */
 package be.doji.productivity.trambu.infrastructure.file;
 
+import be.doji.productivity.trambu.domain.activity.Activity;
 import be.doji.productivity.trambu.infrastructure.converter.ActivityConverter;
+import be.doji.productivity.trambu.infrastructure.converter.ActivityDataConverter;
 import be.doji.productivity.trambu.infrastructure.repository.ActivityDatabaseRepository;
 import be.doji.productivity.trambu.infrastructure.transfer.ActivityData;
 import java.io.File;
@@ -53,8 +55,9 @@ public class FileLoader {
   private void loadTodoFileActivities(Path path) throws IOException {
     List<String> todoFileLines = Files.readAllLines(path);
     for (String line : todoFileLines) {
-      ActivityData parsedActivity = ActivityConverter.parse(line);
-      activityDatabaseRepository.save(parsedActivity);
+      Activity parsedActivity = ActivityConverter.parse(line);
+      ActivityData convertedActivityData = ActivityDataConverter.parse(parsedActivity);
+      activityDatabaseRepository.save(convertedActivityData);
     }
   }
 

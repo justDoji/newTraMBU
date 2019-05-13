@@ -53,7 +53,7 @@ public class TimePoint {
   private static final String EXTENDED_DATE_TIME_PATTERN = "dd/MM/uuuu HH:mm:ss:SSS";
   private static final String EXTENDED_DATE_TIME_REGEX = "\\d\\d/\\d\\d/\\d\\d\\d\\d \\d\\d:\\d\\d:\\d\\d:\\d\\d\\d";
 
-  private static final String LEGACY_DATE_TIME_PATTERN = "uuuu-MM-dd:HH:mm:ss.SSS";
+  public static final String LEGACY_DATE_TIME_PATTERN = "uuuu-MM-dd:HH:mm:ss.SSS";
   private static final String LEGACY_DATE_TIME_REGEX = "\\d\\d\\d\\d-\\d\\d-\\d\\d:\\d\\d:\\d\\d:\\d\\d.\\d\\d\\d";
 
   private static final Map<Pattern, DateTimeFormatter> DATE_CONVERTERS = createDateConverters();
