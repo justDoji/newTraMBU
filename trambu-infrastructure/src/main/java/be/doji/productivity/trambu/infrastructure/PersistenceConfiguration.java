@@ -28,6 +28,8 @@ import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
 import org.hibernate.jpa.HibernatePersistenceProvider;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
@@ -72,11 +74,11 @@ public class PersistenceConfiguration {
   @Value("${entitymanager.packagesToScan}")
   private String packagesToScan;
 
-  @Value("${hibernate.maxFetchDepth}")
+  @Value("${hibernate.jdbc.batch_size}")
   private String jdbcBatchSize;
-  @Value("${hibernate.fetch.size}")
+  @Value("${hibernate.jdbc.fetch_size}")
   private String jdbcFetchSize;
-  @Value("${hibernate.maxFetchDepth}")
+  @Value("${hibernate.max_fetch_depth}")
   private String maxFetchDepth;
 
   private static final String PROPERTY_NAME_HIBERNATE_MAX_FETCH_DEPTH = "hibernate.max_fetch_depth";
@@ -84,8 +86,15 @@ public class PersistenceConfiguration {
   private static final String PROPERTY_NAME_HIBERNATE_JDBC_BATCH_SIZE = "hibernate.jdbc.batch_size";
   private static final String PROPERTY_NAME_HIBERNATE_SHOW_SQL = "hibernate.show_sql";
 
+  @Bean
+  public JpaTransactionManager transactionManager() {
+    JpaTransactionManager transactionManager = new JpaTransactionManager();
+    transactionManager.setDataSource(dataSource());
+    return transactionManager;
+  }
 
   @Bean
+  @ConditionalOnMissingBean(DataSource.class)
   public DataSource dataSource() {
     DriverManagerDataSource dataSource = new DriverManagerDataSource();
     dataSource.setDriverClassName(driver);
@@ -93,13 +102,6 @@ public class PersistenceConfiguration {
     dataSource.setUsername(username);
     dataSource.setPassword(password);
     return dataSource;
-  }
-
-  @Bean
-  public JpaTransactionManager transactionManager() {
-    JpaTransactionManager transactionManager = new JpaTransactionManager();
-    transactionManager.setDataSource(dataSource());
-    return transactionManager;
   }
 
   @Bean
@@ -120,6 +122,7 @@ public class PersistenceConfiguration {
 
     populator.addScript(getActivityDML());
     populator.addScript(getTagDML());
+    populator.addScript(getProjectDML());
 
     DatabasePopulatorUtils.execute(populator, dataSource());
   }
@@ -130,6 +133,10 @@ public class PersistenceConfiguration {
 
   private ClassPathResource getTagDML() {
     return new ClassPathResource("repository/DML_create_tag.sql");
+  }
+
+  private ClassPathResource getProjectDML() {
+    return new ClassPathResource("repository/DML_create_project.sql");
   }
 
   private HibernateJpaVendorAdapter vendorAdaptor() {

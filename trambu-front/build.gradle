@@ -1,43 +1,53 @@
 plugins {
+    id 'org.springframework.boot' version '2.1.4.RELEASE'
     id 'java'
     id 'jacoco'
     id "com.github.hierynomus.license"
-    id "io.spring.dependency-management" version "1.0.5.RELEASE"
 }
-
 apply plugin: 'java'
+apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 
-group = 'be.doji.productivity.trambu'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '1.8'
+
+group 'be.doji.productivity.trambu'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
 
 repositories {
     mavenCentral()
 }
 
-ext { springBootVersion = '2.1.4.RELEASE' }
+afterEvaluate { project ->
+    project.tasks.bootJar {
+        onlyIf {
+            println 'Skipping...'
+            return false
+        }
+    }
+}
 
 dependencies {
     compile project(':trambu-domain')
+    compile project(':trambu-infrastructure')
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+
     implementation 'org.springframework.boot:spring-boot-starter'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
-    // https://mvnrepository.com/artifact/com.google.re2j/re2j
-    compile group: 'com.google.re2j', name: 're2j', version: '1.2'
+    // User Interface
+    compile 'org.joinfaces:butterfaces-spring-boot-starter:4.0.3'
+    compile group: 'org.butterfaces', name: 'butterfaces', version: '3.1.1', ext: 'pom'
+    implementation 'org.butterfaces:components:3.1.1'
+
+    //Lombok
+    compileOnly 'org.projectlombok:lombok:1.18.8'
+    annotationProcessor 'org.projectlombok:lombok:1.18.8'
 
     //Database
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation group: 'com.h2database', name: 'h2', version: '1.3.148'
     compile group: 'org.hibernate', name: 'hibernate-core', version: '5.4.2.Final'
-
-    compileOnly 'org.projectlombok:lombok:1.18.8'
-    annotationProcessor 'org.projectlombok:lombok:1.18.8'
-
-}
-
-dependencyManagement {
-    imports { mavenBom("org.springframework.boot:spring-boot-dependencies:${springBootVersion}") }
 }
 
 test.finalizedBy jacocoTestReport
@@ -61,11 +71,4 @@ jacocoTestReport {
 license {
     header rootProject.file('LICENSE')
     strictCheck true
-}
-
-build {
-    doFirst {
-        licenseFormatTest
-        licenseFormatMain
-    }
 }

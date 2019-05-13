@@ -50,9 +50,6 @@ public class TrambuInfrastructureAutoConfiguration {
     log.info("Created");
   }
 
-  /**
-   * Configures AuthTokenService if missing
-   */
   @Bean
   @ConditionalOnMissingBean(ActivityRepository.class)
   public ActivityRepository activityRepository() {

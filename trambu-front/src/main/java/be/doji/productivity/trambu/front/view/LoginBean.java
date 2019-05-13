@@ -21,16 +21,43 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package be.doji.productivity.trambu.infrastructure.repository;
+package be.doji.productivity.trambu.front.view;
 
-import be.doji.productivity.trambu.infrastructure.transfer.ActivityData;
-import java.util.List;
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Repository;
+import be.doji.productivity.trambu.front.security.Identity;
+import javax.inject.Inject;
+import javax.inject.Named;
+import org.springframework.web.context.annotation.RequestScope;
 
-@Repository
-public interface ActivityDatabaseRepository extends CrudRepository<ActivityData, Long> {
+/**
+ * CDI backing bean holding login credentials and delegating to session scoped spring bean.
+ */
+@Named
+@RequestScope
+public class LoginBean {
 
-  List<ActivityData> findAll();
+  @Inject
+  private Identity identity;
 
+  private String userName = "admin";
+  private String password = "admin";
+
+  public String login() {
+    return identity.login(userName, password);
+  }
+
+  public String getUserName() {
+    return userName;
+  }
+
+  public void setUserName(String userName) {
+    this.userName = userName;
+  }
+
+  public String getPassword() {
+    return password;
+  }
+
+  public void setPassword(String password) {
+    this.password = password;
+  }
 }

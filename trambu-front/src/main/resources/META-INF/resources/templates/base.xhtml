@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    MIT License
+
+    Copyright (c) 2019 Stijn Dejongh
+
+    Permission is hereby granted, free of charge, to any person obtaining a copy
+    of this software and associated documentation files (the "Software"), to deal
+    in the Software without restriction, including without limitation the rights
+    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    copies of the Software, and to permit persons to whom the Software is
+    furnished to do so, subject to the following conditions:
+
+    The above copyright notice and this permission notice shall be included in all
+    copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    SOFTWARE.
+
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <title>TraMBU: activity and time tracking</title>
+    <meta http-equiv="Content-Type" content="application/xhtml+xml;charset=utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="description"
+          content="TraMBU is a Java powered time-management tool, that allows users to track their activities using open formats to represent data."/>
+    <meta name="keywords"
+          content=""/>
+    <meta name="author" content="Stijn Dejongh"/>
+    <meta name="robots" content="index, follow"/>
+    <meta name="revisit-after" content="7 days"/>
+    <meta name="DISTRIBUTION" content="GLOBAL"/>
+    <meta http-equiv="PRAGMA" content="NO-CACHE"/>
+    <meta http-equiv="Expires" content="604800"/>
+    <link rel="shortcut icon" type="image/x-icon" href="#{request.contextPath}/images/favicon.png"/>
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet"/>
+    <link href="../css/main.css" rel="stylesheet" />
+</h:head>
+
+<h:body styleClass="body">
+
+    <f:view>
+
+        <div class="header">
+            <div class="container">
+                <img src="#{request.contextPath}/images/logo_color.png" class="logo" alt="TraMBU Logo"/>
+                <h2>TraMBU
+                    <span class="divider">|</span> <small>Your vehicle to easier task and time management</small>
+                </h2>
+
+                <p>
+                    Demo version of <b>Track My Bitch Up v2.0</b>.
+                </p>
+
+                <div class="socialNetwork">
+
+                    <div class="github">
+                        <!-- Place this tag where you want the button to render. -->
+                        <a class="github-button" href="https://github.com/justDoji/newTraMBU" data-icon="octicon-star" data-count-href="/justDoji/newTraMBU" data-count-api="/repos/justDoji#newTraMBU" data-count-aria-label="# trackers on GitHub" aria-label="TraMBU on GitHub">Star</a>
+                        <!-- Place this tag right after the last button or just before your close body tag. -->
+                        <script id="github-bjs" src="https://buttons.github.io/buttons.js"></script>
+                    </div>
+                </div>
+
+                <ui:insert name="logout"/>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="container">
+                <ui:insert name="content"/>
+            </div>
+        </div>
+
+        <div class="container">
+        <hr />
+            <div class="footer">
+                <div class="versionInformation">
+                    <strong>TraMBU 2.0.0 - SNAPSHOT </strong> - Powered by <a href="http://www.butterfaces.org/">Butterfaces</a><br/>
+                </div>
+                <div class="footer-links">
+                    <div class="butterfaces-links">
+                        <div class="footer-link"><a href="http://www.doji.be" target="_blank">Personal Website</a></div>
+                        <div class="footer-link"><a href="https://github.com/justDoji/newTraMBU" target="_blank">Project Source</a></div>
+                        <div class="footer-link"><a href="http://opensource.org/licenses/MIT" target="_blank">License</a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </f:view>
+</h:body>
+</html>

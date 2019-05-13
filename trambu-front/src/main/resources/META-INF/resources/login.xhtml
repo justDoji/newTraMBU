@@ -1,0 +1,56 @@
+<!--
+
+    MIT License
+
+    Copyright (c) 2019 Stijn Dejongh
+
+    Permission is hereby granted, free of charge, to any person obtaining a copy
+    of this software and associated documentation files (the "Software"), to deal
+    in the Software without restriction, including without limitation the rights
+    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    copies of the Software, and to permit persons to whom the Software is
+    furnished to do so, subject to the following conditions:
+
+    The above copyright notice and this permission notice shall be included in all
+    copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    SOFTWARE.
+
+-->
+<ui:composition template="/templates/base.xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:b="http://butterfaces.org/components"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:define name="content">
+        <h:form>
+            <div class="align-row">
+                <div class="align-item"  style="width: 75%;">
+                    <b:text label="login"
+                            value="#{loginBean.userName}"
+                            autoFocus="true">
+                    </b:text>
+                    <b:secret label="password"
+                              value="#{loginBean.password}">
+                    </b:secret>
+                </div>
+                <div class="align-item" style="background-color: #FFF;">
+                    <b:commandLink value="login"
+                                   action="#{loginBean.login}"
+                                   styleClass="btn btn-primary"
+                                   glyphicon="fa fa-sign-in">
+                        <f:ajax execute="@form" render="@form"/>
+                        <b:defaultAction/>
+                    </b:commandLink>
+                </div>
+                <div class='align-clear'></div>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>
