@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package be.doji.productivity.trambu.infrastructure.parser;
+package be.doji.productivity.trambu.infrastructure.converter;
 
 import com.google.re2j.Matcher;
 import com.google.re2j.Pattern;

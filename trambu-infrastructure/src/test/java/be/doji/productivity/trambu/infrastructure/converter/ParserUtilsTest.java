@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package be.doji.productivity.trambu.infrastructure.parser;
+package be.doji.productivity.trambu.infrastructure.converter;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -42,7 +42,8 @@ public class ParserUtilsTest {
   @Test
   public void parserUtils_privateConstructor()
       throws NoSuchMethodException, ClassNotFoundException {
-    Class<?> aClass = Class.forName("be.doji.productivity.trambu.infrastructure.parser.ParserUtils");
+    Class<?> aClass = Class.forName(
+        "be.doji.productivity.trambu.infrastructure.converter.ParserUtils");
     Constructor<?> c = aClass.getDeclaredConstructor();
     c.setAccessible(true);
 

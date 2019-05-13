@@ -21,44 +21,43 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package be.doji.productivity.trambu.infrastructure.parser;
+package be.doji.productivity.trambu.infrastructure.converter;
 
-import be.doji.productivity.trambu.infrastructure.parser.Property.Indicator;
-import be.doji.productivity.trambu.infrastructure.parser.Property.Regex;
+import be.doji.productivity.trambu.domain.activity.Activity;
+import be.doji.productivity.trambu.infrastructure.converter.Property.Indicator;
+import be.doji.productivity.trambu.infrastructure.converter.Property.Regex;
 import be.doji.productivity.trambu.infrastructure.transfer.ActivityData;
-import be.doji.productivity.trambu.infrastructure.transfer.ActivityProjectData;
-import be.doji.productivity.trambu.infrastructure.transfer.ActivityTagData;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.apache.commons.lang3.StringUtils;
 
-public final class ActivityParser {
+public final class ActivityConverter {
 
   private static final String DEFAULT_TITLE = "Unnamed activity";
 
   /* Utility classes should not have a public or default constructor */
-  private ActivityParser() {
+  private ActivityConverter() {
   }
 
-  public static ActivityData parse(String line) {
+  private static class ActivityDataInnerConverter extends Converter<String, Activity> {
+    ActivityDataInnerConverter(String source) {
+      super(source, Activity.class);
+    }
+  }
+
+  public static Activity parse(String line) {
     if (StringUtils.isBlank(line)) {
       throw new IllegalArgumentException(
           "Failure during parsing: empty String or null value not allowed");
     }
 
-    return new ActivityDataConverter(line)
-        .conversionStep(ActivityParser::parseCompleted, ActivityData::setCompleted)
-        .conversionStep(ActivityParser::parseTitle, ActivityData::setTitle)
-        .conversionStep(ActivityParser::parseDeadline, ActivityData::setDeadline)
-        .conversionStep(ActivityParser::parseTags, ActivityData::setTags)
-        .conversionStep(ActivityParser::parseProjects, ActivityData::setProjects)
+    return new ActivityDataInnerConverter(line)
+        .conversionStep(ActivityConverter::parseCompleted, Activity::setCompleted)
+        .conversionStep(ActivityConverter::parseTitle, Activity::setTitle)
+        .conversionStep(ActivityConverter::parseDeadline, Activity::setDeadline)
+        .conversionStep(ActivityConverter::parseTags, Activity::setTags)
+        .conversionStep(ActivityConverter::parseProjects, Activity::setProjects)
         .getConvertedData();
-  }
-
-  private static class ActivityDataConverter extends Converter<String, ActivityData> {
-    ActivityDataConverter(String source) {
-      super(source, ActivityData.class);
-    }
   }
 
   private static boolean parseCompleted(String line) {
@@ -74,27 +73,33 @@ public final class ActivityParser {
     return findAndStripIndicators(Indicator.DEADLINE, Regex.DEADLINE, line);
   }
 
-  private static List<ActivityTagData> parseTags(String line) {
+  private static List<String> parseTags(String line) {
     List<String> tagMatches = ParserUtils.findAllMatches(Regex.TAG, line);
 
     return tagMatches.stream()
-        .map(ActivityParser::stripIndicators)
+        .map(ActivityConverter::stripIndicators)
         .map(tag -> ParserUtils.replaceFirst(Indicator.TAG, tag, ""))
         .map(String::trim)
-        .map(ActivityTagData::new)
         .collect(Collectors.toList());
   }
 
-  private static List<ActivityProjectData> parseProjects(String line) {
+  private static List<String> parseProjects(String line) {
     List<String> projectMatches = ParserUtils.findAllMatches(Regex.PROJECT, line);
 
     return projectMatches.stream()
-        .map(ActivityParser::stripIndicators)
+        .map(ActivityConverter::stripIndicators)
         .map(project -> ParserUtils.replaceFirst(regexEscape(Indicator.PROJECT), project, ""))
         .map(String::trim)
-        .map(ActivityProjectData::new)
         .collect(Collectors.toList());
   }
+
+
+  public String toString(ActivityData activityToWrite) {
+
+    return "";
+  }
+
+  /* UTILITY METHODS */
 
   private static String stripIndicators(String toStrip) {
     String strippedMatch = ParserUtils
@@ -118,4 +123,5 @@ public final class ActivityParser {
   private static String regexEscape(String toEscape) {
     return "\\" + toEscape;
   }
+
 }

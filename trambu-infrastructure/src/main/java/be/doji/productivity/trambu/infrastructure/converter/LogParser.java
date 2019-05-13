@@ -21,10 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package be.doji.productivity.trambu.infrastructure.parser;
+package be.doji.productivity.trambu.infrastructure.converter;
 
-import be.doji.productivity.trambu.infrastructure.parser.Property.Indicator;
-import be.doji.productivity.trambu.infrastructure.parser.Property.Regex;
+import be.doji.productivity.trambu.infrastructure.converter.Property.Indicator;
+import be.doji.productivity.trambu.infrastructure.converter.Property.Regex;
 import be.doji.productivity.trambu.infrastructure.repository.ActivityDatabaseRepository;
 import be.doji.productivity.trambu.infrastructure.transfer.ActivityData;
 import be.doji.productivity.trambu.infrastructure.transfer.LogPointData;

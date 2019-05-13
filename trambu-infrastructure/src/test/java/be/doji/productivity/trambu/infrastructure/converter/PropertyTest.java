@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package be.doji.productivity.trambu.infrastructure.parser;
+package be.doji.productivity.trambu.infrastructure.converter;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -33,7 +33,7 @@ public class PropertyTest {
   @Test
   public void property_privateConstructor()
       throws NoSuchMethodException, ClassNotFoundException {
-    Class<?> aClass = Class.forName("be.doji.productivity.trambu.infrastructure.parser.Property");
+    Class<?> aClass = Class.forName("be.doji.productivity.trambu.infrastructure.converter.Property");
     Constructor<?> c = aClass.getDeclaredConstructor();
     c.setAccessible(true);
 
@@ -44,9 +44,9 @@ public class PropertyTest {
   public void regex_privateConstructor()
       throws NoSuchMethodException, ClassNotFoundException {
     Class<?> aClass = Class
-        .forName("be.doji.productivity.trambu.infrastructure.parser.Property$Regex");
+        .forName("be.doji.productivity.trambu.infrastructure.converter.Property$Regex");
     Constructor<?> c = aClass.getDeclaredConstructor(
-        Class.forName("be.doji.productivity.trambu.infrastructure.parser.Property"));
+        Class.forName("be.doji.productivity.trambu.infrastructure.converter.Property"));
     c.setAccessible(true);
 
     assertThatThrownBy(aClass::newInstance).isInstanceOf(InstantiationException.class);
@@ -56,9 +56,9 @@ public class PropertyTest {
   public void indicator_privateConstructor()
       throws NoSuchMethodException, ClassNotFoundException {
     Class<?> aClass = Class
-        .forName("be.doji.productivity.trambu.infrastructure.parser.Property$Indicator");
+        .forName("be.doji.productivity.trambu.infrastructure.converter.Property$Indicator");
     Constructor<?> c = aClass.getDeclaredConstructor(
-        Class.forName("be.doji.productivity.trambu.infrastructure.parser.Property"));
+        Class.forName("be.doji.productivity.trambu.infrastructure.converter.Property"));
     c.setAccessible(true);
 
     assertThatThrownBy(aClass::newInstance).isInstanceOf(InstantiationException.class);
