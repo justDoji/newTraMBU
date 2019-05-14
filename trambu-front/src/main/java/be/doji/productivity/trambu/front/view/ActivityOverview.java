@@ -208,21 +208,27 @@
 package be.doji.productivity.trambu.front.view;
 
 import be.doji.productivity.trambu.front.elements.ActivityModel;
+import be.doji.productivity.trambu.infrastructure.file.FileWriter;
 import be.doji.productivity.trambu.infrastructure.repository.ActivityDatabaseRepository;
-import be.doji.productivity.trambu.infrastructure.transfer.ActivityData;
-import be.doji.productivity.trambu.infrastructure.transfer.ActivityProjectData;
-import be.doji.productivity.trambu.infrastructure.transfer.ActivityTagData;
-import java.util.ArrayList;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
 import javax.inject.Named;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.context.annotation.SessionScope;
 
 @SessionScope
 @Named
 public class ActivityOverview {
+
+  @Value("${trambu.file.todo}")
+  private String todoFileLocation;
+
+  @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
+  @Autowired FileWriter writer;
 
   @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
   @Autowired ActivityDatabaseRepository repository;
@@ -242,8 +248,19 @@ public class ActivityOverview {
     return this.model;
   }
 
-  public List<String> getTagsForActivity(ActivityModel activityModel) {
-    return activityModel.getTags();
+  public void toggleEditable(ActivityModel model) throws IOException {
+    ActivityModel toToggle = findModelInList(model.getFrontId());
+    boolean editable = toToggle.isEditable();
+    if(model.isEditable()) {
+      //TODO: save in repository
+      //TODO: write to file
+    }
+
+    toToggle.setEditable(!editable);
   }
 
+  private ActivityModel findModelInList(String frontId) {
+    return this.model.stream().filter(m -> m.getFrontId().equals(frontId))
+        .collect(Collectors.toList()).get(0);
+  }
 }

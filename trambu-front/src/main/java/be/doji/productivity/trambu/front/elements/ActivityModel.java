@@ -237,6 +237,7 @@ public class ActivityModel {
     this.completed = toBuildFrom.isCompleted();
     this.frontId = UUID.randomUUID().toString();
     this.dataBaseId = id;
+    this.editable = false;
 
     toBuildFrom.getDeadline()
         .ifPresent(timePoint -> this.deadline = df.format(timePoint.toLocalDateTime()));
