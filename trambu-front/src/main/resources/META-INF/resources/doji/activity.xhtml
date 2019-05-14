@@ -1,0 +1,68 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:composite="http://java.sun.com/jsf/composite"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:b="http://butterfaces.org/components"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<composite:interface>
+    <composite:attribute name="model"
+                         type="be.doji.productivity.trambu.front.elements.ActivityModel"/>
+</composite:interface>
+
+<composite:implementation>
+    <div class="activity" id="activity_#{cc.attrs.model.frontId}">
+        <div class="activity-header">
+            <div class="activity-item">
+                <b:commandLink id="input"
+                               value="#{cc.attrs.model.completed ?'Done' :'Todo'}"
+                               glyphicon="#{cc.attrs.model.completed ?'glyphicon glyphicon-check' :'glyphicon glyphicon-unchecked'}"
+                               styleClass="btn #{cc.attrs.model.completed ?'btn-primary' :'btn-warning'}"
+                               ajaxDisableLinkOnRequest="true"
+                               ajaxShowWaitingDotsOnRequest="true"
+                               ajaxHideGlyphiconOnRequest="false"
+                               ajaxDisableRenderRegionsOnRequest="true"
+                               ajaxProcessingGlyphicon="fa fa-refresh fa-spin"
+                               action="#{cc.attrs.model.toggleCompleted}"
+                               rendered="true">
+                    <f:ajax execute="@this" render=":formId"/>
+                </b:commandLink>
+            </div>
+            <div class="activity-item">
+                <b>#{cc.attrs.model.title}</b>
+            </div>
+            <div class="align-clear">
+            </div>
+        </div>
+        <br/>
+        <div class="activity-content">
+            Deadline: #{cc.attrs.model.deadline}
+            <hr/>
+            <div class="activity-tags">
+                tags:
+                <ui:repeat value="#{cc.attrs.model.tags}"
+                           var="value"
+                           varStatus="status"
+                           rendered="true">
+
+                    <button type="button"
+                            class="btn btn-outline-secondary">#{cc.attrs.model.tags[status.index]}</button>
+                </ui:repeat>
+            </div>
+            <br/>
+            <div class="activity-projects">
+                projects:
+                <ui:repeat value="#{cc.attrs.model.projects}"
+                           var="project"
+                           varStatus="status"
+                           rendered="true">
+                    <button type="button"
+                            class="btn btn-outline-success">#{cc.attrs.model.projects[status.index]}</button>
+                </ui:repeat>
+            </div>
+        </div>
+    </div>
+</composite:implementation>
+
+</html>
+
+
