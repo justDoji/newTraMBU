@@ -696,7 +696,7 @@ public class FileWriter {
   public void writeActivtiesToFile(Path path) throws IOException {
     List<String> activities = activityRepository.findAll().
         stream()
-        .map(ActivityDataConverter::parse)
+        .map(ActivityDataConverter::toDomain)
         .map(ActivityConverter::write)
         .collect(Collectors.toList());
     Files.write(path, activities);

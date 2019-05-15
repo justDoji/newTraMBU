@@ -736,6 +736,6 @@ public class ActivityData {
 
   public Activity toDomainObject() {
 
-    return ActivityDataConverter.parse(this);
+    return ActivityDataConverter.toDomain(this);
   }
 }

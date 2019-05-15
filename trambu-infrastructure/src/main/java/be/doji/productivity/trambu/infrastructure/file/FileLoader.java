@@ -704,7 +704,7 @@ public class FileLoader {
     List<String> todoFileLines = Files.readAllLines(path);
     for (String line : todoFileLines) {
       Activity parsedActivity = ActivityConverter.parse(line);
-      ActivityData convertedActivityData = ActivityDataConverter.parse(parsedActivity);
+      ActivityData convertedActivityData = ActivityDataConverter.toDomain(parsedActivity);
       activityDatabaseRepository.save(convertedActivityData);
     }
   }

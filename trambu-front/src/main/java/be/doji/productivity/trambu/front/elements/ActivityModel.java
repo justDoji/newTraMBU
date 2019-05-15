@@ -681,7 +681,8 @@ public class ActivityModel {
   private static final String BASIC_DATE_TIME_PATTERN = "dd/MM/uuuu HH:mm:ss";
   private static final DateTimeFormatter df = DateTimeFormatter
       .ofPattern(BASIC_DATE_TIME_PATTERN, Locale.FRANCE);
-  private final Long dataBaseId;
+
+  private  Long dataBaseId;
 
   private String frontId;
   private String title;
@@ -691,17 +692,22 @@ public class ActivityModel {
   private boolean completed;
   private boolean editable;
 
+  public ActivityModel() {
+    this.frontId = UUID.randomUUID().toString();
+  }
+
   public ActivityModel(Activity toBuildFrom, Long id) {
+    //TODO: call converter here
     this.title = toBuildFrom.getTitle();
     this.projects = toBuildFrom.getProjects();
     this.tags = toBuildFrom.getTags();
     this.completed = toBuildFrom.isCompleted();
     this.frontId = UUID.randomUUID().toString();
-    this.dataBaseId = id;
     this.editable = false;
-
     toBuildFrom.getDeadline()
         .ifPresent(timePoint -> this.deadline = df.format(timePoint.toLocalDateTime()));
+
+    this.dataBaseId = id;
   }
 
   public void toggleCompleted() {

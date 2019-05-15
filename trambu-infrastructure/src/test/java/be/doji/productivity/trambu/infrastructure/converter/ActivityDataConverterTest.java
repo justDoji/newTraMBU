@@ -682,7 +682,7 @@ public class ActivityDataConverterTest {
         .title("name")
         .build();
 
-    ActivityData activityData = ActivityDataConverter.parse(activity);
+    ActivityData activityData = ActivityDataConverter.toDomain(activity);
     Assertions.assertThat(activityData).isNotNull();
     Assertions.assertThat(activityData.getTitle()).isEqualTo("name");
   }
@@ -694,7 +694,7 @@ public class ActivityDataConverterTest {
         .deadline("18/12/1989 12:00:00")
         .build();
 
-    ActivityData activityData = ActivityDataConverter.parse(activity);
+    ActivityData activityData = ActivityDataConverter.toDomain(activity);
     Assertions.assertThat(activityData).isNotNull();
     Assertions.assertThat(activityData.getDeadline()).isEqualTo("1989-12-18:12:00:00.000");
   }
@@ -706,7 +706,7 @@ public class ActivityDataConverterTest {
         .tags(Arrays.asList("tagOne", "TagTwo"))
         .build();
 
-    ActivityData activityData = ActivityDataConverter.parse(activity);
+    ActivityData activityData = ActivityDataConverter.toDomain(activity);
     Assertions.assertThat(activityData).isNotNull();
     Assertions.assertThat(activityData.getTags()).hasSize(2);
     Assertions.assertThat(activityData.getTags().get(0).getValue()).isEqualTo("tagOne");
@@ -720,7 +720,7 @@ public class ActivityDataConverterTest {
         .projects(Arrays.asList("ProjectOne", "ProjectTwo"))
         .build();
 
-    ActivityData activityData = ActivityDataConverter.parse(activity);
+    ActivityData activityData = ActivityDataConverter.toDomain(activity);
     Assertions.assertThat(activityData).isNotNull();
     Assertions.assertThat(activityData.getProjects()).hasSize(2);
     Assertions.assertThat(activityData.getProjects().get(0).getValue()).isEqualTo("ProjectOne");

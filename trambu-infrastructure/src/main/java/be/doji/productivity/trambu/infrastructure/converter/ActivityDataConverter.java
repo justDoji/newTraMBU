@@ -689,7 +689,7 @@ public final class ActivityDataConverter {
     }
   }
 
-  public static ActivityData parse(Activity activity) {
+  public static ActivityData toDomain(Activity activity) {
     return new ActivityToActivityDataConverter(activity)
         .conversionStep(Activity::getTitle, ActivityData::setTitle)
         .conversionStep(Activity::isCompleted, ActivityData::setCompleted)
@@ -722,7 +722,7 @@ public final class ActivityDataConverter {
     }
   }
 
-  public static Activity parse(ActivityData data) {
+  public static Activity toDomain(ActivityData data) {
     return new ActivityDataToActivityConverter(data)
         .conversionStep(ActivityData::getTitle, Activity::setTitle)
         .conversionStep(ActivityData::getDeadline, Activity::setDeadline)
