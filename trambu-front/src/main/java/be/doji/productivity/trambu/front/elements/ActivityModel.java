@@ -669,6 +669,7 @@
 package be.doji.productivity.trambu.front.elements;
 
 import be.doji.productivity.trambu.domain.activity.Activity;
+import be.doji.productivity.trambu.front.converter.ActivityModelConverter;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Locale;
@@ -696,17 +697,7 @@ public class ActivityModel {
     this.frontId = UUID.randomUUID().toString();
   }
 
-  public ActivityModel(Activity toBuildFrom, Long id) {
-    //TODO: call converter here
-    this.title = toBuildFrom.getTitle();
-    this.projects = toBuildFrom.getProjects();
-    this.tags = toBuildFrom.getTags();
-    this.completed = toBuildFrom.isCompleted();
-    this.frontId = UUID.randomUUID().toString();
-    this.editable = false;
-    toBuildFrom.getDeadline()
-        .ifPresent(timePoint -> this.deadline = df.format(timePoint.toLocalDateTime()));
-
+  public ActivityModel(Long id) {
     this.dataBaseId = id;
   }
 

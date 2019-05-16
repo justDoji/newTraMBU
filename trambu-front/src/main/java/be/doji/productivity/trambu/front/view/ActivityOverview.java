@@ -668,6 +668,7 @@
  */
 package be.doji.productivity.trambu.front.view;
 
+import be.doji.productivity.trambu.front.converter.ActivityModelConverter;
 import be.doji.productivity.trambu.front.elements.ActivityModel;
 import be.doji.productivity.trambu.infrastructure.file.FileWriter;
 import be.doji.productivity.trambu.infrastructure.repository.ActivityDatabaseRepository;
@@ -700,7 +701,7 @@ public class ActivityOverview {
   public void init() {
     if (this.model == null) {
       this.model = repository.findAll().stream()
-          .map(db -> new ActivityModel(db.toDomainObject(), db.getId()))
+          .map(ActivityModelConverter::parse)
           .collect(Collectors.toList());
     }
   }
