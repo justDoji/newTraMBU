@@ -21,7 +21,7 @@
          The licenses for most software and other practical works are designed
        to take away your freedom to share and change the works.  By contrast,
        our General Public Licenses are intended to guarantee your freedom to
-       share and change all versions of a program--to make sure it remains free
+       share and change all versions of a program to make sure it remains free
        software for all its users.
 
          When we speak of free software, we are referring to freedom, not
@@ -671,19 +671,19 @@
 <ui:composition template="/templates/base.xhtml"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
-                xmlns:b="http://butterfaces.org/components"
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
                 xmlns:doji="http://xmlns.jcp.org/jsf/composite/doji">
     <ui:define name="logout">
         Hello #{identity.userName} !
 
         <h:form>
-            <b:commandLink value="logout"
-                           action="#{identity.logout}"
-                           styleClass="btn btn-primary pull-right"
-                           glyphicon="fa fa-sign-out">
+            <p:commandButton value="logout"
+                             action="#{identity.logout}"
+                             styleClass="btn btn-primary pull-right"
+                             glyphicon="fa fa-sign-out">
                 <f:ajax execute="@this"/>
-            </b:commandLink>
+            </p:commandButton>
         </h:form>
     </ui:define>
     <ui:define name="content">
@@ -693,14 +693,14 @@
             <h:form id="formId">
                 <h:panelGroup id="repeat" layout="block" styleClass="repeat-simple-list">
 
-                    <b:repeat value="#{activityOverview.activities}"
+                    <ui:repeat value="#{activityOverview.activities}"
                               var="activity"
                               status="status"
                               rendered="true">
 
                         <doji:activity model="#{activity}" />
 
-                    </b:repeat>
+                    </ui:repeat>
                 </h:panelGroup>
             </h:form>
         </div>

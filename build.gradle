@@ -67,12 +67,17 @@ license {
     strictCheck true
 }
 
-build {
-    doFirst {
-        licenseFormatTest
-        licenseFormatMain
-    }
+task buildAndFormat(type: DefaultTask) {
+    dependsOn 'licenseFormatTest'
+    dependsOn 'licenseFormatMain'
+    dependsOn 'clean'
+    dependsOn 'build'
+
+    tasks.findByName('licenseFormatMain').mustRunAfter 'licenseFormatTest'
+    tasks.findByName('clean').mustRunAfter 'licenseFormatMain'
+    tasks.findByName('build').mustRunAfter 'clean'
 }
+buildAndFormat.setGroup("build")
 
 task buildAndAnalyze(type: DefaultTask) {
     dependsOn 'licenseFormatTest'

@@ -20,7 +20,7 @@
  *      The licenses for most software and other practical works are designed
  *    to take away your freedom to share and change the works.  By contrast,
  *    our General Public Licenses are intended to guarantee your freedom to
- *    share and change all versions of a program--to make sure it remains free
+ *    share and change all versions of a program to make sure it remains free
  *    software for all its users.
  *
  *      When we speak of free software, we are referring to freedom, not
@@ -671,6 +671,7 @@ package be.doji.productivity.trambu.front.elements;
 import be.doji.productivity.trambu.domain.activity.Activity;
 import be.doji.productivity.trambu.front.converter.ActivityModelConverter;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
@@ -689,9 +690,10 @@ public class ActivityModel {
   private String title;
   private List<String> projects;
   private List<String> tags;
-  private String deadline = "No deadline in sight";
+  private Date deadline;
   private boolean completed;
   private boolean editable;
+  private boolean expanded;
 
   public ActivityModel() {
     this.frontId = UUID.randomUUID().toString();
@@ -713,4 +715,11 @@ public class ActivityModel {
     this.editable = editable;
   }
 
+  public boolean isExpanded() {
+    return expanded;
+  }
+
+  public void setExpanded(boolean expanded) {
+    this.expanded = expanded;
+  }
 }

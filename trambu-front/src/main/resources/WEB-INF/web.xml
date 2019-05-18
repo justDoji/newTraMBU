@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
 
     GNU Affero General Public License Version 3
@@ -21,7 +22,7 @@
          The licenses for most software and other practical works are designed
        to take away your freedom to share and change the works.  By contrast,
        our General Public Licenses are intended to guarantee your freedom to
-       share and change all versions of a program--to make sure it remains free
+       share and change all versions of a program to make sure it remains free
        software for all its users.
 
          When we speak of free software, we are referring to freedom, not
@@ -668,34 +669,12 @@
        <https://www.gnu.org/licenses/>.
 
 -->
-<ui:composition template="/templates/base.xhtml"
-                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-                xmlns:h="http://xmlns.jcp.org/jsf/html"
-                xmlns:b="http://butterfaces.org/components"
-                xmlns:f="http://xmlns.jcp.org/jsf/core">
-    <ui:define name="content">
-        <h:form>
-            <div class="align-row">
-                <div class="align-item"  style="width: 75%;">
-                    <b:text label="login"
-                            value="#{loginBean.userName}"
-                            autoFocus="true">
-                    </b:text>
-                    <b:secret label="password"
-                              value="#{loginBean.password}">
-                    </b:secret>
-                </div>
-                <div class="align-item" style="background-color: #FFF;">
-                    <b:commandLink value="login"
-                                   action="#{loginBean.login}"
-                                   styleClass="btn btn-primary"
-                                   glyphicon="fa fa-sign-in">
-                        <f:ajax execute="@form" render="@form"/>
-                        <b:defaultAction/>
-                    </b:commandLink>
-                </div>
-                <div class='align-clear'></div>
-            </div>
-        </h:form>
-    </ui:define>
-</ui:composition>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="http://java.sun.com/xml/ns/javaee"
+  xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+  id="WebApp_ID" version="3.0">
+  <context-param>
+    <param-name>primefaces.THEME</param-name>
+    <param-value>bootstrap</param-value>
+  </context-param>
+</web-app>

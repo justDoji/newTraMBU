@@ -20,7 +20,7 @@
  *      The licenses for most software and other practical works are designed
  *    to take away your freedom to share and change the works.  By contrast,
  *    our General Public Licenses are intended to guarantee your freedom to
- *    share and change all versions of a program--to make sure it remains free
+ *    share and change all versions of a program to make sure it remains free
  *    software for all its users.
  *
  *      When we speak of free software, we are referring to freedom, not
@@ -678,6 +678,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Wrapper class for date/time representation as I am very frustrated with Java's built in
@@ -695,7 +696,7 @@ public class TimePoint {
   private static final String BASIC_DATE_TIME_PATTERN = "dd/MM/uuuu HH:mm:ss";
   private static final String BASIC_DATE_TIME_REGEX = "\\d\\d/\\d\\d/\\d\\d\\d\\d \\d\\d:\\d\\d:\\d\\d";
 
-  public static final String EXTENDED_DATE_TIME_PATTERN = "dd/MM/uuuu HH:mm:ss:SSS";
+  public static final String EXTENDED_DATE_TIME_PATTERN = "dd/MM/yyyy HH:mm:ss:SSS";
   private static final String EXTENDED_DATE_TIME_REGEX = "\\d\\d/\\d\\d/\\d\\d\\d\\d \\d\\d:\\d\\d:\\d\\d:\\d\\d\\d";
 
   public static final String LEGACY_DATE_TIME_PATTERN = "uuuu-MM-dd:HH:mm:ss.SSS";
@@ -753,6 +754,11 @@ public class TimePoint {
   /* Utility Methods */
 
   public static TimePoint fromString(String timeString) {
+    if (StringUtils.isBlank(timeString)) {
+      throw new IllegalArgumentException(
+          "Could not parse given Date string: No matching parsers found for string [" + timeString
+              + "] ");
+    }
 
     for (Entry<Pattern, DateTimeFormatter> entry : DATE_TIME_CONVERTERS.entrySet()) {
       if (entry.getKey().matcher(timeString).matches()) {

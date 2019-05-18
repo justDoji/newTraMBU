@@ -16,6 +16,14 @@ sourceCompatibility = 1.8
 
 repositories {
     mavenCentral()
+
+    maven {
+        url 'https://repo.spring.io/libs-milestone/'
+    }
+
+    maven {
+        url 'https://repository.primefaces.org/'
+    }
 }
 
 afterEvaluate { project ->
@@ -32,14 +40,14 @@ dependencies {
     compile project(':trambu-infrastructure')
     testCompile group: 'junit', name: 'junit', version: '4.12'
 
-    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
     // User Interface
-    compile 'org.joinfaces:butterfaces-spring-boot-starter:4.0.3'
-    compile group: 'org.butterfaces', name: 'butterfaces', version: '3.1.1', ext: 'pom'
-    implementation 'org.butterfaces:components:3.1.1'
-    compile group: 'org.primefaces', name: 'primefaces', version: '7.0'
+//    compile group: 'org.joinfaces', name: 'primefaces-spring-boot-starter', version: '4.0.4'
+    compile 'org.joinfaces:primefaces-spring-boot-starter:4.1.0-m1'
+    compile 'org.springframework.boot:spring-boot-dependencies:2.2.0.M2'
+    compile group: 'org.primefaces.themes', name: 'all-themes', version: '1.0.10'
 
     //Lombok
     compileOnly 'org.projectlombok:lombok:1.18.8'

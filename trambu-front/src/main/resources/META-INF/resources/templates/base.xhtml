@@ -22,7 +22,7 @@
          The licenses for most software and other practical works are designed
        to take away your freedom to share and change the works.  By contrast,
        our General Public Licenses are intended to guarantee your freedom to
-       share and change all versions of a program--to make sure it remains free
+       share and change all versions of a program to make sure it remains free
        software for all its users.
 
          When we speak of free software, we are referring to freedom, not
@@ -674,7 +674,8 @@
 <html lang="en"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
 <h:head>
     <title>TraMBU: activity and time tracking</title>
     <meta http-equiv="Content-Type" content="application/xhtml+xml;charset=utf-8"/>
@@ -691,8 +692,22 @@
     <meta http-equiv="PRAGMA" content="NO-CACHE"/>
     <meta http-equiv="Expires" content="604800"/>
     <link rel="shortcut icon" type="image/x-icon" href="#{request.contextPath}/images/favicon.png"/>
-    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet"/>
-    <link href="../css/main.css" rel="stylesheet" />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" />
+
+    <h:outputStylesheet name="/css/trambu.css"/>
+
+
+
+    <script type="text/javascript">
+      //<![CDATA[
+      function dateTemplateFunc(date) {
+        return '<span style="background-color:' + ((date.day < 21 && date.day > 10) ? '#81C784' : 'inherit') + ';border-radius:50%;padding: .25em;width: 1.75em; height:1.75em; display:block;">' + date.day + '</span>';
+      }
+      //]]>
+    </script>
 </h:head>
 
 <h:body styleClass="body">
@@ -701,7 +716,7 @@
 
         <div class="header">
             <div class="container">
-                <img src="#{request.contextPath}/images/logo_color.png" class="logo" alt="TraMBU Logo"/>
+                <img src="#{request.contextPath}/images/TraMBU_logo.png" class="logo" alt="TraMBU Logo"/>
                 <h2>TraMBU
                     <span class="divider">|</span> <small>Your vehicle to easier task and time management</small>
                 </h2>
@@ -734,13 +749,13 @@
         <hr />
             <div class="footer">
                 <div class="versionInformation">
-                    <strong>TraMBU 2.0.0 - SNAPSHOT </strong> - Powered by <a href="http://www.butterfaces.org/">Butterfaces</a><br/>
+                    <strong>TraMBU 2.0.0 - SNAPSHOT </strong><br/>
                 </div>
                 <div class="footer-links">
                     <div class="butterfaces-links">
                         <div class="footer-link"><a href="http://www.doji.be" target="_blank">Personal Website</a></div>
                         <div class="footer-link"><a href="https://github.com/justDoji/newTraMBU" target="_blank">Project Source</a></div>
-                        <div class="footer-link"><a href="http://opensource.org/licenses/MIT" target="_blank">License</a></div>
+                        <div class="footer-link"><a href="https://www.gnu.org/licenses/agpl-3.0.en.html" target="_blank">License</a></div>
                     </div>
                 </div>
             </div>
