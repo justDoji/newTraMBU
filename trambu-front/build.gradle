@@ -26,12 +26,13 @@ repositories {
     }
 }
 
-afterEvaluate { project ->
-    project.tasks.bootJar {
-        onlyIf {
-            println 'Skipping...'
-            return false
-        }
+springBoot {
+    mainClassName = 'be.doji.productivity.trambu.front.TrambuWebApplication'
+}
+
+bootJar {
+    manifest {
+        attributes 'Start-Class': 'be.doji.productivity.trambu.front.TrambuWebApplication'
     }
 }
 

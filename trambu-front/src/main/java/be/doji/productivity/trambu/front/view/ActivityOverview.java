@@ -538,10 +538,11 @@
  */
 package be.doji.productivity.trambu.front.view;
 
-import static be.doji.productivity.trambu.front.converter.ActivityModelConverter.*;
+import static be.doji.productivity.trambu.front.converter.ActivityModelConverter.toDatabase;
 
 import be.doji.productivity.trambu.front.converter.ActivityModelConverter;
 import be.doji.productivity.trambu.front.elements.ActivityModel;
+import be.doji.productivity.trambu.infrastructure.file.FileLoader;
 import be.doji.productivity.trambu.infrastructure.file.FileWriter;
 import be.doji.productivity.trambu.infrastructure.repository.ActivityDatabaseRepository;
 import be.doji.productivity.trambu.infrastructure.transfer.ActivityData;
@@ -553,22 +554,23 @@ import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
+import javax.el.MethodExpression;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
+import org.primefaces.event.FileUploadEvent;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.context.annotation.SessionScope;
 
 @SessionScope
 @Named
 public class ActivityOverview {
 
-  @Value("${trambu.file.todo}")
-  private String todoFileLocation;
-
   @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
   @Autowired FileWriter writer;
+
+  @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
+  @Autowired FileLoader loader;
 
   @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
   @Autowired ActivityDatabaseRepository repository;
@@ -579,6 +581,31 @@ public class ActivityOverview {
   public void init() {
     if (this.model == null) {
       loadActivities();
+    }
+  }
+
+  private File todoFile;
+
+  public File getTodoFile() {
+    return todoFile;
+  }
+
+  public void setTodoFile(File todoFile) {
+    this.todoFile = todoFile;
+  }
+
+  public void fileSelected(FileUploadEvent event) {
+    String fileName = event.getFile().getFileName();
+    System.out.println(fileName);
+    showMessage(fileName);
+    try {
+      if (todoFile.exists()) {
+        loader.loadTodoFileActivities(todoFile);
+        this.loadActivities();
+      }
+      showMessage("Todo File loaded");
+    } catch (IOException e) {
+      showMessage("Error loading file contents!");
     }
   }
 
@@ -626,9 +653,8 @@ public class ActivityOverview {
 
   public void writeToFile() {
     try {
-      File toDoFile = new File(todoFileLocation);
-      if (toDoFile.exists()) {
-        writer.writeActivtiesToFile(toDoFile);
+      if (todoFile != null && todoFile.exists()) {
+        writer.writeActivtiesToFile(todoFile);
       } else {
         System.out.println("No output file found!");
       }
@@ -694,5 +720,4 @@ public class ActivityOverview {
 
     context.addMessage(null, new FacesMessage("Info", message));
   }
-
 }
