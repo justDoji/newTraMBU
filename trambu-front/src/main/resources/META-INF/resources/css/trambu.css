@@ -773,7 +773,7 @@ a {
   display: inline-block;
   margin-right: 6px;
   background-color: #EEE;
-  border-radius: 15px;
+  border-radius: 5px;
   padding: 10px;
 }
 .align-clear {
@@ -782,20 +782,21 @@ a {
 .activity {
   margin-right: 6px;
   margin-bottom: 12px;
-  background-color: #e4e4e4;
-  border-radius: 15px;
-  /*padding: 10px;*/
+  background-image: linear-gradient(180deg, #f0f0f0, #dadadb);
+  border-radius: 7px;
   width: 100%;
+  font-size: smaller !important;
+  box-shadow: 3px 3px 10px #bfbfc0;
 }
 
 .activity-header {
   width: 100%;
   background-image: linear-gradient(180deg, #233046, #232e3c);
-  padding: 5px 0 10px 0;
-  margin-bottom: 10px;
+  padding: 0;
+  margin-bottom: 0px;
   border-bottom: 3px solid rgba(73, 98, 121, 0.64);
-  border-top-left-radius: 15px;
-  border-top-right-radius: 15px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
   color: #fff;
 }
 
@@ -807,8 +808,8 @@ a {
 .activity-item {
   display: inline-block;
   margin-right: 6px;
-  border-radius: 15px;
-  padding: 10px;
+  border-radius: 8px;
+  padding: 5px;
 }
 
 .activity-tags{
@@ -824,10 +825,10 @@ a {
   color: #4BBF73;
   border: 2px solid #4BBF73;
   font-weight: bold;
+  font-size: smaller !important;
   position: relative;
   background: linear-gradient(180deg, #233046, #232e3c);
   padding: 6px 12px !important;
-  font-size: 14px;
   line-height: 1.42857143;
 }
 
@@ -837,7 +838,7 @@ a {
   background: #4BBF73 50% 50% repeat-x;
   border: 2px solid #4BBF73;
   padding: 6px 12px !important;
-  font-size: 14px;
+  font-size: smaller !important;
   line-height: 1.42857143;
 }
 
@@ -849,7 +850,7 @@ a {
   background: linear-gradient(180deg, #233046, #232e3c);
   position: relative;
   padding: 6px 12px !important;
-  font-size: 14px;
+  font-size: smaller !important;
   line-height: 1.42857143;
 }
 
@@ -859,7 +860,7 @@ a {
   font-weight: bold;
   border: 2px solid #f0ad4e;
   padding: 6px 12px !important;
-  font-size: 14px;
+  font-size: smaller !important;
   line-height: 1.42857143;
 }
 
@@ -869,7 +870,7 @@ a {
   background: linear-gradient(180deg, #233046, #232e3c);
   position: relative;
   padding: 6px 12px !important;
-  font-size: 14px;
+  font-size: x-small !important;
   line-height: 1.42857143;
 }
 
@@ -878,7 +879,7 @@ a {
   background: #819aaf 50% 50% repeat-x;
   border: 2px solid #678095;
   padding: 6px 12px !important;
-  font-size: 14px;
+  font-size: x-small !important;
   line-height: 1.42857143;
 }
 
