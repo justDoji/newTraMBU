@@ -687,10 +687,22 @@
         </h:form>
     </ui:define>
     <ui:define name="content">
-        <div class="container">
+
+
+        <div class="container" id="main">
             <h2>Activity Overview: </h2>
 
+            <p:commandButton
+                    value="New"
+                    icon="far fa-calendar-plus"
+                    action="#{activityOverview.createActivity}"
+                    update="formId"
+                    styleClass="new"
+            />
+            <br />
             <h:form id="formId">
+                <p:growl id="growl" showDetail="true" sticky="true" />
+
                 <h:panelGroup id="repeat" layout="block" styleClass="repeat-simple-list">
 
                     <ui:repeat value="#{activityOverview.activities}"

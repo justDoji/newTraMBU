@@ -883,6 +883,50 @@ a {
   line-height: 1.42857143;
 }
 
+.new {
+  border: 2px solid #678095;
+  color: #232e3c;
+  background: linear-gradient(180deg, #f0f0f0, #dadadb);
+  position: relative;
+  margin-bottom: 12px;
+  padding: 6px 12px !important;
+  font-size: x-small !important;
+  line-height: 1.42857143;
+}
+
+.new:hover {
+  color: #fff;
+  background: #819aaf 50% 50% repeat-x;
+  margin-bottom: 12px;
+  border: 2px solid #678095;
+  padding: 6px 12px !important;
+  font-size: x-small !important;
+  line-height: 1.42857143;
+}
+
+
+.delete {
+  border: 2px solid #f04e35;
+  color: #f04e35;
+  font-weight: bold;
+  background: linear-gradient(180deg, #233046, #232e3c);
+  position: relative;
+  padding: 6px 12px !important;
+  font-size: smaller !important;
+  line-height: 1.42857143;
+}
+
+.delete:hover {
+  color: #fff;
+  background: #f04e35 50% 50% repeat-x;
+  font-weight: bold;
+  border: 2px solid #f04e35;
+  padding: 6px 12px !important;
+  font-size: smaller !important;
+  line-height: 1.42857143;
+}
+
+
 .tag {
   color: #0d1433;
   background-color: #e4e4e4;

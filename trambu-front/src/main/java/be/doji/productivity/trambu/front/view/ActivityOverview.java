@@ -538,20 +538,23 @@
  */
 package be.doji.productivity.trambu.front.view;
 
-import static be.doji.productivity.trambu.domain.time.TimePoint.EXTENDED_DATE_TIME_PATTERN;
+import static be.doji.productivity.trambu.front.converter.ActivityModelConverter.*;
 
 import be.doji.productivity.trambu.front.converter.ActivityModelConverter;
 import be.doji.productivity.trambu.front.elements.ActivityModel;
 import be.doji.productivity.trambu.infrastructure.file.FileWriter;
 import be.doji.productivity.trambu.infrastructure.repository.ActivityDatabaseRepository;
-import java.text.SimpleDateFormat;
+import be.doji.productivity.trambu.infrastructure.transfer.ActivityData;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -571,33 +574,83 @@ public class ActivityOverview {
   @Autowired ActivityDatabaseRepository repository;
 
   private List<ActivityModel> model;
-  private Date editableDate = new Date();
 
   @PostConstruct
   public void init() {
     if (this.model == null) {
-      this.model = repository.findAll().stream()
-          .map(ActivityModelConverter::parse)
-          .collect(Collectors.toList());
+      loadActivities();
     }
+  }
+
+  private void loadActivities() {
+    this.model = repository.findAll().stream()
+        .map(ActivityModelConverter::parse)
+        .collect(Collectors.toList());
   }
 
   public List<ActivityModel> getActivities() {
     return this.model;
   }
 
-  public void toggleEditable(ActivityModel model) {
+  public void toggleEditable(ActivityModel model) throws IOException {
     ActivityModel toToggle = findModelInList(model.getFrontId());
     boolean editable = toToggle.isEditable();
 
-    SimpleDateFormat format = new SimpleDateFormat(EXTENDED_DATE_TIME_PATTERN);
-
     if (model.isEditable()) {
-      //TODO: save in repository
-      //TODO: write to file
+      saveActivities();
     }
 
     toToggle.setEditable(!editable);
+  }
+
+  public void toggleExpanded(ActivityModel model) {
+    ActivityModel toToggle = findModelInList(model.getFrontId());
+    toToggle.setExpanded(!toToggle.isExpanded());
+  }
+
+  public void toggleCompleted(ActivityModel model) throws IOException {
+    ActivityModel toToggle = findModelInList(model.getFrontId());
+    toToggle.setCompleted(!toToggle.isCompleted());
+    saveActivities();
+  }
+
+  private void saveActivities() {
+    for (ActivityModel activityModel : getActivities()) {
+      ActivityData savedData = repository.save(toDatabase(activityModel));
+      activityModel.setDataBaseId(savedData.getId());
+    }
+
+    writeToFile();
+    showMessage("Activities saved");
+  }
+
+  public void writeToFile() {
+    try {
+      File toDoFile = new File(todoFileLocation);
+      if (toDoFile.exists()) {
+        writer.writeActivtiesToFile(toDoFile);
+      } else {
+        System.out.println("No output file found!");
+      }
+    } catch (IOException e) {
+      showMessage("Error while saving activities to file");
+    }
+  }
+
+  public void createActivity() {
+    ActivityModel newActivity = new ActivityModel();
+    this.model.add(newActivity);
+  }
+
+  public void deleteActivity(ActivityModel toDelete) {
+    if (toDelete != null) {
+      ActivityModel modelInList = findModelInList(toDelete.getFrontId());
+      ActivityData databaseModel = toDatabase(modelInList);
+      repository.delete(databaseModel);
+      this.model.remove(modelInList);
+      saveActivities();
+      showMessage("Activity deleted");
+    }
   }
 
   private ActivityModel findModelInList(String frontId) {
@@ -635,9 +688,11 @@ public class ActivityOverview {
     return result;
   }
 
-  public void toggleExpanded(ActivityModel model) {
-    ActivityModel toToggle = findModelInList(model.getFrontId());
-    toToggle.setExpanded(!toToggle.isExpanded());
+
+  public void showMessage(String message) {
+    FacesContext context = FacesContext.getCurrentInstance();
+
+    context.addMessage(null, new FacesMessage("Info", message));
   }
 
 }

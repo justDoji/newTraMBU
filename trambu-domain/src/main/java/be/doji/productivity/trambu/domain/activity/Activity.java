@@ -690,11 +690,13 @@ public class Activity {
   @Setter private Importance importance;
   private TimePoint deadline;
   @Getter @Setter private boolean completed;
-  @Getter @Setter private List<String> projects;
-  @Getter @Setter private List<String> tags;
+  @Getter @Setter private List<String> projects = new ArrayList<>();
+  @Getter @Setter private List<String> tags = new ArrayList<>();
 
   public Activity() {
     /* Empty default constructor for use in reflection by Converter classes */
+    this.projects = new ArrayList<>();
+    this.tags = new ArrayList<>();
   }
 
   public static ActivityBuilder builder() {

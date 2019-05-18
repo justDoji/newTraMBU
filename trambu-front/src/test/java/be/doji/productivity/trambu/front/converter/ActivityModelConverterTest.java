@@ -744,6 +744,18 @@ public class ActivityModelConverterTest {
     Activity activity = ActivityModelConverter.toDomain(activityModel);
     Assertions.assertThat(activity).isNotNull();
     Assertions.assertThat(activity.getTitle()).isEqualTo("Some kind of title");
+    Assertions.assertThat(activity.isCompleted()).isFalse();
+  }
+
+  @Test
+  public void toDomain_convertsCompleted() {
+    ActivityModel activityModel = new ActivityModel();
+    activityModel.setTitle("Some kind of title");
+    activityModel.setCompleted(true);
+
+    Activity activity = ActivityModelConverter.toDomain(activityModel);
+    Assertions.assertThat(activity).isNotNull();
+    Assertions.assertThat(activity.isCompleted()).isTrue();
   }
 
   @Test
@@ -758,5 +770,31 @@ public class ActivityModelConverterTest {
     Assertions.assertThat(TimePoint
         .isSameDate(activity.getDeadline().get(), TimePoint.fromString("18/12/1989 12:00:00:000")))
         .isTrue();
+  }
+
+  @Test
+  public void toDomain_convertsTags() {
+    ActivityModel activityModel = new ActivityModel();
+    activityModel.setTitle("Some kind of title");
+    activityModel.setTags(Arrays.asList("TagOne", "TagTwo"));
+
+    Activity activity = ActivityModelConverter.toDomain(activityModel);
+    Assertions.assertThat(activity.getTags()).isNotNull();
+    Assertions.assertThat(activity.getTags()).isNotEmpty();
+    Assertions.assertThat(activity.getTags().get(0)).isEqualTo("TagOne");
+    Assertions.assertThat(activity.getTags().get(1)).isEqualTo("TagTwo");
+  }
+
+  @Test
+  public void toDomain_convertsProjects() {
+    ActivityModel activityModel = new ActivityModel();
+    activityModel.setTitle("Some kind of title");
+    activityModel.setProjects(Arrays.asList("ProjectOne", "ProjectTwo"));
+
+    Activity activity = ActivityModelConverter.toDomain(activityModel);
+    Assertions.assertThat(activity.getProjects()).isNotNull();
+    Assertions.assertThat(activity.getProjects()).isNotEmpty();
+    Assertions.assertThat(activity.getProjects().get(0)).isEqualTo("ProjectOne");
+    Assertions.assertThat(activity.getProjects().get(1)).isEqualTo("ProjectTwo");
   }
 }

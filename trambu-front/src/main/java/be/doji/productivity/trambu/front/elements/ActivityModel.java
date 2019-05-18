@@ -670,7 +670,9 @@ package be.doji.productivity.trambu.front.elements;
 
 import be.doji.productivity.trambu.domain.activity.Activity;
 import be.doji.productivity.trambu.front.converter.ActivityModelConverter;
+import be.doji.productivity.trambu.infrastructure.transfer.ActivityProjectData;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -687,9 +689,9 @@ public class ActivityModel {
   private  Long dataBaseId;
 
   private String frontId;
-  private String title;
-  private List<String> projects;
-  private List<String> tags;
+  private String title = "Give me a name!";
+  private List<String> projects = new ArrayList<>();
+  private List<String> tags = new ArrayList<>();
   private Date deadline;
   private boolean completed;
   private boolean editable;
@@ -721,5 +723,17 @@ public class ActivityModel {
 
   public void setExpanded(boolean expanded) {
     this.expanded = expanded;
+  }
+
+  public void setProjects(List<String> projectsToSet) {
+    if(projectsToSet != null) {
+      this.projects.addAll(projectsToSet);
+    }
+  }
+
+  public void setTags(List<String> tagsToSet) {
+    if (tagsToSet != null) {
+      this.tags.addAll(tagsToSet);
+    }
   }
 }

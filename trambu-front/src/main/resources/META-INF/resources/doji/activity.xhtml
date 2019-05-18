@@ -686,7 +686,7 @@
             <div class="activity-item">
                 <p:commandButton value="#{cc.attrs.model.completed ?'Done' :'Todo'}"
                                  id="editSave"
-                                 action="#{cc.attrs.model.toggleCompleted}"
+                                 action="#{activityOverview.toggleCompleted(cc.attrs.model)}"
                                  update="formId"
                                  style="margin-right:20px;"
                                  styleClass="#{cc.attrs.model.completed ?'done' :'todo'}"
@@ -713,6 +713,20 @@
                                  style="margin-right:20px;"
                                  styleClass="edit"
                                  icon="#{cc.attrs.model.editable ?'fas fa-save' :'fas fa-edit'}"/>
+                <p:commandButton
+                    id="delete"
+                    icon = "fas fa-trash-alt"
+                    action="#{activityOverview.deleteActivity(cc.attrs.model)}"
+                    update="formId"
+                    styleClass="delete"
+                    >
+                    <p:confirm header="Confirmation" message="Are you sure?" icon="fas fa-skull-crossbones" />
+                </p:commandButton>
+
+                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                    <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="fas fa-vote-yea" />
+                    <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="fas fa-undo" />
+                </p:confirmDialog>
             </div>
         </div>
 

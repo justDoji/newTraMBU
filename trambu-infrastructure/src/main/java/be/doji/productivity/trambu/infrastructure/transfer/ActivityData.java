@@ -707,7 +707,7 @@ public class ActivityData {
   private String deadline;
 
   @OneToMany(targetEntity = ActivityTagData.class, mappedBy = "activity", cascade = {
-      CascadeType.ALL})
+      CascadeType.ALL}, orphanRemoval=true)
   @LazyCollection(LazyCollectionOption.FALSE)
   private List<ActivityTagData> tags = new ArrayList<>();
 
@@ -719,7 +719,7 @@ public class ActivityData {
   }
 
   @OneToMany(targetEntity = ActivityProjectData.class, mappedBy = "activity", cascade = {
-      CascadeType.ALL})
+      CascadeType.ALL}, orphanRemoval=true)
   @LazyCollection(LazyCollectionOption.FALSE)
   private List<ActivityProjectData> projects = new ArrayList<>();
 
@@ -736,6 +736,6 @@ public class ActivityData {
 
   public Activity toDomainObject() {
 
-    return ActivityDataConverter.toDomain(this);
+    return ActivityDataConverter.parse(this);
   }
 }
