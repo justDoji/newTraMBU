@@ -26,6 +26,15 @@ repositories {
     }
 }
 
+jacocoTestReport {
+    reports {
+        xml.enabled true
+        xml.destination file("${buildDir}/reports/jacoco.xml")
+        csv.enabled false
+        html.destination file("${buildDir}/reports/jacocoHtml")
+    }
+}
+
 springBoot {
     mainClassName = 'be.doji.productivity.trambu.front.TrambuWebApplication'
 }

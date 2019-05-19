@@ -35,12 +35,6 @@ jacocoTestReport {
         csv.enabled false
         html.destination file("${buildDir}/reports/jacocoHtml")
     }
-
-    afterEvaluate {
-        classDirectories = files(classDirectories.files.collect {
-            fileTree(dir: it, exclude: 'be/doji/productivity/trambu/front**')
-        })
-    }
 }
 
 
@@ -57,8 +51,8 @@ sonarqube{
         property "sonar.junit.reportPaths", "build/test-results/test"
 
         //Ignore the front-end in the sonar analysis
-        property 'sonar.coverage.exclusions', "**/trambu/infrastructure/transfer/**, **/be/doji/productivity/trambu/front/**"
-        property 'sonar.exclusions', "**/be/doji/productivity/trambu/front/**,**/trambu/infrastructure/transfer/**"
+        property 'sonar.coverage.exclusions', "**/trambu/infrastructure/transfer/**"
+        property 'sonar.exclusions', "**/trambu/infrastructure/transfer/**"
     }
 }
 

@@ -569,16 +569,21 @@ public class ActivityOverviewController {
 
   private File todoFile;
 
-  @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
-  @Autowired FileWriter writer;
+  private final FileWriter writer;
+
+  private final FileLoader loader;
+
+  private final ActivityDatabaseRepository repository;
+
+  private List<ActivityModel> model = new ArrayList<>();
 
   @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
-  @Autowired FileLoader loader;
-
-  @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
-  @Autowired ActivityDatabaseRepository repository;
-
-  private List<ActivityModel> model;
+  ActivityOverviewController(@Autowired FileWriter writer, @Autowired FileLoader loader,
+      @Autowired ActivityDatabaseRepository repository) {
+    this.writer = writer;
+    this.loader = loader;
+    this.repository = repository;
+  }
 
   @PostConstruct
   public void init() {
@@ -588,17 +593,26 @@ public class ActivityOverviewController {
     this.todoFile = PATH_CONFIGURATION_DIRECTORY.resolve("TODO.txt").toFile();
   }
 
-  private void loadActivities() {
-    this.model = repository.findAll().stream()
-        .map(ActivityModelConverter::parse)
-        .collect(Collectors.toList());
+  void loadActivities() {
+    try {
+      if (todoFile != null && todoFile.exists()) {
+        loader.loadTodoFileActivities(todoFile);
+      } else {
+        showMessage("No todo file found!");
+      }
+      this.model = repository.findAll().stream()
+          .map(ActivityModelConverter::parse)
+          .collect(Collectors.toList());
+    } catch (IOException e) {
+      showMessage("Error while saving activities to file");
+    }
   }
 
   public List<ActivityModel> getActivities() {
     return this.model;
   }
 
-  public void toggleEditable(ActivityModel model) throws IOException {
+  public void toggleEditable(ActivityModel model) {
     ActivityModel toToggle = findModelInList(model.getFrontId());
     boolean editable = toToggle.isEditable();
 
@@ -614,13 +628,13 @@ public class ActivityOverviewController {
     toToggle.setExpanded(!toToggle.isExpanded());
   }
 
-  public void toggleCompleted(ActivityModel model) throws IOException {
+  public void toggleCompleted(ActivityModel model) {
     ActivityModel toToggle = findModelInList(model.getFrontId());
     toToggle.setCompleted(!toToggle.isCompleted());
     saveActivities();
   }
 
-  private void saveActivities() {
+  void saveActivities() {
     for (ActivityModel activityModel : getActivities()) {
       ActivityData savedData = repository.save(toDatabase(activityModel));
       activityModel.setDataBaseId(savedData.getId());
@@ -630,12 +644,12 @@ public class ActivityOverviewController {
     showMessage("Activities saved");
   }
 
-  public void writeToFile() {
+  void writeToFile() {
     try {
       if (todoFile != null && todoFile.exists()) {
         writer.writeActivtiesToFile(todoFile);
       } else {
-        System.out.println("No output file found!");
+        showMessage("No output file found!");
       }
     } catch (IOException e) {
       showMessage("Error while saving activities to file");
@@ -696,10 +710,16 @@ public class ActivityOverviewController {
   private void showMessage(String message) {
     FacesContext context = FacesContext.getCurrentInstance();
 
-    context.addMessage(null, new FacesMessage("Info", message));
+    if(context != null) {
+      context.addMessage(null, new FacesMessage("Info", message));
+    }
   }
 
   public void setTodoFile(File todoFile) {
     this.todoFile = todoFile;
+  }
+
+  void clearActivities() {
+    this.model.clear();
   }
 }
