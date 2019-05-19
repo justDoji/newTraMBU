@@ -538,6 +538,7 @@
  */
 package be.doji.productivity.trambu.front.view;
 
+import static be.doji.productivity.trambu.front.TrambuWebApplication.PATH_CONFIGURATION_DIRECTORY;
 import static be.doji.productivity.trambu.front.converter.ActivityModelConverter.toDatabase;
 
 import be.doji.productivity.trambu.front.converter.ActivityModelConverter;
@@ -549,22 +550,24 @@ import be.doji.productivity.trambu.infrastructure.transfer.ActivityData;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
-import javax.el.MethodExpression;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
-import org.primefaces.event.FileUploadEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.annotation.SessionScope;
 
 @SessionScope
 @Named
 public class ActivityOverview {
+
+  private File todoFile;
 
   @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
   @Autowired FileWriter writer;
@@ -582,31 +585,7 @@ public class ActivityOverview {
     if (this.model == null) {
       loadActivities();
     }
-  }
-
-  private File todoFile;
-
-  public File getTodoFile() {
-    return todoFile;
-  }
-
-  public void setTodoFile(File todoFile) {
-    this.todoFile = todoFile;
-  }
-
-  public void fileSelected(FileUploadEvent event) {
-    String fileName = event.getFile().getFileName();
-    System.out.println(fileName);
-    showMessage(fileName);
-    try {
-      if (todoFile.exists()) {
-        loader.loadTodoFileActivities(todoFile);
-        this.loadActivities();
-      }
-      showMessage("Todo File loaded");
-    } catch (IOException e) {
-      showMessage("Error loading file contents!");
-    }
+    this.todoFile = PATH_CONFIGURATION_DIRECTORY.resolve("TODO.txt").toFile();
   }
 
   private void loadActivities() {
@@ -697,21 +676,20 @@ public class ActivityOverview {
         .reduce(this::reduceStrings);
 
     List<String> options = reducedValues.orElse(new ArrayList<>());
-    List<String> returnOptions = new ArrayList<>();
+    Set<String> returnOptions = new HashSet<>();
     for (String option : options) {
-      if (option.toLowerCase().contains(query.toLowerCase()) && !returnOptions
-          .contains(option)) {
+      if (option.toLowerCase().contains(query.toLowerCase())) {
         returnOptions.add(option);
       }
     }
-    return returnOptions;
+    return new ArrayList<>(returnOptions);
   }
 
   private List<String> reduceStrings(List<String> strings, List<String> strings2) {
-    List<String> result = new ArrayList<>();
+    Set<String> result = new HashSet<>();
     result.addAll(strings);
     result.addAll(strings2);
-    return result;
+    return new ArrayList<>(result);
   }
 
 

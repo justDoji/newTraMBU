@@ -726,12 +726,14 @@ public class ActivityModel {
   }
 
   public void setProjects(List<String> projectsToSet) {
+    this.projects = new ArrayList<>();
     if(projectsToSet != null) {
       this.projects.addAll(projectsToSet);
     }
   }
 
   public void setTags(List<String> tagsToSet) {
+    this.tags = new ArrayList<>();
     if (tagsToSet != null) {
       this.tags.addAll(tagsToSet);
     }

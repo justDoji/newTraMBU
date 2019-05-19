@@ -764,7 +764,7 @@
                                 forceSelection="false"
                                 rendered="#{cc.attrs.model.editable}">
                     <p:column style="width:10%">
-                        <i class="pi pi-check"></i>
+                        <i class="fas fa-calendar-check"></i>
                     </p:column>
 
                     <p:column>
@@ -791,11 +791,12 @@
                                 var="project" itemLabel="#{project}" itemValue="#{project}"
                                 forceSelection="false" rendered="#{cc.attrs.model.editable}">
                     <p:column style="width:10%">
-                        <i class="pi pi-check"></i>
+                        <i class="fas fa-calendar-check"></i>
                     </p:column>
                     <p:column>
                         <h:outputText value="#{project}"/>
                     </p:column>
+<!--                    <p:ajax event="itemSelect" listener="#{autoCompleteView.onItemSelect}" update="msgs" />-->
                 </p:autoComplete>
             </div>
         </p:outputPanel>

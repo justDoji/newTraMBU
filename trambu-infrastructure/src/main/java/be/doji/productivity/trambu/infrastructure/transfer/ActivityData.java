@@ -712,6 +712,7 @@ public class ActivityData {
   private List<ActivityTagData> tags = new ArrayList<>();
 
   public void setTags(List<ActivityTagData> tagsToSet) {
+    this.tags = new ArrayList<>();
     for (ActivityTagData tag : tagsToSet) {
       tag.setActivity(this);
       this.tags.add(tag);
@@ -724,6 +725,7 @@ public class ActivityData {
   private List<ActivityProjectData> projects = new ArrayList<>();
 
   public void setProjects(List<ActivityProjectData> projectsToSet) {
+    this.projects = new ArrayList<>();
     for (ActivityProjectData project : projectsToSet) {
       project.setActivity(this);
       this.projects.add(project);
