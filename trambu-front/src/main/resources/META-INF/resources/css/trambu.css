@@ -99,7 +99,7 @@
  *    feature that (1) displays an appropriate copyright notice, and (2)
  *    tells the user that there is no warranty for the work (except to the
  *    extent that warranties are provided), that licensees may convey the
- *    work under this License, and how to view a copy of this License.  If
+ *    work under this License, and how to controller a copy of this License.  If
  *    the interface presents a list of user commands or options, such as a
  *    menu, a prominent item in the list meets this criterion.
  *
@@ -906,8 +906,8 @@ a {
 
 
 .delete {
-  border: 2px solid #f04e35;
-  color: #f04e35;
+  border: 2px solid #e87e64;
+  color: #E87E64;
   font-weight: bold;
   background: linear-gradient(180deg, #233046, #232e3c);
   position: relative;
@@ -918,9 +918,9 @@ a {
 
 .delete:hover {
   color: #fff;
-  background: #f04e35 50% 50% repeat-x;
+  background: #E87E64 50% 50% repeat-x;
   font-weight: bold;
-  border: 2px solid #f04e35;
+  border: 2px solid #E87E64;
   padding: 6px 12px !important;
   font-size: smaller !important;
   line-height: 1.42857143;

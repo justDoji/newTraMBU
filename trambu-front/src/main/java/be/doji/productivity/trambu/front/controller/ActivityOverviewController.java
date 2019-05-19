@@ -81,9 +81,9 @@
  * An interactive user interface displays "Appropriate Legal Notices" to the extent that it includes
  * a convenient and prominently visible feature that (1) displays an appropriate copyright notice,
  * and (2) tells the user that there is no warranty for the work (except to the extent that
- * warranties are provided), that licensees may convey the work under this License, and how to view
- * a copy of this License.  If the interface presents a list of user commands or options, such as a
- * menu, a prominent item in the list meets this criterion.
+ * warranties are provided), that licensees may convey the work under this License, and how to
+ * controller a copy of this License.  If the interface presents a list of user commands or options,
+ * such as a menu, a prominent item in the list meets this criterion.
  *
  * 1. Source Code.
  *
@@ -536,7 +536,7 @@
  * "copyright disclaimer" for the program, if necessary. For more information on this, and how to
  * apply and follow the GNU AGPL, see <https://www.gnu.org/licenses/>.
  */
-package be.doji.productivity.trambu.front.view;
+package be.doji.productivity.trambu.front.controller;
 
 import static be.doji.productivity.trambu.front.TrambuWebApplication.PATH_CONFIGURATION_DIRECTORY;
 import static be.doji.productivity.trambu.front.converter.ActivityModelConverter.toDatabase;
@@ -565,7 +565,7 @@ import org.springframework.web.context.annotation.SessionScope;
 
 @SessionScope
 @Named
-public class ActivityOverview {
+public class ActivityOverviewController {
 
   private File todoFile;
 
@@ -693,9 +693,13 @@ public class ActivityOverview {
   }
 
 
-  public void showMessage(String message) {
+  private void showMessage(String message) {
     FacesContext context = FacesContext.getCurrentInstance();
 
     context.addMessage(null, new FacesMessage("Info", message));
+  }
+
+  public void setTodoFile(File todoFile) {
+    this.todoFile = todoFile;
   }
 }

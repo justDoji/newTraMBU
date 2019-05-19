@@ -100,7 +100,7 @@
        feature that (1) displays an appropriate copyright notice, and (2)
        tells the user that there is no warranty for the work (except to the
        extent that warranties are provided), that licensees may convey the
-       work under this License, and how to view a copy of this License.  If
+       work under this License, and how to controller a copy of this License.  If
        the interface presents a list of user commands or options, such as a
        menu, a prominent item in the list meets this criterion.
 
@@ -686,7 +686,7 @@
             <div class="activity-item">
                 <p:commandButton value="#{cc.attrs.model.completed ?'Done' :'Todo'}"
                                  id="editSave"
-                                 action="#{activityOverview.toggleCompleted(cc.attrs.model)}"
+                                 action="#{activityOverviewController.toggleCompleted(cc.attrs.model)}"
                                  update="formId"
                                  style="margin-right:20px;"
                                  styleClass="#{cc.attrs.model.completed ?'done' :'todo'}"
@@ -700,7 +700,7 @@
             <div class="activity-item edit-button">
                 <p:commandButton value="#{cc.attrs.model.expanded ?'close' :'open'}"
                                  id="collapsed"
-                                 action="#{activityOverview.toggleExpanded(cc.attrs.model)}"
+                                 action="#{activityOverviewController.toggleExpanded(cc.attrs.model)}"
                                  update="formId"
                                  style="margin-right:20px;"
                                  styleClass="edit"
@@ -708,7 +708,7 @@
 
                 <p:commandButton value="#{cc.attrs.model.editable ?'Save' :'Edit'}"
                                  id="withIcon"
-                                 action="#{activityOverview.toggleEditable(cc.attrs.model)}"
+                                 action="#{activityOverviewController.toggleEditable(cc.attrs.model)}"
                                  update="formId"
                                  style="margin-right:20px;"
                                  styleClass="edit"
@@ -716,7 +716,7 @@
                 <p:commandButton
                     id="delete"
                     icon = "fas fa-trash-alt"
-                    action="#{activityOverview.deleteActivity(cc.attrs.model)}"
+                    action="#{activityOverviewController.deleteActivity(cc.attrs.model)}"
                     update="formId"
                     styleClass="delete"
                     >
@@ -759,7 +759,7 @@
                 </ui:repeat>
                 <p:tooltip id="tagsTooltip" for="inputTags" showEvent="focus" hideEvent="blur"/>
                 <p:autoComplete id="inputTags" multiple="true" value="#{cc.attrs.model.tags}"
-                                completeMethod="#{activityOverview.completeTags}"
+                                completeMethod="#{activityOverviewController.completeTags}"
                                 var="tag" itemLabel="#{tag}" itemValue="#{tag}"
                                 forceSelection="false"
                                 rendered="#{cc.attrs.model.editable}">
@@ -787,7 +787,7 @@
                            hideEvent="blur"/>
                 <p:autoComplete id="inputProjects" multiple="true"
                                 value="#{cc.attrs.model.projects}"
-                                completeMethod="#{activityOverview.completeProjects}"
+                                completeMethod="#{activityOverviewController.completeProjects}"
                                 var="project" itemLabel="#{project}" itemValue="#{project}"
                                 forceSelection="false" rendered="#{cc.attrs.model.editable}">
                     <p:column style="width:10%">
