@@ -36,7 +36,7 @@ public class TrambuInfrastructureAutoConfiguration {
 
   private static final Log log = LogFactory.getLog(TrambuInfrastructureAutoConfiguration.class);
 
-  public TrambuInfrastructureAutoConfiguration() {
+  TrambuInfrastructureAutoConfiguration() {
     log.info("Created");
   }
 

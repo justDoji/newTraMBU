@@ -3,18 +3,16 @@
  *
  * Copyright (c) 2019 Stijn Dejongh
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
+ * This program is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU Affero General Public License as published by the Free Software Foundation, either version 3
+ * of the License, or (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Affero General Public License for more details.
  *
- * You should have received a copy of the GNU Affero General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <http://www.gnu.org/licenses/>.
  */
 package be.doji.productivity.trambu.front.controller;
 
@@ -22,6 +20,7 @@ import static be.doji.productivity.trambu.front.TrambuWebApplication.PATH_CONFIG
 import static be.doji.productivity.trambu.front.converter.ActivityModelConverter.toDatabase;
 
 import be.doji.productivity.trambu.front.converter.ActivityModelConverter;
+import be.doji.productivity.trambu.front.filter.FilterChain;
 import be.doji.productivity.trambu.front.transfer.ActivityModel;
 import be.doji.productivity.trambu.infrastructure.file.FileLoader;
 import be.doji.productivity.trambu.infrastructure.file.FileWriter;
@@ -56,6 +55,7 @@ public class ActivityOverviewController {
   private final ActivityDatabaseRepository repository;
 
   private List<ActivityModel> model = new ArrayList<>();
+  private FilterChain<ActivityModel> filterchain = new FilterChain();
 
   @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
   ActivityOverviewController(@Autowired FileWriter writer, @Autowired FileLoader loader,
@@ -90,6 +90,10 @@ public class ActivityOverviewController {
 
   public List<ActivityModel> getActivities() {
     return this.model;
+  }
+
+  public List<ActivityModel> getFilteredActivities() {
+    return filterchain.getFilteredData(this.model);
   }
 
   public void toggleEditable(ActivityModel model) {
@@ -190,7 +194,7 @@ public class ActivityOverviewController {
   private void showMessage(String message) {
     FacesContext context = FacesContext.getCurrentInstance();
 
-    if(context != null) {
+    if (context != null) {
       context.addMessage(null, new FacesMessage("Info", message));
     }
   }
@@ -201,5 +205,10 @@ public class ActivityOverviewController {
 
   void clearActivities() {
     this.model.clear();
+  }
+
+  public void addTagFilter(String tagToInclude) {
+    this.filterchain
+        .addPositiveFiler(ActivityModel::getTags, (tags) -> tags.contains(tagToInclude));
   }
 }

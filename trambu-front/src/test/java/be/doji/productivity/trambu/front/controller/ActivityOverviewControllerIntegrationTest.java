@@ -192,8 +192,6 @@ public class ActivityOverviewControllerIntegrationTest {
   @Test
   public void completeProjects_containsAllExistingTags() throws URISyntaxException {
     clearActivityState();
-    assertThat(controller.getActivities()).isEmpty();
-    assertThat(repository.findAll()).isEmpty();
 
     controller.createActivity();
     ActivityModel activityOne = controller.getActivities().get(0);
@@ -209,6 +207,39 @@ public class ActivityOverviewControllerIntegrationTest {
   }
 
 
+  @Test
+  public void filter_onTag() throws URISyntaxException {
+    clearActivityState();
+
+    controller.createActivity();
+    ActivityModel activityOne = controller.getActivities().get(0);
+    activityOne.setTags(Arrays.asList("Cone", "Two"));
+
+    controller.createActivity();
+    ActivityModel activityTwo = controller.getActivities().get(1);
+    activityTwo.setTags(Arrays.asList("Cat", "Dog"));
+
+    controller.addTagFilter("Two");
+    assertThat(controller.getFilteredActivities()).hasSize(1);
+  }
+
+  @Test
+  public void filter_onTag_multipleFilters() throws URISyntaxException {
+    clearActivityState();
+
+    controller.createActivity();
+    ActivityModel activityOne = controller.getActivities().get(0);
+    activityOne.setTags(Arrays.asList("Cone", "Two"));
+
+    controller.createActivity();
+    ActivityModel activityTwo = controller.getActivities().get(1);
+    activityTwo.setTags(Arrays.asList("Cat", "Dog"));
+
+    controller.addTagFilter("Two");
+    controller.addTagFilter("Dog");
+    assertThat(controller.getFilteredActivities()).hasSize(2);
+
+  }
 
   private void clearActivityState() throws URISyntaxException {
     ClassLoader classLoader = getClass().getClassLoader();
@@ -216,6 +247,8 @@ public class ActivityOverviewControllerIntegrationTest {
     controller.setTodoFile(file);
     controller.clearActivities();
     repository.deleteAll();
+    assertThat(controller.getActivities()).isEmpty();
+    assertThat(repository.findAll()).isEmpty();
   }
 
 
