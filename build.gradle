@@ -51,13 +51,13 @@ sonarqube{
         property "sonar.junit.reportPaths", "build/test-results/test"
 
         //Ignore the front-end in the sonar analysis
-        property 'sonar.coverage.exclusions', "**/trambu/infrastructure/transfer/**"
-        property 'sonar.exclusions', "**/trambu/infrastructure/transfer/**"
+        property 'sonar.coverage.exclusions', "**/trambu/infrastructure/transfer/**, **be/doji/productivity/trambu/front/transfer/**"
+        property 'sonar.exclusions', "**/trambu/infrastructure/transfer/**, **be/doji/productivity/trambu/front/transfer/**"
     }
 }
 
 license {
-    header rootProject.file('LICENSE')
+    header rootProject.file('LICENSE_HEADER')
     strictCheck true
 }
 

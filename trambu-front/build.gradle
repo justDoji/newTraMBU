@@ -26,6 +26,8 @@ repositories {
     }
 }
 
+test.finalizedBy jacocoTestReport
+
 jacocoTestReport {
     reports {
         xml.enabled true
@@ -70,6 +72,14 @@ dependencies {
 }
 
 license {
-    header rootProject.file('LICENSE')
-    strictCheck true
+    header rootProject.file('LICENSE_HEADER')
+    strictCheck false
+    exclude('**/*.txt')
+}
+
+build {
+    doFirst {
+        licenseFormatTest
+        licenseFormatMain
+    }
 }

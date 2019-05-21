@@ -41,6 +41,6 @@ jacocoTestReport {
 }
 
 license {
-    header rootProject.file('LICENSE')
+    header rootProject.file('LICENSE_HEADER')
     strictCheck true
 }
