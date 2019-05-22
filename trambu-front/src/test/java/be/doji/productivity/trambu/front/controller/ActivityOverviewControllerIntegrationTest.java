@@ -219,8 +219,27 @@ public class ActivityOverviewControllerIntegrationTest {
     ActivityModel activityTwo = controller.getActivities().get(1);
     activityTwo.setTags(Arrays.asList("Cat", "Dog"));
 
+    controller.resetFilter();
+
     controller.addTagFilter("Two");
     assertThat(controller.getFilteredActivities()).hasSize(1);
+  }
+
+  @Test
+  public void filter_onTag_noFilter() throws URISyntaxException {
+    clearActivityState();
+
+    controller.createActivity();
+    ActivityModel activityOne = controller.getActivities().get(0);
+    activityOne.setTags(Arrays.asList("Cone", "Two"));
+
+    controller.createActivity();
+    ActivityModel activityTwo = controller.getActivities().get(1);
+    activityTwo.setTags(Arrays.asList("Cat", "Dog"));
+
+    controller.resetFilter();
+
+    assertThat(controller.getFilteredActivities()).hasSize(2);
   }
 
   @Test

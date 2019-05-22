@@ -29,6 +29,10 @@ public class FilterChain<T> {
     this.filters.add(new PositiveFilter(supplier, includeWhen));
   }
 
+  public void reset() {
+    this.filters = new ArrayList<>();
+  }
+
   public List<T> getFilteredData(List<T> initialList) {
     if (filters.isEmpty()) {
       return initialList;

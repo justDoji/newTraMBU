@@ -38,6 +38,7 @@ import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import javax.inject.Named;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.annotation.SessionScope;
@@ -58,6 +59,7 @@ public class ActivityOverviewController {
   private FilterChain<ActivityModel> filterchain = new FilterChain();
 
   @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
+  @Inject
   ActivityOverviewController(@Autowired FileWriter writer, @Autowired FileLoader loader,
       @Autowired ActivityDatabaseRepository repository) {
     this.writer = writer;
@@ -209,6 +211,10 @@ public class ActivityOverviewController {
 
   public void addTagFilter(String tagToInclude) {
     this.filterchain
-        .addPositiveFiler(ActivityModel::getTags, (tags) -> tags.contains(tagToInclude));
+        .addPositiveFiler(ActivityModel::getTags, tags -> tags.contains(tagToInclude));
+  }
+
+  public void resetFilter() {
+    this.filterchain.reset();
   }
 }
