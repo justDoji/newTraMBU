@@ -226,7 +226,7 @@ public class ActivityOverviewControllerIntegrationTest {
   }
 
   @Test
-  public void filter_onTag_noFilter() throws URISyntaxException {
+  public void filter_noFilter() throws URISyntaxException {
     clearActivityState();
 
     controller.createActivity();
@@ -258,6 +258,24 @@ public class ActivityOverviewControllerIntegrationTest {
     controller.addTagFilter("Dog");
     assertThat(controller.getFilteredActivities()).hasSize(2);
 
+  }
+
+
+  @Test
+  public void filter_onProject_multipleFilters() throws URISyntaxException {
+    clearActivityState();
+
+    controller.createActivity();
+    ActivityModel activityOne = controller.getActivities().get(0);
+    activityOne.setProjects(Arrays.asList("Cone", "Two"));
+
+    controller.createActivity();
+    ActivityModel activityTwo = controller.getActivities().get(1);
+    activityTwo.setProjects(Arrays.asList("Cat", "Dog"));
+
+    controller.addProjectFilter("Two");
+    controller.addProjectFilter("Dog");
+    assertThat(controller.getFilteredActivities()).hasSize(2);
   }
 
   private void clearActivityState() throws URISyntaxException {

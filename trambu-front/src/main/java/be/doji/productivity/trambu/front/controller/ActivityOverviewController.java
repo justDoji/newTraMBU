@@ -214,7 +214,15 @@ public class ActivityOverviewController {
         .addPositiveFiler(ActivityModel::getTags, tags -> tags.contains(tagToInclude));
   }
 
+  public void addProjectFilter(String projectToInclude) {
+    this.filterchain
+        .addPositiveFiler(ActivityModel::getProjects,
+            projects -> projects.contains(projectToInclude));
+  }
+
   public void resetFilter() {
     this.filterchain.reset();
   }
+
+
 }
