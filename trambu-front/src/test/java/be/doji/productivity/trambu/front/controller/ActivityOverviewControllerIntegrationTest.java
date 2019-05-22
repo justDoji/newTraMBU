@@ -278,6 +278,67 @@ public class ActivityOverviewControllerIntegrationTest {
     assertThat(controller.getFilteredActivities()).hasSize(2);
   }
 
+
+  @Test
+  public void getAllExistingProjects_multipleActivities() throws URISyntaxException {
+    clearActivityState();
+
+    controller.createActivity();
+    ActivityModel activityOne = controller.getActivities().get(0);
+    activityOne.setProjects(Arrays.asList("Cone", "Two"));
+
+    controller.createActivity();
+    ActivityModel activityTwo = controller.getActivities().get(1);
+    activityTwo.setProjects(Arrays.asList("Cat", "Dog"));
+
+    assertThat(controller.getAllExistingProjects()).hasSize(4);
+  }
+
+  @Test
+  public void getAllExistingProjects_multipleActivities_haveOverlap() throws URISyntaxException {
+    clearActivityState();
+
+    controller.createActivity();
+    ActivityModel activityOne = controller.getActivities().get(0);
+    activityOne.setProjects(Arrays.asList("Cone", "Two"));
+
+    controller.createActivity();
+    ActivityModel activityTwo = controller.getActivities().get(1);
+    activityTwo.setProjects(Arrays.asList("Cat", "Two"));
+
+    assertThat(controller.getAllExistingProjects()).hasSize(3);
+  }
+
+  @Test
+  public void getAllExistingTags_multipleActivities() throws URISyntaxException {
+    clearActivityState();
+
+    controller.createActivity();
+    ActivityModel activityOne = controller.getActivities().get(0);
+    activityOne.setTags(Arrays.asList("Cone", "Two"));
+
+    controller.createActivity();
+    ActivityModel activityTwo = controller.getActivities().get(1);
+    activityTwo.setTags(Arrays.asList("Cat", "Dog"));
+
+    assertThat(controller.getAllExistingTags()).hasSize(4);
+  }
+
+  @Test
+  public void getAllExistingTags_multipleActivities_haveOverlap() throws URISyntaxException {
+    clearActivityState();
+
+    controller.createActivity();
+    ActivityModel activityOne = controller.getActivities().get(0);
+    activityOne.setTags(Arrays.asList("Cone", "Two"));
+
+    controller.createActivity();
+    ActivityModel activityTwo = controller.getActivities().get(1);
+    activityTwo.setTags(Arrays.asList("Cat", "Two"));
+
+    assertThat(controller.getAllExistingTags()).hasSize(3);
+  }
+
   private void clearActivityState() throws URISyntaxException {
     ClassLoader classLoader = getClass().getClassLoader();
     File file = new File(classLoader.getResource("controller/todo_write.txt").toURI());

@@ -171,9 +171,16 @@ public class ActivityOverviewController {
     return getOptions(query, ActivityModel::getProjects);
   }
 
+  public List<String> getAllExistingTags() {
+    return getValuesFor(ActivityModel::getTags).orElse(new ArrayList<>());
+  }
+
+  public List<String> getAllExistingProjects() {
+    return getValuesFor(ActivityModel::getProjects).orElse(new ArrayList<>());
+  }
+
   private List<String> getOptions(String query, Function<ActivityModel, List<String>> getter) {
-    Optional<List<String>> reducedValues = this.getActivities().stream().map(getter)
-        .reduce(this::reduceStrings);
+    Optional<List<String>> reducedValues = getValuesFor(getter);
 
     List<String> options = reducedValues.orElse(new ArrayList<>());
     Set<String> returnOptions = new HashSet<>();
@@ -183,6 +190,11 @@ public class ActivityOverviewController {
       }
     }
     return new ArrayList<>(returnOptions);
+  }
+
+  private Optional<List<String>> getValuesFor(Function<ActivityModel, List<String>> getter) {
+    return this.getActivities().stream().map(getter)
+        .reduce(this::reduceStrings);
   }
 
   private List<String> reduceStrings(List<String> strings, List<String> strings2) {
