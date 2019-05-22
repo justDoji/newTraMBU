@@ -149,6 +149,11 @@ a {
 .align-clear {
   clear: both;
 }
+.activity-commands {
+  display: block;
+  height: 46px;
+}
+
 .activity {
   margin-right: 6px;
   margin-bottom: 12px;
@@ -262,6 +267,7 @@ a {
   padding: 6px 12px !important;
   font-size: x-small !important;
   line-height: 1.42857143;
+  float: right;
 }
 
 .new:hover {
@@ -272,6 +278,7 @@ a {
   padding: 6px 12px !important;
   font-size: x-small !important;
   line-height: 1.42857143;
+  float: right;
 }
 
 
@@ -363,9 +370,9 @@ a {
 }
 
 .activefilters {
-  text-align: right;
+  text-align: left;
   margin-top: 15px;
-  margin-right: 12px;
+  margin-left: 6px;
   min-height: 45px;
 }
 
@@ -373,7 +380,7 @@ a {
   color: #819aaf;
   background: #fff 50% 50% repeat-x;
   border: 2px solid #678095;
-  padding: 5px 1px !important;
+  padding: 3px 1px !important;
   font-size: smaller !important;
   line-height: 1.42857143;
   margin-bottom: 4px;
