@@ -193,7 +193,7 @@ public class ActivityOverviewController {
   }
 
   private Optional<List<String>> getValuesFor(Function<ActivityModel, List<String>> getter) {
-    Optional<List<String>> reduce = this.getActivities().stream().map(getter)
+    Optional<List<String>> reduce = this.getFilteredActivities().stream().map(getter)
         .reduce(this::reduceStrings);
     reduce.ifPresent(strings -> strings.sort(String.CASE_INSENSITIVE_ORDER));
     return reduce;

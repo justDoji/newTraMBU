@@ -248,15 +248,16 @@ public class ActivityOverviewControllerIntegrationTest {
 
     controller.createActivity();
     ActivityModel activityOne = controller.getActivities().get(0);
-    activityOne.setTags(Arrays.asList("Cone", "Two"));
+    activityOne.setTags(Arrays.asList("Cone", "Two","Dog"));
 
     controller.createActivity();
     ActivityModel activityTwo = controller.getActivities().get(1);
     activityTwo.setTags(Arrays.asList("Cat", "Dog"));
 
-    controller.addTagFilter("Two");
     controller.addTagFilter("Dog");
     assertThat(controller.getFilteredActivities()).hasSize(2);
+    controller.addTagFilter("Two");
+    assertThat(controller.getFilteredActivities()).hasSize(1);
 
   }
 
@@ -267,15 +268,16 @@ public class ActivityOverviewControllerIntegrationTest {
 
     controller.createActivity();
     ActivityModel activityOne = controller.getActivities().get(0);
-    activityOne.setProjects(Arrays.asList("Cone", "Two"));
+    activityOne.setProjects(Arrays.asList("Cone", "Two", "Dog"));
 
     controller.createActivity();
     ActivityModel activityTwo = controller.getActivities().get(1);
     activityTwo.setProjects(Arrays.asList("Cat", "Dog"));
 
-    controller.addProjectFilter("Two");
     controller.addProjectFilter("Dog");
     assertThat(controller.getFilteredActivities()).hasSize(2);
+    controller.addProjectFilter("Two");
+    assertThat(controller.getFilteredActivities()).hasSize(1);
   }
 
 

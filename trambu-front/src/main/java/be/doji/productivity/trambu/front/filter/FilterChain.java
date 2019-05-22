@@ -31,7 +31,7 @@ public class FilterChain<T> {
     List<String> typeNames = this.filters.stream()
         .map(filter -> createIdentifier(filter.getName(), filter.getType())).collect(
             Collectors.toList());
-    if(!typeNames.contains(createIdentifier(displayValue, type))) {
+    if (!typeNames.contains(createIdentifier(displayValue, type))) {
       this.filters.add(new PositiveFilter(displayValue, supplier, includeWhen, type));
     }
   }
@@ -51,14 +51,20 @@ public class FilterChain<T> {
 
     List<T> results = new ArrayList<>();
     for (T element : initialList) {
-      for (PositiveFilter filter : this.filters) {
-        if (filter.allows(element)) {
-          results.add(element);
-          break;
-        }
+      if (shouldBeIncluded(element)) {
+        results.add(element);
       }
     }
     return results;
+  }
+
+  private boolean shouldBeIncluded(T element) {
+    for (PositiveFilter filter : this.filters) {
+      if (!filter.allows(element)) {
+        return false;
+      }
+    }
+    return true;
   }
 
   public List<PositiveFilter> getFilters() {
