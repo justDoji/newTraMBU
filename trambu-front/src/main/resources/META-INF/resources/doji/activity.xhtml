@@ -37,7 +37,7 @@
                 <p:commandButton value="#{cc.attrs.model.completed ?'Done' :'Todo'}"
                                  id="editSave"
                                  action="#{activityOverviewController.toggleCompleted(cc.attrs.model)}"
-                                 update="formId"
+                                 update="formId, filterForm"
                                  style="margin-right:20px;"
                                  styleClass="#{cc.attrs.model.completed ?'done' :'todo'}"
                                  icon="#{cc.attrs.model.completed ?'fas fa-check-square' :'far fa-square'}"/>
@@ -67,7 +67,7 @@
                     id="delete"
                     icon = "fas fa-trash-alt"
                     action="#{activityOverviewController.deleteActivity(cc.attrs.model)}"
-                    update="formId"
+                    update="formId, filterForm"
                     styleClass="delete"
                     >
                     <p:confirm header="Confirmation" message="Are you sure?" icon="fas fa-skull-crossbones" />
