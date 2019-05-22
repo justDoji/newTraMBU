@@ -24,40 +24,79 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:doji="http://xmlns.jcp.org/jsf/composite/doji">
 
-    <ui:define name="menu">
-        <h:form enctype="menuForm">
-           <!-- Add file upload here -->
-        </h:form>
-    </ui:define>
     <ui:define name="content">
 
+        <div class="activefilters">
+            <h:form id="activeFilterForm">
+                <span class="filter-header">Active filters</span>
+                <ui:repeat value="#{activityOverviewController.filterchain.filters}"
+                           var="filter">
+                    <p:commandButton value="#{filter.name}"
+                                     id="removeFilter"
+                                     action="#{activityOverviewController.filterchain.removeFilter(filter)}"
+                                     update="formId, activeFilterForm"
+                                     styleClass="active-filter"
+                                     icon="fas fa-minus-circle"/>
+                </ui:repeat>
 
-        <div class="container" id="main">
-            <h2>Activity Overview: </h2>
-
-            <p:commandButton
-                    value="New"
-                    icon="far fa-calendar-plus"
-                    action="#{activityOverviewController.createActivity}"
-                    update="formId"
-                    styleClass="new"
-            />
-            <br/>
-            <h:form id="formId">
-                <p:growl id="growl" showDetail="true" sticky="true"/>
-
-                <h:panelGroup id="repeat" layout="block" styleClass="repeat-simple-list">
-
-                    <ui:repeat value="#{activityOverviewController.activities}"
-                               var="activity"
-                               status="status"
-                               rendered="true">
-
-                        <doji:activity model="#{activity}"/>
-
-                    </ui:repeat>
-                </h:panelGroup>
             </h:form>
+        </div>
+
+        <div class="container-wrapper">
+            <div class="filterSelector" id="filters">
+                <h:form id="filterForm">
+                    <span class="filter-header">Project Filters</span>
+                    <ui:repeat value="#{activityOverviewController.allExistingProjects}"
+                               var="project">
+                        <p:commandButton value="#{project}"
+                                         id="projectFilter"
+                                         action="#{activityOverviewController.addProjectFilter(project)}"
+                                         update="formId, activeFilterForm"
+                                         styleClass="filter"
+                                         icon="fas fa-filter"/>
+                        <br />
+                    </ui:repeat>
+                    <hr />
+                    <span class="filter-header">Tag Filters</span>
+                    <ui:repeat value="#{activityOverviewController.allExistingTags}"
+                               var="tag">
+                        <p:commandButton value="#{tag}"
+                                         id="tagFilter"
+                                         action="#{activityOverviewController.addTagFilter(tag)}"
+                                         update="formId, activeFilterForm"
+                                         styleClass="filter"
+                                         icon="fas fa-filter"/>
+                        <br />
+                    </ui:repeat>
+                </h:form>
+
+            </div>
+
+            <div class="container" id="main">
+                <p:commandButton
+                        value="New"
+                        icon="far fa-calendar-plus"
+                        action="#{activityOverviewController.createActivity}"
+                        update="formId"
+                        styleClass="new"
+                />
+                <br/>
+                <h:form id="formId">
+                    <p:growl id="growl" showDetail="true" sticky="true"/>
+
+                    <h:panelGroup id="repeat" layout="block" styleClass="repeat-simple-list">
+
+                        <ui:repeat value="#{activityOverviewController.filteredActivities}"
+                                   var="activity"
+                                   status="status"
+                                   rendered="true">
+
+                            <doji:activity model="#{activity}"/>
+
+                        </ui:repeat>
+                    </h:panelGroup>
+                </h:form>
+            </div>
         </div>
     </ui:define>
 </ui:composition>

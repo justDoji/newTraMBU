@@ -20,13 +20,24 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public class FilterChain<T> {
 
   private List<PositiveFilter> filters = new ArrayList<>();
 
-  public <P> void addPositiveFiler(Function<T, P> supplier, Predicate<P> includeWhen) {
-    this.filters.add(new PositiveFilter(supplier, includeWhen));
+  public <P> void addPositiveFiler(String displayValue, Function<T, P> supplier,
+      Predicate<P> includeWhen, String type) {
+    List<String> typeNames = this.filters.stream()
+        .map(filter -> createIdentifier(filter.getName(), filter.getType())).collect(
+            Collectors.toList());
+    if(!typeNames.contains(createIdentifier(displayValue, type))) {
+      this.filters.add(new PositiveFilter(displayValue, supplier, includeWhen, type));
+    }
+  }
+
+  private String createIdentifier(String displayValue, String type) {
+    return type + ":" + displayValue;
   }
 
   public void reset() {
@@ -50,18 +61,47 @@ public class FilterChain<T> {
     return results;
   }
 
-  class PositiveFilter<T, P> {
+  public List<PositiveFilter> getFilters() {
+    return filters;
+  }
+
+  public void removeFilter(PositiveFilter filter) {
+    this.filters.remove(filter);
+  }
+
+  public void clearFilters() {
+    this.filters.clear();
+  }
+
+  public class PositiveFilter<T, P> {
 
     private final Function<T, P> supplier;
     private final Predicate<P> isTobeAddedWhen;
+    private final String name;
+    private final String clazz;
 
-    public PositiveFilter(Function<T, P> supplier, Predicate<P> isTobeAddedWhen) {
+    public PositiveFilter(String displayValue, Function supplier,
+        Predicate isTobeAddedWhen, String clazz) {
+      this.name = displayValue;
       this.isTobeAddedWhen = isTobeAddedWhen;
       this.supplier = supplier;
+      this.clazz = clazz;
     }
 
     public boolean allows(T elementToCheck) {
       return isTobeAddedWhen.test(supplier.apply(elementToCheck));
+    }
+
+    public String getName() {
+      return name;
+    }
+
+    public Predicate<P> getPredicate() {
+      return isTobeAddedWhen;
+    }
+
+    public String getType() {
+      return clazz;
     }
   }
 

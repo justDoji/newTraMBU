@@ -69,10 +69,10 @@ public class ActivityOverviewController {
 
   @PostConstruct
   public void init() {
-    if (this.model == null) {
+    this.todoFile = PATH_CONFIGURATION_DIRECTORY.resolve("TODO.txt").toFile();
+    if (this.model == null || this.model.isEmpty()) {
       loadActivities();
     }
-    this.todoFile = PATH_CONFIGURATION_DIRECTORY.resolve("TODO.txt").toFile();
   }
 
   void loadActivities() {
@@ -193,8 +193,10 @@ public class ActivityOverviewController {
   }
 
   private Optional<List<String>> getValuesFor(Function<ActivityModel, List<String>> getter) {
-    return this.getActivities().stream().map(getter)
+    Optional<List<String>> reduce = this.getActivities().stream().map(getter)
         .reduce(this::reduceStrings);
+    reduce.ifPresent(strings -> strings.sort(String.CASE_INSENSITIVE_ORDER));
+    return reduce;
   }
 
   private List<String> reduceStrings(List<String> strings, List<String> strings2) {
@@ -223,13 +225,18 @@ public class ActivityOverviewController {
 
   public void addTagFilter(String tagToInclude) {
     this.filterchain
-        .addPositiveFiler(ActivityModel::getTags, tags -> tags.contains(tagToInclude));
+        .addPositiveFiler(tagToInclude, ActivityModel::getTags,
+            tags -> tags.contains(tagToInclude), "Tag");
   }
 
   public void addProjectFilter(String projectToInclude) {
     this.filterchain
-        .addPositiveFiler(ActivityModel::getProjects,
-            projects -> projects.contains(projectToInclude));
+        .addPositiveFiler(projectToInclude, ActivityModel::getProjects,
+            projects -> projects.contains(projectToInclude), "Project");
+  }
+
+  public FilterChain<ActivityModel> getFilterchain() {
+    return filterchain;
   }
 
   public void resetFilter() {

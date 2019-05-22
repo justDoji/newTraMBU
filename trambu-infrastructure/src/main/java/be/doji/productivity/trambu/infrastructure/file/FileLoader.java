@@ -51,6 +51,7 @@ public class FileLoader {
   }
 
   private void loadTodoFileActivities(Path path) throws IOException {
+    activityDatabaseRepository.deleteAll();
     List<String> todoFileLines = Files.readAllLines(path);
     for (String line : todoFileLines) {
       Activity parsedActivity = ActivityConverter.parse(line);
