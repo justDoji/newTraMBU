@@ -373,7 +373,7 @@ a {
   text-align: left;
   margin-top: 15px;
   margin-left: 6px;
-  min-height: 45px;
+  min-height: 35px;
 }
 
 .active-filter {
@@ -392,7 +392,7 @@ a {
   background: #E87E64 50% 50% repeat-x;
   font-weight: bold;
   border: 2px solid #678095;
-  padding: 5px 1px !important;
+  padding: 3px 1px !important;
   font-size: smaller !important;
   line-height: 1.42857143;
   margin-bottom: 4px;
