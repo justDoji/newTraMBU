@@ -8,12 +8,14 @@
 User can submit both ideas or bugfixes.
 When these are accepted, we will create a **'Story'** For tracking and describing the issue in more detail.
 
-##User labels
+## User labels
+
 **Feature Request** : general idea on a new feature you would like added to the project  
 **Bug Report** : Something that is going wrong  
 **Enhancement** : Improvements on existing features  
 
-##Team labels
+## Team labels
+
 **Story** : Accepted requests  
 **XS**,**S**,**M**,**L**,**XL** : Effort needed to complete the story
 
