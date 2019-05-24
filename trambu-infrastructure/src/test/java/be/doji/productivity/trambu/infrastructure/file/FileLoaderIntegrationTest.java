@@ -16,6 +16,9 @@
  */
 package be.doji.productivity.trambu.infrastructure.file;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
 import be.doji.productivity.trambu.infrastructure.repository.ActivityDatabaseRepository;
 import be.doji.productivity.trambu.infrastructure.transfer.ActivityData;
 import be.doji.productivity.trambu.infrastructure.transfer.LogPointData;
@@ -23,7 +26,6 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.List;
-import org.assertj.core.api.Assertions;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -45,12 +47,12 @@ public class FileLoaderIntegrationTest {
   public void loadTodoFileContents_FileWithActivities() throws IOException, URISyntaxException {
     ClassLoader classLoader = getClass().getClassLoader();
     File file = new File(classLoader.getResource("reader/todo_test.txt").toURI());
-    Assertions.assertThat(activityDatabaseRepository.findAll()).isEmpty();
+    assertThat(activityDatabaseRepository.findAll()).isEmpty();
 
     fileLoader.loadTodoFileActivities(file);
 
-    Assertions.assertThat(activityDatabaseRepository.findAll()).isNotEmpty();
-    Assertions.assertThat(activityDatabaseRepository.findAll()).hasSize(3);
+    assertThat(activityDatabaseRepository.findAll()).isNotEmpty();
+    assertThat(activityDatabaseRepository.findAll()).hasSize(3);
   }
 
   @Test
@@ -58,23 +60,34 @@ public class FileLoaderIntegrationTest {
     // Prep file
     ClassLoader classLoader = getClass().getClassLoader();
     File file = new File(classLoader.getResource("reader/timelog_test.txt").toURI());
-    Assertions.assertThat(activityDatabaseRepository.findAll()).isEmpty();
+    assertThat(activityDatabaseRepository.findAll()).isEmpty();
 
     //Add activity with ID 123 to activity repository
     ActivityData rootActivity = new ActivityData();
     rootActivity.setId(123L);
     rootActivity.setTitle("Implement timelogs");
     activityDatabaseRepository.save(rootActivity);
-    Assertions.assertThat(activityDatabaseRepository.findAll()).hasSize(1);
+    assertThat(activityDatabaseRepository.findAll()).hasSize(1);
 
     fileLoader.loadTimeLogFile(file);
 
     // Assert expected outcome
-    Assertions.assertThat(activityDatabaseRepository.findAll()).hasSize(1);
+    assertThat(activityDatabaseRepository.findAll()).hasSize(1);
     List<LogPointData> expectedTimeLogs = activityDatabaseRepository.findAll().get(0).getTimelogs();
-    Assertions.assertThat(expectedTimeLogs).isNotNull();
-    Assertions.assertThat(expectedTimeLogs).isNotEmpty();
-    Assertions.assertThat(expectedTimeLogs).hasSize(3);
+    assertThat(expectedTimeLogs).isNotNull();
+    assertThat(expectedTimeLogs).isNotEmpty();
+    assertThat(expectedTimeLogs).hasSize(3);
+
+  }
+
+  @Test
+  public void loadTimeLogFileContents_throwsException_WhenFileDoesNotExist() {
+    File file = new File("SOME/PATH/THAT/DOES_NOT_EXIST.txt");
+
+    assertThatThrownBy(() -> fileLoader.loadTimeLogFile(file))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessageContaining("Error while loading timelog file")
+        .hasMessageContaining("DOES_NOT_EXIST.txt");
 
   }
 
