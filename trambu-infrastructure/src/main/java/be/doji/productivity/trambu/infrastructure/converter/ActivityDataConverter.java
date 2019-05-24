@@ -27,6 +27,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+// TODO: make this a service for consitency
 public final class ActivityDataConverter {
 
   /* Utility classes should not have a public or default constructor */

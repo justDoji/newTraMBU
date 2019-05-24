@@ -27,6 +27,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import org.apache.commons.lang3.StringUtils;
 
+// TODO: make this a service for consitency
 public final class ActivityConverter {
 
   private static final String DEFAULT_TITLE = "Unnamed activity";

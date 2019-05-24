@@ -56,7 +56,7 @@ public class FileLoaderIntegrationTest {
   }
 
   @Test
-  public void loadTimeLogFileContents_FileWithTimeLogs() throws URISyntaxException {
+  public void loadTimeLogFileContents_FileWithTimeLogs() throws URISyntaxException, IOException {
     // Prep file
     ClassLoader classLoader = getClass().getClassLoader();
     File file = new File(classLoader.getResource("reader/timelog_test.txt").toURI());
@@ -64,7 +64,7 @@ public class FileLoaderIntegrationTest {
 
     //Add activity with ID 123 to activity repository
     ActivityData rootActivity = new ActivityData();
-    rootActivity.setId(123L);
+    rootActivity.setId((long) 123);
     rootActivity.setTitle("Implement timelogs");
     activityDatabaseRepository.save(rootActivity);
     assertThat(activityDatabaseRepository.findAll()).hasSize(1);

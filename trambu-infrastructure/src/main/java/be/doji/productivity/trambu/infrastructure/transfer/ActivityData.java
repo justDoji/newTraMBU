@@ -62,7 +62,7 @@ public class ActivityData {
   @OneToMany(targetEntity = LogPointData.class, mappedBy = "activity", cascade = {
       CascadeType.ALL}, orphanRemoval = true)
   @LazyCollection(LazyCollectionOption.FALSE)
-  private List<LogPointData> timelogs;
+  private List<LogPointData> timelogs = new ArrayList<>();
 
 
   /**
@@ -108,5 +108,11 @@ public class ActivityData {
   public Activity toDomainObject() {
 
     return ActivityDataConverter.parse(this);
+  }
+
+  public void addTimelog(LogPointData pointData) {
+    if (pointData != null) {
+      this.timelogs.add(pointData);
+    }
   }
 }

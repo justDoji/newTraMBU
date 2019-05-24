@@ -16,6 +16,7 @@
  */
 package be.doji.productivity.trambu.infrastructure.transfer;
 
+import java.util.Optional;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -54,4 +55,7 @@ public class LogPointData {
   @Column(name = "END", nullable = false)
   private String end;
 
+  public Optional<ActivityData> getActivity() {
+    return Optional.ofNullable(this.activity);
+  }
 }
