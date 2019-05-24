@@ -3,18 +3,16 @@
  *
  * Copyright (c) 2019 Stijn Dejongh
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
+ * This program is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU Affero General Public License as published by the Free Software Foundation, either version 3
+ * of the License, or (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Affero General Public License for more details.
  *
- * You should have received a copy of the GNU Affero General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <http://www.gnu.org/licenses/>.
  */
 package be.doji.productivity.trambu.infrastructure.transfer;
 
@@ -57,10 +55,19 @@ public class ActivityData {
   private String deadline;
 
   @OneToMany(targetEntity = ActivityTagData.class, mappedBy = "activity", cascade = {
-      CascadeType.ALL}, orphanRemoval=true)
+      CascadeType.ALL}, orphanRemoval = true)
   @LazyCollection(LazyCollectionOption.FALSE)
   private List<ActivityTagData> tags = new ArrayList<>();
 
+  @OneToMany(targetEntity = LogPointData.class, mappedBy = "activity", cascade = {
+      CascadeType.ALL}, orphanRemoval = true)
+  @LazyCollection(LazyCollectionOption.FALSE)
+  private List<LogPointData> timelogs;
+
+
+  /**
+   * Extra setter for double binding
+   */
   public void setTags(List<ActivityTagData> tagsToSet) {
     this.tags = new ArrayList<>();
     for (ActivityTagData tag : tagsToSet) {
@@ -69,8 +76,20 @@ public class ActivityData {
     }
   }
 
+  /**
+   * Extra setter for double binding
+   */
+  public void setTimelogs(
+      List<LogPointData> timelogs) {
+    this.timelogs = new ArrayList<>();
+    for (LogPointData logPoint : timelogs) {
+      logPoint.setActivity(this);
+      this.timelogs.add(logPoint);
+    }
+  }
+
   @OneToMany(targetEntity = ActivityProjectData.class, mappedBy = "activity", cascade = {
-      CascadeType.ALL}, orphanRemoval=true)
+      CascadeType.ALL}, orphanRemoval = true)
   @LazyCollection(LazyCollectionOption.FALSE)
   private List<ActivityProjectData> projects = new ArrayList<>();
 

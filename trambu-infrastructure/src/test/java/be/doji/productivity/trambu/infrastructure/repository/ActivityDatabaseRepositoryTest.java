@@ -19,9 +19,11 @@
 package be.doji.productivity.trambu.infrastructure.repository;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
+import static org.assertj.core.api.Java6Assertions.assertThatCode;
 
 import be.doji.productivity.trambu.infrastructure.transfer.ActivityData;
 import be.doji.productivity.trambu.infrastructure.transfer.ActivityTagData;
+import be.doji.productivity.trambu.infrastructure.transfer.LogPointData;
 import java.util.ArrayList;
 import java.util.List;
 import javax.sql.DataSource;
@@ -83,6 +85,29 @@ public class ActivityDatabaseRepositoryTest {
     assertThat(repository.findAll().get(0).getTitle()).isEqualTo("Save me");
     assertThat(repository.findAll().get(0).getTags()).isNotEmpty();
     assertThat(repository.findAll().get(0).getTags()).hasSize(2);
+  }
+
+  @Test
+  public void addActivity_withTimeLog() {
+    ActivityData data = new ActivityData();
+    data.setTitle("Activity with timelog");
+    List<LogPointData> timeLogs = new ArrayList<>();
+    LogPointData logPoint = new LogPointData("24-05-2019 20:00:00", "24-05-2019 21:14:00");
+    timeLogs.add(logPoint);
+    data.setTimelogs(timeLogs);
+
+    assertThat(repository.findAll()).hasSize(0);
+
+    repository.save(data);
+
+    assertThat(repository.findAll()).hasSize(1);
+    ActivityData savedData = repository.findAll().get(0);
+    assertThat(savedData.getTitle()).isEqualTo("Activity with timelog");
+    assertThat(savedData.getTimelogs()).isNotEmpty();
+    assertThat(savedData.getTimelogs()).hasSize(1);
+    assertThat(savedData.getTimelogs().get(0)).isNotNull();
+    assertThat(savedData.getTimelogs().get(0).getStart()).isEqualTo("24-05-2019 20:00:00");
+    assertThat(savedData.getTimelogs().get(0).getEnd()).isEqualTo("24-05-2019 21:14:00");
   }
 
   @After
