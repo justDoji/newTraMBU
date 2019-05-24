@@ -1,10 +1,9 @@
 ---
-name: Feature request
+name: Story
 about: Suggest an idea for this project
 title: "[STORY] title"
 labels: story
 assignees: ''
-
 ---
 
 **Story Outline**
