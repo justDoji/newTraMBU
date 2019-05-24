@@ -1,6 +1,6 @@
 ---
 name: Story
-about: Suggest an idea for this project
+about: Describe your story (team only)
 title: "[STORY] title"
 labels: story
 assignees: ''
