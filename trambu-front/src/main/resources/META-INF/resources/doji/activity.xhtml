@@ -35,7 +35,7 @@
         <div class="activity-header">
             <div class="activity-item">
                 <p:commandButton value="#{cc.attrs.model.completed ?'Done' :'Todo'}"
-                                 id="editSave"
+                                 id="todoDone"
                                  action="#{activityOverviewController.toggleCompleted(cc.attrs.model)}"
                                  update="formId, filterForm"
                                  style="margin-right:20px;"
@@ -57,9 +57,9 @@
                                  icon="#{cc.attrs.model.expanded ?'fas fa-chevron-down' :'fas fa-chevron-up'}"/>
 
                 <p:commandButton value="#{cc.attrs.model.editable ?'Save' :'Edit'}"
-                                 id="withIcon"
+                                 id="editSave"
                                  action="#{activityOverviewController.toggleEditable(cc.attrs.model)}"
-                                 update="formId"
+                                 update="formId, filterForm"
                                  style="margin-right:20px;"
                                  styleClass="edit"
                                  icon="#{cc.attrs.model.editable ?'fas fa-save' :'fas fa-edit'}"/>
