@@ -59,6 +59,4 @@ public class FileLoader {
       activityDatabaseRepository.save(convertedActivityData);
     }
   }
-
-
 }
