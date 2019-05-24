@@ -59,4 +59,9 @@ public class FileLoader {
       activityDatabaseRepository.save(convertedActivityData);
     }
   }
+
+
+  public void loadTimeLogFile(File file) {
+
+  }
 }
