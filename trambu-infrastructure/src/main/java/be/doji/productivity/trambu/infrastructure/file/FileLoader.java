@@ -64,13 +64,23 @@ public class FileLoader {
   }
 
 
-  public void loadTimeLogFile(File file) throws IllegalArgumentException {
+  /**
+   *
+   * @param file the file containing timelog data
+   * @throws IllegalArgumentException when the file is not found
+   * @throws IOException when a problem occurs reading the file
+   */
+  public void loadTimeLogFile(File file) throws IllegalArgumentException, IOException {
     if (!file.exists()) {
       String errorMessage = ERROR_LOADING_FILE + ": " + file.getName();
       LOG.error(errorMessage);
       throw new IllegalArgumentException(errorMessage);
     }
 
+    List<String> fileLines = Files.readAllLines(file.toPath());
+    for(String line : fileLines) {
+      
+    }
 
 
   }
