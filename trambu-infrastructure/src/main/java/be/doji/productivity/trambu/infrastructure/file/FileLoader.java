@@ -40,8 +40,8 @@ import org.springframework.stereotype.Service;
 public class FileLoader {
 
   private static final String ERROR_LOADING_FILE = "Error while loading timelog file";
+  private static final Logger LOG = LoggerFactory.getLogger(FileLoader.class);
 
-  private final Logger LOG = LoggerFactory.getLogger(FileLoader.class);
   private final ActivityDatabaseRepository activityDatabaseRepository;
   private final LogParser logParser;
   private final ActivityDataConverter dataConverter;
@@ -76,7 +76,7 @@ public class FileLoader {
    * @throws IllegalArgumentException when the file is not found
    * @throws IOException when a problem occurs reading the file
    */
-  public void loadTimeLogFile(File file) throws IllegalArgumentException, IOException {
+  public void loadTimeLogFile(File file) throws IOException {
     throwErrorIfFileDoesNotExist(file, ERROR_LOADING_FILE);
 
     for (String line : Files.readAllLines(file.toPath())) {
