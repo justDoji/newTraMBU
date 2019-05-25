@@ -53,7 +53,7 @@ public class LogParserTest {
     ActivityData activityData = new ActivityData();
     activityData.setId(123L);
     activityData.setTitle("Some kind of title");
-    when(activityRepositoryMock.findById(activityData.getId()))
+    when(activityRepositoryMock.findByReferenceKey("283b6271-b513-4e89-b757-10e98c9078ea"))
         .thenReturn(Optional.of(activityData));
 
     logParser = new LogParser(activityRepositoryMock);

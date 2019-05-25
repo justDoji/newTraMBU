@@ -16,6 +16,14 @@
  */
 package be.doji.productivity.trambu.infrastructure.converter;
 
+import static be.doji.productivity.trambu.infrastructure.converter.ParserUtils.findAllMatches;
+import static be.doji.productivity.trambu.infrastructure.converter.ParserUtils.findAndStripIndicators;
+import static be.doji.productivity.trambu.infrastructure.converter.ParserUtils.findFirstMatch;
+import static be.doji.productivity.trambu.infrastructure.converter.ParserUtils.matches;
+import static be.doji.productivity.trambu.infrastructure.converter.ParserUtils.regexEscape;
+import static be.doji.productivity.trambu.infrastructure.converter.ParserUtils.replaceFirst;
+import static be.doji.productivity.trambu.infrastructure.converter.ParserUtils.stripGroupIndicators;
+
 import be.doji.productivity.trambu.domain.activity.Activity;
 import be.doji.productivity.trambu.domain.time.TimePoint;
 import be.doji.productivity.trambu.infrastructure.converter.Property.Indicator;
@@ -58,12 +66,12 @@ public final class ActivityConverter {
   }
 
   private static boolean parseCompleted(String line) {
-    return ParserUtils.matches(Regex.COMPLETED, line);
+    return matches(Regex.COMPLETED, line);
   }
 
   private static String parseTitle(String line) {
     return stripGroupIndicators(
-        ParserUtils.findFirstMatch(Regex.TITLE, line).orElse(DEFAULT_TITLE)).trim();
+        findFirstMatch(Regex.TITLE, line).orElse(DEFAULT_TITLE)).trim();
   }
 
   private static String parseDeadline(String line) {
@@ -71,21 +79,21 @@ public final class ActivityConverter {
   }
 
   private static List<String> parseTags(String line) {
-    List<String> tagMatches = ParserUtils.findAllMatches(Regex.TAG, line);
+    List<String> tagMatches = findAllMatches(Regex.TAG, line);
 
     return tagMatches.stream()
-        .map(ActivityConverter::stripGroupIndicators)
-        .map(tag -> ParserUtils.replaceFirst(Indicator.TAG, tag, ""))
+        .map(ParserUtils::stripGroupIndicators)
+        .map(tag -> replaceFirst(Indicator.TAG, tag, ""))
         .map(String::trim)
         .collect(Collectors.toList());
   }
 
   private static List<String> parseProjects(String line) {
-    List<String> projectMatches = ParserUtils.findAllMatches(Regex.PROJECT, line);
+    List<String> projectMatches = findAllMatches(Regex.PROJECT, line);
 
     return projectMatches.stream()
-        .map(ActivityConverter::stripGroupIndicators)
-        .map(project -> ParserUtils.replaceFirst(regexEscape(Indicator.PROJECT), project, ""))
+        .map(ParserUtils::stripGroupIndicators)
+        .map(project -> replaceFirst(regexEscape(Indicator.PROJECT), project, ""))
         .map(String::trim)
         .collect(Collectors.toList());
   }
@@ -141,31 +149,4 @@ public final class ActivityConverter {
         .collect(
             Collectors.joining());
   }
-
-
-
-  /* UTILITY METHODS */
-
-  private static String stripGroupIndicators(String toStrip) {
-    String strippedMatch = ParserUtils
-        .replaceFirst(regexEscape(Indicator.GROUP_START), toStrip, "");
-    return ParserUtils.replaceLast(regexEscape(Indicator.GROUP_END), strippedMatch, "");
-  }
-
-  private static Optional<String> findAndStripIndicators(String escapedIndicator, String regex,
-      String line) {
-    return ParserUtils
-        .findFirstMatch(regex, line)
-        .map(s -> stripGroupIndicators(s, escapedIndicator).trim());
-  }
-
-  private static String stripGroupIndicators(String toStrip, String escapedIndicator) {
-    return ParserUtils
-        .replaceFirst(escapedIndicator, toStrip, "");
-  }
-
-  private static String regexEscape(String toEscape) {
-    return "\\" + toEscape;
-  }
-
 }

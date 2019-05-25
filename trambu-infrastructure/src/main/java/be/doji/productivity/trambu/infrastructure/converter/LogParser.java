@@ -18,12 +18,15 @@
  */
 package be.doji.productivity.trambu.infrastructure.converter;
 
+import static be.doji.productivity.trambu.infrastructure.converter.ParserUtils.*;
+
 import be.doji.productivity.trambu.infrastructure.converter.Property.Indicator;
 import be.doji.productivity.trambu.infrastructure.converter.Property.Regex;
 import be.doji.productivity.trambu.infrastructure.repository.ActivityDatabaseRepository;
 import be.doji.productivity.trambu.infrastructure.transfer.ActivityData;
 import be.doji.productivity.trambu.infrastructure.transfer.LogPointData;
 import java.util.Optional;
+import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -45,22 +48,20 @@ public class LogParser {
   }
 
   private String parseStart(String logline) {
-    Optional<String> match = ParserUtils.findFirstMatch(Regex.LOGPOINT_START, logline);
-    return ParserUtils.replaceFirst(Indicator.LOGPOINT_START, match.orElse(""), "").trim();
+    Optional<String> match = findFirstMatch(Regex.LOGPOINT_START, logline);
+    return replaceFirst(Indicator.LOGPOINT_START, match.orElse(""), "").trim();
   }
 
   private String parseEnd(String logline) {
-    Optional<String> match = ParserUtils.findFirstMatch(Regex.LOGPOINT_END, logline);
-    return ParserUtils.replaceFirst(Indicator.LOGPOINT_END, match.orElse(""), "").trim();
+    Optional<String> match = findFirstMatch(Regex.LOGPOINT_END, logline);
+    return replaceFirst(Indicator.LOGPOINT_END, match.orElse(""), "").trim();
   }
 
   private ActivityData parseActivity(String logline) {
-    Optional<String> match = ParserUtils.findFirstMatch(Regex.LOGPOINT_ACTIVITY, logline);
+    Optional<String> match = findFirstMatch(Regex.LOGPOINT_ACTIVITY, logline);
     if (match.isPresent()) {
-      String trimmedMatch = ParserUtils.replaceFirst(Indicator.LOGPOINT_ACTIVITY, match.get(), "")
-          .trim();
-      long activityId = Long.parseLong(trimmedMatch);
-      return activityDatabase.findById(activityId).orElse(null);
+      String trimmedMatch = stripGroupIndicators(replaceFirst(Indicator.LOGPOINT_ACTIVITY, match.get(), "")).trim();
+      return activityDatabase.findByReferenceKey(trimmedMatch).orElse(null);
     }
 
     return null;

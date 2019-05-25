@@ -18,6 +18,7 @@
  */
 package be.doji.productivity.trambu.infrastructure.converter;
 
+import be.doji.productivity.trambu.infrastructure.converter.Property.Indicator;
 import com.google.re2j.Matcher;
 import com.google.re2j.Pattern;
 import java.util.ArrayList;
@@ -89,6 +90,28 @@ public final class ParserUtils {
     } else {
       return line;
     }
+  }
+
+  public static String stripGroupIndicators(String toStrip) {
+    String strippedMatch = ParserUtils
+        .replaceFirst(regexEscape(Indicator.GROUP_START), toStrip, "");
+    return ParserUtils.replaceLast(regexEscape(Indicator.GROUP_END), strippedMatch, "");
+  }
+
+  public static Optional<String> findAndStripIndicators(String escapedIndicator, String regex,
+      String line) {
+    return ParserUtils
+        .findFirstMatch(regex, line)
+        .map(s -> stripIndicators(s, escapedIndicator).trim());
+  }
+
+  public static String stripIndicators(String toStrip, String escapedIndicator) {
+    return ParserUtils
+        .replaceFirst(escapedIndicator, toStrip, "");
+  }
+
+  public static String regexEscape(String toEscape) {
+    return "\\" + toEscape;
   }
 
 }

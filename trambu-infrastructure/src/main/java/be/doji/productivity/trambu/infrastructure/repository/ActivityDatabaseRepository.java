@@ -18,6 +18,7 @@ package be.doji.productivity.trambu.infrastructure.repository;
 
 import be.doji.productivity.trambu.infrastructure.transfer.ActivityData;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -26,6 +27,6 @@ public interface ActivityDatabaseRepository extends CrudRepository<ActivityData,
 
   List<ActivityData> findAll();
 
-  ActivityData findByReferenceKey(String key);
+  Optional<ActivityData> findByReferenceKey(String key);
 
 }

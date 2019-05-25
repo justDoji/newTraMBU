@@ -62,9 +62,9 @@ public class FileLoaderIntegrationTest {
     File file = new File(classLoader.getResource("reader/timelog_test.txt").toURI());
     assertThat(activityDatabaseRepository.findAll()).isEmpty();
 
-    //Add activity with ID 123 to activity repository
+    //Add activity with reference key to activity repository
     ActivityData rootActivity = new ActivityData();
-    rootActivity.setId((long) 123);
+    rootActivity.setReferenceKey("283b6271-b513-4e89-b757-10e98c9078ea");
     rootActivity.setTitle("Implement timelogs");
     activityDatabaseRepository.save(rootActivity);
     assertThat(activityDatabaseRepository.findAll()).hasSize(1);
