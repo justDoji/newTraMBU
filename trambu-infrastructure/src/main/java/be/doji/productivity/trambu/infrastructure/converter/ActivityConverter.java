@@ -3,18 +3,16 @@
  *
  * Copyright (c) 2019 Stijn Dejongh
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
+ * This program is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU Affero General Public License as published by the Free Software Foundation, either version 3
+ * of the License, or (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Affero General Public License for more details.
  *
- * You should have received a copy of the GNU Affero General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <http://www.gnu.org/licenses/>.
  */
 package be.doji.productivity.trambu.infrastructure.converter;
 
@@ -24,6 +22,7 @@ import be.doji.productivity.trambu.infrastructure.converter.Property.Indicator;
 import be.doji.productivity.trambu.infrastructure.converter.Property.Regex;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import org.apache.commons.lang3.StringUtils;
 
@@ -54,6 +53,7 @@ public final class ActivityConverter {
         .conversionStep(ActivityConverter::parseDeadline, Activity::setDeadline)
         .conversionStep(ActivityConverter::parseTags, Activity::setTags)
         .conversionStep(ActivityConverter::parseProjects, Activity::setProjects)
+        .conversionStep(ActivityConverter::parseReferenceKey, Activity::setReferenceKey)
         .getConvertedData();
   }
 
@@ -62,19 +62,19 @@ public final class ActivityConverter {
   }
 
   private static String parseTitle(String line) {
-    return stripIndicators(
+    return stripGroupIndicators(
         ParserUtils.findFirstMatch(Regex.TITLE, line).orElse(DEFAULT_TITLE)).trim();
   }
 
   private static String parseDeadline(String line) {
-    return findAndStripIndicators(Indicator.DEADLINE, Regex.DEADLINE, line);
+    return findAndStripIndicators(Indicator.DEADLINE, Regex.DEADLINE, line).orElse(null);
   }
 
   private static List<String> parseTags(String line) {
     List<String> tagMatches = ParserUtils.findAllMatches(Regex.TAG, line);
 
     return tagMatches.stream()
-        .map(ActivityConverter::stripIndicators)
+        .map(ActivityConverter::stripGroupIndicators)
         .map(tag -> ParserUtils.replaceFirst(Indicator.TAG, tag, ""))
         .map(String::trim)
         .collect(Collectors.toList());
@@ -84,10 +84,16 @@ public final class ActivityConverter {
     List<String> projectMatches = ParserUtils.findAllMatches(Regex.PROJECT, line);
 
     return projectMatches.stream()
-        .map(ActivityConverter::stripIndicators)
+        .map(ActivityConverter::stripGroupIndicators)
         .map(project -> ParserUtils.replaceFirst(regexEscape(Indicator.PROJECT), project, ""))
         .map(String::trim)
         .collect(Collectors.toList());
+  }
+
+  private static String parseReferenceKey(String line) {
+    String firstMatch = findAndStripIndicators(Indicator.REFERENCE_KEY, Regex.REFERENCE_KEY, line)
+        .orElse(UUID.randomUUID().toString());
+    return stripGroupIndicators(firstMatch).trim();
   }
 
   private static class ActivityToStringConverter extends Converter<Activity, StringBuilder> {
@@ -140,21 +146,20 @@ public final class ActivityConverter {
 
   /* UTILITY METHODS */
 
-  private static String stripIndicators(String toStrip) {
+  private static String stripGroupIndicators(String toStrip) {
     String strippedMatch = ParserUtils
         .replaceFirst(regexEscape(Indicator.GROUP_START), toStrip, "");
     return ParserUtils.replaceLast(regexEscape(Indicator.GROUP_END), strippedMatch, "");
   }
 
-  private static String findAndStripIndicators(String escapedIndicator, String regex,
+  private static Optional<String> findAndStripIndicators(String escapedIndicator, String regex,
       String line) {
     return ParserUtils
         .findFirstMatch(regex, line)
-        .map(s -> stripIndicators(s, escapedIndicator).trim())
-        .orElse(null);
+        .map(s -> stripGroupIndicators(s, escapedIndicator).trim());
   }
 
-  private static String stripIndicators(String toStrip, String escapedIndicator) {
+  private static String stripGroupIndicators(String toStrip, String escapedIndicator) {
     return ParserUtils
         .replaceFirst(escapedIndicator, toStrip, "");
   }

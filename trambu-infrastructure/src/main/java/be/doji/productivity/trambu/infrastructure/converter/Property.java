@@ -3,18 +3,16 @@
  *
  * Copyright (c) 2019 Stijn Dejongh
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
+ * This program is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU Affero General Public License as published by the Free Software Foundation, either version 3
+ * of the License, or (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Affero General Public License for more details.
  *
- * You should have received a copy of the GNU Affero General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <http://www.gnu.org/licenses/>.
  */
 package be.doji.productivity.trambu.infrastructure.converter;
 
@@ -68,6 +66,12 @@ final class Property {
         + GROUP_END
         + TERMINATOR;
 
+    static final String REFERENCE_KEY = Indicator.REFERENCE_KEY
+        + GROUP_START
+        + ".{8}-.{4}-.{4}-.{4}-.{12}"
+        + GROUP_END
+        + TERMINATOR;
+
 
     static final String LOGPOINT_START = Indicator.LOGPOINT_START + DATE + TERMINATOR;
     static final String LOGPOINT_END = Indicator.LOGPOINT_END + DATE + TERMINATOR;
@@ -89,8 +93,7 @@ final class Property {
     static final String PROJECT = "+";
     static final String TAG = "@";
     static final String DEADLINE = "due:";
-    static final String WARNING_PERIOD = "warningPeriod:";
-    static final String UUID = "uuid:";
+    static final String REFERENCE_KEY = "uuid:";
 
     static final String LOGPOINT_ACTIVITY = "ACTIVITY:";
     static final String LOGPOINT_START = "STARTTIME:";

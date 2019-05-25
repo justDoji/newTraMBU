@@ -29,7 +29,7 @@ import org.junit.Test;
 
 public class ActivityConverterTest {
 
-  private static final String ACTIVITY_DATA_LINE = "(A) 2017-10-21:14:13.000 [TaskTitle] +[Overarching Project] @[Tag] @[Tag with multiple words] due:2017-12-21:16:15:00.000 uuid:283b6271-b513-4e89-b757-10e98c9078ea";
+  private static final String ACTIVITY_DATA_LINE = "(A) 2017-10-21:14:13.000 [TaskTitle] +[Overarching Project] @[Tag] @[Tag with multiple words] due:2017-12-21:16:15:00.000 uuid:[283b6271-b513-4e89-b757-10e98c9078ea]";
   private static final String COMPLETED_ACTIVITY = "X (B) [Buy thunderbird plugin license]";
   private static final String COMPLETED_ACTIVITY_LOWERCASE = "x (B) [Buy thunderbird plugin license]";
 
@@ -116,6 +116,12 @@ public class ActivityConverterTest {
   public void parse_activityProject_noProject() {
     Activity parsedActivity = ActivityConverter.parse(COMPLETED_ACTIVITY);
     assertThat(parsedActivity.getProjects()).isEmpty();
+  }
+
+  @Test
+  public void parse_activityContainsUUID() {
+    Activity parsed = ActivityConverter.parse(ACTIVITY_DATA_LINE);
+    assertThat(parsed.getReferenceKey()).isEqualTo("283b6271-b513-4e89-b757-10e98c9078ea");
   }
 
   @Test
