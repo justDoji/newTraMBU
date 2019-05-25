@@ -1,27 +1,27 @@
 /**
  * TraMBU - an open time management tool
  *
- *     Copyright (C) 2019  Stijn Dejongh
+ * Copyright (C) 2019  Stijn Dejongh
  *
- *     This program is free software: you can redistribute it and/or modify
- *     it under the terms of the GNU Affero General Public License as
- *     published by the Free Software Foundation, either version 3 of the
- *     License, or (at your option) any later version.
+ * This program is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU Affero General Public License as published by the Free Software Foundation, either version 3
+ * of the License, or (at your option) any later version.
  *
- *     This program is distributed in the hope that it will be useful,
- *     but WITHOUT ANY WARRANTY; without even the implied warranty of
- *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *     GNU Affero General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Affero General Public License for more details.
  *
- *     You should have received a copy of the GNU Affero General Public License
- *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
  *
- *     For further information on usage, or licensing, contact the author
- *     through his github profile: https://github.com/justDoji
+ * For further information on usage, or licensing, contact the author through his github profile:
+ * https://github.com/justDoji
  */
 package be.doji.productivity.trambu.infrastructure.converter;
 
-import static be.doji.productivity.trambu.infrastructure.converter.ParserUtils.*;
+import static be.doji.productivity.trambu.infrastructure.converter.ParserUtils.findFirstMatch;
+import static be.doji.productivity.trambu.infrastructure.converter.ParserUtils.replaceFirst;
+import static be.doji.productivity.trambu.infrastructure.converter.ParserUtils.stripGroupIndicators;
 
 import be.doji.productivity.trambu.infrastructure.converter.Property.Indicator;
 import be.doji.productivity.trambu.infrastructure.converter.Property.Regex;
@@ -29,7 +29,6 @@ import be.doji.productivity.trambu.infrastructure.repository.ActivityDatabaseRep
 import be.doji.productivity.trambu.infrastructure.transfer.ActivityData;
 import be.doji.productivity.trambu.infrastructure.transfer.LogPointData;
 import java.util.Optional;
-import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -63,7 +62,8 @@ public class LogParser {
   private ActivityData parseActivity(String logline) {
     Optional<String> match = findFirstMatch(Regex.LOGPOINT_ACTIVITY, logline);
     if (match.isPresent()) {
-      String trimmedMatch = stripGroupIndicators(replaceFirst(Indicator.LOGPOINT_ACTIVITY, match.get(), "")).trim();
+      String trimmedMatch = stripGroupIndicators(
+          replaceFirst(Indicator.LOGPOINT_ACTIVITY, match.get(), "")).trim();
       return activityDatabase.findByReferenceKey(trimmedMatch).orElse(null);
     }
 

@@ -113,11 +113,6 @@ public class ActivityData {
     return id;
   }
 
-  public Activity toDomainObject() {
-
-    return ActivityDataConverter.parse(this);
-  }
-
   public void addTimelog(LogPointData pointData) {
     if (pointData != null) {
       this.timelogs.add(pointData);

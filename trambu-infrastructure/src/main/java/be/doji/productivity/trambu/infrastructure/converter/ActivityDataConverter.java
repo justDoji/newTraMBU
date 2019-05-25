@@ -29,21 +29,19 @@ import be.doji.productivity.trambu.infrastructure.transfer.ActivityTagData;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import org.springframework.stereotype.Service;
 
-// TODO: make this a service for consitency
-public final class ActivityDataConverter {
+@Service
+public class ActivityDataConverter {
 
-  /* Utility classes should not have a public or default constructor */
-  private ActivityDataConverter() {throw new UnsupportedOperationException();}
-
-  private static class ActivityToActivityDataConverter extends Converter<Activity, ActivityData> {
+  private class ActivityToActivityDataConverter extends Converter<Activity, ActivityData> {
 
     ActivityToActivityDataConverter(Activity source) {
       super(source, ActivityData.class);
     }
   }
 
-  public static ActivityData parse(Activity activity) {
+  public ActivityData parse(Activity activity) {
     return new ActivityToActivityDataConverter(activity)
         .conversionStep(Activity::getTitle, ActivityData::setTitle)
         .conversionStep(Activity::isCompleted, ActivityData::setCompleted)
@@ -70,14 +68,14 @@ public final class ActivityDataConverter {
         .orElse("");
   }
 
-  private static class ActivityDataToActivityConverter extends Converter<ActivityData, Activity> {
+  private class ActivityDataToActivityConverter extends Converter<ActivityData, Activity> {
 
     ActivityDataToActivityConverter(ActivityData source) {
       super(source, Activity.class);
     }
   }
 
-  public static Activity parse(ActivityData data) {
+  public Activity parse(ActivityData data) {
     return new ActivityDataToActivityConverter(data)
         .conversionStep(ActivityData::getTitle, Activity::setTitle)
         .conversionStep(ActivityData::getDeadline, Activity::setDeadline)

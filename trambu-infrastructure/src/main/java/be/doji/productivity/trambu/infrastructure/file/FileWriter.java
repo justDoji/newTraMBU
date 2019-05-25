@@ -38,9 +38,11 @@ import org.springframework.stereotype.Service;
 public class FileWriter {
 
   private final ActivityDatabaseRepository activityRepository;
+  private final ActivityDataConverter dataConverter;
 
-  public FileWriter(@Autowired ActivityDatabaseRepository repository) {
+  public FileWriter(@Autowired ActivityDatabaseRepository repository, @Autowired ActivityDataConverter converter) {
     this.activityRepository = repository;
+    this.dataConverter = converter;
   }
 
   public void writeActivtiesToFile(File file) throws IOException {
@@ -50,7 +52,7 @@ public class FileWriter {
   public void writeActivtiesToFile(Path path) throws IOException {
     List<String> activities = activityRepository.findAll().
         stream()
-        .map(ActivityDataConverter::parse)
+        .map(dataConverter::parse)
         .map(ActivityConverter::write)
         .collect(Collectors.toList());
     Files.write(path, activities, StandardOpenOption.TRUNCATE_EXISTING);

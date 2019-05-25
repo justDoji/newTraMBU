@@ -37,10 +37,18 @@ jacocoTestReport {
     }
 }
 
+def gitBranch() {
+    def branch = ""
+    def proc = "git rev-parse --abbrev-ref HEAD".execute()
+    proc.in.eachLine { line -> branch = line }
+    proc.err.eachLine { line -> println line }
+    proc.waitFor()
+    branch
+}
 
 sonarqube{
     properties {
-        //property "sonar.branch.name", "ddd_redesign"
+        property "sonar.branch.name", gitBranch()
         property "sonar.sourceEncoding", "UTF-8"
         property "sonar.projectKey", "be.doji.productivity:newtrambu"
         property "sonar.language", "java"
