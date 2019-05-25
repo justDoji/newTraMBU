@@ -37,7 +37,7 @@ public class LogParserTest {
 
   private static final String TIMELOG_ENTRY = "STARTTIME:2018-12-05:18:48:33.130 ENDTIME:2018-12-05:18:48:36.021";
   private static final String TIMELOG_ENTRY_NO_END = "STARTTIME:2018-12-05:18:48:33.130";
-  private static final String TIMELOG_ENTRY_WITH_ACTIVITY = "ACTIVITY:123 STARTTIME:2018-12-05:18:48:33.130 ENDTIME:2018-12-05:18:48:36.021";
+  private static final String TIMELOG_ENTRY_WITH_ACTIVITY = "ACTIVITY:[283b6271-b513-4e89-b757-10e98c9078ea] STARTTIME:2018-12-05:18:48:33.130 ENDTIME:2018-12-05:18:48:36.021";
 
   @Mock private ActivityDatabaseRepository activityRepositoryMock;
 

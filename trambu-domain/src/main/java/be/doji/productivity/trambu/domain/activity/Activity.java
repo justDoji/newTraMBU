@@ -105,6 +105,7 @@ public class Activity {
     private boolean completed;
     private List<String> projects = new ArrayList<>();
     private List<String> tags = new ArrayList<>();
+    private String referenceKey;
 
     public ActivityBuilder title(String activityName) {
       this.activityTitle = activityName;
@@ -138,6 +139,7 @@ public class Activity {
       result.setCompleted(this.completed);
       result.setTags(tags);
       result.setProjects(projects);
+      result.setReferenceKey(this.referenceKey);
 
       return result;
     }
@@ -175,6 +177,11 @@ public class Activity {
 
     public ActivityBuilder projects(List<String> projects) {
       this.projects.addAll(projects);
+      return this;
+    }
+
+    public ActivityBuilder referenceKey(String referenceKey) {
+      this.referenceKey = referenceKey;
       return this;
     }
   }

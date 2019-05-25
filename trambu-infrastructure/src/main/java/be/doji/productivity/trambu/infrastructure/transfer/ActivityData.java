@@ -54,6 +54,9 @@ public class ActivityData {
   @Column(name = "DEADLINE")
   private String deadline;
 
+  @Column(name = "REFERENCE_KEY")
+  private String referenceKey;
+
   @OneToMany(targetEntity = ActivityTagData.class, mappedBy = "activity", cascade = {
       CascadeType.ALL}, orphanRemoval = true)
   @LazyCollection(LazyCollectionOption.FALSE)

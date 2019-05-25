@@ -47,6 +47,7 @@ public final class ActivityDataConverter {
         .conversionStep(ActivityDataConverter::parseDeadline, ActivityData::setDeadline)
         .conversionStep(ActivityDataConverter::parseTags, ActivityData::setTags)
         .conversionStep(ActivityDataConverter::parseProjects, ActivityData::setProjects)
+        .conversionStep(Activity::getReferenceKey, ActivityData::setReferenceKey)
         .getConvertedData();
   }
 

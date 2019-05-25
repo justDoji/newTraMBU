@@ -18,6 +18,8 @@
  */
 package be.doji.productivity.trambu.infrastructure.converter;
 
+import static org.assertj.core.api.Assertions.*;
+
 import be.doji.productivity.trambu.domain.activity.Activity;
 import be.doji.productivity.trambu.infrastructure.transfer.ActivityData;
 import java.util.Arrays;
@@ -33,8 +35,8 @@ public class ActivityDataConverterTest {
         .build();
 
     ActivityData activityData = ActivityDataConverter.parse(activity);
-    Assertions.assertThat(activityData).isNotNull();
-    Assertions.assertThat(activityData.getTitle()).isEqualTo("name");
+    assertThat(activityData).isNotNull();
+    assertThat(activityData.getTitle()).isEqualTo("name");
   }
 
   @Test
@@ -45,8 +47,8 @@ public class ActivityDataConverterTest {
         .build();
 
     ActivityData activityData = ActivityDataConverter.parse(activity);
-    Assertions.assertThat(activityData).isNotNull();
-    Assertions.assertThat(activityData.getDeadline()).isEqualTo("1989-12-18:12:00:00.000");
+    assertThat(activityData).isNotNull();
+    assertThat(activityData.getDeadline()).isEqualTo("1989-12-18:12:00:00.000");
   }
 
   @Test
@@ -57,10 +59,10 @@ public class ActivityDataConverterTest {
         .build();
 
     ActivityData activityData = ActivityDataConverter.parse(activity);
-    Assertions.assertThat(activityData).isNotNull();
-    Assertions.assertThat(activityData.getTags()).hasSize(2);
-    Assertions.assertThat(activityData.getTags().get(0).getValue()).isEqualTo("tagOne");
-    Assertions.assertThat(activityData.getTags().get(1).getValue()).isEqualTo("TagTwo");
+    assertThat(activityData).isNotNull();
+    assertThat(activityData.getTags()).hasSize(2);
+    assertThat(activityData.getTags().get(0).getValue()).isEqualTo("tagOne");
+    assertThat(activityData.getTags().get(1).getValue()).isEqualTo("TagTwo");
   }
 
   @Test
@@ -71,10 +73,22 @@ public class ActivityDataConverterTest {
         .build();
 
     ActivityData activityData = ActivityDataConverter.parse(activity);
-    Assertions.assertThat(activityData).isNotNull();
-    Assertions.assertThat(activityData.getProjects()).hasSize(2);
-    Assertions.assertThat(activityData.getProjects().get(0).getValue()).isEqualTo("ProjectOne");
-    Assertions.assertThat(activityData.getProjects().get(1).getValue()).isEqualTo("ProjectTwo");
+    assertThat(activityData).isNotNull();
+    assertThat(activityData.getProjects()).hasSize(2);
+    assertThat(activityData.getProjects().get(0).getValue()).isEqualTo("ProjectOne");
+    assertThat(activityData.getProjects().get(1).getValue()).isEqualTo("ProjectTwo");
+  }
+
+  @Test
+  public void parse_referenceKey() {
+    Activity activity = Activity.builder()
+        .title("name")
+        .referenceKey("283b6271-b513-4e89-b757-10e98c9078ea")
+        .build();
+    ActivityData activityData = ActivityDataConverter.parse(activity);
+    assertThat(activityData).isNotNull();
+    assertThat(activityData.getReferenceKey()).isNotNull();
+    assertThat(activityData.getReferenceKey()).isEqualTo("283b6271-b513-4e89-b757-10e98c9078ea");
   }
 
 }
