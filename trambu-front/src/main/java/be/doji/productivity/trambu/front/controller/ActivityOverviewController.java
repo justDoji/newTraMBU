@@ -22,7 +22,6 @@
 package be.doji.productivity.trambu.front.controller;
 
 import static be.doji.productivity.trambu.front.TrambuWebApplication.PATH_CONFIGURATION_DIRECTORY;
-import static be.doji.productivity.trambu.front.converter.ActivityModelConverter.toDatabase;
 
 import be.doji.productivity.trambu.front.converter.ActivityModelConverter;
 import be.doji.productivity.trambu.front.filter.FilterChain;
@@ -52,24 +51,28 @@ import org.springframework.web.context.annotation.SessionScope;
 @Named
 public class ActivityOverviewController {
 
+
   private File todoFile;
 
   private final FileWriter writer;
-
   private final FileLoader loader;
-
+  private final ActivityModelConverter modelConverter;
   private final ActivityDatabaseRepository repository;
+
 
   private List<ActivityModel> model = new ArrayList<>();
   private FilterChain<ActivityModel> filterchain = new FilterChain();
 
   @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
   @Inject
-  ActivityOverviewController(@Autowired FileWriter writer, @Autowired FileLoader loader,
-      @Autowired ActivityDatabaseRepository repository) {
+  ActivityOverviewController(@Autowired FileWriter writer,
+      @Autowired FileLoader loader,
+      @Autowired ActivityDatabaseRepository repository,
+      @Autowired ActivityModelConverter modelConverter) {
     this.writer = writer;
     this.loader = loader;
     this.repository = repository;
+    this.modelConverter = modelConverter;
   }
 
   @PostConstruct
@@ -88,7 +91,7 @@ public class ActivityOverviewController {
         showMessage("No todo file found!");
       }
       this.model = repository.findAll().stream()
-          .map(ActivityModelConverter::parse)
+          .map(modelConverter::parse)
           .collect(Collectors.toList());
     } catch (IOException e) {
       showMessage("Error while saving activities to file");
@@ -127,7 +130,7 @@ public class ActivityOverviewController {
 
   void saveActivities() {
     for (ActivityModel activityModel : getActivities()) {
-      ActivityData savedData = repository.save(toDatabase(activityModel));
+      ActivityData savedData = repository.save(modelConverter.toDatabase(activityModel));
       activityModel.setDataBaseId(savedData.getId());
     }
 
@@ -155,7 +158,7 @@ public class ActivityOverviewController {
   public void deleteActivity(ActivityModel toDelete) {
     if (toDelete != null) {
       ActivityModel modelInList = findModelInList(toDelete.getFrontId());
-      ActivityData databaseModel = toDatabase(modelInList);
+      ActivityData databaseModel = modelConverter.toDatabase(modelInList);
       repository.delete(databaseModel);
       this.model.remove(modelInList);
       saveActivities();

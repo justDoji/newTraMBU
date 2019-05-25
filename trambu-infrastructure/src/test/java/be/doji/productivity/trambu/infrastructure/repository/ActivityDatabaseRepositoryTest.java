@@ -1,38 +1,32 @@
 /**
  * TraMBU - an open time management tool
  *
- *     Copyright (C) 2019  Stijn Dejongh
+ * Copyright (C) 2019  Stijn Dejongh
  *
- *     This program is free software: you can redistribute it and/or modify
- *     it under the terms of the GNU Affero General Public License as
- *     published by the Free Software Foundation, either version 3 of the
- *     License, or (at your option) any later version.
+ * This program is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU Affero General Public License as published by the Free Software Foundation, either version 3
+ * of the License, or (at your option) any later version.
  *
- *     This program is distributed in the hope that it will be useful,
- *     but WITHOUT ANY WARRANTY; without even the implied warranty of
- *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *     GNU Affero General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Affero General Public License for more details.
  *
- *     You should have received a copy of the GNU Affero General Public License
- *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
  *
- *     For further information on usage, or licensing, contact the author
- *     through his github profile: https://github.com/justDoji
+ * For further information on usage, or licensing, contact the author through his github profile:
+ * https://github.com/justDoji
  */
 package be.doji.productivity.trambu.infrastructure.repository;
 
-import static org.assertj.core.api.Java6Assertions.assertThat;
-import static org.assertj.core.api.Java6Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import be.doji.productivity.trambu.infrastructure.transfer.ActivityData;
 import be.doji.productivity.trambu.infrastructure.transfer.ActivityTagData;
 import be.doji.productivity.trambu.infrastructure.transfer.LogPointData;
 import java.util.ArrayList;
 import java.util.List;
-import javax.sql.DataSource;
-import org.assertj.core.api.Assertions;
 import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,8 +43,8 @@ public class ActivityDatabaseRepositoryTest {
 
   @Test
   public void repository_CanBeAutowired() {
-    Assertions.assertThat(repository).isNotNull();
-    Assertions.assertThat(repository.findAll()).hasSize(0);
+    assertThat(repository).isNotNull();
+    assertThat(repository.findAll()).hasSize(0);
   }
 
   @Test
@@ -61,11 +55,11 @@ public class ActivityDatabaseRepositoryTest {
 
     ActivityData saved = repository.save(activityData);
 
-    Assertions.assertThat(repository.findById(saved.getId())).isPresent();
+    assertThat(repository.findById(saved.getId())).isPresent();
 
     ActivityData savedActivity = repository.findById(saved.getId()).get();
-    Assertions.assertThat(savedActivity.getTitle()).isEqualTo("Save me");
-    Assertions.assertThat(savedActivity.isCompleted()).isTrue();
+    assertThat(savedActivity.getTitle()).isEqualTo("Save me");
+    assertThat(savedActivity.isCompleted()).isTrue();
   }
 
   @Test

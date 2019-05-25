@@ -32,8 +32,16 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
+@RunWith(SpringRunner.class)
+@SpringBootTest
 public class ActivityModelConverterTest {
+
+  @Autowired private  ActivityModelConverter converter;
 
   @Test
   public void parse_defaultFields() {
@@ -42,7 +50,7 @@ public class ActivityModelConverterTest {
         .deadline("18/12/1989 12:00:00")
         .build();
 
-    ActivityModel activityModel = ActivityModelConverter.parse(activity);
+    ActivityModel activityModel = converter.parse(activity);
     assertThat(activityModel).isNotNull();
     assertThat(activityModel.getTitle()).isEqualTo("name");
     Date myBirthday = new GregorianCalendar(1989, Calendar.DECEMBER, 18, 12, 0, 0).getTime();
@@ -56,7 +64,7 @@ public class ActivityModelConverterTest {
         .completed(true)
         .build();
 
-    ActivityModel activityModel = ActivityModelConverter.parse(activity);
+    ActivityModel activityModel = converter.parse(activity);
     assertThat(activityModel).isNotNull();
     assertThat(activityModel.isCompleted()).isTrue();
   }
@@ -68,7 +76,7 @@ public class ActivityModelConverterTest {
         .tags(Arrays.asList("tagOne", "tagTwo"))
         .build();
 
-    ActivityModel activityModel = ActivityModelConverter.parse(activity);
+    ActivityModel activityModel = converter.parse(activity);
     assertThat(activityModel).isNotNull();
     assertThat(activityModel.getTags()).hasSize(2);
     assertThat(activityModel.getTags().get(0)).isEqualTo("tagOne");
@@ -82,7 +90,7 @@ public class ActivityModelConverterTest {
         .projects(Arrays.asList("projectOne", "projectTwo"))
         .build();
 
-    ActivityModel activityModel = ActivityModelConverter.parse(activity);
+    ActivityModel activityModel = converter.parse(activity);
     assertThat(activityModel).isNotNull();
     assertThat(activityModel.getProjects()).hasSize(2);
     assertThat(activityModel.getProjects().get(0)).isEqualTo("projectOne");
@@ -94,7 +102,7 @@ public class ActivityModelConverterTest {
     ActivityModel activityModel = new ActivityModel();
     activityModel.setTitle("Some kind of title");
 
-    Activity activity = ActivityModelConverter.toDomain(activityModel);
+    Activity activity = converter.toDomain(activityModel);
     Assertions.assertThat(activity).isNotNull();
     Assertions.assertThat(activity.getTitle()).isEqualTo("Some kind of title");
     Assertions.assertThat(activity.isCompleted()).isFalse();
@@ -106,7 +114,7 @@ public class ActivityModelConverterTest {
     activityModel.setTitle("Some kind of title");
     activityModel.setCompleted(true);
 
-    Activity activity = ActivityModelConverter.toDomain(activityModel);
+    Activity activity = converter.toDomain(activityModel);
     Assertions.assertThat(activity).isNotNull();
     Assertions.assertThat(activity.isCompleted()).isTrue();
   }
@@ -118,7 +126,7 @@ public class ActivityModelConverterTest {
     Date myBirthday = new GregorianCalendar(1989, Calendar.DECEMBER, 18, 12, 0, 0).getTime();
     activityModel.setDeadline(myBirthday);
 
-    Activity activity = ActivityModelConverter.toDomain(activityModel);
+    Activity activity = converter.toDomain(activityModel);
     Assertions.assertThat(activity.getDeadline()).isPresent();
     Assertions.assertThat(TimePoint
         .isSameDate(activity.getDeadline().get(), TimePoint.fromString("18/12/1989 12:00:00:000")))
@@ -131,7 +139,7 @@ public class ActivityModelConverterTest {
     activityModel.setTitle("Some kind of title");
     activityModel.setTags(Arrays.asList("TagOne", "TagTwo"));
 
-    Activity activity = ActivityModelConverter.toDomain(activityModel);
+    Activity activity = converter.toDomain(activityModel);
     Assertions.assertThat(activity.getTags()).isNotNull();
     Assertions.assertThat(activity.getTags()).isNotEmpty();
     Assertions.assertThat(activity.getTags().get(0)).isEqualTo("TagOne");
@@ -144,7 +152,7 @@ public class ActivityModelConverterTest {
     activityModel.setTitle("Some kind of title");
     activityModel.setProjects(Arrays.asList("ProjectOne", "ProjectTwo"));
 
-    Activity activity = ActivityModelConverter.toDomain(activityModel);
+    Activity activity = converter.toDomain(activityModel);
     Assertions.assertThat(activity.getProjects()).isNotNull();
     Assertions.assertThat(activity.getProjects()).isNotEmpty();
     Assertions.assertThat(activity.getProjects().get(0)).isEqualTo("ProjectOne");

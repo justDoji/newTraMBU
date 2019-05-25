@@ -21,6 +21,7 @@
  */
 package be.doji.productivity.trambu.infrastructure.converter;
 
+import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -134,7 +135,7 @@ public class ActivityConverterTest {
         .build();
 
     String toString = ActivityConverter.write(activity);
-    Assertions.assertThat(toString).startsWith("[name]");
+    assertThat(toString).startsWith("[name]");
   }
 
   @Test
@@ -145,7 +146,7 @@ public class ActivityConverterTest {
         .build();
 
     String toString = ActivityConverter.write(activity);
-    Assertions.assertThat(toString).startsWith("x [name]");
+    assertThat(toString).startsWith("x [name]");
   }
 
   @Test
@@ -155,7 +156,7 @@ public class ActivityConverterTest {
         .build();
 
     String toString = ActivityConverter.write(activity);
-    Assertions.assertThat(toString).contains("[name is @ cool g_y]");
+    assertThat(toString).contains("[name is @ cool g_y]");
   }
 
   @Test
@@ -166,7 +167,7 @@ public class ActivityConverterTest {
         .build();
 
     String toString = ActivityConverter.write(activity);
-    Assertions.assertThat(toString).startsWith("[name] due:2017-10-21:14:13:00.000");
+    assertThat(toString).startsWith("[name] due:2017-10-21:14:13:00.000");
   }
 
   @Test
@@ -177,7 +178,7 @@ public class ActivityConverterTest {
         .build();
 
     String toString = ActivityConverter.write(activity);
-    Assertions.assertThat(toString).startsWith("[name] @[tagOne] @[tagTwo]");
+    assertThat(toString).startsWith("[name] @[tagOne] @[tagTwo]");
   }
 
   @Test
@@ -188,6 +189,6 @@ public class ActivityConverterTest {
         .build();
 
     String toString = ActivityConverter.write(activity);
-    Assertions.assertThat(toString).startsWith("[name] +[projectOne] +[projectTwo]");
+    assertThat(toString).startsWith("[name] +[projectOne] +[projectTwo]");
   }
 }

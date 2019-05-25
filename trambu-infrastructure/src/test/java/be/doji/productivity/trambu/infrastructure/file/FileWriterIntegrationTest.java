@@ -21,6 +21,8 @@
  */
 package be.doji.productivity.trambu.infrastructure.file;
 
+import static org.assertj.core.api.Assertions.*;
+
 import be.doji.productivity.trambu.infrastructure.repository.ActivityDatabaseRepository;
 import be.doji.productivity.trambu.infrastructure.transfer.ActivityData;
 import be.doji.productivity.trambu.infrastructure.transfer.ActivityTagData;
@@ -54,16 +56,16 @@ public class FileWriterIntegrationTest {
   public void writeTodoFileContents_FileWithActivities() throws IOException, URISyntaxException {
     ClassLoader classLoader = getClass().getClassLoader();
     File file = new File(classLoader.getResource(FILE_PATH).toURI());
-    Assertions.assertThat(activityDatabaseRepository.findAll()).isEmpty();
+    assertThat(activityDatabaseRepository.findAll()).isEmpty();
     activityDatabaseRepository.save(createData());
-    Assertions.assertThat(activityDatabaseRepository.findAll()).isNotEmpty();
-    Assertions.assertThat(activityDatabaseRepository.findAll()).hasSize(1);
+    assertThat(activityDatabaseRepository.findAll()).isNotEmpty();
+    assertThat(activityDatabaseRepository.findAll()).hasSize(1);
 
     fileWriter.writeActivtiesToFile(file);
 
     List<String> strings = Files.readAllLines(file.toPath());
-    Assertions.assertThat(strings).isNotEmpty();
-    Assertions.assertThat(strings).hasSize(1);
+    assertThat(strings).isNotEmpty();
+    assertThat(strings).hasSize(1);
   }
 
   private ActivityData createData() {

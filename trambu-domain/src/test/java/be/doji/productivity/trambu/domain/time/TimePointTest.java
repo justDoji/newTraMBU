@@ -22,6 +22,7 @@
 package be.doji.productivity.trambu.domain.time;
 
 import static be.doji.productivity.trambu.domain.time.TimePoint.LEGACY_DATE_TIME_PATTERN;
+import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -231,7 +232,7 @@ public class TimePointTest {
   public void write_returnExpectedString() {
     TimePoint day2 = TimePoint.fromString("05/12/2018 00:00:00");
     String output = day2.write(LEGACY_DATE_TIME_PATTERN);
-    Assertions.assertThat(output).isEqualTo("2018-12-05:00:00:00.000");
+    assertThat(output).isEqualTo("2018-12-05:00:00:00.000");
   }
 
   @Test

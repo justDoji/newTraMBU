@@ -1,23 +1,21 @@
 /**
  * TraMBU - an open time management tool
  *
- *     Copyright (C) 2019  Stijn Dejongh
+ * Copyright (C) 2019  Stijn Dejongh
  *
- *     This program is free software: you can redistribute it and/or modify
- *     it under the terms of the GNU Affero General Public License as
- *     published by the Free Software Foundation, either version 3 of the
- *     License, or (at your option) any later version.
+ * This program is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU Affero General Public License as published by the Free Software Foundation, either version 3
+ * of the License, or (at your option) any later version.
  *
- *     This program is distributed in the hope that it will be useful,
- *     but WITHOUT ANY WARRANTY; without even the implied warranty of
- *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *     GNU Affero General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Affero General Public License for more details.
  *
- *     You should have received a copy of the GNU Affero General Public License
- *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
  *
- *     For further information on usage, or licensing, contact the author
- *     through his github profile: https://github.com/justDoji
+ * For further information on usage, or licensing, contact the author through his github profile:
+ * https://github.com/justDoji
  */
 package be.doji.productivity.trambu.front.converter;
 
@@ -32,52 +30,59 @@ import be.doji.productivity.trambu.infrastructure.transfer.ActivityData;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-public final class ActivityModelConverter {
+@Service
+public class ActivityModelConverter {
 
-  /* Utility methods should not have a public or default  constructor */
-  private ActivityModelConverter() {}
+  private ActivityDataConverter dataConverter;
 
-  public static ActivityModel parse(ActivityData db) {
-    ActivityModel activityModel = ActivityModelConverter.parse(db.toDomainObject());
+  @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
+  public ActivityModelConverter(@Autowired ActivityDataConverter dataConverter) {
+    this.dataConverter = dataConverter;
+  }
+
+  public ActivityModel parse(ActivityData db) {
+    ActivityModel activityModel = parse(dataConverter.parse(db));
     activityModel.setDataBaseId(db.getId());
     return activityModel;
   }
 
-  public static ActivityData toDatabase(ActivityModel activityModel) {
+  public ActivityData toDatabase(ActivityModel activityModel) {
     Activity activity = ActivityModelConverter.toDomain(activityModel);
-    ActivityData activityData = ActivityDataConverter.parse(activity);
+    ActivityData activityData = dataConverter.parse(activity);
     if (activityModel.getDataBaseId() != null) {
       activityData.setId(activityModel.getDataBaseId());
     }
     return activityData;
   }
 
-  private static class ActivityToActivityModelConverter extends Converter<Activity, ActivityModel> {
+  private class ActivityToActivityModelConverter extends Converter<Activity, ActivityModel> {
 
     ActivityToActivityModelConverter(Activity source) {
       super(source, ActivityModel.class);
     }
   }
 
-  public static ActivityModel parse(Activity activity) {
+  public ActivityModel parse(Activity activity) {
 
     return new ActivityToActivityModelConverter(activity)
         .conversionStep(Activity::getTitle, ActivityModel::setTitle)
-        .conversionStep(ActivityModelConverter::parseDeadline, ActivityModel::setDeadline)
+        .conversionStep(this::parseDeadline, ActivityModel::setDeadline)
         .conversionStep(Activity::isCompleted, ActivityModel::setCompleted)
         .conversionStep(Activity::getTags, ActivityModel::setTags)
         .conversionStep(Activity::getProjects, ActivityModel::setProjects)
         .getConvertedData();
   }
 
-  private static Date parseDeadline(Activity activity) {
+  private Date parseDeadline(Activity activity) {
     return activity.getDeadline().map(timePoint -> timePoint.write(EXTENDED_DATE_TIME_PATTERN))
-        .map(ActivityModelConverter::mapStringToDate)
+        .map(this::mapStringToDate)
         .orElse(null);
   }
 
-  private static Date mapStringToDate(String s) {
+  private Date mapStringToDate(String s) {
     try {
       SimpleDateFormat simpleDateFormat = new SimpleDateFormat(EXTENDED_DATE_TIME_PATTERN);
       return simpleDateFormat.parse(s);

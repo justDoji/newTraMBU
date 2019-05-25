@@ -21,6 +21,7 @@
  */
 package be.doji.productivity.trambu.infrastructure.converter;
 
+import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 import be.doji.productivity.trambu.infrastructure.repository.ActivityDatabaseRepository;
@@ -67,32 +68,32 @@ public class LogParserTest {
   @Test
   public void parse_startDate() {
     LogPointData parsedLog = logParser.parse(TIMELOG_ENTRY);
-    Assertions.assertThat(parsedLog).isNotNull();
-    Assertions.assertThat(parsedLog.getStart()).isEqualTo("2018-12-05:18:48:33.130");
+    assertThat(parsedLog).isNotNull();
+    assertThat(parsedLog.getStart()).isEqualTo("2018-12-05:18:48:33.130");
   }
 
   @Test
   public void parse_endDate() {
     LogPointData parsedLog = logParser.parse(TIMELOG_ENTRY);
-    Assertions.assertThat(parsedLog).isNotNull();
-    Assertions.assertThat(parsedLog.getEnd()).isNotNull();
-    Assertions.assertThat(parsedLog.getEnd()).isEqualTo("2018-12-05:18:48:36.021");
+    assertThat(parsedLog).isNotNull();
+    assertThat(parsedLog.getEnd()).isNotNull();
+    assertThat(parsedLog.getEnd()).isEqualTo("2018-12-05:18:48:36.021");
   }
 
   @Test
   public void parse_endDate_noEnd() {
     LogPointData parsedLog = logParser.parse(TIMELOG_ENTRY_NO_END);
-    Assertions.assertThat(parsedLog).isNotNull();
-    Assertions.assertThat(parsedLog.getStart()).isEqualTo("2018-12-05:18:48:33.130");
-    Assertions.assertThat(parsedLog.getEnd()).isEmpty();
+    assertThat(parsedLog).isNotNull();
+    assertThat(parsedLog.getStart()).isEqualTo("2018-12-05:18:48:33.130");
+    assertThat(parsedLog.getEnd()).isEmpty();
   }
 
   @Test
   public void parse_activity() {
     LogPointData parsedLog = logParser.parse(TIMELOG_ENTRY_WITH_ACTIVITY);
-    Assertions.assertThat(parsedLog).isNotNull();
-    Assertions.assertThat(parsedLog.getActivity()).isNotNull();
-    Assertions.assertThat(parsedLog.getActivity()).isPresent();
-    Assertions.assertThat(parsedLog.getActivity().get().getTitle()).isEqualTo("Some kind of title");
+    assertThat(parsedLog).isNotNull();
+    assertThat(parsedLog.getActivity()).isNotNull();
+    assertThat(parsedLog.getActivity()).isPresent();
+    assertThat(parsedLog.getActivity().get().getTitle()).isEqualTo("Some kind of title");
   }
 }
