@@ -99,7 +99,7 @@ public class FileWriterIntegrationTest {
 
     assertThatThrownBy(() -> fileWriter.writeTimeLogsToFile(file))
         .isInstanceOf(IllegalArgumentException.class)
-        .hasMessageContaining("Error while loading timelog file")
+        .hasMessageContaining("Error while opening output file")
         .hasMessageContaining("DOES_NOT_EXIST.txt");
   }
 
