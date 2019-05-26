@@ -63,14 +63,14 @@ public class LogConverterTest {
 
   @Test
   public void parse_startDate() {
-    LogPointData parsedLog = logConverter.parse(TIMELOG_ENTRY);
+    LogPointData parsedLog = logConverter.write(TIMELOG_ENTRY);
     assertThat(parsedLog).isNotNull();
     assertThat(parsedLog.getStart()).isEqualTo("2018-12-05:18:48:33.130");
   }
 
   @Test
   public void parse_endDate() {
-    LogPointData parsedLog = logConverter.parse(TIMELOG_ENTRY);
+    LogPointData parsedLog = logConverter.write(TIMELOG_ENTRY);
     assertThat(parsedLog).isNotNull();
     assertThat(parsedLog.getEnd()).isNotNull();
     assertThat(parsedLog.getEnd()).isEqualTo("2018-12-05:18:48:36.021");
@@ -78,7 +78,7 @@ public class LogConverterTest {
 
   @Test
   public void parse_endDate_noEnd() {
-    LogPointData parsedLog = logConverter.parse(TIMELOG_ENTRY_NO_END);
+    LogPointData parsedLog = logConverter.write(TIMELOG_ENTRY_NO_END);
     assertThat(parsedLog).isNotNull();
     assertThat(parsedLog.getStart()).isEqualTo("2018-12-05:18:48:33.130");
     assertThat(parsedLog.getEnd()).isEmpty();
@@ -86,7 +86,7 @@ public class LogConverterTest {
 
   @Test
   public void parse_activity() {
-    LogPointData parsedLog = logConverter.parse(TIMELOG_ENTRY_WITH_ACTIVITY);
+    LogPointData parsedLog = logConverter.write(TIMELOG_ENTRY_WITH_ACTIVITY);
     assertThat(parsedLog).isNotNull();
     assertThat(parsedLog.getActivity()).isNotNull();
     assertThat(parsedLog.getActivity()).isPresent();
@@ -100,7 +100,7 @@ public class LogConverterTest {
     activityData.setTitle("Activity with timelogs");
     activityData.setReferenceKey("283b6271-b513-4e89-b757-10e98c9078ea");
     activityData.addTimelog(logPoint);
-    assertThat(logConverter.parse(activityData)).isEqualTo(Arrays.asList(
+    assertThat(logConverter.write(activityData)).isEqualTo(Arrays.asList(
         "ACTIVITY:[283b6271-b513-4e89-b757-10e98c9078ea] STARTTIME:2018-05-24:21:21:00.000 ENDTIME:2018-05-24:21:21:35.000"));
   }
 
@@ -110,6 +110,6 @@ public class LogConverterTest {
     activityData.setTitle("Activity with timelogs");
     activityData.setReferenceKey("283b6271-b513-4e89-b757-10e98c9078ea");
 
-    assertThat(logConverter.parse(activityData)).isEmpty();
+    assertThat(logConverter.write(activityData)).isEmpty();
   }
 }

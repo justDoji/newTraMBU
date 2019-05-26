@@ -74,7 +74,7 @@ public class FileWriter {
   public void writeTimeLogsToFile(Path path) throws IOException {
     throwErrorIfFileDoesNotExist(path, ERROR_OPENING_FILE);
     List<String> fileLines = activityRepository.findAll().stream()
-        .map(logConverter::parse)
+        .map(logConverter::write)
         .flatMap(Collection::stream)
         .collect(Collectors.toList());
     Files.write(path, fileLines, StandardOpenOption.TRUNCATE_EXISTING);

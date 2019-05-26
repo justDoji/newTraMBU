@@ -25,8 +25,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import be.doji.productivity.trambu.domain.activity.Activity;
 import be.doji.productivity.trambu.domain.time.TimePoint;
+import be.doji.productivity.trambu.domain.time.TimeSlot;
+import be.doji.productivity.trambu.domain.timelog.TimeLog;
 import be.doji.productivity.trambu.front.transfer.ActivityModel;
 import be.doji.productivity.trambu.infrastructure.transfer.ActivityData;
+import be.doji.productivity.trambu.infrastructure.transfer.LogPointData;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
@@ -109,6 +112,22 @@ public class ActivityModelConverterTest {
     assertThat(activityModel.getProjects()).hasSize(2);
     assertThat(activityModel.getProjects().get(0)).isEqualTo("projectOne");
     assertThat(activityModel.getProjects().get(1)).isEqualTo("projectTwo");
+  }
+
+  @Test
+  public void parse_timelogs() {
+    String referenceKey = UUID.randomUUID().toString();
+    ActivityData activity = new ActivityData();
+    activity.setTitle("Title");
+    activity.setReferenceKey(referenceKey);
+
+    activity.addTimelog(new LogPointData("2018-05-24:21:21:00.000", "2018-05-24:21:21:35.000"));
+    activity.addTimelog(new LogPointData("2018-05-25:21:21:00.000", "2018-05-25:21:21:35.000"));
+    ActivityModel model = converter.parse(activity);
+
+    assertThat(model.getTimelogs()).isNotEmpty();
+    assertThat(model.getTimelogs()).hasSize(2);
+
   }
 
   @Test

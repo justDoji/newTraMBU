@@ -80,7 +80,7 @@ public class FileLoader {
     throwErrorIfFileDoesNotExist(file, ERROR_LOADING_FILE);
 
     for (String line : Files.readAllLines(file.toPath())) {
-      LogPointData pointData = logConverter.parse(line);
+      LogPointData pointData = logConverter.write(line);
       pointData.getActivity().ifPresent(activity -> {
         activity.addTimelog(pointData);
         activityDatabaseRepository.save(activity);

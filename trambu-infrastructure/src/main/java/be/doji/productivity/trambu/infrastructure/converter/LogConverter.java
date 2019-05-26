@@ -44,7 +44,7 @@ public class LogConverter {
     this.activityDatabase = repository;
   }
 
-  public LogPointData parse(String line) {
+  public LogPointData write(String line) {
     return new StringToLogConverter(line)
         .conversionStep(this::parseStart, LogPointData::setStart)
         .conversionStep(this::parseEnd, LogPointData::setEnd)
@@ -73,15 +73,15 @@ public class LogConverter {
     return null;
   }
 
-  public List<String> parse(ActivityData data) {
+  public List<String> write(ActivityData data) {
     List<String> logLines = new ArrayList<>();
     for (LogPointData logPoint : data.getTimelogs()) {
-      logLines.add(parseLogPoint(data.getReferenceKey(), logPoint));
+      logLines.add(writeLogPoint(data.getReferenceKey(), logPoint));
     }
     return logLines;
   }
 
-  private String parseLogPoint(String referenceKey, LogPointData logPoint) {
+  private String writeLogPoint(String referenceKey, LogPointData logPoint) {
     StringBuilder result = new StringBuilder();
     result.append(Indicator.LOGPOINT_ACTIVITY)
         .append(Indicator.GROUP_START)
@@ -109,5 +109,4 @@ public class LogConverter {
       super(source, String.class);
     }
   }
-
 }
