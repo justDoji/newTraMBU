@@ -22,7 +22,7 @@ package be.doji.productivity.trambu.infrastructure.file;
 import be.doji.productivity.trambu.domain.activity.Activity;
 import be.doji.productivity.trambu.infrastructure.converter.ActivityConverter;
 import be.doji.productivity.trambu.infrastructure.converter.ActivityDataConverter;
-import be.doji.productivity.trambu.infrastructure.converter.LogParser;
+import be.doji.productivity.trambu.infrastructure.converter.LogConverter;
 import be.doji.productivity.trambu.infrastructure.repository.ActivityDatabaseRepository;
 import be.doji.productivity.trambu.infrastructure.transfer.ActivityData;
 import be.doji.productivity.trambu.infrastructure.transfer.LogPointData;
@@ -43,14 +43,14 @@ public class FileLoader {
   private static final Logger LOG = LoggerFactory.getLogger(FileLoader.class);
 
   private final ActivityDatabaseRepository activityDatabaseRepository;
-  private final LogParser logParser;
+  private final LogConverter logConverter;
   private final ActivityDataConverter dataConverter;
 
 
   public FileLoader(@Autowired ActivityDatabaseRepository activityDatabaseRepository,
-      @Autowired LogParser logParser, @Autowired ActivityDataConverter converter) {
+                    @Autowired LogConverter logConverter, @Autowired ActivityDataConverter converter) {
     this.activityDatabaseRepository = activityDatabaseRepository;
-    this.logParser = logParser;
+    this.logConverter = logConverter;
     this.dataConverter = converter;
   }
 
@@ -80,7 +80,7 @@ public class FileLoader {
     throwErrorIfFileDoesNotExist(file, ERROR_LOADING_FILE);
 
     for (String line : Files.readAllLines(file.toPath())) {
-      LogPointData pointData = logParser.parse(line);
+      LogPointData pointData = logConverter.parse(line);
       pointData.getActivity().ifPresent(activity -> {
         activity.addTimelog(pointData);
         activityDatabaseRepository.save(activity);

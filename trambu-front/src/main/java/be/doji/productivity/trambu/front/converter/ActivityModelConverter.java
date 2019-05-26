@@ -52,7 +52,7 @@ public class ActivityModelConverter {
   public ActivityData toDatabase(ActivityModel activityModel) {
     Activity activity = ActivityModelConverter.toDomain(activityModel);
     ActivityData activityData = dataConverter.parse(activity);
-    if (activityModel.getDataBaseId() != null) {
+    if (activityModel.getReferenceKey() != null) {
       activityData.setReferenceKey(activityModel.getReferenceKey());
     }
     return activityData;

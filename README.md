@@ -2,11 +2,14 @@
 
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=be.doji.productivity%3Anewtrambu&metric=alert_status)](https://sonarcloud.io/dashboard?id=be.doji.productivity%3Anewtrambu)
 
+The history and general idea (*salutes*) of this project can be found on our [About Page](docs/ABOUT.md)
 
-## Workflow
+## Contributing
 
-User can submit both ideas or bugfixes.
-When these are accepted, we will create a **'Story'** For tracking and describing the issue in more detail.
+We are always looking for your input!  
+Take a look at our [Contribution Guide](docs/CONTRIBUTING.md)
+
+# Issue tracker labels and flow
 
 ## User labels
 
@@ -19,7 +22,7 @@ When these are accepted, we will create a **'Story'** For tracking and describin
 **Story** : Accepted requests  
 **XS**,**S**,**M**,**L**,**XL** : Effort needed to complete the story
 
-## License
+# License
 
 TraMBU is licened under the AGPL license. Basically: You are free to use, fork, and modify the code.
 However, the original author must be accredited. Any code changes must be made public under  

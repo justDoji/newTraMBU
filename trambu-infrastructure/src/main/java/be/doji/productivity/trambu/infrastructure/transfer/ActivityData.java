@@ -115,6 +115,7 @@ public class ActivityData {
 
   public void addTimelog(LogPointData pointData) {
     if (pointData != null) {
+      pointData.setActivity(this);
       this.timelogs.add(pointData);
     }
   }

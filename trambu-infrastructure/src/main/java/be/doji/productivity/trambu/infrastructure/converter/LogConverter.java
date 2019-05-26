@@ -28,21 +28,24 @@ import be.doji.productivity.trambu.infrastructure.converter.Property.Regex;
 import be.doji.productivity.trambu.infrastructure.repository.ActivityDatabaseRepository;
 import be.doji.productivity.trambu.infrastructure.transfer.ActivityData;
 import be.doji.productivity.trambu.infrastructure.transfer.LogPointData;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class LogParser {
+public class LogConverter {
 
+  public static final String SPACE = " ";
   private ActivityDatabaseRepository activityDatabase;
 
-  public LogParser(@Autowired ActivityDatabaseRepository repository) {
+  public LogConverter(@Autowired ActivityDatabaseRepository repository) {
     this.activityDatabase = repository;
   }
 
   public LogPointData parse(String line) {
-    return new LogConverter(line)
+    return new StringToLogConverter(line)
         .conversionStep(this::parseStart, LogPointData::setStart)
         .conversionStep(this::parseEnd, LogPointData::setEnd)
         .conversionStep(this::parseActivity, LogPointData::setActivity)
@@ -70,10 +73,40 @@ public class LogParser {
     return null;
   }
 
-  private class LogConverter extends Converter<String, LogPointData> {
+  public List<String> parse(ActivityData data) {
+    List<String> logLines = new ArrayList<>();
+    for (LogPointData logPoint : data.getTimelogs()) {
+      logLines.add(parseLogPoint(data.getReferenceKey(), logPoint));
+    }
+    return logLines;
+  }
 
-    LogConverter(String source) {
+  private String parseLogPoint(String referenceKey, LogPointData logPoint) {
+    StringBuilder result = new StringBuilder();
+    result.append(Indicator.LOGPOINT_ACTIVITY)
+        .append(Indicator.GROUP_START)
+        .append(referenceKey)
+        .append(Indicator.GROUP_END)
+        .append(SPACE)
+        .append(Indicator.LOGPOINT_START)
+        .append(logPoint.getStart())
+        .append(SPACE)
+        .append(Indicator.LOGPOINT_END)
+        .append(logPoint.getEnd());
+    return result.toString();
+  }
+
+  private class StringToLogConverter extends Converter<String, LogPointData> {
+
+    StringToLogConverter(String source) {
       super(source, LogPointData.class);
+    }
+  }
+
+  private class LogToStringConverter extends Converter<LogPointData, String> {
+
+    public LogToStringConverter(LogPointData source) {
+      super(source, String.class);
     }
   }
 
