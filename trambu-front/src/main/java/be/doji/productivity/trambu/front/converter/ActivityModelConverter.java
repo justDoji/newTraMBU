@@ -28,6 +28,7 @@ import be.doji.productivity.trambu.infrastructure.converter.ActivityDataConverte
 import be.doji.productivity.trambu.infrastructure.converter.Converter;
 import be.doji.productivity.trambu.infrastructure.converter.LogConverter;
 import be.doji.productivity.trambu.infrastructure.transfer.ActivityData;
+import be.doji.productivity.trambu.infrastructure.transfer.LogPointData;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -37,12 +38,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class ActivityModelConverter {
 
-  private final LogConverter logConverter;
+  private final TimeLogConverter logConverter;
   private final ActivityDataConverter dataConverter;
 
   @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
   public ActivityModelConverter(@Autowired ActivityDataConverter dataConverter, @Autowired
-      LogConverter logConverter) {
+      TimeLogConverter logConverter) {
     this.dataConverter = dataConverter;
     this.logConverter = logConverter;
 
@@ -51,8 +52,10 @@ public class ActivityModelConverter {
   public ActivityModel parse(ActivityData db) {
     ActivityModel activityModel = parse(dataConverter.parse(db));
     activityModel.setReferenceKey(db.getReferenceKey());
+    for(LogPointData logpoint :db.getTimelogs()) {
+      activityModel.addTimeLog(logConverter.parse(logpoint));
+    }
 
-    logConverter.write(db);
     return activityModel;
   }
 

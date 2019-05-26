@@ -127,7 +127,6 @@ public class ActivityModelConverterTest {
 
     assertThat(model.getTimelogs()).isNotEmpty();
     assertThat(model.getTimelogs()).hasSize(2);
-
   }
 
   @Test

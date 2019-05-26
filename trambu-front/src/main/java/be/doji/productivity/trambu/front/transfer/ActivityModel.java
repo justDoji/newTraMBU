@@ -83,4 +83,12 @@ public class ActivityModel {
     }
   }
 
+  public void setTimeLogs(List<TimeLogModel> timelogs) {
+    this.timelogs = new ArrayList<>();
+    this.timelogs.addAll(timelogs);
+  }
+
+  public void addTimeLog(TimeLogModel timelog) {
+    this.timelogs.add(timelog);
+  }
 }
