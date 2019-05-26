@@ -32,6 +32,8 @@ import lombok.Data;
 @Data
 public class ActivityModel {
 
+  //TODO: add timelogs
+
   private static final String BASIC_DATE_TIME_PATTERN = "dd/MM/uuuu HH:mm:ss";
   private static final DateTimeFormatter df = DateTimeFormatter
       .ofPattern(BASIC_DATE_TIME_PATTERN, Locale.FRANCE);
