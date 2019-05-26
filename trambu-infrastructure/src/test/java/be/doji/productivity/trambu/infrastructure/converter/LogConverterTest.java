@@ -28,7 +28,7 @@ import be.doji.productivity.trambu.infrastructure.repository.ActivityDatabaseRep
 import be.doji.productivity.trambu.infrastructure.transfer.ActivityData;
 import be.doji.productivity.trambu.infrastructure.transfer.LogPointData;
 import java.util.Optional;
-import org.assertj.core.api.Assertions;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -39,7 +39,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class LogParserTest {
+public class LogConverterTest {
 
   private static final String TIMELOG_ENTRY = "STARTTIME:2018-12-05:18:48:33.130 ENDTIME:2018-12-05:18:48:36.021";
   private static final String TIMELOG_ENTRY_NO_END = "STARTTIME:2018-12-05:18:48:33.130";
@@ -47,7 +47,7 @@ public class LogParserTest {
 
   @Mock private ActivityDatabaseRepository activityRepositoryMock;
 
-  private LogParser logParser;
+  private LogConverter logConverter;
 
   @Before
   public void setUp() {
@@ -62,19 +62,19 @@ public class LogParserTest {
     when(activityRepositoryMock.findByReferenceKey("283b6271-b513-4e89-b757-10e98c9078ea"))
         .thenReturn(Optional.of(activityData));
 
-    logParser = new LogParser(activityRepositoryMock);
+    logConverter = new LogConverter(activityRepositoryMock);
   }
 
   @Test
   public void parse_startDate() {
-    LogPointData parsedLog = logParser.parse(TIMELOG_ENTRY);
+    LogPointData parsedLog = logConverter.parse(TIMELOG_ENTRY);
     assertThat(parsedLog).isNotNull();
     assertThat(parsedLog.getStart()).isEqualTo("2018-12-05:18:48:33.130");
   }
 
   @Test
   public void parse_endDate() {
-    LogPointData parsedLog = logParser.parse(TIMELOG_ENTRY);
+    LogPointData parsedLog = logConverter.parse(TIMELOG_ENTRY);
     assertThat(parsedLog).isNotNull();
     assertThat(parsedLog.getEnd()).isNotNull();
     assertThat(parsedLog.getEnd()).isEqualTo("2018-12-05:18:48:36.021");
@@ -82,7 +82,7 @@ public class LogParserTest {
 
   @Test
   public void parse_endDate_noEnd() {
-    LogPointData parsedLog = logParser.parse(TIMELOG_ENTRY_NO_END);
+    LogPointData parsedLog = logConverter.parse(TIMELOG_ENTRY_NO_END);
     assertThat(parsedLog).isNotNull();
     assertThat(parsedLog.getStart()).isEqualTo("2018-12-05:18:48:33.130");
     assertThat(parsedLog.getEnd()).isEmpty();
@@ -90,7 +90,7 @@ public class LogParserTest {
 
   @Test
   public void parse_activity() {
-    LogPointData parsedLog = logParser.parse(TIMELOG_ENTRY_WITH_ACTIVITY);
+    LogPointData parsedLog = logConverter.parse(TIMELOG_ENTRY_WITH_ACTIVITY);
     assertThat(parsedLog).isNotNull();
     assertThat(parsedLog.getActivity()).isNotNull();
     assertThat(parsedLog.getActivity()).isPresent();

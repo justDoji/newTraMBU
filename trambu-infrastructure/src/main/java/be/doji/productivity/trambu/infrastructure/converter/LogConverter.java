@@ -1,21 +1,23 @@
 /**
  * TraMBU - an open time management tool
  *
- * Copyright (C) 2019  Stijn Dejongh
+ *     Copyright (C) 2019  Stijn Dejongh
  *
- * This program is free software: you can redistribute it and/or modify it under the terms of the
- * GNU Affero General Public License as published by the Free Software Foundation, either version 3
- * of the License, or (at your option) any later version.
+ *     This program is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU Affero General Public License as
+ *     published by the Free Software Foundation, either version 3 of the
+ *     License, or (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
- * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Affero General Public License for more details.
+ *     This program is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU Affero General Public License for more details.
  *
- * You should have received a copy of the GNU Affero General Public License along with this program.
- * If not, see <https://www.gnu.org/licenses/>.
+ *     You should have received a copy of the GNU Affero General Public License
+ *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *
- * For further information on usage, or licensing, contact the author through his github profile:
- * https://github.com/justDoji
+ *     For further information on usage, or licensing, contact the author
+ *     through his github profile: https://github.com/justDoji
  */
 package be.doji.productivity.trambu.infrastructure.converter;
 
@@ -33,16 +35,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class LogParser {
+public class LogConverter {
 
   private ActivityDatabaseRepository activityDatabase;
 
-  public LogParser(@Autowired ActivityDatabaseRepository repository) {
+  public LogConverter(@Autowired ActivityDatabaseRepository repository) {
     this.activityDatabase = repository;
   }
 
   public LogPointData parse(String line) {
-    return new LogConverter(line)
+    return new StringToLogConverter(line)
         .conversionStep(this::parseStart, LogPointData::setStart)
         .conversionStep(this::parseEnd, LogPointData::setEnd)
         .conversionStep(this::parseActivity, LogPointData::setActivity)
@@ -70,10 +72,22 @@ public class LogParser {
     return null;
   }
 
-  private class LogConverter extends Converter<String, LogPointData> {
+  public String parse(ActivityData data) {
+    //TODO: implement this
+    return null;
+  }
 
-    LogConverter(String source) {
+  private class StringToLogConverter extends Converter<String, LogPointData> {
+
+    StringToLogConverter(String source) {
       super(source, LogPointData.class);
+    }
+  }
+
+  private class LogToStringConverter extends Converter<LogPointData, String> {
+
+    public LogToStringConverter(LogPointData source) {
+      super(source, String.class);
     }
   }
 
