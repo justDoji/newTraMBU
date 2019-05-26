@@ -2,12 +2,12 @@
 
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=be.doji.productivity%3Anewtrambu&metric=alert_status)](https://sonarcloud.io/dashboard?id=be.doji.productivity%3Anewtrambu)
 
-The history and general idea (*salutes*) of this project can be found on our [About Page](ABOUT.md)
+The history and general idea (*salutes*) of this project can be found on our [About Page](docs/ABOUT.md)
 
 ## Contributing
 
 We are always looking for your input!  
-Take a look at our [Contribution Guide](CONTRIBUTING.md)
+Take a look at our [Contribution Guide](docs/CONTRIBUTING.md)
 
 # Issue tracker labels and flow
 

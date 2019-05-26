@@ -46,7 +46,8 @@ Here are a couple of tutorials that can help you get started on your journey of 
 
 ## General guidelines
 
-* When submitting a PR, please include a message 
+* When submitting a PR, please fill out the [Pull request template](../.github/PULL_REQUEST_TEMPLATE/pull_request_template.md).
+* When submitting a pull request, you certify to be in agreement with the [DCO](DCO.md)
 * Before you submit a PR, be sure all tests in the application code pass. Do this by running the gradle task 'gradlew build'.
 
 ## For something that is bigger than a one or two line fix:
@@ -59,7 +60,7 @@ Here are a couple of tutorials that can help you get started on your journey of 
     * Note the jQuery Foundation Code of Conduct.
     * Send a pull request indicating that you have a CLA on file.
 
-## Woopsie-daisy fixes
+## Whoopsy-daisy fixes
 
 These fixes may be pushed to master if they meet the general requirements.
 If you do not have commit access to our repository, let one of the maintainers know your fix,
