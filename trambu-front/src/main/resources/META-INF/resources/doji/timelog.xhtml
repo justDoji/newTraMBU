@@ -32,19 +32,16 @@
 </composite:interface>
 
 <composite:implementation>
+    <h:form id="timelogForm">
+        <p:dataTable var="timelog" value="#{cc.attrs.model.timelogs}">
+            <p:column headerText="Start">
+                <h:outputText value="#{timelog.start}" />
+            </p:column>
 
-    <h:form>
-        <p:fieldset legend="Timelog" toggleable="true" toggleSpeed="500">
-            <h:panelGrid columns="2" cellpadding="5">
-                    <p:row>
-                        <p:column colspan="1"><b>Start</b>b></p:column>
-                        <p:column colspan="1"><b>End</b>b></p:column>
-                    </p:row>
-                    <p:repeat value="#{cc.attrs.model.}"
-                              var="project">
-                    </p:repeat>
-            </h:panelGrid>
-        </p:fieldset>
+            <p:column headerText="End">
+                <h:outputText value="#{timelog.end}" />
+            </p:column>
+        </p:dataTable>
     </h:form>
 </composite:implementation>
 </html>

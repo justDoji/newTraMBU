@@ -38,7 +38,6 @@ public class ActivityModel {
 
   private Long dataBaseId;
 
-  private String frontId;
   private String title = "Give me a name!";
   private List<String> projects = new ArrayList<>();
   private List<String> tags = new ArrayList<>();
@@ -50,7 +49,7 @@ public class ActivityModel {
   private List<TimeLogModel> timelogs = new ArrayList<>();
 
   public ActivityModel() {
-    this.frontId = UUID.randomUUID().toString();
+    this.referenceKey = UUID.randomUUID().toString();
   }
 
   public boolean isEditable() {

@@ -27,4 +27,5 @@ import lombok.Data;
 public class TimeLogModel {
   String start;
   String end;
+
 }

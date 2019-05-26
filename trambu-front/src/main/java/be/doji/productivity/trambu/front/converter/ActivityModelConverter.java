@@ -26,7 +26,6 @@ import be.doji.productivity.trambu.domain.time.TimePoint;
 import be.doji.productivity.trambu.front.transfer.ActivityModel;
 import be.doji.productivity.trambu.infrastructure.converter.ActivityDataConverter;
 import be.doji.productivity.trambu.infrastructure.converter.Converter;
-import be.doji.productivity.trambu.infrastructure.converter.LogConverter;
 import be.doji.productivity.trambu.infrastructure.transfer.ActivityData;
 import be.doji.productivity.trambu.infrastructure.transfer.LogPointData;
 import java.text.ParseException;
@@ -51,8 +50,8 @@ public class ActivityModelConverter {
 
   public ActivityModel parse(ActivityData db) {
     ActivityModel activityModel = parse(dataConverter.parse(db));
-    activityModel.setReferenceKey(db.getReferenceKey());
-    for(LogPointData logpoint :db.getTimelogs()) {
+
+    for (LogPointData logpoint : db.getTimelogs()) {
       activityModel.addTimeLog(logConverter.parse(logpoint));
     }
 
@@ -83,6 +82,7 @@ public class ActivityModelConverter {
         .conversionStep(Activity::isCompleted, ActivityModel::setCompleted)
         .conversionStep(Activity::getTags, ActivityModel::setTags)
         .conversionStep(Activity::getProjects, ActivityModel::setProjects)
+        .conversionStep(Activity::getReferenceKey, ActivityModel::setReferenceKey)
         .getConvertedData();
   }
 

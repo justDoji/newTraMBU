@@ -31,6 +31,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +49,7 @@ public class FileLoader {
 
 
   public FileLoader(@Autowired ActivityDatabaseRepository activityDatabaseRepository,
-                    @Autowired LogConverter logConverter, @Autowired ActivityDataConverter converter) {
+      @Autowired LogConverter logConverter, @Autowired ActivityDataConverter converter) {
     this.activityDatabaseRepository = activityDatabaseRepository;
     this.logConverter = logConverter;
     this.dataConverter = converter;
@@ -80,11 +81,19 @@ public class FileLoader {
     throwErrorIfFileDoesNotExist(file, ERROR_LOADING_FILE);
 
     for (String line : Files.readAllLines(file.toPath())) {
-      LogPointData pointData = logConverter.write(line);
+      LogPointData pointData = logConverter.parse(line);
       pointData.getActivity().ifPresent(activity -> {
-        activity.addTimelog(pointData);
-        activityDatabaseRepository.save(activity);
+        updateTimePoint(pointData, activity.getReferenceKey());
       });
+    }
+  }
+
+  private void updateTimePoint(LogPointData pointData, String referenceKey) {
+    Optional<ActivityData> byReferenceKey = activityDatabaseRepository
+        .findByReferenceKey(referenceKey);
+    if (byReferenceKey.isPresent()) {
+      byReferenceKey.get().addTimelog(pointData);
+      activityDatabaseRepository.save(byReferenceKey.get());
     }
   }
 

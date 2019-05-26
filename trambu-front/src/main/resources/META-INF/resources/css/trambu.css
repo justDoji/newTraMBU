@@ -183,6 +183,10 @@ a {
   padding: 10px;
 }
 
+.timelogs {
+  width: 85%;
+}
+
 .activity-item {
   display: inline-block;
   margin-right: 6px;

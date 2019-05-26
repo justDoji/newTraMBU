@@ -26,7 +26,8 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:doji="http://xmlns.jcp.org/jsf/composite/doji">
 
 <composite:interface>
     <composite:attribute name="model"
@@ -34,7 +35,7 @@
 </composite:interface>
 
 <composite:implementation>
-    <div class="activity" id="activity_#{cc.attrs.model.frontId}">
+    <div class="activity" id="activity_#{cc.attrs.model.referenceKey}">
         <div class="activity-header">
             <div class="activity-item">
                 <p:commandButton value="#{cc.attrs.model.completed ?'Done' :'Todo'}"
@@ -67,18 +68,21 @@
                                  styleClass="edit"
                                  icon="#{cc.attrs.model.editable ?'fas fa-save' :'fas fa-edit'}"/>
                 <p:commandButton
-                    id="delete"
-                    icon = "fas fa-trash-alt"
-                    action="#{activityOverviewController.deleteActivity(cc.attrs.model)}"
-                    update="formId, filterForm"
-                    styleClass="delete"
-                    >
-                    <p:confirm header="Confirmation" message="Are you sure?" icon="fas fa-skull-crossbones" />
+                        id="delete"
+                        icon="fas fa-trash-alt"
+                        action="#{activityOverviewController.deleteActivity(cc.attrs.model)}"
+                        update="formId, filterForm"
+                        styleClass="delete"
+                >
+                    <p:confirm header="Confirmation" message="Are you sure?"
+                               icon="fas fa-skull-crossbones"/>
                 </p:commandButton>
 
                 <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                    <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="fas fa-vote-yea" />
-                    <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="fas fa-undo" />
+                    <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes"
+                                     icon="fas fa-vote-yea"/>
+                    <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no"
+                                     icon="fas fa-undo"/>
                 </p:confirmDialog>
             </div>
         </div>
@@ -99,6 +103,10 @@
                         showTime="true" numberOfMonths="3" pattern="dd/MM/yyyy HH:mm:ss"
                         monthNavigator="true" yearNavigator="true"
                         rendered="#{cc.attrs.model.editable}"/>
+            <br />
+            <div class="timelogs">
+                <doji:timelog model="#{cc.attrs.model}"/>
+            </div>
             <hr/>
             <div class="activity-tags">
                 <p:outputLabel value="Tags:" for="inputTags"/>
@@ -125,7 +133,6 @@
                     </p:column>
                 </p:autoComplete>
             </div>
-            <br/>
             <div class="activity-projects">
                 <p:outputLabel value="Projects:" for="inputProjects"/>
                 <ui:repeat value="#{cc.attrs.model.projects}"
@@ -149,7 +156,7 @@
                     <p:column>
                         <h:outputText value="#{project}"/>
                     </p:column>
-<!--                    <p:ajax event="itemSelect" listener="#{autoCompleteView.onItemSelect}" update="msgs" />-->
+                    <!--                    <p:ajax event="itemSelect" listener="#{autoCompleteView.onItemSelect}" update="msgs" />-->
                 </p:autoComplete>
             </div>
         </p:outputPanel>

@@ -44,7 +44,7 @@ public class LogConverter {
     this.activityDatabase = repository;
   }
 
-  public LogPointData write(String line) {
+  public LogPointData parse(String line) {
     return new StringToLogConverter(line)
         .conversionStep(this::parseStart, LogPointData::setStart)
         .conversionStep(this::parseEnd, LogPointData::setEnd)

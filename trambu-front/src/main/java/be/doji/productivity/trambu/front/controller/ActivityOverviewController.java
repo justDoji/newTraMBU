@@ -107,7 +107,7 @@ public class ActivityOverviewController {
   }
 
   public void toggleEditable(ActivityModel model) {
-    ActivityModel toToggle = findModelInList(model.getFrontId());
+    ActivityModel toToggle = findModelInList(model.getReferenceKey());
     boolean editable = toToggle.isEditable();
 
     if (model.isEditable()) {
@@ -118,12 +118,12 @@ public class ActivityOverviewController {
   }
 
   public void toggleExpanded(ActivityModel model) {
-    ActivityModel toToggle = findModelInList(model.getFrontId());
+    ActivityModel toToggle = findModelInList(model.getReferenceKey());
     toToggle.setExpanded(!toToggle.isExpanded());
   }
 
   public void toggleCompleted(ActivityModel model) {
-    ActivityModel toToggle = findModelInList(model.getFrontId());
+    ActivityModel toToggle = findModelInList(model.getReferenceKey());
     toToggle.setCompleted(!toToggle.isCompleted());
     saveActivities();
   }
@@ -157,7 +157,7 @@ public class ActivityOverviewController {
 
   public void deleteActivity(ActivityModel toDelete) {
     if (toDelete != null) {
-      ActivityModel modelInList = findModelInList(toDelete.getFrontId());
+      ActivityModel modelInList = findModelInList(toDelete.getReferenceKey());
       ActivityData databaseModel = modelConverter.toDatabase(modelInList);
       repository.delete(databaseModel);
       this.model.remove(modelInList);
@@ -167,7 +167,7 @@ public class ActivityOverviewController {
   }
 
   private ActivityModel findModelInList(String frontId) {
-    return this.model.stream().filter(m -> m.getFrontId().equals(frontId))
+    return this.model.stream().filter(m -> m.getReferenceKey().equals(frontId))
         .collect(Collectors.toList()).get(0);
   }
 
