@@ -1,23 +1,21 @@
 /**
  * TraMBU - an open time management tool
  *
- *     Copyright (C) 2019  Stijn Dejongh
+ * Copyright (C) 2019  Stijn Dejongh
  *
- *     This program is free software: you can redistribute it and/or modify
- *     it under the terms of the GNU Affero General Public License as
- *     published by the Free Software Foundation, either version 3 of the
- *     License, or (at your option) any later version.
+ * This program is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU Affero General Public License as published by the Free Software Foundation, either version 3
+ * of the License, or (at your option) any later version.
  *
- *     This program is distributed in the hope that it will be useful,
- *     but WITHOUT ANY WARRANTY; without even the implied warranty of
- *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *     GNU Affero General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Affero General Public License for more details.
  *
- *     You should have received a copy of the GNU Affero General Public License
- *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
  *
- *     For further information on usage, or licensing, contact the author
- *     through his github profile: https://github.com/justDoji
+ * For further information on usage, or licensing, contact the author through his github profile:
+ * https://github.com/justDoji
  */
 package be.doji.productivity.trambu.infrastructure.converter;
 
@@ -30,6 +28,8 @@ import be.doji.productivity.trambu.infrastructure.converter.Property.Regex;
 import be.doji.productivity.trambu.infrastructure.repository.ActivityDatabaseRepository;
 import be.doji.productivity.trambu.infrastructure.transfer.ActivityData;
 import be.doji.productivity.trambu.infrastructure.transfer.LogPointData;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,6 +37,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class LogConverter {
 
+  public static final String SPACE = " ";
   private ActivityDatabaseRepository activityDatabase;
 
   public LogConverter(@Autowired ActivityDatabaseRepository repository) {
@@ -72,9 +73,27 @@ public class LogConverter {
     return null;
   }
 
-  public String parse(ActivityData data) {
-    //TODO: implement this
-    return null;
+  public List<String> parse(ActivityData data) {
+    List<String> logLines = new ArrayList<>();
+    for (LogPointData logPoint : data.getTimelogs()) {
+      logLines.add(parseLogPoint(data.getReferenceKey(), logPoint));
+    }
+    return logLines;
+  }
+
+  private String parseLogPoint(String referenceKey, LogPointData logPoint) {
+    StringBuilder result = new StringBuilder();
+    result.append(Indicator.LOGPOINT_ACTIVITY)
+        .append(Indicator.GROUP_START)
+        .append(referenceKey)
+        .append(Indicator.GROUP_END)
+        .append(SPACE)
+        .append(Indicator.LOGPOINT_START)
+        .append(logPoint.getStart())
+        .append(SPACE)
+        .append(Indicator.LOGPOINT_END)
+        .append(logPoint.getEnd());
+    return result.toString();
   }
 
   private class StringToLogConverter extends Converter<String, LogPointData> {

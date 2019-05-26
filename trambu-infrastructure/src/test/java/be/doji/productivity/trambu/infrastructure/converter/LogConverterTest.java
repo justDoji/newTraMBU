@@ -27,6 +27,7 @@ import static org.mockito.Mockito.when;
 import be.doji.productivity.trambu.infrastructure.repository.ActivityDatabaseRepository;
 import be.doji.productivity.trambu.infrastructure.transfer.ActivityData;
 import be.doji.productivity.trambu.infrastructure.transfer.LogPointData;
+import java.util.Arrays;
 import java.util.Optional;
 
 import org.junit.Before;
@@ -37,7 +38,6 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest
 public class LogConverterTest {
 
@@ -95,5 +95,24 @@ public class LogConverterTest {
     assertThat(parsedLog.getActivity()).isNotNull();
     assertThat(parsedLog.getActivity()).isPresent();
     assertThat(parsedLog.getActivity().get().getTitle()).isEqualTo("Some kind of title");
+  }
+
+  @Test
+  public void parse_toString_withReferenceKey() {
+    LogPointData logPoint = new LogPointData("2018-05-24:21:21:00.000", "2018-05-24:21:21:35.000");
+    ActivityData activityData = new ActivityData();
+    activityData.setTitle("Activity with timelogs");
+    activityData.setReferenceKey("283b6271-b513-4e89-b757-10e98c9078ea");
+    activityData.addTimelog(logPoint);
+    assertThat(logConverter.parse(activityData)).isEqualTo(Arrays.asList("ACTIVITY:[283b6271-b513-4e89-b757-10e98c9078ea] STARTTIME:2018-05-24:21:21:00.000 ENDTIME:2018-05-24:21:21:35.000"));
+  }
+
+  @Test
+  public void parse_toString_noLogpoints() {
+    ActivityData activityData = new ActivityData();
+    activityData.setTitle("Activity with timelogs");
+    activityData.setReferenceKey("283b6271-b513-4e89-b757-10e98c9078ea");
+
+    assertThat(logConverter.parse(activityData)).isEmpty();
   }
 }
