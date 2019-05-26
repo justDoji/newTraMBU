@@ -46,6 +46,7 @@ public class ActivityModel {
   private boolean completed;
   private boolean editable;
   private boolean expanded;
+  private String referenceKey;
 
   public ActivityModel() {
     this.frontId = UUID.randomUUID().toString();
