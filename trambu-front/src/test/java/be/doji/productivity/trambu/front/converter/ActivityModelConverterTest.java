@@ -26,10 +26,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 import be.doji.productivity.trambu.domain.activity.Activity;
 import be.doji.productivity.trambu.domain.time.TimePoint;
 import be.doji.productivity.trambu.front.transfer.ActivityModel;
+import be.doji.productivity.trambu.infrastructure.transfer.ActivityData;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.UUID;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -41,7 +43,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest
 public class ActivityModelConverterTest {
 
-  @Autowired private  ActivityModelConverter converter;
+  @Autowired private ActivityModelConverter converter;
 
   @Test
   public void parse_defaultFields() {
@@ -55,6 +57,18 @@ public class ActivityModelConverterTest {
     assertThat(activityModel.getTitle()).isEqualTo("name");
     Date myBirthday = new GregorianCalendar(1989, Calendar.DECEMBER, 18, 12, 0, 0).getTime();
     assertThat(activityModel.getDeadline()).isEqualTo(myBirthday);
+  }
+
+  @Test
+  public void parse_referenceKey() {
+    String referenceKey = UUID.randomUUID().toString();
+    ActivityData activity = new ActivityData();
+    activity.setTitle("Title");
+    activity.setReferenceKey(referenceKey);
+
+    ActivityModel activityModel = converter.parse(activity);
+    assertThat(activityModel).isNotNull();
+    assertThat(activityModel.getReferenceKey()).isEqualTo(referenceKey);
   }
 
   @Test

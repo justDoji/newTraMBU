@@ -45,16 +45,14 @@ public class ActivityModelConverter {
 
   public ActivityModel parse(ActivityData db) {
     ActivityModel activityModel = parse(dataConverter.parse(db));
-    activityModel.setDataBaseId(db.getId());
+    activityModel.setReferenceKey(db.getReferenceKey());
     return activityModel;
   }
 
   public ActivityData toDatabase(ActivityModel activityModel) {
     Activity activity = ActivityModelConverter.toDomain(activityModel);
     ActivityData activityData = dataConverter.parse(activity);
-    if (activityModel.getDataBaseId() != null) {
-      activityData.setId(activityModel.getDataBaseId());
-    }
+    activityData.setReferenceKey(activityModel.getReferenceKey());
     return activityData;
   }
 

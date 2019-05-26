@@ -46,6 +46,7 @@ public class ActivityModel {
   private boolean completed;
   private boolean editable;
   private boolean expanded;
+  private String referenceKey;
 
   public ActivityModel() {
     this.frontId = UUID.randomUUID().toString();
@@ -80,4 +81,5 @@ public class ActivityModel {
       this.tags.addAll(tagsToSet);
     }
   }
+
 }
