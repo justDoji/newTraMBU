@@ -77,6 +77,7 @@ public class ActivityOverviewController {
   @PostConstruct
   public void init() {
     this.todoFile = PATH_CONFIGURATION_DIRECTORY.resolve("TODO.txt").toFile();
+    this.timeFile = PATH_CONFIGURATION_DIRECTORY.resolve("TIMELOG.txt").toFile();
     if (this.model == null || this.model.isEmpty()) {
       loadActivities();
     }

@@ -26,6 +26,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import javax.annotation.PostConstruct;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
@@ -36,6 +38,8 @@ import org.springframework.context.annotation.PropertySource;
 @PropertySource(value = {"classpath:application.properties"})
 @ImportAutoConfiguration({TrambuInfrastructureAutoConfiguration.class})
 public class TrambuWebApplication {
+
+  private static final Logger LOG = LoggerFactory.getLogger(TrambuWebApplication.class);
 
 
   public static final Path PATH_CONFIGURATION_DIRECTORY = Paths
@@ -59,6 +63,7 @@ public class TrambuWebApplication {
   }
 
   private void loadTodoFileLocation() throws IOException {
+    LOG.info("Loading activities from file");
     Path todoLocation = PATH_CONFIGURATION_DIRECTORY.resolve("TODO.txt");
     if (!todoLocation.toFile().exists()) {
       Files.createFile(todoLocation);
@@ -67,6 +72,7 @@ public class TrambuWebApplication {
   }
 
   private void loadTimeLogFile() throws IOException {
+    LOG.info("Loading timelogs from file");
     Path timeLogLocation = PATH_CONFIGURATION_DIRECTORY.resolve("TIMELOG.txt");
     if (!timeLogLocation.toFile().exists()) {
       Files.createFile(timeLogLocation);

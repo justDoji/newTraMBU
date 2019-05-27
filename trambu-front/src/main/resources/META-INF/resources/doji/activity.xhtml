@@ -52,7 +52,7 @@
                 <p:inputText value="#{cc.attrs.model.title}" rendered="#{cc.attrs.model.editable}"/>
             </div>
             <div class="activity-item edit-button">
-                <p:commandButton value="#{cc.attrs.model.expanded ?'close' :'open'}"
+                <p:commandButton value="#{cc.attrs.model.expanded ?'Close' :'Open'}"
                                  id="collapsed"
                                  action="#{activityOverviewController.toggleExpanded(cc.attrs.model)}"
                                  update="formId"
