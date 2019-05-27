@@ -103,10 +103,4 @@ public class LogConverter {
     }
   }
 
-  private class LogToStringConverter extends Converter<LogPointData, String> {
-
-    public LogToStringConverter(LogPointData source) {
-      super(source, String.class);
-    }
-  }
 }

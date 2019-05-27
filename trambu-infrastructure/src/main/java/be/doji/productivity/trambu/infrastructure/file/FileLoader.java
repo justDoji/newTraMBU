@@ -82,10 +82,10 @@ public class FileLoader {
 
     for (String line : Files.readAllLines(file.toPath())) {
       LogPointData pointData = logConverter.parse(line);
-      pointData.getActivity().ifPresent(activity -> {
-        updateTimePoint(pointData, activity.getReferenceKey());
-      });
+      pointData.getActivity()
+          .ifPresent(activity -> updateTimePoint(pointData, activity.getReferenceKey()));
     }
+    LOG.info("Timelog data loaded.");
   }
 
   private void updateTimePoint(LogPointData pointData, String referenceKey) {
