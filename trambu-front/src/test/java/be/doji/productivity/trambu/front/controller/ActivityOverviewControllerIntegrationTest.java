@@ -368,10 +368,31 @@ public class ActivityOverviewControllerIntegrationTest {
     assertThat(controller.getAllExistingTags()).hasSize(3);
   }
 
+  @Test
+  public void loadActivities_timeLogsAreLoaded() throws URISyntaxException {
+    ClassLoader classLoader = getClass().getClassLoader();
+    File todoFile = new File(classLoader.getResource("controller/todo_with_uuid_read.txt").toURI());
+    File timeFile = new File(classLoader.getResource("controller/timelog.txt").toURI());
+
+    controller.setTodoFile(todoFile);
+    controller.setTimeFile(timeFile);
+
+    controller.loadActivities();
+
+    assertThat(controller.getActivities()).isNotEmpty();
+    assertThat(controller.getActivities()).hasSize(4);
+    ActivityModel shouldContainTimeLogs = controller.getActivities().get(0);
+    assertThat(shouldContainTimeLogs).isNotNull();
+    assertThat(shouldContainTimeLogs.getTitle()).isEqualTo("Show application demo");
+    assertThat(shouldContainTimeLogs.getTimelogs()).isNotEmpty();
+    assertThat(shouldContainTimeLogs.getTimelogs()).hasSize(3);
+  }
+
   private void clearActivityState() throws URISyntaxException {
     ClassLoader classLoader = getClass().getClassLoader();
     File file = new File(classLoader.getResource("controller/todo_write.txt").toURI());
     controller.setTodoFile(file);
+    controller.setTimeFile(null);
     controller.clearActivities();
     repository.deleteAll();
     assertThat(controller.getActivities()).isEmpty();

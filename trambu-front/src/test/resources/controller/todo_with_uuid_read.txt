@@ -1,0 +1,4 @@
+x [Show application demo] due:2018-12-07:00:00:00.000 @[demo] +[TraMBU] uuid:[53950295-729a-444c-967b-9ccb83ceeacb]
+[Show the application to people] @[showoff] +[TraMBU] uuid:[de339959-1a64-4f1b-a05c-605c5e652c6e]
+x [Hello World!] due:2017-12-21:16:15:00.000 @[Tag] @[Tag with multiple words] +[Overarching Project] uuid:[46fb3eec-7233-4442-a72b-746685bba0ae]
+[With timelogs!] @[TraMBU] uuid:[56a84218-d7d1-4ec7-b20a-269ed3630236]

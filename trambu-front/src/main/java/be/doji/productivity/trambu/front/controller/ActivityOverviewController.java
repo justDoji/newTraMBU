@@ -51,6 +51,7 @@ public class ActivityOverviewController {
 
 
   private File todoFile;
+  private File timeFile;
 
   private final FileWriter writer;
   private final FileLoader loader;
@@ -83,17 +84,34 @@ public class ActivityOverviewController {
 
   void loadActivities() {
     try {
-      if (todoFile != null && todoFile.exists()) {
-        loader.loadTodoFileActivities(todoFile);
-      } else {
-        showMessage("No todo file found!");
-      }
-      this.model = repository.findAll().stream()
-          .map(modelConverter::parse)
-          .collect(Collectors.toList());
+      loadActivitiesFromFile();
+      loadTimelogsFromFile();
+      repopulateModel();
     } catch (IOException e) {
       showMessage("Error while saving activities to file");
     }
+  }
+
+  private void loadActivitiesFromFile() throws IOException {
+    if (todoFile != null && todoFile.exists()) {
+      loader.loadTodoFileActivities(todoFile);
+    } else {
+      showMessage("No todo file found!");
+    }
+  }
+
+  private void loadTimelogsFromFile() throws IOException {
+    if (timeFile != null && timeFile.exists()) {
+      loader.loadTimeLogFile(timeFile);
+    } else {
+      showMessage("No timelog file found!");
+    }
+  }
+
+  private void repopulateModel() {
+    this.model = repository.findAll().stream()
+        .map(modelConverter::parse)
+        .collect(Collectors.toList());
   }
 
   public List<ActivityModel> getActivities() {
@@ -223,10 +241,6 @@ public class ActivityOverviewController {
     }
   }
 
-  public void setTodoFile(File todoFile) {
-    this.todoFile = todoFile;
-  }
-
   void clearActivities() {
     this.model.clear();
   }
@@ -251,5 +265,11 @@ public class ActivityOverviewController {
     this.filterchain.reset();
   }
 
+  public void setTodoFile(File todoFile) {
+    this.todoFile = todoFile;
+  }
 
+  public void setTimeFile(File timeFile) {
+    this.timeFile = timeFile;
+  }
 }
