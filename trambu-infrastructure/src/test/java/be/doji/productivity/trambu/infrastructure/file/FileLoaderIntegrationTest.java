@@ -82,7 +82,7 @@ public class FileLoaderIntegrationTest {
     List<LogPointData> expectedTimeLogs = activityDatabaseRepository.findAll().get(0).getTimelogs();
     assertThat(expectedTimeLogs).isNotNull();
     assertThat(expectedTimeLogs).isNotEmpty();
-    assertThat(expectedTimeLogs).hasSize(3);
+    assertThat(expectedTimeLogs).hasSize(4);
 
   }
 

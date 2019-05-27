@@ -68,7 +68,7 @@ public class ActivityModelConverter {
       activityData.setReferenceKey(activityModel.getReferenceKey());
     }
     activityData.setTimelogs(parseTimelogs(activityModel.getTimelogs()));
-    
+
     return activityData;
   }
 
@@ -76,7 +76,8 @@ public class ActivityModelConverter {
     List<LogPointData> logPointData = new ArrayList<>();
     for (TimeLogModel log : timelogs) {
       logPointData.add(new LogPointData(TimeLogConverter.DATE_FORMAT.format(log.getStart()),
-          TimeLogConverter.DATE_FORMAT.format(log.getEnd())));
+          log.getEnd() == null ? null :
+              TimeLogConverter.DATE_FORMAT.format(log.getEnd())));
     }
     return logPointData;
   }

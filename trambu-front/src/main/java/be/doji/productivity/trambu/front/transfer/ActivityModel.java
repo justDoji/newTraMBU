@@ -43,10 +43,12 @@ public class ActivityModel {
   private List<String> tags = new ArrayList<>();
   private Date deadline;
   private boolean completed;
-  private boolean editable;
-  private boolean expanded;
   private String referenceKey;
   private List<TimeLogModel> timelogs = new ArrayList<>();
+
+  private boolean editable;
+  private boolean expanded;
+  private boolean timelogExpanded;
 
   public ActivityModel() {
     this.referenceKey = UUID.randomUUID().toString();
@@ -89,5 +91,42 @@ public class ActivityModel {
 
   public void addTimeLog(TimeLogModel timelog) {
     this.timelogs.add(timelog);
+  }
+
+  public boolean getTimelogExpanded() {
+    return timelogExpanded;
+  }
+
+  public void setTimelogExpanded(boolean timelogExpanded) {
+    this.timelogExpanded = timelogExpanded;
+  }
+
+  public void toggleTimeLog() {
+    if (getTimeRunning() && getLastTimelogEntry() != null) {
+      getLastTimelogEntry().setEnd(new Date());
+    } else {
+      TimeLogModel timeLog = new TimeLogModel();
+      timeLog.setStart(new Date());
+      this.timelogs.add(timeLog);
+    }
+  }
+
+  public boolean getTimeRunning() {
+    TimeLogModel lastTimelogEntry = getLastTimelogEntry();
+    if (lastTimelogEntry == null) {
+      return false;
+    }
+    return lastTimelogEntry.getEnd() == null;
+  }
+
+  private TimeLogModel getLastTimelogEntry() {
+    if (timelogs.isEmpty()) {
+      return null;
+    }
+    return this.timelogs.get(timelogs.size() - 1);
+  }
+
+  public void toggleTimelogExpanded() {
+    this.timelogExpanded = !this.timelogExpanded;
   }
 }

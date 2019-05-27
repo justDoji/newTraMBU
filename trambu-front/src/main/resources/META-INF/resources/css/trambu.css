@@ -183,10 +183,6 @@ a {
   padding: 10px;
 }
 
-.timelogs {
-  width: 85%;
-}
-
 .activity-item {
   display: inline-block;
   margin-right: 6px;
@@ -408,6 +404,7 @@ a {
 
 .edit-button {
   float: right;
+  float: right;
 }
 
 .activities-title {
@@ -419,3 +416,73 @@ a {
   border-radius: 5px;
 }
 
+.timelogs {
+  width: 98%;
+}
+
+.timelog-header {
+  width: 100%;
+  background-image: linear-gradient(180deg, #678095, #617a8f);
+  padding: 3px;
+  margin-bottom: 0px;
+  border-bottom: 3px solid #e3e3e3;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  color: #d3d3d3;
+  font-size: small !important;
+  font-weight: bold;
+}
+
+.time-start {
+  border: 2px solid #e3e3e3;
+  color: #e3e3e3;
+  background: linear-gradient(180deg, #678095, #617a8f);
+  position: relative;
+  padding: 6px 12px !important;
+  font-size: x-small !important;
+  line-height: 1.42857143;
+}
+
+.time-start:hover {
+  color: #678095;
+  background: #e3e3e3 50% 50% repeat-x;
+  border: 2px solid #678095;
+  padding: 6px 12px !important;
+  font-size: x-small !important;
+  line-height: 1.42857143;
+}
+
+.time-open {
+  border: 2px solid #e3e3e3;
+  color: #e3e3e3;
+  background: linear-gradient(180deg, #678095, #617a8f);
+  position: relative;
+  padding: 6px 12px !important;
+  font-size: x-small !important;
+  line-height: 1.42857143;
+  float: right;
+}
+
+.time-open:hover {
+  color: #678095;
+  background: #e3e3e3 50% 50% repeat-x;
+  border: 2px solid #678095;
+  padding: 6px 12px !important;
+  font-size: x-small !important;
+  line-height: 1.42857143;
+  float: right;
+}
+
+.timelogTable {
+  background-image: linear-gradient(180deg, #f0f0f0, #dadadb) !important;
+  border-collapse: collapse !important;
+}
+
+.timelogTable, th {
+  color: #2d2a2b;
+  background-image: linear-gradient(180deg, #e3e3e3, #c6c6c7) !important;
+  border-collapse: collapse!important;
+  font-size: x-small !important;
+  line-height: 1.42857143;
+  border: none !important;
+}

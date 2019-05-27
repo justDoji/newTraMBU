@@ -33,8 +33,25 @@
 </composite:interface>
 
 <composite:implementation>
-    <h:form id="timelogForm">
-        <p:dataTable var="timelog" value="#{cc.attrs.model.timelogs}" >
+
+    <div id="timelogHeader" class="timelog-header">
+
+        <p:commandButton value="#{cc.attrs.model.timeRunning ? 'Stop' : 'Start'}"
+                         id="stopStart"
+                         action="#{activityOverviewController.toggleTimelog(cc.attrs.model)}"
+                         update="formId"
+                         style="margin-right:20px;"
+                         styleClass="time-start"
+                         icon="#{cc.attrs.model.timeRunning ? 'far fa-stop-circle' : 'fas fa-stopwatch' }"/>
+        <h:outputText value="Timelogs"/>
+        <p:commandButton id="collapsed"
+                         action="#{cc.attrs.model.toggleTimelogExpanded}"
+                         update="formId"
+                         style="margin-right:20px;"
+                         styleClass="time-open"
+                         icon="#{cc.attrs.model.timelogExpanded ?'fas fa-chevron-down' :'fas fa-chevron-up'}"/>
+    </div>
+        <p:dataTable var="timelog" value="#{cc.attrs.model.timelogs}" styleClass="timelogTable" tableStyleClass="timelogTable" rendered="#{cc.attrs.model.timelogExpanded}">
             <p:column headerText="Start">
                 <h:outputText value="#{timelog.start}" rendered="#{!cc.attrs.model.editable}">
                     <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss"
@@ -49,7 +66,7 @@
                             rendered="#{cc.attrs.model.editable}"/>
             </p:column>
 
-            <p:column headerText="Stop">
+            <p:column  headerText="Stop">
                 <h:outputText value="#{timelog.end}" rendered="#{!cc.attrs.model.editable}">
                     <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss"
                                        rendered="#{!cc.attrs.model.editable}"/>
@@ -62,6 +79,5 @@
                             rendered="#{cc.attrs.model.editable}"/>
             </p:column>
         </p:dataTable>
-    </h:form>
 </composite:implementation>
 </html>

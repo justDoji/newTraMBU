@@ -38,6 +38,7 @@ import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
+import javax.el.MethodExpression;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
@@ -285,5 +286,11 @@ public class ActivityOverviewController {
 
   public void setTimeFile(File timeFile) {
     this.timeFile = timeFile;
+  }
+
+  public void toggleTimelog(ActivityModel model) {
+    ActivityModel toUpdate = findModelInList(model.getReferenceKey());
+    toUpdate.toggleTimeLog();
+    saveActivities();
   }
 }

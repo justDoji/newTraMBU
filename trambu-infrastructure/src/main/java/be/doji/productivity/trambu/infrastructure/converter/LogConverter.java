@@ -31,6 +31,7 @@ import be.doji.productivity.trambu.infrastructure.transfer.LogPointData;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -90,9 +91,11 @@ public class LogConverter {
         .append(SPACE)
         .append(Indicator.LOGPOINT_START)
         .append(logPoint.getStart())
-        .append(SPACE)
-        .append(Indicator.LOGPOINT_END)
-        .append(logPoint.getEnd());
+        .append(SPACE);
+    if (StringUtils.isNotBlank(logPoint.getEnd())) {
+      result.append(Indicator.LOGPOINT_END)
+          .append(logPoint.getEnd());
+    }
     return result.toString();
   }
 
