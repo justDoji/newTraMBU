@@ -159,13 +159,26 @@ public class ActivityOverviewController {
 
   void writeToFile() {
     try {
-      if (todoFile != null && todoFile.exists()) {
-        writer.writeActivtiesToFile(todoFile);
-      } else {
-        showMessage("No output file found!");
-      }
+      writeActivities();
+      writeTimelogs();
     } catch (IOException e) {
       showMessage("Error while saving activities to file");
+    }
+  }
+
+  private void writeActivities() throws IOException {
+    if (todoFile != null && todoFile.exists()) {
+      writer.writeActivtiesToFile(todoFile);
+    } else {
+      showMessage("No output file found!");
+    }
+  }
+
+  private void writeTimelogs() throws IOException {
+    if (timeFile != null && timeFile.exists()) {
+      writer.writeTimeLogsToFile(timeFile);
+    } else {
+      showMessage("No output file found!");
     }
   }
 

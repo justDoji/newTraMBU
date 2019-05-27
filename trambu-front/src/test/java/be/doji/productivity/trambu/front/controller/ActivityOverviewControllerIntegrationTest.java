@@ -22,7 +22,9 @@ package be.doji.productivity.trambu.front.controller;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import be.doji.productivity.trambu.front.converter.ActivityModelConverter;
+import be.doji.productivity.trambu.front.converter.TimeLogConverter;
 import be.doji.productivity.trambu.front.transfer.ActivityModel;
+import be.doji.productivity.trambu.front.transfer.TimeLogModel;
 import be.doji.productivity.trambu.infrastructure.file.FileLoader;
 import be.doji.productivity.trambu.infrastructure.file.FileWriter;
 import be.doji.productivity.trambu.infrastructure.repository.ActivityDatabaseRepository;
@@ -30,6 +32,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import org.junit.After;
@@ -58,11 +61,27 @@ public class ActivityOverviewControllerIntegrationTest {
   @Autowired
   private ActivityModelConverter modelConverter;
 
+  private static final String LINE_ONE = "x (A) [Go to store for food?] @[food] due:2018-12-07:00:00:00.000 warningPeriod:PT24H";
+  private static final String LINE_TWO = "(C) [Show the application to people] +[TraMBU] @[showoff] warningPeriod:PT24H loc:[Home]";
+  private static final String LINE_THREE = "(A) 2017-10-21:14:13.000 [Hello World!] +[Overarching Project] @[Tag] @[Tag with multiple words] due:2017-12-21:16:15:00.000 uuid:283b6271-b513-4e89-b757-10e98c9078ea";
 
   @Before
   public void setUp() throws IOException, URISyntaxException {
     this.controller = new ActivityOverviewController(writer, loader, repository, modelConverter);
     cleanUp();
+  }
+
+  @After
+  public void cleanUp() throws IOException, URISyntaxException {
+    ClassLoader classLoader = getClass().getClassLoader();
+    File file = new File(classLoader.getResource("controller/todo_write.txt").toURI());
+    Files.write(file.toPath(), new ArrayList<>());
+
+    File timeFile = new File(classLoader.getResource("controller/timelog_write.txt").toURI());
+    Files.write(timeFile.toPath(), new ArrayList<>());
+
+    file = new File(classLoader.getResource("controller/todo_read.txt").toURI());
+    Files.write(file.toPath(), Arrays.asList(LINE_ONE, LINE_TWO, LINE_THREE));
   }
 
 
@@ -94,7 +113,7 @@ public class ActivityOverviewControllerIntegrationTest {
   }
 
   @Test
-  public void saveActivities_writeToRepository() throws URISyntaxException {
+  public void saveActivities_writeToRepository() throws URISyntaxException, IOException {
     clearActivityState();
     assertThat(controller.getActivities()).isEmpty();
     assertThat(repository.findAll()).isEmpty();
@@ -145,22 +164,8 @@ public class ActivityOverviewControllerIntegrationTest {
   }
 
 
-  private static final String LINE_ONE = "x (A) [Go to store for food?] @[food] due:2018-12-07:00:00:00.000 warningPeriod:PT24H";
-  private static final String LINE_TWO = "(C) [Show the application to people] +[TraMBU] @[showoff] warningPeriod:PT24H loc:[Home]";
-  private static final String LINE_THREE = "(A) 2017-10-21:14:13.000 [Hello World!] +[Overarching Project] @[Tag] @[Tag with multiple words] due:2017-12-21:16:15:00.000 uuid:283b6271-b513-4e89-b757-10e98c9078ea";
-
-  @After
-  public void cleanUp() throws IOException, URISyntaxException {
-    ClassLoader classLoader = getClass().getClassLoader();
-    File file = new File(classLoader.getResource("controller/todo_write.txt").toURI());
-    Files.write(file.toPath(), new ArrayList<>());
-
-    file = new File(classLoader.getResource("controller/todo_read.txt").toURI());
-    Files.write(file.toPath(), Arrays.asList(LINE_ONE, LINE_TWO, LINE_THREE));
-  }
-
   @Test
-  public void toggleEditable_savesActivities() throws URISyntaxException {
+  public void toggleEditable_savesActivities() throws URISyntaxException, IOException {
     clearActivityState();
     assertThat(controller.getActivities()).isEmpty();
     assertThat(repository.findAll()).isEmpty();
@@ -179,7 +184,7 @@ public class ActivityOverviewControllerIntegrationTest {
   }
 
   @Test
-  public void toggleComplete_savesActivities() throws URISyntaxException {
+  public void toggleComplete_savesActivities() throws URISyntaxException, IOException {
     clearActivityState();
     assertThat(controller.getActivities()).isEmpty();
     assertThat(repository.findAll()).isEmpty();
@@ -198,7 +203,7 @@ public class ActivityOverviewControllerIntegrationTest {
   }
 
   @Test
-  public void completeTags_containsAllExistingTags() throws URISyntaxException {
+  public void completeTags_containsAllExistingTags() throws URISyntaxException, IOException {
     clearActivityState();
     assertThat(controller.getActivities()).isEmpty();
     assertThat(repository.findAll()).isEmpty();
@@ -217,7 +222,7 @@ public class ActivityOverviewControllerIntegrationTest {
   }
 
   @Test
-  public void completeProjects_containsAllExistingTags() throws URISyntaxException {
+  public void completeProjects_containsAllExistingTags() throws URISyntaxException, IOException {
     clearActivityState();
 
     controller.createActivity();
@@ -235,7 +240,7 @@ public class ActivityOverviewControllerIntegrationTest {
 
 
   @Test
-  public void filter_onTag() throws URISyntaxException {
+  public void filter_onTag() throws URISyntaxException, IOException {
     clearActivityState();
 
     controller.createActivity();
@@ -253,7 +258,7 @@ public class ActivityOverviewControllerIntegrationTest {
   }
 
   @Test
-  public void filter_noFilter() throws URISyntaxException {
+  public void filter_noFilter() throws URISyntaxException, IOException {
     clearActivityState();
 
     controller.createActivity();
@@ -270,7 +275,7 @@ public class ActivityOverviewControllerIntegrationTest {
   }
 
   @Test
-  public void filter_onTag_multipleFilters() throws URISyntaxException {
+  public void filter_onTag_multipleFilters() throws URISyntaxException, IOException {
     clearActivityState();
 
     controller.createActivity();
@@ -290,7 +295,7 @@ public class ActivityOverviewControllerIntegrationTest {
 
 
   @Test
-  public void filter_onProject_multipleFilters() throws URISyntaxException {
+  public void filter_onProject_multipleFilters() throws URISyntaxException, IOException {
     clearActivityState();
 
     controller.createActivity();
@@ -309,7 +314,7 @@ public class ActivityOverviewControllerIntegrationTest {
 
 
   @Test
-  public void getAllExistingProjects_multipleActivities() throws URISyntaxException {
+  public void getAllExistingProjects_multipleActivities() throws URISyntaxException, IOException {
     clearActivityState();
 
     controller.createActivity();
@@ -324,7 +329,8 @@ public class ActivityOverviewControllerIntegrationTest {
   }
 
   @Test
-  public void getAllExistingProjects_multipleActivities_haveOverlap() throws URISyntaxException {
+  public void getAllExistingProjects_multipleActivities_haveOverlap()
+      throws URISyntaxException, IOException {
     clearActivityState();
 
     controller.createActivity();
@@ -339,7 +345,7 @@ public class ActivityOverviewControllerIntegrationTest {
   }
 
   @Test
-  public void getAllExistingTags_multipleActivities() throws URISyntaxException {
+  public void getAllExistingTags_multipleActivities() throws URISyntaxException, IOException {
     clearActivityState();
 
     controller.createActivity();
@@ -354,7 +360,8 @@ public class ActivityOverviewControllerIntegrationTest {
   }
 
   @Test
-  public void getAllExistingTags_multipleActivities_haveOverlap() throws URISyntaxException {
+  public void getAllExistingTags_multipleActivities_haveOverlap()
+      throws URISyntaxException, IOException {
     clearActivityState();
 
     controller.createActivity();
@@ -369,7 +376,8 @@ public class ActivityOverviewControllerIntegrationTest {
   }
 
   @Test
-  public void loadActivities_timeLogsAreLoaded() throws URISyntaxException {
+  public void loadActivities_timeLogsAreLoaded() throws URISyntaxException, IOException {
+    clearActivityState();
     ClassLoader classLoader = getClass().getClassLoader();
     File todoFile = new File(classLoader.getResource("controller/todo_with_uuid_read.txt").toURI());
     File timeFile = new File(classLoader.getResource("controller/timelog.txt").toURI());
@@ -388,11 +396,35 @@ public class ActivityOverviewControllerIntegrationTest {
     assertThat(shouldContainTimeLogs.getTimelogs()).hasSize(3);
   }
 
-  private void clearActivityState() throws URISyntaxException {
+  @Test
+  public void saveActivities_timeLogsAreSaved()
+      throws IOException, URISyntaxException, ParseException {
+    clearActivityState();
     ClassLoader classLoader = getClass().getClassLoader();
-    File file = new File(classLoader.getResource("controller/todo_write.txt").toURI());
-    controller.setTodoFile(file);
-    controller.setTimeFile(null);
+    File timefile = new File(classLoader.getResource("controller/timelog_write.txt").toURI());
+    controller.setTimeFile(timefile);
+
+    controller.createActivity();
+    ActivityModel activityOne = controller.getActivities().get(0);
+    activityOne.setTags(Arrays.asList("Cone", "Two"));
+
+    TimeLogModel timeLog = new TimeLogModel();
+    timeLog.setStart(TimeLogConverter.DATE_FORMAT.parse("2018-12-05:18:48:33.130"));
+    timeLog.setEnd(TimeLogConverter.DATE_FORMAT.parse("2018-13-05:18:48:33.130"));
+    activityOne.addTimeLog(timeLog);
+
+    controller.saveActivities();
+    assertThat(Files.readAllLines(timefile.toPath())).isNotEmpty();
+    assertThat(Files.readAllLines(timefile.toPath())).hasSize(1);
+  }
+
+
+  private void clearActivityState() throws URISyntaxException, IOException {
+    ClassLoader classLoader = getClass().getClassLoader();
+    File todofile = new File(classLoader.getResource("controller/todo_write.txt").toURI());
+    File timefile = new File(classLoader.getResource("controller/timelog_write.txt").toURI());
+    controller.setTodoFile(todofile);
+    controller.setTimeFile(timefile);
     controller.clearActivities();
     repository.deleteAll();
     assertThat(controller.getActivities()).isEmpty();

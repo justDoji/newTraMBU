@@ -24,13 +24,16 @@ import static be.doji.productivity.trambu.domain.time.TimePoint.EXTENDED_DATE_TI
 import be.doji.productivity.trambu.domain.activity.Activity;
 import be.doji.productivity.trambu.domain.time.TimePoint;
 import be.doji.productivity.trambu.front.transfer.ActivityModel;
+import be.doji.productivity.trambu.front.transfer.TimeLogModel;
 import be.doji.productivity.trambu.infrastructure.converter.ActivityDataConverter;
 import be.doji.productivity.trambu.infrastructure.converter.Converter;
 import be.doji.productivity.trambu.infrastructure.transfer.ActivityData;
 import be.doji.productivity.trambu.infrastructure.transfer.LogPointData;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -64,7 +67,18 @@ public class ActivityModelConverter {
     if (activityModel.getReferenceKey() != null) {
       activityData.setReferenceKey(activityModel.getReferenceKey());
     }
+    activityData.setTimelogs(parseTimelogs(activityModel.getTimelogs()));
+    
     return activityData;
+  }
+
+  private List<LogPointData> parseTimelogs(List<TimeLogModel> timelogs) {
+    List<LogPointData> logPointData = new ArrayList<>();
+    for (TimeLogModel log : timelogs) {
+      logPointData.add(new LogPointData(TimeLogConverter.DATE_FORMAT.format(log.getStart()),
+          TimeLogConverter.DATE_FORMAT.format(log.getEnd())));
+    }
+    return logPointData;
   }
 
   private class ActivityToActivityModelConverter extends Converter<Activity, ActivityModel> {
