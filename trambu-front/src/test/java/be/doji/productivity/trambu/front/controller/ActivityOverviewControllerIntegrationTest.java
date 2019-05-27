@@ -33,6 +33,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import org.junit.After;
@@ -64,10 +65,12 @@ public class ActivityOverviewControllerIntegrationTest {
   private static final String LINE_ONE = "x (A) [Go to store for food?] @[food] due:2018-12-07:00:00:00.000 warningPeriod:PT24H";
   private static final String LINE_TWO = "(C) [Show the application to people] +[TraMBU] @[showoff] warningPeriod:PT24H loc:[Home]";
   private static final String LINE_THREE = "(A) 2017-10-21:14:13.000 [Hello World!] +[Overarching Project] @[Tag] @[Tag with multiple words] due:2017-12-21:16:15:00.000 uuid:283b6271-b513-4e89-b757-10e98c9078ea";
+  private SimpleDateFormat dateFormat;
 
   @Before
   public void setUp() throws IOException, URISyntaxException {
     this.controller = new ActivityOverviewController(writer, loader, repository, modelConverter);
+    this.dateFormat = new SimpleDateFormat(TimeLogConverter.LOG_DATE_PATTERN);
     cleanUp();
   }
 
@@ -409,8 +412,8 @@ public class ActivityOverviewControllerIntegrationTest {
     activityOne.setTags(Arrays.asList("Cone", "Two"));
 
     TimeLogModel timeLog = new TimeLogModel();
-    timeLog.setStart(TimeLogConverter.DATE_FORMAT.parse("2018-12-05:18:48:33.130"));
-    timeLog.setEnd(TimeLogConverter.DATE_FORMAT.parse("2018-13-05:18:48:33.130"));
+    timeLog.setStart(dateFormat.parse("2018-12-05:18:48:33.130"));
+    timeLog.setEnd(dateFormat.parse("2018-13-05:18:48:33.130"));
     activityOne.addTimeLog(timeLog);
 
     controller.saveActivities();

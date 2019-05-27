@@ -35,13 +35,18 @@ import org.springframework.stereotype.Service;
 public class TimeLogConverter {
 
   public static final String LOG_DATE_PATTERN = "yyyy-MM-dd:HH:mm:ss.SSS";
-  public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat(LOG_DATE_PATTERN);
+  private final SimpleDateFormat dateFormat;
 
   private final ActivityDatabaseRepository activityRepository;
 
   @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
   public TimeLogConverter(@Autowired ActivityDatabaseRepository activityDatabaseRepository) {
     this.activityRepository = activityDatabaseRepository;
+    this.dateFormat = new SimpleDateFormat(LOG_DATE_PATTERN);
+  }
+
+  public SimpleDateFormat getDateFormat() {
+    return this.dateFormat;
   }
 
   public TimeLogModel parse(LogPointData data) {
@@ -53,7 +58,7 @@ public class TimeLogConverter {
 
   private Date mapStart(LogPointData data) {
     try {
-      return DATE_FORMAT.parse(data.getStart());
+      return dateFormat.parse(data.getStart());
     } catch (ParseException e) {
       return null;
     }
@@ -61,7 +66,7 @@ public class TimeLogConverter {
 
   private Date mapEnd(LogPointData data) {
     try {
-      return DATE_FORMAT.parse(data.getEnd());
+      return dateFormat.parse(data.getEnd());
     } catch (ParseException e) {
       return null;
     }
@@ -79,11 +84,11 @@ public class TimeLogConverter {
   }
 
   private String mapStart(TimeLogModel timeLogModel) {
-    return DATE_FORMAT.format(timeLogModel.getStart());
+    return dateFormat.format(timeLogModel.getStart());
   }
 
   private String mapEnd(TimeLogModel timeLogModel) {
-    return DATE_FORMAT.format(timeLogModel.getEnd());
+    return dateFormat.format(timeLogModel.getEnd());
   }
 
   private class LogPointDataToModelConverter extends Converter<LogPointData, TimeLogModel> {

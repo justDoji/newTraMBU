@@ -26,6 +26,7 @@ import be.doji.productivity.trambu.infrastructure.repository.ActivityDatabaseRep
 import be.doji.productivity.trambu.infrastructure.transfer.ActivityData;
 import be.doji.productivity.trambu.infrastructure.transfer.LogPointData;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Optional;
 import org.junit.Before;
 import org.junit.Test;
@@ -39,13 +40,16 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest
 public class TimeLogConverterTest {
 
-  TimeLogConverter converter;
+  private SimpleDateFormat dateFormat;
+  private TimeLogConverter converter;
+
   @Mock
   private ActivityDatabaseRepository activityRepositoryMock;
 
   @Before
   public void setUp() {
     converter = new TimeLogConverter(activityRepositoryMock);
+    this.dateFormat = new SimpleDateFormat(TimeLogConverter.LOG_DATE_PATTERN);
   }
 
 
@@ -55,8 +59,8 @@ public class TimeLogConverterTest {
         "2018-05-24:21:21:35.000");
     TimeLogModel parsed = converter.parse(logPointData);
     assertThat(parsed).isNotNull();
-    assertThat(parsed.getStart()).isEqualTo(TimeLogConverter.DATE_FORMAT.parse("2018-05-24:21:21:00.000"));
-    assertThat(parsed.getEnd()).isEqualTo(TimeLogConverter.DATE_FORMAT.parse("2018-05-24:21:21:35.000"));
+    assertThat(parsed.getStart()).isEqualTo(dateFormat.parse("2018-05-24:21:21:00.000"));
+    assertThat(parsed.getEnd()).isEqualTo(dateFormat.parse("2018-05-24:21:21:35.000"));
   }
 
   @Test
@@ -68,8 +72,8 @@ public class TimeLogConverterTest {
         .thenReturn(Optional.of(activity));
 
     TimeLogModel timeLogModel = new TimeLogModel();
-    timeLogModel.setStart(TimeLogConverter.DATE_FORMAT.parse("2018-05-24:21:21:00.000"));
-    timeLogModel.setEnd(TimeLogConverter.DATE_FORMAT.parse("2018-05-24:21:21:35.000"));
+    timeLogModel.setStart(dateFormat.parse("2018-05-24:21:21:00.000"));
+    timeLogModel.setEnd(dateFormat.parse("2018-05-24:21:21:35.000"));
 
     LogPointData data = converter.parse(timeLogModel, "283b6271-b513-4e89-b757-10e98c9078ea");
     assertThat(data).isNotNull();

@@ -75,9 +75,9 @@ public class ActivityModelConverter {
   private List<LogPointData> parseTimelogs(List<TimeLogModel> timelogs) {
     List<LogPointData> logPointData = new ArrayList<>();
     for (TimeLogModel log : timelogs) {
-      logPointData.add(new LogPointData(TimeLogConverter.DATE_FORMAT.format(log.getStart()),
+      logPointData.add(new LogPointData(logConverter.getDateFormat().format(log.getStart()),
           log.getEnd() == null ? null :
-              TimeLogConverter.DATE_FORMAT.format(log.getEnd())));
+              logConverter.getDateFormat().format(log.getEnd())));
     }
     return logPointData;
   }
