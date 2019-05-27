@@ -123,6 +123,27 @@ public class ActivityOverviewControllerIntegrationTest {
     assertThat(Files.readAllLines(file.toPath())).hasSize(1);
   }
 
+  @Test
+  public void saveActivities_writeToFile_onlyWritesOnce() throws URISyntaxException, IOException {
+    ClassLoader classLoader = getClass().getClassLoader();
+    File file = new File(classLoader.getResource("controller/todo_write.txt").toURI());
+    controller.clearActivities();
+    repository.deleteAll();
+    controller.setTodoFile(file);
+    assertThat(controller.getActivities()).isEmpty();
+    assertThat(Files.readAllLines(file.toPath())).isEmpty();
+
+    controller.createActivity();
+    controller.createActivity();
+    assertThat(controller.getActivities()).hasSize(2);
+
+    controller.saveActivities();
+    assertThat(Files.readAllLines(file.toPath())).hasSize(2);
+
+    controller.saveActivities();
+    assertThat(Files.readAllLines(file.toPath())).hasSize(2);
+  }
+
 
   private static final String LINE_ONE = "x (A) [Go to store for food?] @[food] due:2018-12-07:00:00:00.000 warningPeriod:PT24H";
   private static final String LINE_TWO = "(C) [Show the application to people] +[TraMBU] @[showoff] warningPeriod:PT24H loc:[Home]";
