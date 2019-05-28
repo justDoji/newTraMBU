@@ -44,6 +44,15 @@
                          styleClass="time-start"
                          icon="#{cc.attrs.model.timeRunning ? 'far fa-stop-circle' : 'fas fa-stopwatch' }"/>
         <h:outputText value="Timelogs"/>
+        <div class="timedhours">
+            <h:outputText
+                    value="#{activityOverviewController.hoursSpentToday(cc.attrs.model.referenceKey)} hours today"
+                    styleClass="timeCountToday"/>
+            <h:outputText value="/"/>
+            <h:outputText
+                    value="#{activityOverviewController.hoursSpentTotal(cc.attrs.model.referenceKey)} hours total"
+                    styleClass="timeCountTotal"/>
+        </div>
         <p:commandButton id="collapsed"
                          action="#{cc.attrs.model.toggleTimelogExpanded}"
                          update="formId"
@@ -51,33 +60,34 @@
                          styleClass="time-open"
                          icon="#{cc.attrs.model.timelogExpanded ?'fas fa-chevron-down' :'fas fa-chevron-up'}"/>
     </div>
-        <p:dataTable var="timelog" value="#{cc.attrs.model.timelogs}" styleClass="timelogTable" tableStyleClass="timelogTable" rendered="#{cc.attrs.model.timelogExpanded}">
-            <p:column headerText="Start">
-                <h:outputText value="#{timelog.start}" rendered="#{!cc.attrs.model.editable}">
-                    <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss"
-                                       rendered="#{!cc.attrs.model.editable}"/>
-                </h:outputText>
+    <p:dataTable var="timelog" value="#{cc.attrs.model.timelogs}" styleClass="timelogTable"
+                 tableStyleClass="timelogTable" rendered="#{cc.attrs.model.timelogExpanded}">
+        <p:column headerText="Start">
+            <h:outputText value="#{timelog.start}" rendered="#{!cc.attrs.model.editable}">
+                <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss"
+                                   rendered="#{!cc.attrs.model.editable}"/>
+            </h:outputText>
 
-                <p:outputLabel for="start_edit" value="Choose time:"
-                               rendered="#{cc.attrs.model.editable}"/>
-                <p:calendar id="start_edit" value="#{timelog.start}"
-                            showTime="true" numberOfMonths="2" pattern="dd/MM/yyyy HH:mm:ss"
-                            monthNavigator="true" yearNavigator="false"
-                            rendered="#{cc.attrs.model.editable}"/>
-            </p:column>
+            <p:outputLabel for="start_edit" value="Choose time:"
+                           rendered="#{cc.attrs.model.editable}"/>
+            <p:calendar id="start_edit" value="#{timelog.start}"
+                        showTime="true" numberOfMonths="2" pattern="dd/MM/yyyy HH:mm:ss"
+                        monthNavigator="true" yearNavigator="false"
+                        rendered="#{cc.attrs.model.editable}"/>
+        </p:column>
 
-            <p:column  headerText="Stop">
-                <h:outputText value="#{timelog.end}" rendered="#{!cc.attrs.model.editable}">
-                    <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss"
-                                       rendered="#{!cc.attrs.model.editable}"/>
-                </h:outputText>
-                <p:outputLabel for="stop_edit" value="Choose time:"
-                               rendered="#{cc.attrs.model.editable}"/>
-                <p:calendar id="stop_edit" value="#{timelog.end}"
-                            showTime="true" numberOfMonths="3" pattern="dd/MM/yyyy HH:mm:ss"
-                            monthNavigator="true" yearNavigator="false"
-                            rendered="#{cc.attrs.model.editable}"/>
-            </p:column>
-        </p:dataTable>
+        <p:column headerText="Stop">
+            <h:outputText value="#{timelog.end}" rendered="#{!cc.attrs.model.editable}">
+                <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss"
+                                   rendered="#{!cc.attrs.model.editable}"/>
+            </h:outputText>
+            <p:outputLabel for="stop_edit" value="Choose time:"
+                           rendered="#{cc.attrs.model.editable}"/>
+            <p:calendar id="stop_edit" value="#{timelog.end}"
+                        showTime="true" numberOfMonths="3" pattern="dd/MM/yyyy HH:mm:ss"
+                        monthNavigator="true" yearNavigator="false"
+                        rendered="#{cc.attrs.model.editable}"/>
+        </p:column>
+    </p:dataTable>
 </composite:implementation>
 </html>

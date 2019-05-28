@@ -24,13 +24,18 @@ import static be.doji.productivity.trambu.front.TrambuWebApplication.PATH_CONFIG
 import be.doji.productivity.trambu.front.converter.ActivityModelConverter;
 import be.doji.productivity.trambu.front.filter.FilterChain;
 import be.doji.productivity.trambu.front.transfer.ActivityModel;
+import be.doji.productivity.trambu.front.transfer.TimeLogModel;
 import be.doji.productivity.trambu.infrastructure.file.FileLoader;
 import be.doji.productivity.trambu.infrastructure.file.FileWriter;
 import be.doji.productivity.trambu.infrastructure.repository.ActivityDatabaseRepository;
 import be.doji.productivity.trambu.infrastructure.transfer.ActivityData;
 import java.io.File;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -42,6 +47,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import org.apache.commons.lang3.time.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -315,5 +321,64 @@ public class ActivityOverviewController {
   public void toggleAutotrack() {
     LOG.debug("Toggle autotrack");
     this.autotracking = !this.autotracking;
+  }
+
+  public String hoursSpentTotal(String referenceKey) {
+    return hoursSpent(referenceKey, this::getHourDelta);
+  }
+
+  public String hoursSpentToday(String referenceKey) {
+    return hoursSpent(referenceKey, this::getHoursToday);
+  }
+
+  private String hoursSpent(String referenceKey, Function<TimeLogModel, Double> mapper) {
+    ActivityModel modelInList = findModelInList(referenceKey);
+    BigDecimal bigDecimal = BigDecimal.valueOf(
+        modelInList.getTimelogs().stream().map(mapper).mapToDouble(Double::doubleValue)
+            .sum());
+    bigDecimal = bigDecimal.setScale(2, RoundingMode.HALF_UP);
+    return bigDecimal.toString();
+  }
+
+  private double getHourDelta(TimeLogModel timeLogModel) {
+    Date startCount = timeLogModel.getStart();
+    Date endCount = timeLogModel.getEnd() == null ? new Date() : timeLogModel.getEnd();
+
+    if (startCount.after(endCount)) {
+      return 0;
+    } else {
+      long miliDelta = endCount.getTime() - startCount.getTime();
+      return (double) miliDelta / (1000 * 60 * 60);
+    }
+  }
+
+  private double getHoursToday(TimeLogModel timeLogModel) {
+
+    Date startOfToday = DateUtils.truncate(new Date(), Calendar.DAY_OF_MONTH);
+
+    Date startCount =
+        timeLogModel.getStart().before(startOfToday) ? startOfToday : timeLogModel.getStart();
+    Date endCount = getEndOfTodayCount(timeLogModel);
+
+    if (startCount.after(endCount)) {
+      return 0;
+    } else {
+      long miliDelta = endCount.getTime() - startCount.getTime();
+      return (double) miliDelta / (1000 * 60 * 60);
+    }
+  }
+
+  private Date getEndOfTodayCount(TimeLogModel timeLogModel) {
+    Calendar today = Calendar.getInstance();
+    today.set(Calendar.HOUR_OF_DAY, 23);
+    today.set(Calendar.MINUTE, 59);
+    today.set(Calendar.SECOND, 59);
+    Date endOfToday = today.getTime();
+
+    if (timeLogModel.getEnd() == null) {
+      return new Date();
+    } else {
+      return timeLogModel.getEnd().after(endOfToday) ? endOfToday : timeLogModel.getEnd();
+    }
   }
 }

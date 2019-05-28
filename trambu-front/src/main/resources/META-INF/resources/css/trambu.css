@@ -242,7 +242,8 @@ a {
 
 .done {
   color: #4BBF73;
-  border: 1px solid #4BBF73;
+  border: 0px;
+  border-left: 3px solid #4BBF73;
   font-weight: bold;
   font-size: smaller !important;
   position: relative;
@@ -255,7 +256,8 @@ a {
   color: #fff;
   font-weight: bold;
   background: #4BBF73 50% 50% repeat-x;
-  border: 1px solid #4BBF73;
+  border: 0px solid #f0ad4e;
+  margin-left: 3px;
   padding: 6px 12px !important;
   font-size: smaller !important;
   line-height: 1.42857143;
@@ -263,7 +265,8 @@ a {
 
 
 .todo {
-  border: 1px solid #f0ad4e;
+  border: 0px;
+  border-left: 3px solid #f0ad4e;
   color: #f0ad4e;
   font-weight: bold;
   background: transparent;
@@ -277,7 +280,8 @@ a {
   color: #fff;
   background: #f0ad4e 50% 50% repeat-x;
   font-weight: bold;
-  border: 1px solid #f0ad4e;
+  border: 0px solid #f0ad4e;
+  margin-left: 3px;
   padding: 6px 12px !important;
   font-size: smaller !important;
   line-height: 1.42857143;
@@ -481,22 +485,24 @@ a {
 }
 
 .time-start {
-  border: 2px solid #e3e3e3;
+  border: 1px solid #e3e3e3;
   color: #e3e3e3;
   background: transparent;
   position: relative;
   padding: 3px 1px !important;
   font-size: x-small !important;
   line-height: 1.42857143;
+  text-shadow: 2px 2px 0 rgba(18, 18, 40, 0.75);
 }
 
 .time-start:hover {
-  color: #678095;
-  background: #e3e3e3 50% 50% repeat-x;
-  border: 2px solid #678095;
+  color: #e3e3e3;
+  background: #67b4fe 50% 50% repeat-x;
+  border: 1px solid #67b4fe;
   padding: 3px 1px !important;
   font-size: x-small !important;
   line-height: 1.42857143;
+  text-shadow: 2px 2px 0 #67b4fe;
 }
 
 .time-open {
@@ -548,6 +554,25 @@ a {
   margin-top: 15px;
   margin-left: 6px;
   min-height: 35px;
+}
+
+.timedhours {
+  display: inline-block;
+  margin-left: 25px;
+}
+
+.timeCountToday {
+  margin-left: 2px;
+  margin-right: 2px;
+  font-size: x-small !important;
+  color: #67b4fe;
+}
+
+.timeCountTotal {
+  margin-left: 2px;
+  margin-right: 2px;
+  font-size: x-small !important;
+  color: #a5acb3;
 }
 
 /*Override*/
