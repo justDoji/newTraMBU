@@ -29,20 +29,34 @@
 
     <ui:define name="content">
 
-        <div class="activefilters">
-            <h:form id="activeFilterForm">
-                <span class="filter-header">Active filters</span>
-                <ui:repeat value="#{activityOverviewController.filterchain.filters}"
-                           var="filter">
-                    <p:commandButton value="#{filter.name}"
-                                     id="removeFilter"
-                                     action="#{activityOverviewController.filterchain.removeFilter(filter)}"
-                                     update="formId, activeFilterForm, filterForm"
-                                     styleClass="active-filter"
-                                     icon="fas fa-minus-circle"/>
-                </ui:repeat>
+        <div id="topbar" class="topbar">
+            <div class="activefilters">
+                <h:form id="activeFilterForm">
+                    <span class="filter-header">Active filters</span>
+                    <ui:repeat value="#{activityOverviewController.filterchain.filters}"
+                               var="filter">
+                        <p:commandButton value="#{filter.name}"
+                                         id="removeFilter"
+                                         action="#{activityOverviewController.filterchain.removeFilter(filter)}"
+                                         update="formId, activeFilterForm, filterForm"
+                                         styleClass="active-filter"
+                                         icon="fas fa-minus-circle"/>
+                    </ui:repeat>
 
-            </h:form>
+                </h:form>
+            </div>
+            <div class="autotrack">
+                <h:form id="tracking">
+
+                    <p:outputLabel for="autotrack" value="Autotrack" style="margin-right: 5px;" styleClass="filter-header"/>
+                    <p:selectBooleanCheckbox id="autotrack"
+                                             value="#{activityOverviewController.autotracking}"
+                                             update="formId, tracking"
+                                             valueChangeListener="#{activityOverviewController.toggleAutotrack}"
+                                             onchange="submit()"
+                    />
+                </h:form>
+            </div>
         </div>
 
         <div class="container-wrapper">
@@ -57,9 +71,9 @@
                                          update="formId, activeFilterForm, filterForm"
                                          styleClass="filter"
                                          icon="fas fa-filter"/>
-                        <br />
+                        <br/>
                     </ui:repeat>
-                    <hr />
+                    <hr/>
                     <span class="filter-header">Tag Filters</span>
                     <ui:repeat value="#{activityOverviewController.allExistingTags}"
                                var="tag">
@@ -69,7 +83,7 @@
                                          update="formId, activeFilterForm, filterForm"
                                          styleClass="filter"
                                          icon="fas fa-filter"/>
-                        <br />
+                        <br/>
                     </ui:repeat>
                 </h:form>
 
@@ -77,13 +91,13 @@
 
             <div class="container" id="main">
                 <div class="activity-commands">
-                <p:commandButton
-                        value="New"
-                        icon="far fa-calendar-plus"
-                        action="#{activityOverviewController.createActivity}"
-                        update="formId"
-                        styleClass="new"
-                />
+                    <p:commandButton
+                            value="New"
+                            icon="far fa-calendar-plus"
+                            action="#{activityOverviewController.createActivity}"
+                            update="formId"
+                            styleClass="new"
+                    />
                 </div>
                 <h:form id="formId">
                     <p:growl id="growl" showDetail="true" sticky="true"/>

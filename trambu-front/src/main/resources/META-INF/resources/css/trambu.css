@@ -377,6 +377,8 @@ a {
   margin-top: 15px;
   margin-left: 6px;
   min-height: 35px;
+  width: 88%;
+  display: flex;
 }
 
 .active-filter {
@@ -485,4 +487,20 @@ a {
   font-size: x-small !important;
   line-height: 1.42857143;
   border: none !important;
+}
+
+.topbar {
+  width: 100%;
+  display: inline-flex;
+  flex-direction: row;
+}
+
+.autotrack {
+  float: right !important;
+  width: 10%;
+  font-size: x-small !important;
+  display: flex;
+  margin-top: 15px;
+  margin-left: 6px;
+  min-height: 35px;
 }

@@ -42,6 +42,8 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.annotation.SessionScope;
 
@@ -49,6 +51,7 @@ import org.springframework.web.context.annotation.SessionScope;
 @Named
 public class ActivityOverviewController {
 
+  private static final Logger LOG = LoggerFactory.getLogger(ActivityOverviewController.class);
 
   private File todoFile;
   private File timeFile;
@@ -57,6 +60,8 @@ public class ActivityOverviewController {
   private final FileLoader loader;
   private final ActivityModelConverter modelConverter;
   private final ActivityDatabaseRepository repository;
+
+  private boolean autotracking;
 
 
   private List<ActivityModel> model = new ArrayList<>();
@@ -137,6 +142,11 @@ public class ActivityOverviewController {
   public void toggleExpanded(ActivityModel model) {
     ActivityModel toToggle = findModelInList(model.getReferenceKey());
     toToggle.setExpanded(!toToggle.isExpanded());
+
+    if (isAutotracking()) {
+      LOG.debug("Autotrack for activity: " + model.getTitle());
+      toggleTimelog(model);
+    }
   }
 
   public void toggleCompleted(ActivityModel model) {
@@ -291,5 +301,19 @@ public class ActivityOverviewController {
     ActivityModel toUpdate = findModelInList(model.getReferenceKey());
     toUpdate.toggleTimeLog();
     saveActivities();
+  }
+
+  public boolean isAutotracking() {
+    return autotracking;
+  }
+
+  public void setAutotracking(boolean autotracking) {
+    LOG.debug("autotrack setter: " + autotracking);
+    this.autotracking = autotracking;
+  }
+
+  public void toggleAutotrack() {
+    LOG.debug("Toggle autotrack");
+    this.autotracking = !this.autotracking;
   }
 }
