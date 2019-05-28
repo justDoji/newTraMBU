@@ -19,6 +19,7 @@
  */
 package be.doji.productivity.trambu.front.controller;
 
+import static java.util.Calendar.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import be.doji.productivity.trambu.front.converter.ActivityModelConverter;
@@ -36,6 +37,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -379,6 +381,25 @@ public class ActivityOverviewControllerIntegrationTest {
   }
 
   @Test
+  public void delete_removesActivity() throws IOException, URISyntaxException {
+    clearActivityState();
+
+    controller.createActivity();
+    ActivityModel activityOne = controller.getActivities().get(0);
+    activityOne.setTags(Arrays.asList("Cone", "Two"));
+
+    controller.createActivity();
+    ActivityModel activityTwo = controller.getActivities().get(1);
+    activityTwo.setTags(Arrays.asList("Cat", "Two"));
+
+    assertThat(controller.getActivities()).hasSize(2);
+
+    controller.deleteActivity(activityTwo);
+
+    assertThat(controller.getActivities()).hasSize(1);
+  }
+
+  @Test
   public void loadActivities_timeLogsAreLoaded() throws URISyntaxException, IOException {
     clearActivityState();
     ClassLoader classLoader = getClass().getClassLoader();
@@ -419,6 +440,135 @@ public class ActivityOverviewControllerIntegrationTest {
     controller.saveActivities();
     assertThat(Files.readAllLines(timefile.toPath())).isNotEmpty();
     assertThat(Files.readAllLines(timefile.toPath())).hasSize(1);
+  }
+
+  @Test
+  public void hoursSpentTotal_returnsCorrectHours()
+      throws ParseException, IOException, URISyntaxException {
+    clearActivityState();
+    ClassLoader classLoader = getClass().getClassLoader();
+    File timefile = new File(classLoader.getResource("controller/timelog_write.txt").toURI());
+    controller.setTimeFile(timefile);
+
+    controller.createActivity();
+    ActivityModel activityOne = controller.getActivities().get(0);
+    activityOne.setTags(Arrays.asList("Cone", "Two"));
+
+    TimeLogModel timeLog = new TimeLogModel();
+    timeLog.setStart(dateFormat.parse("2018-12-05:10:00:00.00"));
+    timeLog.setEnd(dateFormat.parse("2018-12-05:18:45:33.130"));
+    activityOne.addTimeLog(timeLog);
+
+    String spentTotal = controller.hoursSpentTotal(activityOne.getReferenceKey());
+    assertThat(spentTotal).isNotBlank();
+    assertThat(spentTotal).isEqualTo("8.76");
+  }
+
+  @Test
+  public void hoursSpentToday_returnsZero_ifNoTimeSpentToday()
+      throws ParseException, IOException, URISyntaxException {
+    clearActivityState();
+    ClassLoader classLoader = getClass().getClassLoader();
+    File timefile = new File(classLoader.getResource("controller/timelog_write.txt").toURI());
+    controller.setTimeFile(timefile);
+
+    controller.createActivity();
+    ActivityModel activityOne = controller.getActivities().get(0);
+    activityOne.setTags(Arrays.asList("Cone", "Two"));
+
+    TimeLogModel timeLog = new TimeLogModel();
+    timeLog.setStart(dateFormat.parse("1995-12-05:10:00:00.00"));
+    timeLog.setEnd(dateFormat.parse("1995-12-05:18:45:33.130"));
+    activityOne.addTimeLog(timeLog);
+
+    String spentTotal = controller.hoursSpentToday(activityOne.getReferenceKey());
+    assertThat(spentTotal).isNotBlank();
+    assertThat(spentTotal).isEqualTo("0.00");
+  }
+
+  @Test
+  public void hoursSpentToday_returnsTwo_ifTwoHoursSpentToday()
+      throws IOException, URISyntaxException {
+    clearActivityState();
+    ClassLoader classLoader = getClass().getClassLoader();
+    File timefile = new File(classLoader.getResource("controller/timelog_write.txt").toURI());
+    controller.setTimeFile(timefile);
+
+    controller.createActivity();
+    ActivityModel activityOne = controller.getActivities().get(0);
+    activityOne.setTags(Arrays.asList("Cone", "Two"));
+
+    TimeLogModel timeLog = new TimeLogModel();
+    Calendar start = getInstance();
+    start.set(HOUR_OF_DAY, start.get(HOUR_OF_DAY) - 2);
+    Calendar end = getInstance();
+
+    timeLog.setStart(start.getTime());
+    timeLog.setEnd(end.getTime());
+    activityOne.addTimeLog(timeLog);
+
+    String spentTotal = controller.hoursSpentToday(activityOne.getReferenceKey());
+    assertThat(spentTotal).isNotBlank();
+    assertThat(spentTotal).isEqualTo("2.00");
+  }
+
+  @Test
+  public void toggleTimeLog() throws IOException, URISyntaxException {
+    clearActivityState();
+    ClassLoader classLoader = getClass().getClassLoader();
+    File timefile = new File(classLoader.getResource("controller/timelog_write.txt").toURI());
+    controller.setTimeFile(timefile);
+
+    controller.createActivity();
+    ActivityModel activityOne = controller.getActivities().get(0);
+    activityOne.setTags(Arrays.asList("Cone", "Two"));
+
+    assertThat(activityOne.getTimelogs()).isEmpty();
+
+    controller.toggleTimelog(activityOne);
+    assertThat(activityOne.getTimelogs()).hasSize(1);
+    assertThat(activityOne.getTimeRunning()).isTrue();
+  }
+
+  @Test
+  public void autotrack_startsTimeWhenActivated() throws IOException, URISyntaxException {
+    clearActivityState();
+    ClassLoader classLoader = getClass().getClassLoader();
+    File timefile = new File(classLoader.getResource("controller/timelog_write.txt").toURI());
+    controller.setTimeFile(timefile);
+
+    controller.createActivity();
+    ActivityModel activityOne = controller.getActivities().get(0);
+    activityOne.setTags(Arrays.asList("Cone", "Two"));
+
+    assertThat(activityOne.getTimelogs()).isEmpty();
+    assertThat(controller.isAutotracking()).isFalse();
+    assertThat(activityOne.getTimeRunning()).isFalse();
+
+    controller.toggleAutotrack();
+    assertThat(controller.isAutotracking()).isTrue();
+
+    controller.toggleExpanded(activityOne);
+    assertThat(activityOne.getTimeRunning()).isTrue();
+  }
+
+  @Test
+  public void autotrack_doesntTimeWhenDeactivated() throws IOException, URISyntaxException {
+    clearActivityState();
+    ClassLoader classLoader = getClass().getClassLoader();
+    File timefile = new File(classLoader.getResource("controller/timelog_write.txt").toURI());
+    controller.setTimeFile(timefile);
+
+    controller.createActivity();
+    ActivityModel activityOne = controller.getActivities().get(0);
+    activityOne.setTags(Arrays.asList("Cone", "Two"));
+
+    assertThat(activityOne.getTimelogs()).isEmpty();
+    assertThat(controller.isAutotracking()).isFalse();
+    assertThat(activityOne.getTimeRunning()).isFalse();
+
+    controller.toggleExpanded(activityOne);
+    assertThat(activityOne.getTimeRunning()).isFalse();
   }
 
 

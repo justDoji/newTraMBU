@@ -41,6 +41,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
+import java.util.function.ToDoubleFunction;
 import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -150,7 +151,7 @@ public class ActivityOverviewController {
     toToggle.setExpanded(!toToggle.isExpanded());
 
     if (isAutotracking()) {
-      LOG.debug("Autotrack for activity: " + model.getTitle());
+      LOG.debug("Autotrack for activity: {}", model.getTitle());
       toggleTimelog(model);
     }
   }
@@ -314,7 +315,7 @@ public class ActivityOverviewController {
   }
 
   public void setAutotracking(boolean autotracking) {
-    LOG.debug("autotrack setter: " + autotracking);
+    LOG.debug("autotrack setter: {}", autotracking);
     this.autotracking = autotracking;
   }
 
@@ -331,11 +332,10 @@ public class ActivityOverviewController {
     return hoursSpent(referenceKey, this::getHoursToday);
   }
 
-  private String hoursSpent(String referenceKey, Function<TimeLogModel, Double> mapper) {
+  private String hoursSpent(String referenceKey, ToDoubleFunction<TimeLogModel> mapper) {
     ActivityModel modelInList = findModelInList(referenceKey);
     BigDecimal bigDecimal = BigDecimal.valueOf(
-        modelInList.getTimelogs().stream().map(mapper).mapToDouble(Double::doubleValue)
-            .sum());
+        modelInList.getTimelogs().stream().mapToDouble(mapper).sum());
     bigDecimal = bigDecimal.setScale(2, RoundingMode.HALF_UP);
     return bigDecimal.toString();
   }
