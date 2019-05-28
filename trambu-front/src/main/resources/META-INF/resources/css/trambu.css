@@ -549,3 +549,13 @@ a {
   margin-left: 6px;
   min-height: 35px;
 }
+
+/*Override*/
+
+.title-edit {
+  margin: 0;
+  outline: medium none;
+  padding: 4px;
+  font-weight: normal;
+  width: 100%;
+}

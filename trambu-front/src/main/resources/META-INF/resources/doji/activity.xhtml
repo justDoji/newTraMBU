@@ -49,7 +49,7 @@
             <div class="activity-title">
                 <b><h:outputText value="#{cc.attrs.model.title}"
                                  rendered="#{!cc.attrs.model.editable}"/></b>
-                <p:inputText value="#{cc.attrs.model.title}" rendered="#{cc.attrs.model.editable}"/>
+                <p:inputText value="#{cc.attrs.model.title}" rendered="#{cc.attrs.model.editable}" styleClass="title-edit"/>
             </div>
             <div class="activity-item edit-button">
                 <p:commandButton alt="#{cc.attrs.model.expanded ?'Close' :'Open'}"
