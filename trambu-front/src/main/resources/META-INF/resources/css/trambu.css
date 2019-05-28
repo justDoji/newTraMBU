@@ -27,8 +27,10 @@ a {
 }
 
 .header {
-  background-image: linear-gradient(0deg, #07092d, #01050b);
-  padding: 20px 0 35px 0;
+  /*background-image: linear-gradient(0deg, #07092d, #01050b);*/
+  background: #283957 url("../../images/header-repeater.png") 50% 50% repeat-x;
+  background-size: contain;
+  padding: 5px 0 5px 0;
   margin-bottom: 3px;
   border-bottom: 2px solid #0e0e0e;
   color: #fff;
@@ -169,14 +171,19 @@ a {
 
 .activity-header {
   width: 100%;
-  background: #28303f url("../../images/repeater.png") 50% 50% repeat-x;
+  background: #303d54 url("../../images/repeater-grad.png") 50% 50% repeat-x;
   background-size: contain;
   padding: 0;
   margin-bottom: 0px;
-  border-bottom: 1px solid rgba(25, 36, 57, 0.64);
+  border-bottom: 0px solid rgba(25, 36, 57, 0.64);
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
   color: #fff;
+}
+
+.activity-title {
+  width: 55%;
+  display: inline-block;
 }
 
 .activity-content {
@@ -235,7 +242,7 @@ a {
 
 .done {
   color: #4BBF73;
-  border: 2px solid #4BBF73;
+  border: 1px solid #4BBF73;
   font-weight: bold;
   font-size: smaller !important;
   position: relative;
@@ -248,7 +255,7 @@ a {
   color: #fff;
   font-weight: bold;
   background: #4BBF73 50% 50% repeat-x;
-  border: 2px solid #4BBF73;
+  border: 1px solid #4BBF73;
   padding: 6px 12px !important;
   font-size: smaller !important;
   line-height: 1.42857143;
@@ -256,7 +263,7 @@ a {
 
 
 .todo {
-  border: 2px solid #f0ad4e;
+  border: 1px solid #f0ad4e;
   color: #f0ad4e;
   font-weight: bold;
   background: transparent;
@@ -270,14 +277,14 @@ a {
   color: #fff;
   background: #f0ad4e 50% 50% repeat-x;
   font-weight: bold;
-  border: 2px solid #f0ad4e;
+  border: 1px solid #f0ad4e;
   padding: 6px 12px !important;
   font-size: smaller !important;
   line-height: 1.42857143;
 }
 
 .edit {
-  border: 2px solid #e3e3e3;
+  border: 0px solid #e3e3e3;
   color: #e3e3e3;
   background: transparent;
   position: relative;
@@ -290,7 +297,7 @@ a {
 .edit:hover {
   color: #fff;
   background: #819aaf 50% 50% repeat-x;
-  border: 2px solid #678095;
+  border: 0px solid #678095;
   padding: 6px 12px !important;
   font-size: x-small !important;
   line-height: 1.42857143;
@@ -307,7 +314,6 @@ a {
   line-height: 1.42857143;
   float: right;
 }
-}
 
 .new:hover {
   color: #fff;
@@ -322,7 +328,7 @@ a {
 
 
 .delete {
-  border: 2px solid #e87e64;
+  border: 0px solid #e87e64;
   color: #E87E64;
   font-weight: bold;
   background: transparent;
@@ -337,7 +343,7 @@ a {
   color: #fff;
   background: #E87E64 50% 50% repeat-x;
   font-weight: bold;
-  border: 2px solid #E87E64;
+  border: 0px solid #E87E64;
   padding: 6px 12px !important;
   font-size: smaller !important;
   line-height: 1.42857143;
@@ -479,7 +485,7 @@ a {
   color: #e3e3e3;
   background: transparent;
   position: relative;
-  padding: 6px 12px !important;
+  padding: 3px 1px !important;
   font-size: x-small !important;
   line-height: 1.42857143;
 }
@@ -488,17 +494,17 @@ a {
   color: #678095;
   background: #e3e3e3 50% 50% repeat-x;
   border: 2px solid #678095;
-  padding: 6px 12px !important;
+  padding: 3px 1px !important;
   font-size: x-small !important;
   line-height: 1.42857143;
 }
 
 .time-open {
-  border: 2px solid #e3e3e3;
+  border: 0px solid #e3e3e3;
   color: #e3e3e3;
   background: transparent;
   position: relative;
-  padding: 6px 12px !important;
+  padding: 3px 1px !important;
   font-size: x-small !important;
   line-height: 1.42857143;
   float: right;
@@ -507,8 +513,8 @@ a {
 .time-open:hover {
   color: #678095;
   background: #e3e3e3 50% 50% repeat-x;
-  border: 2px solid #678095;
-  padding: 6px 12px !important;
+  border: 0px solid #678095;
+  padding: 3px 1px !important;
   font-size: x-small !important;
   line-height: 1.42857143;
   float: right;

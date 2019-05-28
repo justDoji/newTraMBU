@@ -46,13 +46,14 @@
                                  styleClass="#{cc.attrs.model.completed ?'done' :'todo'}"
                                  icon="#{cc.attrs.model.completed ?'fas fa-check-square' :'far fa-square'}"/>
             </div>
-            <div class="activity-item">
+            <div class="activity-title">
                 <b><h:outputText value="#{cc.attrs.model.title}"
                                  rendered="#{!cc.attrs.model.editable}"/></b>
                 <p:inputText value="#{cc.attrs.model.title}" rendered="#{cc.attrs.model.editable}"/>
             </div>
             <div class="activity-item edit-button">
-                <p:commandButton value="#{cc.attrs.model.expanded ?'Close' :'Open'}"
+                <p:commandButton alt="#{cc.attrs.model.expanded ?'Close' :'Open'}"
+                                 title="#{cc.attrs.model.expanded ?'Close' :'Open'}"
                                  id="collapsed"
                                  action="#{activityOverviewController.toggleExpanded(cc.attrs.model)}"
                                  update="formId"
@@ -60,7 +61,8 @@
                                  styleClass="edit"
                                  icon="#{cc.attrs.model.expanded ?'fas fa-chevron-down' :'fas fa-chevron-up'}"/>
 
-                <p:commandButton value="#{cc.attrs.model.editable ?'Save' :'Edit'}"
+                <p:commandButton alt="#{cc.attrs.model.editable ?'Save' :'Edit'}"
+                                 title="#{cc.attrs.model.editable ?'Save' :'Edit'}"
                                  id="editSave"
                                  action="#{activityOverviewController.toggleEditable(cc.attrs.model)}"
                                  update="formId, filterForm"
