@@ -169,10 +169,11 @@ a {
 
 .activity-header {
   width: 100%;
-  background-image: linear-gradient(180deg, #233046, #232e3c);
+  background: #28303f url("../../images/repeater.png") 50% 50% repeat-x;
+  background-size: contain;
   padding: 0;
   margin-bottom: 0px;
-  border-bottom: 3px solid rgba(73, 98, 121, 0.64);
+  border-bottom: 1px solid rgba(25, 36, 57, 0.64);
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
   color: #fff;
@@ -238,7 +239,7 @@ a {
   font-weight: bold;
   font-size: smaller !important;
   position: relative;
-  background: linear-gradient(180deg, #233046, #232e3c);
+  background: transparent;
   padding: 6px 12px !important;
   line-height: 1.42857143;
 }
@@ -258,7 +259,7 @@ a {
   border: 2px solid #f0ad4e;
   color: #f0ad4e;
   font-weight: bold;
-  background: linear-gradient(180deg, #233046, #232e3c);
+  background: transparent;
   position: relative;
   padding: 6px 12px !important;
   font-size: smaller !important;
@@ -276,13 +277,14 @@ a {
 }
 
 .edit {
-  border: 2px solid #678095;
-  color: #678095;
-  background: linear-gradient(180deg, #233046, #232e3c);
+  border: 2px solid #e3e3e3;
+  color: #e3e3e3;
+  background: transparent;
   position: relative;
   padding: 6px 12px !important;
   font-size: x-small !important;
   line-height: 1.42857143;
+  text-shadow: 2px 2px 0 rgba(18, 18, 40, 0.75);
 }
 
 .edit:hover {
@@ -305,6 +307,7 @@ a {
   line-height: 1.42857143;
   float: right;
 }
+}
 
 .new:hover {
   color: #fff;
@@ -322,11 +325,12 @@ a {
   border: 2px solid #e87e64;
   color: #E87E64;
   font-weight: bold;
-  background: linear-gradient(180deg, #233046, #232e3c);
+  background: transparent;
   position: relative;
   padding: 6px 12px !important;
   font-size: smaller !important;
   line-height: 1.42857143;
+  text-shadow: 2px 2px 0 rgba(102, 56, 41, 0.75);
 }
 
 .delete:hover {
@@ -457,7 +461,8 @@ a {
 
 .timelog-header {
   width: 100%;
-  background-image: linear-gradient(180deg, #678095, #617a8f);
+  background: #535a68 url("../../images/repeater.png") 50% 50% repeat-x;
+  background-size: contain;
   padding: 3px;
   margin-bottom: 0px;
   margin-top: 3px;
@@ -472,7 +477,7 @@ a {
 .time-start {
   border: 2px solid #e3e3e3;
   color: #e3e3e3;
-  background: linear-gradient(180deg, #678095, #617a8f);
+  background: transparent;
   position: relative;
   padding: 6px 12px !important;
   font-size: x-small !important;
@@ -491,7 +496,7 @@ a {
 .time-open {
   border: 2px solid #e3e3e3;
   color: #e3e3e3;
-  background: linear-gradient(180deg, #678095, #617a8f);
+  background: transparent;
   position: relative;
   padding: 6px 12px !important;
   font-size: x-small !important;
