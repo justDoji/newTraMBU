@@ -4,7 +4,7 @@
 
 The history and general idea (*salutes*) of this project can be found on our [About Page](docs/ABOUT.md)
 
-![Trambu Screenshot](./docs/images/trambu_default_style.PNG "Screenshot of Trambu")
+![Trambu Screenshot](./docs/images/trambu_default_style_time.PNG "Screenshot of Trambu")
 
 ## Contributing
 
