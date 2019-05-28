@@ -198,6 +198,39 @@ a {
   margin-bottom: 7px;
 }
 
+.autocomplete {
+  width: 100%;
+}
+
+.ui-autocomplete {
+  width: 86% !important;
+  zoom: 1;
+  cursor: pointer;
+  -moz-box-shadow: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  position: relative;
+  display: inline-block;
+  margin-left: 5px !important;;
+}
+
+.ui-autocomplete-multiple-container.ui-inputfield {
+  padding: 0 !important;
+  width: 100% !important;
+}
+
+.ui-autocomplete-token {
+
+  cursor: default;
+  float: left;
+  overflow: hidden;
+  padding: 1px 3px;
+  white-space: nowrap;
+  position: relative;
+  margin: 2px;
+  background: #9ed2ff !important;
+  border: 1px solid #647d92;
+}
 
 .done {
   color: #4BBF73;
@@ -318,8 +351,8 @@ a {
 }
 
 .tag:hover {
-  color: #fff;
-  background: #0d1433 50% 50% repeat-x;
+  color: #0d1433;
+  background-color: #e4e4e4;
   border: 2px solid #0d1433;
   padding: 6px 12px !important;
   font-size: smaller !important;
@@ -328,9 +361,9 @@ a {
 }
 
 .project {
-  color: #4BBF73;
-  background: #e4e4e4 50% 50% repeat-x;
-  border: 2px solid #4BBF73;
+  color: #0071dc;
+  background-color: #e4e4e4;
+  border: 2px solid #0071dc;
   padding: 6px 12px !important;
   font-size: smaller !important;
   line-height: 1.42857143;
@@ -338,9 +371,9 @@ a {
 }
 
 .project:hover {
-  color: #fff;
-  background: #4BBF73 50% 50% repeat-x;
-  border: 2px solid #4BBF73;
+  color: #0071dc;
+  background-color: #e4e4e4;
+  border: 2px solid #0071dc;
   padding: 6px 12px !important;
   font-size: smaller !important;
   line-height: 1.42857143;
@@ -427,6 +460,7 @@ a {
   background-image: linear-gradient(180deg, #678095, #617a8f);
   padding: 3px;
   margin-bottom: 0px;
+  margin-top: 3px;
   border-bottom: 3px solid #e3e3e3;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;

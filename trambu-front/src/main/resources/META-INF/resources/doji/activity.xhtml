@@ -122,6 +122,7 @@
                 <p:autoComplete id="inputTags" multiple="true" value="#{cc.attrs.model.tags}"
                                 completeMethod="#{activityOverviewController.completeTags}"
                                 var="tag" itemLabel="#{tag}" itemValue="#{tag}"
+                                styleClass="autocomplete"
                                 forceSelection="false"
                                 rendered="#{cc.attrs.model.editable}">
                     <p:column style="width:10%">
@@ -149,6 +150,7 @@
                                 value="#{cc.attrs.model.projects}"
                                 completeMethod="#{activityOverviewController.completeProjects}"
                                 var="project" itemLabel="#{project}" itemValue="#{project}"
+                                styleClass="autocomplete"
                                 forceSelection="false" rendered="#{cc.attrs.model.editable}">
                     <p:column style="width:10%">
                         <i class="fas fa-calendar-check"></i>
