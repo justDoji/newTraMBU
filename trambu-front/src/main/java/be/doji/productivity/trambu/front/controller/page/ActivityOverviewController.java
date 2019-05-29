@@ -17,20 +17,14 @@
  * For further information on usage, or licensing, contact the author through his github profile:
  * https://github.com/justDoji
  */
-package be.doji.productivity.trambu.front.controller;
+package be.doji.productivity.trambu.front.controller.page;
 
-import static be.doji.productivity.trambu.front.TrambuWebApplication.PATH_CONFIGURATION_DIRECTORY;
-
-import be.doji.productivity.trambu.front.converter.ActivityModelConverter;
+import be.doji.productivity.trambu.front.controller.exception.InvalidReferenceException;
+import be.doji.productivity.trambu.front.controller.state.ActivityModelContainer;
 import be.doji.productivity.trambu.front.filter.FilterChain;
 import be.doji.productivity.trambu.front.transfer.ActivityModel;
 import be.doji.productivity.trambu.front.transfer.TimeLogModel;
-import be.doji.productivity.trambu.infrastructure.file.FileLoader;
-import be.doji.productivity.trambu.infrastructure.file.FileWriter;
-import be.doji.productivity.trambu.infrastructure.repository.ActivityDatabaseRepository;
-import be.doji.productivity.trambu.infrastructure.transfer.ActivityData;
 import java.io.File;
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
@@ -42,8 +36,6 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.function.ToDoubleFunction;
-import java.util.stream.Collectors;
-import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
@@ -63,91 +55,35 @@ public class ActivityOverviewController {
   private File todoFile;
   private File timeFile;
 
-  private final FileWriter writer;
-  private final FileLoader loader;
-  private final ActivityModelConverter modelConverter;
-  private final ActivityDatabaseRepository repository;
+  private final ActivityModelContainer activityContainer;
 
   private boolean autotracking;
 
-
-  private List<ActivityModel> model = new ArrayList<>();
   private FilterChain<ActivityModel> filterchain = new FilterChain();
 
   @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
   @Inject
-  ActivityOverviewController(@Autowired FileWriter writer,
-      @Autowired FileLoader loader,
-      @Autowired ActivityDatabaseRepository repository,
-      @Autowired ActivityModelConverter modelConverter) {
-    this.writer = writer;
-    this.loader = loader;
-    this.repository = repository;
-    this.modelConverter = modelConverter;
-  }
-
-  @PostConstruct
-  public void init() {
-    this.todoFile = PATH_CONFIGURATION_DIRECTORY.resolve("TODO.txt").toFile();
-    this.timeFile = PATH_CONFIGURATION_DIRECTORY.resolve("TIMELOG.txt").toFile();
-    if (this.model == null || this.model.isEmpty()) {
-      loadActivities();
-    }
-  }
-
-  void loadActivities() {
-    try {
-      loadActivitiesFromFile();
-      loadTimelogsFromFile();
-      repopulateModel();
-    } catch (IOException e) {
-      showMessage("Error while saving activities to file");
-    }
-  }
-
-  private void loadActivitiesFromFile() throws IOException {
-    if (todoFile != null && todoFile.exists()) {
-      loader.loadTodoFileActivities(todoFile);
-    } else {
-      showMessage("No todo file found!");
-    }
-  }
-
-  private void loadTimelogsFromFile() throws IOException {
-    if (timeFile != null && timeFile.exists()) {
-      loader.loadTimeLogFile(timeFile);
-    } else {
-      showMessage("No timelog file found!");
-    }
-  }
-
-  private void repopulateModel() {
-    this.model = repository.findAll().stream()
-        .map(modelConverter::parse)
-        .collect(Collectors.toList());
-  }
-
-  public List<ActivityModel> getActivities() {
-    return this.model;
+  ActivityOverviewController(@Autowired ActivityModelContainer activityContainer) {
+    this.activityContainer = activityContainer;
   }
 
   public List<ActivityModel> getFilteredActivities() {
-    return filterchain.getFilteredData(this.model);
+    return filterchain.getFilteredData(activityContainer.getActivities());
   }
 
   public void toggleEditable(ActivityModel model) {
-    ActivityModel toToggle = findModelInList(model.getReferenceKey());
+    ActivityModel toToggle = activityContainer.getActivity(model.getReferenceKey());
     boolean editable = toToggle.isEditable();
 
     if (model.isEditable()) {
-      saveActivities();
+      activityContainer.saveActivities();
     }
 
     toToggle.setEditable(!editable);
   }
 
   public void toggleExpanded(ActivityModel model) {
-    ActivityModel toToggle = findModelInList(model.getReferenceKey());
+    ActivityModel toToggle = activityContainer.getActivity(model.getReferenceKey());
     toToggle.setExpanded(!toToggle.isExpanded());
 
     if (isAutotracking()) {
@@ -157,66 +93,23 @@ public class ActivityOverviewController {
   }
 
   public void toggleCompleted(ActivityModel model) {
-    ActivityModel toToggle = findModelInList(model.getReferenceKey());
+    ActivityModel toToggle = activityContainer.getActivity(model.getReferenceKey());
     toToggle.setCompleted(!toToggle.isCompleted());
-    saveActivities();
-  }
-
-  void saveActivities() {
-    for (ActivityModel activityModel : getActivities()) {
-      repository.findByReferenceKey(activityModel.getReferenceKey())
-          .ifPresent(repository::delete);
-      ActivityData savedData = repository.save(modelConverter.toDatabase(activityModel));
-      activityModel.setDataBaseId(savedData.getId());
-    }
-
-    writeToFile();
-    showMessage("Activities saved");
-  }
-
-  void writeToFile() {
-    try {
-      writeActivities();
-      writeTimelogs();
-    } catch (IOException e) {
-      showMessage("Error while saving activities to file");
-    }
-  }
-
-  private void writeActivities() throws IOException {
-    if (todoFile != null && todoFile.exists()) {
-      writer.writeActivtiesToFile(todoFile);
-    } else {
-      showMessage("No output file found!");
-    }
-  }
-
-  private void writeTimelogs() throws IOException {
-    if (timeFile != null && timeFile.exists()) {
-      writer.writeTimeLogsToFile(timeFile);
-    } else {
-      showMessage("No output file found!");
-    }
+    activityContainer.saveActivities();
   }
 
   public void createActivity() {
-    ActivityModel newActivity = new ActivityModel();
-    this.model.add(newActivity);
+    activityContainer.createActivity();
   }
 
   public void deleteActivity(ActivityModel toDelete) {
-    if (toDelete != null) {
-      Optional<ActivityData> databaseModel = repository.findByReferenceKey(toDelete.getReferenceKey());
-      databaseModel.ifPresent(repository::delete);
-      this.model.remove(findModelInList(toDelete.getReferenceKey()));
-      saveActivities();
-      showMessage("Activity deleted");
+    try {
+      activityContainer.deleteActivity(toDelete.getReferenceKey());
+    } catch (InvalidReferenceException e) {
+      String message = "An error occured while deleting an activity";
+      LOG.error(message);
+      showMessage(message);
     }
-  }
-
-  private ActivityModel findModelInList(String frontId) {
-    return this.model.stream().filter(m -> m.getReferenceKey().equals(frontId))
-        .collect(Collectors.toList()).get(0);
   }
 
   public List<String> completeTags(String query) {
@@ -271,10 +164,6 @@ public class ActivityOverviewController {
     }
   }
 
-  void clearActivities() {
-    this.model.clear();
-  }
-
   public void addTagFilter(String tagToInclude) {
     this.filterchain
         .addPositiveFiler(tagToInclude, ActivityModel::getTags,
@@ -304,9 +193,9 @@ public class ActivityOverviewController {
   }
 
   public void toggleTimelog(ActivityModel model) {
-    ActivityModel toUpdate = findModelInList(model.getReferenceKey());
+    ActivityModel toUpdate = activityContainer.getActivity(model.getReferenceKey());
     toUpdate.toggleTimeLog();
-    saveActivities();
+    activityContainer.saveActivities();
   }
 
   public boolean isAutotracking() {
@@ -323,6 +212,8 @@ public class ActivityOverviewController {
     this.autotracking = !this.autotracking;
   }
 
+  //TODO: extract hours spent to TimeSpentCalculator.class
+
   public String hoursSpentTotal(String referenceKey) {
     return hoursSpent(referenceKey, this::getHourDelta);
   }
@@ -332,7 +223,7 @@ public class ActivityOverviewController {
   }
 
   private String hoursSpent(String referenceKey, ToDoubleFunction<TimeLogModel> mapper) {
-    ActivityModel modelInList = findModelInList(referenceKey);
+    ActivityModel modelInList = activityContainer.getActivity(referenceKey);
     BigDecimal bigDecimal = BigDecimal.valueOf(
         modelInList.getTimelogs().stream().mapToDouble(mapper).sum());
     bigDecimal = bigDecimal.setScale(2, RoundingMode.HALF_UP);
