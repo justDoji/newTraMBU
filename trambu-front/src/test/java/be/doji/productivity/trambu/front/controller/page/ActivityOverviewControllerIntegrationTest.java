@@ -53,8 +53,8 @@ public class ActivityOverviewControllerIntegrationTest {
   private static final String LINE_THREE = "(A) 2017-10-21:14:13.000 [Hello World!] +[Overarching Project] @[Tag] @[Tag with multiple words] due:2017-12-21:16:15:00.000 uuid:283b6271-b513-4e89-b757-10e98c9078ea";
   private SimpleDateFormat dateFormat;
 
-  @Autowired
-  private ActivityModelContainer container;
+  @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
+  @Autowired private ActivityModelContainer container;
 
   private ActivityOverviewController controller;
 
