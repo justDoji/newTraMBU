@@ -206,10 +206,9 @@ public class ActivityOverviewController {
 
   public void deleteActivity(ActivityModel toDelete) {
     if (toDelete != null) {
-      ActivityModel modelInList = findModelInList(toDelete.getReferenceKey());
-      ActivityData databaseModel = modelConverter.toDatabase(modelInList);
-      repository.delete(databaseModel);
-      this.model.remove(modelInList);
+      Optional<ActivityData> databaseModel = repository.findByReferenceKey(toDelete.getReferenceKey());
+      databaseModel.ifPresent(repository::delete);
+      this.model.remove(findModelInList(toDelete.getReferenceKey()));
       saveActivities();
       showMessage("Activity deleted");
     }

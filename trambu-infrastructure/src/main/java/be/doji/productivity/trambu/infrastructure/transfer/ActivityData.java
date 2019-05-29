@@ -119,4 +119,5 @@ public class ActivityData {
       this.timelogs.add(pointData);
     }
   }
+
 }
