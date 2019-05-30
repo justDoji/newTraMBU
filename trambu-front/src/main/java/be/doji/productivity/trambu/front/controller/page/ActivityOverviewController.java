@@ -24,7 +24,6 @@ import be.doji.productivity.trambu.front.controller.exception.InvalidReferenceEx
 import be.doji.productivity.trambu.front.controller.state.ActivityModelContainer;
 import be.doji.productivity.trambu.front.filter.FilterChain;
 import be.doji.productivity.trambu.front.transfer.ActivityModel;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;

@@ -11,6 +11,10 @@ import org.apache.commons.lang3.time.DateUtils;
 
 public final class TimeSpentCalculator {
 
+  private TimeSpentCalculator() {
+    throw new IllegalStateException("Utility class");
+  }
+
   public static String hoursSpentTotal(ActivityModel model) {
     return hoursSpent(TimeSpentCalculator::getHourDelta, model);
   }

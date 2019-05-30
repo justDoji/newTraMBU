@@ -152,7 +152,7 @@ public class ActivityModelContainer {
     databaseModel.ifPresent(repository::delete);
     this.activities.remove(findModelInList(referenceKey));
     saveActivities();
-    LOG.info("Activity deleted: {}" + referenceKey);
+    LOG.info("Activity deleted: {}", referenceKey);
   }
 
   public ActivityModel getActivity(String referenceKey) {
