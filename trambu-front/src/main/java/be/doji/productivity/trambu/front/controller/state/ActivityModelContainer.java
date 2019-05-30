@@ -13,7 +13,11 @@ import java.io.File;
 import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
@@ -39,7 +43,7 @@ public class ActivityModelContainer {
   private File todoFile;
   private File timeFile;
 
-  private List<ActivityModel> activities = new ArrayList<>();
+  private Map<String, ActivityModel> activities = new HashMap<>();
 
   @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
   public ActivityModelContainer(
@@ -90,11 +94,15 @@ public class ActivityModelContainer {
   private void updateActivities() {
     this.activities = repository.findAll().stream()
         .map(modelConverter::parse)
-        .collect(Collectors.toList());
+        .collect(Collectors.toMap(
+            ActivityModel::getReferenceKey,
+            e -> e));
   }
 
   public List<ActivityModel> getActivities() {
-    return this.activities;
+    ArrayList<ActivityModel> activityModels = new ArrayList<>(this.activities.values());
+    Collections.sort(activityModels, Comparator.comparing(ActivityModel::getReferenceKey));
+    return activityModels;
   }
 
   public void saveActivities() {
@@ -136,9 +144,10 @@ public class ActivityModelContainer {
 
   /* Activity Control Methods*/
 
-  public void createActivity() {
+  public String createActivity() {
     ActivityModel newActivity = new ActivityModel();
-    this.activities.add(newActivity);
+    this.activities.put(newActivity.getReferenceKey(), newActivity);
+    return newActivity.getReferenceKey();
   }
 
   public void deleteActivity(String referenceKey) throws InvalidReferenceException {
@@ -150,7 +159,7 @@ public class ActivityModelContainer {
 
     Optional<ActivityData> databaseModel = repository.findByReferenceKey(referenceKey);
     databaseModel.ifPresent(repository::delete);
-    this.activities.remove(findModelInList(referenceKey));
+    this.activities.remove(referenceKey);
     saveActivities();
     LOG.info("Activity deleted: {}", referenceKey);
   }
@@ -160,9 +169,7 @@ public class ActivityModelContainer {
   }
 
   private ActivityModel findModelInList(String reference) {
-    //TODO: refactor to HashMap for performance reasons
-    return this.activities.stream().filter(m -> m.getReferenceKey().equals(reference))
-        .collect(Collectors.toList()).get(0);
+    return this.activities.get(reference);
   }
 
   void clearActivities() {

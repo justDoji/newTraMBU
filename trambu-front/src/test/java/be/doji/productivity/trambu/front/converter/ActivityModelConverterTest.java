@@ -114,8 +114,6 @@ public class ActivityModelConverterTest {
     assertThat(activityModel.getProjects().get(1)).isEqualTo("projectTwo");
   }
 
-  //TODO: convert timelog data!
-
   @Test
   public void parse_timelogs() {
     String referenceKey = UUID.randomUUID().toString();

@@ -86,8 +86,8 @@ public class ActivityOverviewController {
     activityContainer.saveActivities();
   }
 
-  public void createActivity() {
-    activityContainer.createActivity();
+  public String createActivity() {
+    return activityContainer.createActivity();
   }
 
   public void deleteActivity(ActivityModel toDelete) {

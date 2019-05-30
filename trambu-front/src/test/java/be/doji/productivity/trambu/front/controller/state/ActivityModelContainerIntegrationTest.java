@@ -244,7 +244,7 @@ public class ActivityModelContainerIntegrationTest {
 
     assertThat(container.getActivities()).isNotEmpty();
     assertThat(container.getActivities()).hasSize(4);
-    ActivityModel shouldContainTimeLogs = container.getActivities().get(0);
+    ActivityModel shouldContainTimeLogs = container.getActivities().get(1);
     assertThat(shouldContainTimeLogs).isNotNull();
     assertThat(shouldContainTimeLogs.getTitle()).isEqualTo("Show application demo");
     assertThat(shouldContainTimeLogs.getTimelogs()).isNotEmpty();
