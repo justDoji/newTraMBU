@@ -1,6 +1,11 @@
 # TraMBU
 
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=be.doji.productivity%3Anewtrambu&metric=alert_status)](https://sonarcloud.io/dashboard?id=be.doji.productivity%3Anewtrambu)
+## Metrics
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=be.doji.productivity%3Anewtrambu&metric=alert_status)](https://sonarcloud.io/dashboard?id=be.doji.productivity%3Anewtrambu) 
+
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=be.doji.productivity%3Anewtrambu&metric=coverage)](https://sonarcloud.io/dashboard?id=be.doji.productivity%3Anewtrambu)
+
+## About 
 
 The history and general idea (*salutes*) of this project can be found on our [About Page](docs/ABOUT.md)
 
