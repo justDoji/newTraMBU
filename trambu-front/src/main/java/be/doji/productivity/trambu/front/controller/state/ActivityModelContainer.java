@@ -106,7 +106,7 @@ public class ActivityModelContainer {
     }
 
     writeToFile();
-    LOG.info("Activities saved");
+    LOG.info("Saving complete");
   }
 
   void writeToFile() {
@@ -114,7 +114,7 @@ public class ActivityModelContainer {
       writeActivities();
       writeTimelogs();
     } catch (IOException e) {
-      LOG.error("Error while saving activities to file: {}" + e.getMessage());
+      LOG.error("Error while saving activities to file: {}", e.getMessage());
     }
   }
 
@@ -122,7 +122,7 @@ public class ActivityModelContainer {
     if (todoFile != null && todoFile.exists()) {
       writer.writeActivtiesToFile(todoFile);
     } else {
-      LOG.info("No output file found!");
+      LOG.error("No output file found!");
     }
   }
 
@@ -192,4 +192,6 @@ public class ActivityModelContainer {
     repository.deleteAll();
     this.loadActivities();
   }
+
+
 }

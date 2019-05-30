@@ -9,18 +9,27 @@ import be.doji.productivity.trambu.front.transfer.TimeLogModel;
 import be.doji.productivity.trambu.infrastructure.file.FileLoader;
 import be.doji.productivity.trambu.infrastructure.file.FileWriter;
 import be.doji.productivity.trambu.infrastructure.repository.ActivityDatabaseRepository;
+import ch.qos.logback.classic.Level;
+import ch.qos.logback.classic.Logger;
+import ch.qos.logback.classic.spi.ILoggingEvent;
+import ch.qos.logback.core.read.ListAppender;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -46,14 +55,27 @@ public class ActivityModelContainerIntegrationTest {
   private static final String LINE_TWO = "(C) [Show the application to people] +[TraMBU] @[showoff] warningPeriod:PT24H loc:[Home]";
   private static final String LINE_THREE = "(A) 2017-10-21:14:13.000 [Hello World!] +[Overarching Project] @[Tag] @[Tag with multiple words] due:2017-12-21:16:15:00.000 uuid:283b6271-b513-4e89-b757-10e98c9078ea";
   private SimpleDateFormat dateFormat;
+  private ListAppender<ILoggingEvent> logAppender;
 
   @Before
   public void setUp() throws Exception {
     this.dateFormat = new SimpleDateFormat(TimeLogConverter.LOG_DATE_PATTERN);
     this.container = new ActivityModelContainer(writer, loader,
         modelConverter, repository);
-
+    setUpLogger();
     reset();
+  }
+
+  private void setUpLogger() {
+    // get Logback Logger
+    Logger fooLogger = (Logger) LoggerFactory.getLogger(ActivityModelContainer.class);
+
+    // create and start a ListAppender
+    this.logAppender = new ListAppender<>();
+    logAppender.start();
+
+    // add the appender to the logger
+    fooLogger.addAppender(logAppender);
   }
 
   private void reset() throws URISyntaxException {
@@ -135,6 +157,32 @@ public class ActivityModelContainerIntegrationTest {
 
     container.saveActivities();
     assertThat(Files.readAllLines(file.toPath())).hasSize(1);
+  }
+
+  @Test
+  public void saveActivities_doesnNotwriteToFile_ifFileDoesNotExist() throws URISyntaxException, IOException {
+    container.clearActivities();
+    repository.deleteAll();
+
+    Path file = Paths.get("controller/DOEST/NOT/EXIST.txt");
+    assertThat(file.toFile().exists()).isFalse();
+    container.setTodoFile(file.toFile());
+    assertThat(container.getActivities()).isEmpty();
+
+    container.createActivity();
+    assertThat(container.getActivities()).hasSize(1);
+
+    container.saveActivities();
+
+    List<ILoggingEvent> logsList = logAppender.list;
+    SoftAssertions assertions = new SoftAssertions();
+    assertions.assertThat(logsList.get(0)
+        .getMessage()).contains("No output file found!");
+    assertions.assertThat(logsList.get(0).getLevel()).isEqualTo(Level.ERROR);
+    assertions.assertThat(logsList.get(1)
+        .getMessage()).contains("Saving complete");
+    assertions.assertThat(logsList.get(1).getLevel()).isEqualTo(Level.INFO);
+    assertions.assertAll();
   }
 
   @Test
