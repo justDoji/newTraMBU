@@ -58,40 +58,43 @@ public class ActivityOverviewController {
     this.activityContainer = activityContainer;
   }
 
-  public void toggleEditable(ActivityModel model) {
-    ActivityModel toToggle = activityContainer.getActivity(model.getReferenceKey());
+  public void toggleEditable(String activityKey) {
+    ActivityModel toToggle = activityContainer.getActivity(activityKey);
     boolean editable = toToggle.isEditable();
 
-    if (model.isEditable()) {
+    if (toToggle.isEditable()) {
       activityContainer.saveActivities();
     }
 
     toToggle.setEditable(!editable);
   }
 
-  public void toggleExpanded(ActivityModel model) {
-    ActivityModel toToggle = activityContainer.getActivity(model.getReferenceKey());
+  public void toggleExpanded(String activityKey) {
+    ActivityModel toToggle = activityContainer.getActivity(activityKey);
     toToggle.setExpanded(!toToggle.isExpanded());
 
     if (isAutotracking()) {
-      LOG.debug("Autotrack for activity: {}", model.getTitle());
-      toggleTimelog(model);
+      LOG.debug("Autotrack for activity: {}", toToggle.getTitle());
+      toggleTimelog(toToggle);
     }
   }
 
-  public void toggleCompleted(ActivityModel model) {
-    ActivityModel toToggle = activityContainer.getActivity(model.getReferenceKey());
+  public void toggleCompleted(String activityKey) {
+    ActivityModel toToggle = activityContainer.getActivity(activityKey);
     toToggle.setCompleted(!toToggle.isCompleted());
     activityContainer.saveActivities();
   }
 
   public String createActivity() {
-    return activityContainer.createActivity();
+
+    String activityKey = activityContainer.createActivity();
+    toggleEditable(activityKey);
+    return activityKey;
   }
 
-  public void deleteActivity(ActivityModel toDelete) {
+  public void deleteActivity(String activityKey) {
     try {
-      activityContainer.deleteActivity(toDelete.getReferenceKey());
+      activityContainer.deleteActivity(activityKey);
     } catch (InvalidReferenceException e) {
       String message = "An error occured while deleting an activity";
       LOG.error(message);
