@@ -81,7 +81,7 @@ public class ActivityOverviewControllerIntegrationTest {
 
   @Test
   public void toggleEditable_savesActivities() throws URISyntaxException {
-    resetContainer();
+    reset();
     assertThat(container.getActivities()).isEmpty();
 
     ActivityModel toToggle = container.getActivity(container.createActivity());
@@ -98,7 +98,7 @@ public class ActivityOverviewControllerIntegrationTest {
 
   @Test
   public void toggleComplete_savesActivities() throws URISyntaxException {
-    resetContainer();
+    reset();
     assertThat(container.getActivities()).isEmpty();
 
     controller.createActivity();
@@ -116,7 +116,7 @@ public class ActivityOverviewControllerIntegrationTest {
 
   @Test
   public void completeTags_containsAllExistingTags() throws URISyntaxException {
-    resetContainer();
+    reset();
 
     ActivityModel activityOne = container.getActivity(controller.createActivity());
     activityOne.setTags(Arrays.asList("Cone", "Two"));
@@ -124,14 +124,14 @@ public class ActivityOverviewControllerIntegrationTest {
     ActivityModel activityTwo = container.getActivity(controller.createActivity());
     activityTwo.setTags(Arrays.asList("Cat", "Dog"));
 
-    assertThat(controller.completeTags("C")).hasSize(2);
-    assertThat(controller.completeTags("D")).hasSize(1);
-    assertThat(controller.completeTags("T")).hasSize(2);
+    assertThat(controller.completeTags("C")).hasSize(3);
+    assertThat(controller.completeTags("D")).hasSize(2);
+    assertThat(controller.completeTags("T")).hasSize(3);
   }
 
   @Test
   public void completeProjects_containsAllExistingTags() throws URISyntaxException {
-    resetContainer();
+    reset();
 
     ActivityModel activityOne = container.getActivity(controller.createActivity());
     activityOne.setProjects(Arrays.asList("Cone", "Two"));
@@ -139,15 +139,15 @@ public class ActivityOverviewControllerIntegrationTest {
     ActivityModel activityTwo = container.getActivity(controller.createActivity());
     activityTwo.setProjects(Arrays.asList("Cat", "Dog"));
 
-    assertThat(controller.completeProjects("C")).hasSize(2);
-    assertThat(controller.completeProjects("D")).hasSize(1);
-    assertThat(controller.completeProjects("T")).hasSize(2);
+    assertThat(controller.completeProjects("C")).hasSize(3);
+    assertThat(controller.completeProjects("D")).hasSize(2);
+    assertThat(controller.completeProjects("T")).hasSize(3);
   }
 
 
   @Test
   public void filter_onTag() throws URISyntaxException {
-    resetContainer();
+    reset();
 
     String refOne = controller.createActivity();
     ActivityModel activityOne = container.getActivity(refOne);
@@ -166,7 +166,7 @@ public class ActivityOverviewControllerIntegrationTest {
 
   @Test
   public void filter_noFilter() throws URISyntaxException {
-    resetContainer();
+    reset();
 
     String refOne = controller.createActivity();
     ActivityModel activityOne = container.getActivity(refOne);
@@ -183,7 +183,7 @@ public class ActivityOverviewControllerIntegrationTest {
 
   @Test
   public void filter_onTag_multipleFilters() throws URISyntaxException {
-    resetContainer();
+    reset();
 
     ActivityModel activityOne = container.getActivity(controller.createActivity());
     activityOne.setTags(Arrays.asList("Cone", "Two", "Dog"));
@@ -201,7 +201,7 @@ public class ActivityOverviewControllerIntegrationTest {
 
   @Test
   public void filter_onProject_multipleFilters() throws URISyntaxException {
-    resetContainer();
+    reset();
 
     ActivityModel activityOne = container.getActivity(controller.createActivity());
     activityOne.setProjects(Arrays.asList("Cone", "Two", "Dog"));
@@ -215,10 +215,44 @@ public class ActivityOverviewControllerIntegrationTest {
     assertThat(controller.getFilteredActivities()).hasSize(1);
   }
 
+  @Test
+  public void getPossibleProjectFilters_withExistingFilter_onlyReturnsInactiveFilters() throws URISyntaxException {
+    reset();
+
+    ActivityModel activityOne = container.getActivity(controller.createActivity());
+    activityOne.setProjects(Arrays.asList("Cone", "Two", "Dog", "Cat"));
+
+    assertThat(controller.getFilterOptionsForProjects()).hasSize(4);
+
+    controller.addProjectFilter("Two");
+
+    assertThat(controller.getFilterOptionsForProjects()).hasSize(3);
+    assertThat(controller.getFilterOptionsForProjects()).contains("Cone");
+    assertThat(controller.getFilterOptionsForProjects()).contains("Dog");
+    assertThat(controller.getFilterOptionsForProjects()).contains("Cat");
+  }
+
+  @Test
+  public void getPossibleTagFilters_withExistingFilter_onlyReturnsInactiveFilters() throws URISyntaxException {
+    reset();
+
+    ActivityModel activityOne = container.getActivity(controller.createActivity());
+    activityOne.setTags(Arrays.asList("Cone", "Two", "Dog", "Cat"));
+
+    assertThat(controller.getFilterOptionsForTags()).hasSize(4);
+
+    controller.addTagFilter("Two");
+
+    assertThat(controller.getFilterOptionsForTags()).hasSize(3);
+    assertThat(controller.getFilterOptionsForTags()).contains("Cone");
+    assertThat(controller.getFilterOptionsForTags()).contains("Dog");
+    assertThat(controller.getFilterOptionsForTags()).contains("Cat");
+  }
+
 
   @Test
   public void getAllExistingProjects_multipleActivities() throws URISyntaxException {
-    resetContainer();
+    reset();
 
     ActivityModel activityOne = container.getActivity(controller.createActivity());
     activityOne.setProjects(Arrays.asList("Cone", "Two"));
@@ -226,12 +260,12 @@ public class ActivityOverviewControllerIntegrationTest {
     ActivityModel activityTwo = container.getActivity(controller.createActivity());
     activityTwo.setProjects(Arrays.asList("Cat", "Dog"));
 
-    assertThat(controller.getAllExistingProjects()).hasSize(4);
+    assertThat(controller.getFilterOptionsForProjects()).hasSize(4);
   }
 
   @Test
   public void getAllExistingProjects_multipleActivities_haveOverlap() throws URISyntaxException {
-    resetContainer();
+    reset();
 
     ActivityModel activityOne = container.getActivity(controller.createActivity());
     activityOne.setProjects(Arrays.asList("Cone", "Two"));
@@ -239,12 +273,12 @@ public class ActivityOverviewControllerIntegrationTest {
     ActivityModel activityTwo = container.getActivity(controller.createActivity());
     activityTwo.setProjects(Arrays.asList("Cat", "Two"));
 
-    assertThat(controller.getAllExistingProjects()).hasSize(3);
+    assertThat(controller.getFilterOptionsForProjects()).hasSize(3);
   }
 
   @Test
   public void getAllExistingTags_multipleActivities() throws URISyntaxException {
-    resetContainer();
+    reset();
 
     ActivityModel activityOne = container.getActivity(controller.createActivity());
     activityOne.setTags(Arrays.asList("Cone", "Two"));
@@ -254,12 +288,12 @@ public class ActivityOverviewControllerIntegrationTest {
 
     assertThat(container.getActivities()).hasSize(2);
     assertThat(controller.getFilteredActivities()).hasSize(2);
-    assertThat(controller.getAllExistingTags()).hasSize(4);
+    assertThat(controller.getFilterOptionsForTags()).hasSize(4);
   }
 
   @Test
   public void getAllExistingTags_multipleActivities_haveOverlap() throws URISyntaxException {
-    resetContainer();
+    reset();
 
     ActivityModel activityOne = container.getActivity(controller.createActivity());
     activityOne.setTags(Arrays.asList("Cone", "Two"));
@@ -267,12 +301,12 @@ public class ActivityOverviewControllerIntegrationTest {
     ActivityModel activityTwo = container.getActivity(controller.createActivity());
     activityTwo.setTags(Arrays.asList("Cat", "Two"));
 
-    assertThat(controller.getAllExistingTags()).hasSize(3);
+    assertThat(controller.getFilterOptionsForTags()).hasSize(3);
   }
 
   @Test
   public void delete_removesActivity() throws URISyntaxException {
-    resetContainer();
+    reset();
 
     ActivityModel activityOne = container.getActivity(controller.createActivity());
     activityOne.setTags(Arrays.asList("Cone", "Two"));
@@ -290,7 +324,7 @@ public class ActivityOverviewControllerIntegrationTest {
   @Test
   public void hoursSpentTotal_returnsCorrectHours()
       throws ParseException, URISyntaxException {
-    resetContainer();
+    reset();
     ClassLoader classLoader = getClass().getClassLoader();
     File timefile = new File(classLoader.getResource("controller/timelog_write.txt").toURI());
     container.setTimeFile(timefile);
@@ -311,7 +345,7 @@ public class ActivityOverviewControllerIntegrationTest {
   @Test
   public void hoursSpentToday_returnsZero_ifNoTimeSpentToday()
       throws ParseException, URISyntaxException {
-    resetContainer();
+    reset();
     ClassLoader classLoader = getClass().getClassLoader();
     File timefile = new File(classLoader.getResource("controller/timelog_write.txt").toURI());
     container.setTimeFile(timefile);
@@ -332,7 +366,7 @@ public class ActivityOverviewControllerIntegrationTest {
   @Test
   public void hoursSpentToday_returnsTwo_ifTwoHoursSpentToday()
       throws URISyntaxException {
-    resetContainer();
+    reset();
     ClassLoader classLoader = getClass().getClassLoader();
     File timefile = new File(classLoader.getResource("controller/timelog_write.txt").toURI());
     container.setTimeFile(timefile);
@@ -356,7 +390,7 @@ public class ActivityOverviewControllerIntegrationTest {
 
   @Test
   public void toggleTimeLog() throws URISyntaxException {
-    resetContainer();
+    reset();
 
     ClassLoader classLoader = getClass().getClassLoader();
     File timefile = new File(classLoader.getResource("controller/timelog_write.txt").toURI());
@@ -374,7 +408,7 @@ public class ActivityOverviewControllerIntegrationTest {
 
   @Test
   public void autotrack_startsTimeWhenActivated() throws URISyntaxException {
-    resetContainer();
+    reset();
 
     ClassLoader classLoader = getClass().getClassLoader();
     File timefile = new File(classLoader.getResource("controller/timelog_write.txt").toURI());
@@ -396,7 +430,7 @@ public class ActivityOverviewControllerIntegrationTest {
 
   @Test
   public void autotrack_doesntTimeWhenDeactivated() throws URISyntaxException {
-    resetContainer();
+    reset();
 
     ActivityModel activityOne = container.getActivity(container.createActivity());
     activityOne.setTags(Arrays.asList("Cone", "Two"));
@@ -409,7 +443,7 @@ public class ActivityOverviewControllerIntegrationTest {
     assertThat(activityOne.getTimeRunning()).isFalse();
   }
 
-  private void resetContainer() throws URISyntaxException {
+  private void reset() throws URISyntaxException {
     ClassLoader classLoader = getClass().getClassLoader();
     File todofile = new File(classLoader.getResource("controller/todo_write.txt").toURI());
     File timefile = new File(classLoader.getResource("controller/timelog_write.txt").toURI());
@@ -419,6 +453,9 @@ public class ActivityOverviewControllerIntegrationTest {
     container.reset();
 
     assertThat(container.getActivities()).isEmpty();
+
+    controller.resetFilter();
+    assertThat(controller.getFilterchain().getFilters()).isEmpty();
   }
 
 

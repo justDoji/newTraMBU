@@ -432,11 +432,11 @@ a {
   color: #819aaf;
   background: #fff 50% 50% repeat-x;
   border: 2px solid #678095;
-  padding: 3px 1px !important;
-  font-size: smaller !important;
+  padding: 5px 1px !important;
+  font-size: x-small !important;
+  min-width: 145px;
   line-height: 1.42857143;
-  margin-bottom: 4px;
-  margin-left: 6px;
+  margin-top: 6px;
 }
 
 .active-filter:hover {
@@ -444,11 +444,11 @@ a {
   background: #E87E64 50% 50% repeat-x;
   font-weight: bold;
   border: 2px solid #678095;
-  padding: 3px 1px !important;
-  font-size: smaller !important;
+  padding: 5px 1px !important;
+  font-size: x-small !important;
+  min-width: 145px;
   line-height: 1.42857143;
-  margin-bottom: 4px;
-  margin-left: 6px;
+  margin-top: 6px;
 }
 
 .edit-button {
