@@ -46,8 +46,8 @@ Here are a couple of tutorials that can help you get started on your journey of 
 
 ## General guidelines
 
-* When submitting a PR, please fill out the [Pull request template](../.github/PULL_REQUEST_TEMPLATE/pull_request_template.md).
-* When submitting a pull request, you certify to be in agreement with the [DCO](DCO.md)
+* When submitting a PR, please fill out the [Pull request template](.github/PULL_REQUEST_TEMPLATE/pull_request_template.md).
+* When submitting a pull request, you certify to be in agreement with the [DCO](docs/DCO.md)
 * Before you submit a PR, be sure all tests in the application code pass. Do this by running the gradle task 'gradlew build'.
 * Follow the [Google Java Code Style](https://github.com/google/styleguide/blob/gh-pages/intellij-java-google-style.xml) for your code
   * You can easily do this by regulary pressing the 'reformat code' hotkey in your IDE (ctrl + alt + l)

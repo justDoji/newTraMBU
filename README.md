@@ -14,7 +14,7 @@ The history and general idea (*salutes*) of this project can be found on our [Ab
 ## Contributing
 
 We are always looking for your input!  
-Take a look at our [Contribution Guide](docs/CONTRIBUTING.md)
+Take a look at our [Contribution Guide](CONTRIBUTING.md)
 
 # Issue tracker labels and flow
 
