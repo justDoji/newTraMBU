@@ -88,9 +88,9 @@ public class ActivityOverviewControllerIntegrationTest {
     assertThat(container.getActivities()).hasSize(1);
 
     // Replicate UI interactions
-    controller.toggleEditable(toToggle);
+    controller.toggleEditable(toToggle.getReferenceKey());
     toToggle.setTitle("A new title");
-    controller.toggleEditable(toToggle);
+    controller.toggleEditable(toToggle.getReferenceKey());
 
     assertThat(container.getActivities()).hasSize(1);
     assertThat(container.getActivity(toToggle.getReferenceKey()).getTitle()).isEqualTo("A new title");
@@ -108,7 +108,7 @@ public class ActivityOverviewControllerIntegrationTest {
     ActivityModel toToggle = container.getActivities().get(0);
     assertThat(toToggle.isCompleted()).isFalse();
 
-    controller.toggleCompleted(toToggle);
+    controller.toggleCompleted(toToggle.getReferenceKey());
 
     assertThat(container.getActivities()).hasSize(1);
     assertThat(container.getActivities().get(0).isCompleted()).isTrue();
@@ -316,7 +316,7 @@ public class ActivityOverviewControllerIntegrationTest {
 
     assertThat(container.getActivities()).hasSize(2);
 
-    controller.deleteActivity(activityTwo);
+    controller.deleteActivity(activityTwo.getReferenceKey());
 
     assertThat(container.getActivities()).hasSize(1);
   }
@@ -424,7 +424,7 @@ public class ActivityOverviewControllerIntegrationTest {
     controller.toggleAutotrack();
     assertThat(controller.isAutotracking()).isTrue();
 
-    controller.toggleExpanded(activityOne);
+    controller.toggleExpanded(activityOne.getReferenceKey());
     assertThat(activityOne.getTimeRunning()).isTrue();
   }
 
@@ -439,7 +439,7 @@ public class ActivityOverviewControllerIntegrationTest {
     assertThat(controller.isAutotracking()).isFalse();
     assertThat(activityOne.getTimeRunning()).isFalse();
 
-    controller.toggleExpanded(activityOne);
+    controller.toggleExpanded(activityOne.getReferenceKey());
     assertThat(activityOne.getTimeRunning()).isFalse();
   }
 
