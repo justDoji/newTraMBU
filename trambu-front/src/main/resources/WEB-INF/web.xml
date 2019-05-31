@@ -28,6 +28,6 @@
   id="WebApp_ID" version="3.0">
   <context-param>
     <param-name>primefaces.THEME</param-name>
-    <param-value>bootstrap</param-value>
+    <param-value>trambu_dark</param-value>
   </context-param>
 </web-app>
