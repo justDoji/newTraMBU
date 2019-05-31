@@ -1,23 +1,21 @@
 /**
  * TraMBU - an open time management tool
  *
- *     Copyright (C) 2019  Stijn Dejongh
+ * Copyright (C) 2019  Stijn Dejongh
  *
- *     This program is free software: you can redistribute it and/or modify
- *     it under the terms of the GNU Affero General Public License as
- *     published by the Free Software Foundation, either version 3 of the
- *     License, or (at your option) any later version.
+ * This program is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU Affero General Public License as published by the Free Software Foundation, either version 3
+ * of the License, or (at your option) any later version.
  *
- *     This program is distributed in the hope that it will be useful,
- *     but WITHOUT ANY WARRANTY; without even the implied warranty of
- *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *     GNU Affero General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Affero General Public License for more details.
  *
- *     You should have received a copy of the GNU Affero General Public License
- *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
  *
- *     For further information on usage, or licensing, contact the author
- *     through his github profile: https://github.com/justDoji
+ * For further information on usage, or licensing, contact the author through his github profile:
+ * https://github.com/justDoji
  */
 package be.doji.productivity.trambu.front.filter;
 
@@ -26,6 +24,7 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import org.apache.commons.lang3.StringUtils;
 
 public class FilterChain<T> {
 
@@ -33,12 +32,17 @@ public class FilterChain<T> {
 
   public <P> void addPositiveFiler(String displayValue, Function<T, P> supplier,
       Predicate<P> includeWhen, String type) {
+
+    if (!containsFilter(displayValue, type)) {
+      this.filters.add(new PositiveFilter(displayValue, supplier, includeWhen, type));
+    }
+  }
+
+  public boolean containsFilter(String displayValue, String type) {
     List<String> typeNames = this.filters.stream()
         .map(filter -> createIdentifier(filter.getName(), filter.getType())).collect(
             Collectors.toList());
-    if (!typeNames.contains(createIdentifier(displayValue, type))) {
-      this.filters.add(new PositiveFilter(displayValue, supplier, includeWhen, type));
-    }
+    return typeNames.contains(createIdentifier(displayValue, type));
   }
 
   private String createIdentifier(String displayValue, String type) {
@@ -74,6 +78,14 @@ public class FilterChain<T> {
 
   public List<PositiveFilter> getFilters() {
     return filters;
+  }
+
+  public List<PositiveFilter> getFiltersForType(String type) {
+    if (StringUtils.isBlank(type)) {
+      return new ArrayList<>();
+    }
+    
+    return filters.stream().filter(f -> type.equals(f.getType())).collect(Collectors.toList());
   }
 
   public void removeFilter(PositiveFilter filter) {

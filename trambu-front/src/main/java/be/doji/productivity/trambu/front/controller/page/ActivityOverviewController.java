@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
@@ -44,6 +45,8 @@ import org.springframework.web.context.annotation.SessionScope;
 public class ActivityOverviewController {
 
   private static final Logger LOG = LoggerFactory.getLogger(ActivityOverviewController.class);
+  public static final String FILTER_TYPE_PROJECT = "Project";
+  public static final String FILTER_TYPE_TAG = "Tag";
   private final ActivityModelContainer activityContainer;
   private final FilterChain<ActivityModel> filterchain = new FilterChain<>();
 
@@ -53,10 +56,6 @@ public class ActivityOverviewController {
   @Inject
   ActivityOverviewController(@Autowired ActivityModelContainer activityContainer) {
     this.activityContainer = activityContainer;
-  }
-
-  public List<ActivityModel> getFilteredActivities() {
-    return filterchain.getFilteredData(activityContainer.getActivities());
   }
 
   public void toggleEditable(ActivityModel model) {
@@ -100,42 +99,6 @@ public class ActivityOverviewController {
     }
   }
 
-  public List<String> completeTags(String query) {
-    return getOptions(query, ActivityModel::getTags);
-  }
-
-  public List<String> completeProjects(String query) {
-    return getOptions(query, ActivityModel::getProjects);
-  }
-
-  public List<String> getAllExistingTags() {
-    return getValuesFor(ActivityModel::getTags).orElse(new ArrayList<>());
-  }
-
-  public List<String> getAllExistingProjects() {
-    return getValuesFor(ActivityModel::getProjects).orElse(new ArrayList<>());
-  }
-
-  private List<String> getOptions(String query, Function<ActivityModel, List<String>> getter) {
-    Optional<List<String>> reducedValues = getValuesFor(getter);
-
-    List<String> options = reducedValues.orElse(new ArrayList<>());
-    Set<String> returnOptions = new HashSet<>();
-    for (String option : options) {
-      if (option.toLowerCase().contains(query.toLowerCase())) {
-        returnOptions.add(option);
-      }
-    }
-    return new ArrayList<>(returnOptions);
-  }
-
-  private Optional<List<String>> getValuesFor(Function<ActivityModel, List<String>> getter) {
-    Optional<List<String>> reduce = this.getFilteredActivities().stream().map(getter)
-        .reduce(this::reduceStrings);
-    reduce.ifPresent(strings -> strings.sort(String.CASE_INSENSITIVE_ORDER));
-    return reduce;
-  }
-
   private List<String> reduceStrings(List<String> strings, List<String> strings2) {
     Set<String> result = new HashSet<>();
     result.addAll(strings);
@@ -150,26 +113,6 @@ public class ActivityOverviewController {
     if (context != null) {
       context.addMessage(null, new FacesMessage("Info", message));
     }
-  }
-
-  public void addTagFilter(String tagToInclude) {
-    this.filterchain
-        .addPositiveFiler(tagToInclude, ActivityModel::getTags,
-            tags -> tags.contains(tagToInclude), "Tag");
-  }
-
-  public void addProjectFilter(String projectToInclude) {
-    this.filterchain
-        .addPositiveFiler(projectToInclude, ActivityModel::getProjects,
-            projects -> projects.contains(projectToInclude), "Project");
-  }
-
-  public FilterChain<ActivityModel> getFilterchain() {
-    return filterchain;
-  }
-
-  public void resetFilter() {
-    this.filterchain.reset();
   }
 
   public void toggleTimelog(ActivityModel model) {
@@ -200,5 +143,79 @@ public class ActivityOverviewController {
     return TimeSpentCalculator.hoursSpentToday(activityContainer.getActivity(referenceKey));
   }
 
+  public List<ActivityModel> getFilteredActivities() {
+    return filterchain.getFilteredData(activityContainer.getActivities());
+  }
 
+  public void addTagFilter(String tagToInclude) {
+    this.filterchain
+        .addPositiveFiler(tagToInclude, ActivityModel::getTags,
+            tags -> tags.contains(tagToInclude), FILTER_TYPE_TAG);
+  }
+
+  public void addProjectFilter(String projectToInclude) {
+    this.filterchain
+        .addPositiveFiler(projectToInclude, ActivityModel::getProjects,
+            projects -> projects.contains(projectToInclude), FILTER_TYPE_PROJECT);
+  }
+
+  public FilterChain<ActivityModel> getFilterchain() {
+    return filterchain;
+  }
+
+  public void resetFilter() {
+    this.filterchain.reset();
+  }
+
+  public List<String> getFilterOptionsForProjects() {
+    return getOpenFilterOptionsForType(ActivityModel::getProjects,
+        FILTER_TYPE_PROJECT);
+  }
+
+  public List<String> getFilterOptionsForTags() {
+    return getOpenFilterOptionsForType(ActivityModel::getTags,
+        FILTER_TYPE_TAG);
+  }
+
+  private List<String> getOpenFilterOptionsForType(Function<ActivityModel, List<String>> getter,
+      String type) {
+    List<String> collect = getValuesFor(this.getFilteredActivities(), getter)
+        .orElse(new ArrayList<>()).stream()
+        .filter(o -> !filterchain.containsFilter(o, type))
+        .collect(
+            Collectors.toList());
+    collect.sort(String.CASE_INSENSITIVE_ORDER);
+    return collect;
+  }
+
+  public List<String> completeTags(String query) {
+    return getCompletionOptions(query, ActivityModel::getTags);
+  }
+
+  public List<String> completeProjects(String query) {
+    return getCompletionOptions(query, ActivityModel::getProjects);
+  }
+
+  private List<String> getCompletionOptions(String query,
+      Function<ActivityModel, List<String>> getter) {
+    Optional<List<String>> reducedValues = getValuesFor(activityContainer.getActivities(), getter);
+    List<String> options = reducedValues.orElse(new ArrayList<>());
+
+    Set<String> returnOptions = new HashSet<>();
+    returnOptions.add(query);
+    for (String option : options) {
+      if (option.toLowerCase().contains(query.toLowerCase())) {
+        returnOptions.add(option);
+      }
+    }
+    return new ArrayList<>(returnOptions);
+  }
+
+  private Optional<List<String>> getValuesFor(List<ActivityModel> toCheck,
+      Function<ActivityModel, List<String>> getter) {
+    Optional<List<String>> reduce = toCheck.stream().map(getter)
+        .reduce(this::reduceStrings);
+    reduce.ifPresent(strings -> strings.sort(String.CASE_INSENSITIVE_ORDER));
+    return reduce;
+  }
 }
