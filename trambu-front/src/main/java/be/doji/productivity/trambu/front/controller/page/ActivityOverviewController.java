@@ -69,6 +69,13 @@ public class ActivityOverviewController {
     toToggle.setEditable(!editable);
   }
 
+  public void toggleSaveAll() {
+    for(ActivityModel model : activityContainer.getActivities()) {
+      model.setEditable(false);
+    }
+    activityContainer.saveActivities();
+  }
+
   public void toggleExpanded(String activityKey) {
     ActivityModel toToggle = activityContainer.getActivity(activityKey);
     toToggle.setExpanded(!toToggle.isExpanded());
@@ -89,6 +96,7 @@ public class ActivityOverviewController {
 
     String activityKey = activityContainer.createActivity();
     toggleEditable(activityKey);
+    toggleExpanded(activityKey);
     return activityKey;
   }
 

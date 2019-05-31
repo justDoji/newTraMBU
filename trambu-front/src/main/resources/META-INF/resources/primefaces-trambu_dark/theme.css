@@ -1298,6 +1298,14 @@ a {
   width: 100% !important;
 }
 
+.ui-inputfield {
+  margin: 0;
+  outline: medium none;
+  padding: 4px;
+  font-weight: normal;
+  background: #f9fafe;
+}
+
 .ui-autocomplete-token {
 
   cursor: default;
@@ -1500,8 +1508,8 @@ a {
 }
 
 .active-filter {
-  color: #819aaf;
-  background: #fff 50% 50% repeat-x;
+  color: #fff;
+  background: #678095 50% 50% repeat-x;
   border: 2px solid #678095;
   padding: 5px 1px !important;
   font-size: x-small !important;
@@ -1657,4 +1665,10 @@ a {
   padding: 4px;
   font-weight: normal;
   width: 100%;
+  user-select: auto;
+}
+
+.title-edit::selection {
+  background: #536a9d;
+  color: #f9f9ff;
 }

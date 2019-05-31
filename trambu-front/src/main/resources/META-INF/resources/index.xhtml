@@ -109,6 +109,7 @@
                     />
                 </div>
                 <h:form id="formId">
+                    <p:defaultCommand target="saveAll" />
                     <p:growl id="growl" showDetail="true" sticky="true"/>
 
                     <h:panelGroup id="repeat" layout="block" styleClass="repeat-simple-list">
@@ -122,6 +123,14 @@
 
                         </ui:repeat>
                     </h:panelGroup>
+                    <p:commandButton
+                            value="Save All"
+                            id="saveAll"
+                            icon="fas fa-save"
+                            action="#{activityOverviewController.toggleSaveAll}"
+                            update="formId"
+                            styleClass="filter"
+                    />
                 </h:form>
             </div>
         </div>
