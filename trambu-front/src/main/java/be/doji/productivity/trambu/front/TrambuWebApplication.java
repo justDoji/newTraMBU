@@ -46,7 +46,7 @@ public class TrambuWebApplication {
       .get(System.getProperty("user.home"), ".trambu");
 
   public static void main(String[] args) {
-    SpringApplication.run(TrambuWebApplication.class, args);
+    SpringApplication.run(TrambuWebApplication.class);
   }
 
   @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection") @Autowired
