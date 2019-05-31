@@ -30,21 +30,6 @@
     <ui:define name="content">
 
         <div id="topbar" class="topbar">
-            <div class="activefilters">
-                <h:form id="activeFilterForm">
-                    <span class="filter-header">Active filters</span>
-                    <ui:repeat value="#{activityOverviewController.filterchain.filters}"
-                               var="filter">
-                        <p:commandButton value="#{filter.name}"
-                                         id="removeFilter"
-                                         action="#{activityOverviewController.filterchain.removeFilter(filter)}"
-                                         update="formId, activeFilterForm, filterForm"
-                                         styleClass="active-filter"
-                                         icon="fas fa-minus-circle"/>
-                    </ui:repeat>
-
-                </h:form>
-            </div>
             <div class="autotrack">
                 <h:form id="tracking">
 
@@ -63,24 +48,48 @@
             <div class="filterSelector" id="filters">
                 <h:form id="filterForm">
                     <span class="filter-header">Project Filters</span>
-                    <ui:repeat value="#{activityOverviewController.allExistingProjects}"
+                    <!-- Active -->
+                    <ui:repeat value="#{activityOverviewController.filterchain.getFiltersForType('Project')}"
+                               var="filter">
+                        <p:commandButton value="#{filter.name}"
+                                         id="removeProjectFilter"
+                                         action="#{activityOverviewController.filterchain.removeFilter(filter)}"
+                                         update="formId, filterForm"
+                                         styleClass="active-filter"
+                                         icon="fas fa-minus-circle"/>
+                    </ui:repeat>
+
+                    <ui:repeat value="#{activityOverviewController.filterOptionsForProjects}"
                                var="project">
                         <p:commandButton value="#{project}"
                                          id="projectFilter"
                                          action="#{activityOverviewController.addProjectFilter(project)}"
-                                         update="formId, activeFilterForm, filterForm"
+                                         update="formId, filterForm"
                                          styleClass="filter"
                                          icon="fas fa-filter"/>
                         <br/>
                     </ui:repeat>
-                    <hr/>
+
+                    <hr />
+
                     <span class="filter-header">Tag Filters</span>
-                    <ui:repeat value="#{activityOverviewController.allExistingTags}"
+                    <!-- Active -->
+                    <ui:repeat value="#{activityOverviewController.filterchain.getFiltersForType('Tag')}"
+                               var="filter">
+                        <p:commandButton value="#{filter.name}"
+                                         id="removeTagFilter"
+                                         action="#{activityOverviewController.filterchain.removeFilter(filter)}"
+                                         update="formId, filterForm"
+                                         styleClass="active-filter"
+                                         icon="fas fa-minus-circle"/>
+                    </ui:repeat>
+
+                    <ui:repeat value="#{activityOverviewController.filterOptionsForTags}"
                                var="tag">
                         <p:commandButton value="#{tag}"
                                          id="tagFilter"
                                          action="#{activityOverviewController.addTagFilter(tag)}"
-                                         update="formId, activeFilterForm, filterForm"
+                                         update="formId, filterForm"
                                          styleClass="filter"
                                          icon="fas fa-filter"/>
                         <br/>
