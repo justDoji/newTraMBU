@@ -30,6 +30,7 @@
   touch-action: none;
 }
 
+
 /* Layout helpers
 ----------------------------------*/
 .ui-helper-hidden {
@@ -93,7 +94,7 @@
 
 .ui-state-hover {
   color: #5ab7fc;
-  background:  linear-gradient(180deg, #eafafa, #b6deee) 50% 50% repeat-x;
+  background: linear-gradient(180deg, #eafafa, #b6deee) 50% 50% repeat-x;
 }
 
 .ui-state-default, .ui-widget-content .ui-state-default:hover {
@@ -1238,6 +1239,8 @@ a {
   width: 100%;
   font-size: smaller !important;
   box-shadow: 3px 3px 10px #bfbfc0;
+  color: #042154;
+  font-weight: bold;
 }
 
 .activity-header {
@@ -1548,11 +1551,14 @@ a {
 
 .timelogs {
   width: 98%;
+  margin-bottom: 8px;
+  margin-top: 8px;
 }
 
 .timelog-header {
+
   width: 100%;
-  background: #535a68 url("#{resource['primefaces-trambu_dark:images/repeater.png']}") 50% 50% repeat-x;
+  background: #6e7b95 url("#{resource['primefaces-trambu_dark:images/repeater.png']}") 50% 50% repeat-x;
   background-size: contain;
   padding: 3px;
   margin-bottom: 0px;
@@ -1563,6 +1569,7 @@ a {
   color: #d3d3d3;
   font-size: small !important;
   font-weight: bold;
+
 }
 
 .time-start {
@@ -1671,4 +1678,15 @@ a {
 .title-edit::selection {
   background: #536a9d;
   color: #f9f9ff;
+}
+
+.activity-label {
+  max-width: 100%;
+  margin-bottom: 5px;
+  font-weight: 700;
+  clear: both;
+  display: block;
+  font-size: x-small;
+  color: rgba(106, 123, 155, 0.62);
+  border-bottom: 1px solid rgba(106, 123, 155, 0.62);
 }

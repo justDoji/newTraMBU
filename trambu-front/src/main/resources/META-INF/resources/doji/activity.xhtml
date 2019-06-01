@@ -52,7 +52,8 @@
                                  rendered="#{!cc.attrs.model.editable}"/></b>
                 <p:inputText id="titleEdit" value="#{cc.attrs.model.title}"
                              rendered="#{cc.attrs.model.editable}" styleClass="title-edit"
-                             ondblclick="this.setSelectionRange(0, this.value.length)" onfocus="this.setSelectionRange(0, this.value.length)" tabindex="1">
+                             ondblclick="this.setSelectionRange(0, this.value.length)"
+                             onfocus="this.setSelectionRange(0, this.value.length)" tabindex="1">
                     <f:ajax execute="titleEdit" render="titleEdit"/>
                 </p:inputText>
             </div>
@@ -97,7 +98,8 @@
         <p:outputPanel deferred="false" deferredMode="visible" class="activity-content"
                        rendered="#{cc.attrs.model.expanded}">
             <p:outputLabel for="deadline" value="Deadline: "
-                           rendered="#{!cc.attrs.model.editable}"/>
+                           rendered="#{!cc.attrs.model.editable}"
+                           styleClass="activity-label" />
             <h:outputText id="deadline"
                           value="#{cc.attrs.model.deadline != null ? cc.attrs.model.deadline :'No deadline in sight'}"
                           rendered="#{!cc.attrs.model.editable}">
@@ -105,7 +107,7 @@
                                    rendered="#{!cc.attrs.model.editable}"/>
             </h:outputText>
             <p:outputLabel for="deadline_edit" value="Deadline:"
-                           rendered="#{cc.attrs.model.editable}"/>
+                           rendered="#{cc.attrs.model.editable}" styleClass="activity-label"/>
             <p:calendar id="deadline_edit" value="#{cc.attrs.model.deadline}"
                         showTime="true" numberOfMonths="3" pattern="dd/MM/yyyy HH:mm:ss"
                         monthNavigator="true" yearNavigator="true"
@@ -115,9 +117,9 @@
             <div class="timelogs">
                 <doji:timelog model="#{cc.attrs.model}"/>
             </div>
-            <hr/>
+
             <div class="activity-tags">
-                <p:outputLabel value="Tags:" for="inputTags"/>
+                <p:outputLabel value="Tags:" for="inputTags" styleClass="activity-label"/>
                 <ui:repeat value="#{cc.attrs.model.tags}"
                            var="value"
                            varStatus="status"
@@ -144,7 +146,7 @@
                 </p:autoComplete>
             </div>
             <div class="activity-projects">
-                <p:outputLabel value="Projects:" for="inputProjects"/>
+                <p:outputLabel value="Projects:" for="inputProjects" styleClass="activity-label"/>
                 <ui:repeat value="#{cc.attrs.model.projects}"
                            var="project"
                            varStatus="status"
