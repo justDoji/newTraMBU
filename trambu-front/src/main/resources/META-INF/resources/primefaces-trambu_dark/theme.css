@@ -1236,6 +1236,7 @@ a {
   margin-left: 10px;
   border-top: 1px solid rgba(71, 122, 181, 0.34);
   padding: 5px;
+  margin-top: 6px;
 }
 
 .yourkit-link {
@@ -1646,11 +1647,12 @@ a {
 
 .time-start {
   border: 0;
-  color: #6795df;
+  color: #3778b7;
   background: transparent;
   position: relative;
   padding: 3px 1px !important;
   font-size: x-small !important;
+  font-weight: bold;
   line-height: 1.42857143;
   text-shadow: 1px 1px 0 rgba(104, 125, 138, 0.27);
 }
@@ -1667,7 +1669,7 @@ a {
 
 .time-open {
   border: 0px solid #e3e3e3;
-  color: #6795df;
+  color: #3778b7;
   background: transparent;
   position: relative;
   padding: 3px 1px !important;
@@ -1728,7 +1730,7 @@ a {
   margin-right: 5px;
   font-size: x-small !important;
   font-weight: bold;
-  color: #67b4fe;
+  color: #3778b7;
   text-shadow: 1px 1px 0 rgba(104, 125, 138, 0.27);
 }
 
