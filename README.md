@@ -17,14 +17,14 @@ Either check out the latest source code, or download one of our packaged release
 
 ### Packaged releases
 
-Go to (Our releases page)[https://github.com/justDoji/TraMBU/releases], and download the latest version.
+Go to [Our releases page](https://github.com/justDoji/TraMBU/releases(, and download the latest version.
 Be sure you have the Java runtime environment installed on your computer.
 Try this by running
 
 > java -version
 
 If the Java Runtime is installed, you should see ouput containing the version and installation location. 
-If you get a 'command not found' message, head over to the (Oracle site)[https://www.oracle.com/technetwork/java/javase/downloads/index.html] and download the Java Runtime Environment.
+If you get a 'command not found' message, head over to the [Oracle site](https://www.oracle.com/technetwork/java/javase/downloads/index.html) and download the Java Runtime Environment.
 TRAMBU works best with the Java 8 runtime environment.
 
 To run TRAMBU, navigate to the folder containing the downloaded *'.jar'* file, open a command prompt and execute:
