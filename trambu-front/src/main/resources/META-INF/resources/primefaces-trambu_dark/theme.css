@@ -1115,7 +1115,7 @@ a {
 
 .navbar-inner {
   position: relative;
-  min-width: 1080px;
+  min-width: 1175px;
   max-width: 1320px;
   margin-left: auto;
   margin-right: auto;
@@ -1148,6 +1148,8 @@ a {
   align-items: center;
   padding-top: 12px;
   height: 40px;
+  padding-left: 6px;
+  padding-right: 6px;
 }
 
 .logo-phrase {
