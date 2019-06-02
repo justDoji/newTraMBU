@@ -1639,12 +1639,12 @@ a {
 
 .timelog-header {
   width: 100%;
-  background: #e6e6e6;
+  background: #fbfbfb;
   padding: 3px;
   color: #233046;
   font-size: small !important;
   font-weight: bold;
-  border-bottom: 1px solid #81a1cf80;
+  border-bottom: 0px solid #81a1cf80;
 }
 
 .time-start {
