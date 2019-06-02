@@ -115,7 +115,9 @@
                         tabindex="2"/>
             <br/>
             <div class="timelogs">
-                <doji:timelog model="#{cc.attrs.model}"/>
+                <p:outputLabel for="timelogs" value="Timelogs:"
+                               styleClass="activity-label" />
+                <doji:timelog id="timelogs" model="#{cc.attrs.model}"/>
             </div>
 
             <div class="activity-tags">

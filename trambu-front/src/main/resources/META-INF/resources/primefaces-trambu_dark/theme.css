@@ -1065,6 +1065,10 @@ body .ui-tooltip {
   border-width: 2px;
 }
 
+body {
+  background: #f3f3f3 !important
+}
+
 a {
   color: #0f3557;
 }
@@ -1083,7 +1087,7 @@ a {
 }
 
 .ui-widget-content {
-  border: 1px solid #283957;
+  border: 1px solid #c0c9d869;
   background: #eFeFeF;
   color: #222222;
 }
@@ -1097,32 +1101,88 @@ a {
 
 .header {
   /*background-image: linear-gradient(0deg, #07092d, #01050b);*/
-  background: #283957 url("#{resource['primefaces-trambu_dark:images/header-repeater.png']}") 50% 50% repeat-x;
+  /*background: #283957 url("#{resource['primefaces-trambu_dark:images/header-repeater.png']}") 50% 50% repeat-x;*/
+  background-color: #262626;
+  z-index: 421;
   background-size: contain;
   padding: 5px 0 5px 0;
   margin-bottom: 3px;
   border-bottom: 2px solid #0e0e0e;
   color: #fff;
+  display: flex;
+  height: 48px;
+}
+
+.navbar-inner {
+  position: relative;
+  min-width: 1080px;
+  max-width: 1320px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 20px;
+  padding-right: 20px;
+  display: flex;
+}
+
+.logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: -8px;
+  padding-top: 0px;
+  padding-left: 8px;
+  padding-right: 8px;
+  border-bottom: 4px solid transparent;
+}
+
+.logo-image {
+  display: block;
+  height: 30px;
+  margin-left: 5px;
+}
+
+.logo-text {
+  display: block;
+  font-weight: bolder;
+  justify-content: center;
+  align-items: center;
+  padding-top: 12px;
+  height: 40px;
+}
+
+.logo-phrase {
+  display: inline;
+
+}
+
+.navbar-element {
+
+  display: block;
+  height: 48px;
+  padding: 0px 5px;
+  line-height: 32px;
+  border-bottom: 4px solid transparent;
+  box-sizing: border-box;
+  color: #ccc;
+  font-size: 12px;
+  letter-spacing: .05em;
+  white-space: nowrap;
+
 }
 
 .hidden {
   display: none;
 }
 
-.header small {
-  color: #fff;
-}
-
-.logo {
-  vertical-align: middle;
-  display: inline-block;
-  float: left;
-  height: 145px;
-  margin-right: 15px;
-}
-
 .divider {
   color: #0089ff;
+  border-left: 0px solid #0089ff;
+  margin-left: 5px;
+  margin-right: 5px;
+  height: 25px;
+  justify-content: center;
+  align-items: center;
+  margin-top: 5px;
 }
 
 .socialNetwork {
@@ -1141,24 +1201,41 @@ a {
   font-size: smaller;
 }
 
+.page-footer {
+  min-height: 60px;
+  padding: 8px;
+  line-height: 1.5;
+  border-top: 1px solid #e6e6e6;
+  box-sizing: border-box;
+  background-color: #f3f3f3;
+  color: #595959;
+  font-size: 12px;
+  text-align: center;
+}
+
 .footer {
-  margin-top: 25px;
+  margin-top: 5px;
   margin-bottom: 20px;
-  display: flex;
   justify-content: space-between;
+  color: #3d5d6e;
 }
 
 .footer-links {
   display: flex;
   flex-direction: column;
-}
-
-.butterfaces-links {
-  display: flex;
+  min-width: 1080px;
+  max-width: 1320px;
+  margin-left: auto;
+  margin-right: auto;
+  justify-content: left;
+  align-items: center;
+  margin-top: 15px;
 }
 
 .footer-link {
-  margin-left: 6px;
+  margin-left: 10px;
+  border-top: 1px solid rgba(71, 122, 181, 0.34);
+  padding: 5px;
 }
 
 .yourkit-link {
@@ -1206,6 +1283,7 @@ a {
 
 .content {
   margin-bottom: 15px;
+  min-height: 545px;
 }
 
 .align-row {
@@ -1234,13 +1312,14 @@ a {
 .activity {
   margin-right: 6px;
   margin-bottom: 12px;
-  background-image: linear-gradient(180deg, #f0f0f0, #dadadb);
+  background: #fbfbfb;
   border-radius: 7px;
   width: 100%;
   font-size: smaller !important;
   box-shadow: 3px 3px 10px #bfbfc0;
   color: #042154;
   font-weight: bold;
+  border: 1px solid #a8a8a8;
 }
 
 .activity-header {
@@ -1438,7 +1517,7 @@ a {
 
 .tag {
   color: #0d1433;
-  background-color: #e4e4e4;
+  background-color: #fbfbfb;
   border: 2px solid #0d1433;
   padding: 6px 12px !important;
   font-size: smaller !important;
@@ -1448,7 +1527,7 @@ a {
 
 .tag:hover {
   color: #0d1433;
-  background-color: #e4e4e4;
+  background-color: #fbfbfb;
   border: 2px solid #0d1433;
   padding: 6px 12px !important;
   font-size: smaller !important;
@@ -1458,7 +1537,7 @@ a {
 
 .project {
   color: #0071dc;
-  background-color: #e4e4e4;
+  background-color: #fbfbfb;
   border: 2px solid #0071dc;
   padding: 6px 12px !important;
   font-size: smaller !important;
@@ -1468,7 +1547,7 @@ a {
 
 .project:hover {
   color: #0071dc;
-  background-color: #e4e4e4;
+  background-color: #fbfbfb;
   border: 2px solid #0071dc;
   padding: 6px 12px !important;
   font-size: smaller !important;
@@ -1479,7 +1558,7 @@ a {
 .filter {
   border: 2px solid #678095;
   color: #678095;
-  background: linear-gradient(180deg, #fff, #fff);
+  background: linear-gradient(180deg, #ffffff85, #f3f3f3);
   position: relative;
   margin-bottom: 6px;
   margin-top: 6px;
@@ -1556,37 +1635,30 @@ a {
 }
 
 .timelog-header {
-
   width: 100%;
-  background: #6e7b95 url("#{resource['primefaces-trambu_dark:images/repeater.png']}") 50% 50% repeat-x;
-  background-size: contain;
+  background: #e6e6e6;
   padding: 3px;
-  margin-bottom: 0px;
-  margin-top: 3px;
-  border-bottom: 3px solid #e3e3e3;
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
-  color: #d3d3d3;
+  color: #233046;
   font-size: small !important;
   font-weight: bold;
-
+  border-bottom: 1px solid #81a1cf80;
 }
 
 .time-start {
-  border: 1px solid #e3e3e3;
-  color: #e3e3e3;
+  border: 0;
+  color: #6795df;
   background: transparent;
   position: relative;
   padding: 3px 1px !important;
   font-size: x-small !important;
   line-height: 1.42857143;
-  text-shadow: 2px 2px 0 rgba(18, 18, 40, 0.75);
+  text-shadow: 1px 1px 0 rgba(104, 125, 138, 0.27);
 }
 
 .time-start:hover {
   color: #e3e3e3;
   background: #67b4fe 50% 50% repeat-x;
-  border: 1px solid #67b4fe;
+  border: 0px solid #67b4fe;
   padding: 3px 1px !important;
   font-size: x-small !important;
   line-height: 1.42857143;
@@ -1595,7 +1667,7 @@ a {
 
 .time-open {
   border: 0px solid #e3e3e3;
-  color: #e3e3e3;
+  color: #6795df;
   background: transparent;
   position: relative;
   padding: 3px 1px !important;
@@ -1619,13 +1691,15 @@ a {
   border-collapse: collapse !important;
 }
 
-.timelogTable, th {
-  color: #2d2a2b;
-  background-image: linear-gradient(180deg, #e3e3e3, #c6c6c7) !important;
+.timelogTable, th, tr {
+  color: #29303f;
+  background: #fdfdfd !important;
   border-collapse: collapse !important;
   font-size: x-small !important;
+  font-weight: bold;
   line-height: 1.42857143;
-  border: none !important;
+  border: 0px solid #5571873b !important;
+  border-radius: 3px;
 }
 
 .topbar {
@@ -1646,19 +1720,20 @@ a {
 
 .timedhours {
   display: inline-block;
-  margin-left: 25px;
+  margin-left: 125px;
 }
 
 .timeCountToday {
   margin-left: 2px;
-  margin-right: 2px;
+  margin-right: 5px;
   font-size: x-small !important;
   font-weight: bold;
   color: #67b4fe;
+  text-shadow: 1px 1px 0 rgba(104, 125, 138, 0.27);
 }
 
 .timeCountTotal {
-  margin-left: 2px;
+  margin-left: 5px;
   margin-right: 2px;
   font-size: x-small !important;
   color: #a5acb3;

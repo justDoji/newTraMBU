@@ -28,7 +28,7 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+>
 <h:head>
     <title>TraMBU: activity and time tracking</title>
     <meta http-equiv="Content-Type" content="application/xhtml+xml;charset=utf-8"/>
@@ -47,16 +47,21 @@
     <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.png"/>
 
     <!-- Stylesheets -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" />
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"/>
 
-<!--    <h:outputStylesheet name="#{themeController.theme}"/>-->
+    <!--    <h:outputStylesheet name="#{themeController.theme}"/>-->
 
     <script type="text/javascript">
       //<![CDATA[
       function dateTemplateFunc(date) {
-        return '<span style="background-color:' + ((date.day < 21 && date.day > 10) ? '#81C784' : 'inherit') + ';border-radius:50%;padding: .25em;width: 1.75em; height:1.75em; display:block;">' + date.day + '</span>';
+        return '<span style="background-color:' + ((date.day < 21 && date.day > 10) ? '#81C784'
+            : 'inherit')
+            + ';border-radius:50%;padding: .25em;width: 1.75em; height:1.75em; display:block;">'
+            + date.day + '</span>';
       }
+
       //]]>
     </script>
 </h:head>
@@ -66,28 +71,21 @@
     <f:view>
 
         <div class="header">
-            <div class="container">
-                <img src="/images/TraMBU_logo.png" class="logo" alt="TraMBU Logo"/>
-                <h2>TraMBU
-                    <span class="divider">|</span> <small>Your vehicle to easier task and time management</small>
-                </h2>
+            <div class="navbar-inner">
+                <div class="logo">
+                    <span class="logo-text">TRAMBU</span>
+                    <img src="/images/TraMBU_logo_color.png" class="logo-image" alt="TraMBU Logo"/>
 
-                <p>
-                    Pre-release demo version of <b>TraMBU 2.0</b>.
-                </p>
-
-                <div class="socialNetwork">
-
-                    <div class="github">
-                        <!-- Place this tag where you want the button to render. -->
-                        <a class="github-button" href="https://github.com/justDoji/newTraMBU" data-icon="octicon-star" data-count-href="/justDoji/newTraMBU" data-count-api="/repos/justDoji#newTraMBU" data-count-aria-label="# trackers on GitHub" aria-label="TraMBU on GitHub">Star</a>
-                        <!-- Place this tag right after the last button or just before your close body tag. -->
-                        <script id="github-bjs" src="https://buttons.github.io/buttons.js"></script>
+                </div>
+                <span class="divider"/>
+                <div class="navbar-element">
+                    <div class="logo-phrase">
+                        <small>Your vehicle to easier task and time management</small>
                     </div>
                 </div>
+                <!--Menu goes here-->
+                <ui:insert name="menu"/>
             </div>
-            <!--Menu goes here-->
-            <ui:insert name="menu"/>
         </div>
 
         <div class="content">
@@ -96,18 +94,18 @@
             </div>
         </div>
 
-        <div class="container">
-        <hr />
+        <div class="page-footer">
             <div class="footer">
                 <div class="versionInformation">
-                    <strong>TraMBU 2.0.0 - SNAPSHOT </strong><br/>
+                    <strong>TraMBU v2</strong> - <a
+                        href="https://www.gnu.org/licenses/agpl-3.0.en.html"
+                        target="_blank">Licensed under the AGPL version 3</a><br/>
                 </div>
                 <div class="footer-links">
-                    <div class="butterfaces-links">
-                        <div class="footer-link"><a href="http://www.doji.be" target="_blank">Personal Website</a></div>
-                        <div class="footer-link"><a href="https://github.com/justDoji/newTraMBU" target="_blank">Project Source</a></div>
-                        <div class="footer-link"><a href="https://www.gnu.org/licenses/agpl-3.0.en.html" target="_blank">License</a></div>
-                    </div>
+                    <div class="footer-link"><a href="http://www.doji.be"
+                                                target="_blank">Personal Website</a></div>
+                    <div class="footer-link"><a href="https://github.com/justDoji/newTraMBU"
+                                                target="_blank">Project Source</a></div>
                 </div>
             </div>
         </div>
