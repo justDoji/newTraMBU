@@ -19,8 +19,8 @@
  */
 package be.doji.productivity.trambu.front.calculator;
 
-import be.doji.productivity.trambu.front.transfer.ActivityModel;
-import be.doji.productivity.trambu.front.transfer.TimeLogModel;
+import be.doji.productivity.trambu.front.model.ActivityModel;
+import be.doji.productivity.trambu.front.model.TimeLogModel;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import org.assertj.core.api.Assertions;

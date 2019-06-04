@@ -19,22 +19,48 @@
  *     For further information on usage, or licensing, contact the author
  *     through his github profile: https://github.com/justDoji
  */
-package be.doji.productivity.trambu.front.controller;
+package be.doji.productivity.trambu.front.model;
 
-import javax.inject.Named;
-import org.springframework.web.context.annotation.SessionScope;
+public class Theme {
 
-@SessionScope
-@Named
-public class ThemeController {
+  private int id;
+  private String displayName;
+  private String name;
 
-  private String theme = "/css/trambu.css";
+  public Theme() {}
 
-  public String getTheme() {
-    return theme;
+  public Theme(int id, String displayName, String name) {
+    this.id = id;
+    this.displayName = displayName;
+    this.name = name;
   }
 
-  public void setTheme(String theme) {
-    this.theme = theme;
+  public int getId() {
+    return id;
+  }
+
+  public void setId(int id) {
+    this.id = id;
+  }
+
+  public String getDisplayName() {
+    return displayName;
+  }
+
+  public void setDisplayName(String displayName) {
+    this.displayName = displayName;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  @Override
+  public String toString() {
+    return name;
   }
 }

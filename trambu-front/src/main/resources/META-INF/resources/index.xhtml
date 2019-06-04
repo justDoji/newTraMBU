@@ -24,6 +24,7 @@
 <ui:composition template="/templates/base.xhtml"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:doji="http://xmlns.jcp.org/jsf/composite/doji">
 
@@ -33,7 +34,8 @@
             <div class="autotrack">
                 <h:form id="tracking">
 
-                    <p:outputLabel for="autotrack" value="Autotrack" style="margin-right: 5px;" styleClass="filter-header"/>
+                    <p:outputLabel for="autotrack" value="Autotrack" style="margin-right: 5px;"
+                                   styleClass="filter-header"/>
                     <p:selectBooleanCheckbox id="autotrack"
                                              value="#{activityOverviewController.autotracking}"
                                              update="formId, tracking"
@@ -42,6 +44,13 @@
                     />
                 </h:form>
             </div>
+            <div id="themeswitcher" class="themeswitcher">
+                <p:outputLabel for="themeswitch" value="Theme:" styleClass="filter-header"/>
+                <p:themeSwitcher id="themeswitch" style="width:165px">
+                    <f:selectItem itemLabel="Choose Theme" itemValue="" />
+                    <f:selectItems value="#{themeController.themes}" var="theme" itemLabel="#{theme.displayName}" itemValue="#{theme.name}"/>
+                </p:themeSwitcher>
+            </div>
         </div>
 
         <div class="container-wrapper">
@@ -49,8 +58,9 @@
                 <h:form id="filterForm">
                     <span class="filter-header">Project Filters</span>
                     <!-- Active -->
-                    <ui:repeat value="#{activityOverviewController.filterchain.getFiltersForType('Project')}"
-                               var="filter">
+                    <ui:repeat
+                            value="#{activityOverviewController.filterchain.getFiltersForType('Project')}"
+                            var="filter">
                         <p:commandButton value="#{filter.name}"
                                          id="removeProjectFilter"
                                          action="#{activityOverviewController.filterchain.removeFilter(filter)}"
@@ -70,12 +80,13 @@
                         <br/>
                     </ui:repeat>
 
-                    <hr />
+                    <hr/>
 
                     <span class="filter-header">Tag Filters</span>
                     <!-- Active -->
-                    <ui:repeat value="#{activityOverviewController.filterchain.getFiltersForType('Tag')}"
-                               var="filter">
+                    <ui:repeat
+                            value="#{activityOverviewController.filterchain.getFiltersForType('Tag')}"
+                            var="filter">
                         <p:commandButton value="#{filter.name}"
                                          id="removeTagFilter"
                                          action="#{activityOverviewController.filterchain.removeFilter(filter)}"
@@ -109,7 +120,7 @@
                     />
                 </div>
                 <h:form id="formId">
-                    <p:defaultCommand target="saveAll" />
+                    <p:defaultCommand target="saveAll"/>
                     <p:growl id="growl" showDetail="true" sticky="true"/>
 
                     <h:panelGroup id="repeat" layout="block" styleClass="repeat-simple-list">

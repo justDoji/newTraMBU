@@ -25,9 +25,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import be.doji.productivity.trambu.domain.activity.Activity;
 import be.doji.productivity.trambu.domain.time.TimePoint;
-import be.doji.productivity.trambu.domain.time.TimeSlot;
-import be.doji.productivity.trambu.domain.timelog.TimeLog;
-import be.doji.productivity.trambu.front.transfer.ActivityModel;
+import be.doji.productivity.trambu.front.model.ActivityModel;
 import be.doji.productivity.trambu.infrastructure.transfer.ActivityData;
 import be.doji.productivity.trambu.infrastructure.transfer.LogPointData;
 import java.util.Arrays;

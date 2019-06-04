@@ -25,7 +25,7 @@ import static be.doji.productivity.trambu.front.TrambuWebApplication.PATH_CONFIG
 
 import be.doji.productivity.trambu.front.controller.exception.InvalidReferenceException;
 import be.doji.productivity.trambu.front.converter.ActivityModelConverter;
-import be.doji.productivity.trambu.front.transfer.ActivityModel;
+import be.doji.productivity.trambu.front.model.ActivityModel;
 import be.doji.productivity.trambu.infrastructure.file.FileLoader;
 import be.doji.productivity.trambu.infrastructure.file.FileWriter;
 import be.doji.productivity.trambu.infrastructure.repository.ActivityDatabaseRepository;

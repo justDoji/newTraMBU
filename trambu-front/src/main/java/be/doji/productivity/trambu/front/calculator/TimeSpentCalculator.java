@@ -21,8 +21,8 @@
  */
 package be.doji.productivity.trambu.front.calculator;
 
-import be.doji.productivity.trambu.front.transfer.ActivityModel;
-import be.doji.productivity.trambu.front.transfer.TimeLogModel;
+import be.doji.productivity.trambu.front.model.ActivityModel;
+import be.doji.productivity.trambu.front.model.TimeLogModel;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Calendar;

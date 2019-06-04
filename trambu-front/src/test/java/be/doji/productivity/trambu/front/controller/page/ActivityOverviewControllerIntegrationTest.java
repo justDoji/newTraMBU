@@ -25,8 +25,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import be.doji.productivity.trambu.front.controller.state.ActivityModelContainer;
 import be.doji.productivity.trambu.front.converter.TimeLogConverter;
-import be.doji.productivity.trambu.front.transfer.ActivityModel;
-import be.doji.productivity.trambu.front.transfer.TimeLogModel;
+import be.doji.productivity.trambu.front.model.ActivityModel;
+import be.doji.productivity.trambu.front.model.TimeLogModel;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;

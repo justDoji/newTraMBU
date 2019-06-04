@@ -25,8 +25,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import be.doji.productivity.trambu.front.converter.ActivityModelConverter;
 import be.doji.productivity.trambu.front.converter.TimeLogConverter;
-import be.doji.productivity.trambu.front.transfer.ActivityModel;
-import be.doji.productivity.trambu.front.transfer.TimeLogModel;
+import be.doji.productivity.trambu.front.model.ActivityModel;
+import be.doji.productivity.trambu.front.model.TimeLogModel;
 import be.doji.productivity.trambu.infrastructure.file.FileLoader;
 import be.doji.productivity.trambu.infrastructure.file.FileWriter;
 import be.doji.productivity.trambu.infrastructure.repository.ActivityDatabaseRepository;

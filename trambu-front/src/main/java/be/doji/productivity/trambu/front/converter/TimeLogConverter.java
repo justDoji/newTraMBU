@@ -19,7 +19,7 @@
  */
 package be.doji.productivity.trambu.front.converter;
 
-import be.doji.productivity.trambu.front.transfer.TimeLogModel;
+import be.doji.productivity.trambu.front.model.TimeLogModel;
 import be.doji.productivity.trambu.infrastructure.converter.Converter;
 import be.doji.productivity.trambu.infrastructure.repository.ActivityDatabaseRepository;
 import be.doji.productivity.trambu.infrastructure.transfer.ActivityData;

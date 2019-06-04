@@ -17,7 +17,7 @@
  * For further information on usage, or licensing, contact the author through his github profile:
  * https://github.com/justDoji
  */
-package be.doji.productivity.trambu.front.transfer;
+package be.doji.productivity.trambu.front.model;
 
 import java.util.Date;
 import lombok.Data;

@@ -1102,12 +1102,12 @@ a {
 .header {
   /*background-image: linear-gradient(0deg, #07092d, #01050b);*/
   /*background: #283957 url("#{resource['primefaces-trambu_dark:images/header-repeater.png']}") 50% 50% repeat-x;*/
-  background-color: #262626;
+  background-color: #d2940c;
   z-index: 421;
   background-size: contain;
   padding: 5px 0 5px 0;
   margin-bottom: 3px;
-  border-bottom: 2px solid #0e0e0e;
+  border-bottom: 2px solid #714e0c;
   color: #fff;
   display: flex;
   height: 48px;

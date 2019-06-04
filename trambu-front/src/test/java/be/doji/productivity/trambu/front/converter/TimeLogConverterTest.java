@@ -21,7 +21,7 @@ package be.doji.productivity.trambu.front.converter;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import be.doji.productivity.trambu.front.transfer.TimeLogModel;
+import be.doji.productivity.trambu.front.model.TimeLogModel;
 import be.doji.productivity.trambu.infrastructure.repository.ActivityDatabaseRepository;
 import be.doji.productivity.trambu.infrastructure.transfer.ActivityData;
 import be.doji.productivity.trambu.infrastructure.transfer.LogPointData;
