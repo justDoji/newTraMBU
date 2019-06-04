@@ -44,6 +44,7 @@ public class ActivityModel {
   private Status status;
   private String referenceKey;
   private List<TimeLogModel> timelogs = new ArrayList<>();
+  private String comments;
 
   private boolean editable;
   private boolean expanded;

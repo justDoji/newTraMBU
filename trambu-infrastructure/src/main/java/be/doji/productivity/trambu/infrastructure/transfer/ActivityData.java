@@ -68,6 +68,9 @@ public class ActivityData {
   @LazyCollection(LazyCollectionOption.FALSE)
   private List<LogPointData> timelogs = new ArrayList<>();
 
+  @Column(name = "COMMENTS")
+  private String comments;
+
 
   /**
    * Extra setter for double binding

@@ -100,4 +100,16 @@ public class ActivityDataConverterTest {
     assertThat(activityData.getReferenceKey()).isEqualTo("283b6271-b513-4e89-b757-10e98c9078ea");
   }
 
+  @Test
+  public void parse_comments() {
+    Activity activity = Activity.builder()
+        .title("name")
+        .referenceKey("283b6271-b513-4e89-b757-10e98c9078ea")
+        .comments("These are comments")
+        .build();
+
+    ActivityData parsedData = converter.parse(activity);
+    assertThat(parsedData.getComments()).isEqualTo("These are comments");
+  }
+
 }

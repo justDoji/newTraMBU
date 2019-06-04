@@ -1790,3 +1790,8 @@ a {
   color: rgba(106, 123, 155, 0.62);
   border-bottom: 1px solid rgba(106, 123, 155, 0.62);
 }
+
+.commentField {
+  width:100%;
+  height:255px;
+}

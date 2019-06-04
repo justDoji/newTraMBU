@@ -120,6 +120,16 @@
                 <doji:timelog id="timelogs" model="#{cc.attrs.model}"/>
             </div>
 
+            <p:outputLabel for="comment" value="Comments:"
+                           styleClass="activity-label" rendered="#{!cc.attrs.model.editable}" />
+            <p:scrollPanel id="comment" mode="native" styleClass="commentField" rendered="#{!cc.attrs.model.editable}">
+                #{cc.attrs.model.comments}
+            </p:scrollPanel>
+
+            <p:outputLabel for="commentField" value="Comments:"
+                           styleClass="activity-label" rendered="#{cc.attrs.model.editable}"/>
+            <p:textEditor id="commentField" widgetVar="commentField" value="#{cc.attrs.model.comments}" height="300" style="margin-bottom:10px" rendered="#{cc.attrs.model.editable}"/>
+
             <div class="activity-tags">
                 <p:outputLabel value="Tags:" for="inputTags" styleClass="activity-label"/>
                 <ui:repeat value="#{cc.attrs.model.tags}"

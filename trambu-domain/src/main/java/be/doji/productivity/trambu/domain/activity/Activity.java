@@ -46,6 +46,7 @@ public class Activity {
   @Getter @Setter private boolean completed;
   @Getter @Setter private List<String> projects = new ArrayList<>();
   @Getter @Setter private List<String> tags = new ArrayList<>();
+  @Getter @Setter private String comments;
   private UUID referenceKey;
 
   public Activity() {
@@ -114,6 +115,7 @@ public class Activity {
     private List<String> projects = new ArrayList<>();
     private List<String> tags = new ArrayList<>();
     private String referenceKey;
+    private String comments;
 
     public ActivityBuilder title(String activityName) {
       this.activityTitle = activityName;
@@ -135,6 +137,11 @@ public class Activity {
       return this;
     }
 
+    public ActivityBuilder comments(String comments) {
+      this.comments = comments;
+      return this;
+    }
+
     public Activity build() {
       throwExceptionIfInvalidParameters();
 
@@ -145,9 +152,10 @@ public class Activity {
       result.setImportance(this.importance);
       result.setDeadline(this.deadline);
       result.setCompleted(this.completed);
-      result.setTags(tags);
-      result.setProjects(projects);
+      result.setTags(this.tags);
+      result.setProjects(this.projects);
       result.setReferenceKey(this.referenceKey);
+      result.setComments(this.comments);
 
       return result;
     }

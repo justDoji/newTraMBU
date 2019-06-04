@@ -98,6 +98,7 @@ public class ActivityModelConverter {
         .conversionStep(Activity::getTags, ActivityModel::setTags)
         .conversionStep(Activity::getProjects, ActivityModel::setProjects)
         .conversionStep(Activity::getReferenceKey, ActivityModel::setReferenceKey)
+        .conversionStep(Activity::getComments, ActivityModel::setComments)
         .getConvertedData();
   }
 
@@ -140,6 +141,7 @@ public class ActivityModelConverter {
         .conversionStep(ActivityModelConverter::mapDeadline, Activity::setDeadline)
         .conversionStep(ActivityModel::getTags, Activity::setTags)
         .conversionStep(ActivityModel::getProjects, Activity::setProjects)
+        .conversionStep(ActivityModel::getComments, Activity::setComments)
         .getConvertedData();
   }
 
