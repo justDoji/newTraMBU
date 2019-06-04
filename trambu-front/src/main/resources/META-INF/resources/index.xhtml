@@ -68,6 +68,33 @@
         <div class="container-wrapper">
             <div class="filterSelector" id="filters">
                 <h:form id="filterForm">
+
+                    <span class="filter-header">Status Filters</span>
+                    <!-- Active -->
+                    <ui:repeat
+                            value="#{activityOverviewController.filterchain.getFiltersForType('Status')}"
+                            var="filter">
+                        <p:commandButton value="#{filter.name}"
+                                         id="removeStatusFilter"
+                                         action="#{activityOverviewController.filterchain.removeFilter(filter)}"
+                                         update="formId, filterForm"
+                                         styleClass="active-filter"
+                                         icon="fas fa-minus-circle"/>
+
+                    </ui:repeat>
+
+                    <ui:repeat value="#{activityOverviewController.filterOptionsForStatus}"
+                               var="status">
+                        <p:commandButton value="#{status} (#{activityOverviewController.getAmountOfMatchesForFilter(status, 'Status')})"
+                                         id="statusFilter"
+                                         action="#{activityOverviewController.addStatusFilter(status)}"
+                                         update="formId, filterForm"
+                                         styleClass="filter"
+                                         icon="fas fa-filter"/>
+                    </ui:repeat>
+
+                    <hr />
+
                     <span class="filter-header">Project Filters</span>
                     <!-- Active -->
                     <ui:repeat
@@ -83,13 +110,12 @@
 
                     <ui:repeat value="#{activityOverviewController.filterOptionsForProjects}"
                                var="project">
-                        <p:commandButton value="#{project}"
+                        <p:commandButton value="#{project} (#{activityOverviewController.getAmountOfMatchesForFilter(project, 'Project')})"
                                          id="projectFilter"
                                          action="#{activityOverviewController.addProjectFilter(project)}"
                                          update="formId, filterForm"
                                          styleClass="filter"
                                          icon="fas fa-filter"/>
-                        <br/>
                     </ui:repeat>
 
                     <hr/>
@@ -109,7 +135,7 @@
 
                     <ui:repeat value="#{activityOverviewController.filterOptionsForTags}"
                                var="tag">
-                        <p:commandButton value="#{tag}"
+                        <p:commandButton value="#{tag} (#{activityOverviewController.getAmountOfMatchesForFilter(tag, 'Tag')})"
                                          id="tagFilter"
                                          action="#{activityOverviewController.addTagFilter(tag)}"
                                          update="formId, filterForm"

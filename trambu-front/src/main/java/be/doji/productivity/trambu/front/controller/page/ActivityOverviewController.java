@@ -47,6 +47,7 @@ public class ActivityOverviewController {
   private static final Logger LOG = LoggerFactory.getLogger(ActivityOverviewController.class);
   public static final String FILTER_TYPE_PROJECT = "Project";
   public static final String FILTER_TYPE_TAG = "Tag";
+  public static final String FILTER_TYPE_STATUS = "Status";
   private final ActivityModelContainer activityContainer;
   private final FilterChain<ActivityModel> filterchain = new FilterChain<>();
 
@@ -70,7 +71,7 @@ public class ActivityOverviewController {
   }
 
   public void toggleSaveAll() {
-    for(ActivityModel model : activityContainer.getActivities()) {
+    for (ActivityModel model : activityContainer.getActivities()) {
       model.setEditable(false);
     }
     activityContainer.saveActivities();
@@ -164,6 +165,12 @@ public class ActivityOverviewController {
             tags -> tags.contains(tagToInclude), FILTER_TYPE_TAG);
   }
 
+  public void addStatusFilter(String status) {
+    this.filterchain
+        .addPositiveFiler(status, ActivityModel::getWrappedStatus,
+            statusses -> statusses.contains(status), FILTER_TYPE_STATUS);
+  }
+
   public void addProjectFilter(String projectToInclude) {
     this.filterchain
         .addPositiveFiler(projectToInclude, ActivityModel::getProjects,
@@ -176,6 +183,11 @@ public class ActivityOverviewController {
 
   public void resetFilter() {
     this.filterchain.reset();
+  }
+
+  public List<String> getFilterOptionsForStatus() {
+    return getOpenFilterOptionsForType(ActivityModel::getWrappedStatus,
+        FILTER_TYPE_STATUS);
   }
 
   public List<String> getFilterOptionsForProjects() {
@@ -228,5 +240,28 @@ public class ActivityOverviewController {
         .reduce(this::reduceStrings);
     reduce.ifPresent(strings -> strings.sort(String.CASE_INSENSITIVE_ORDER));
     return reduce;
+  }
+
+  public long getAmountOfMatchesForFilter(String toFilter, String type) {
+    addFilter(toFilter, type);
+    long amountOfMatchersForFilter = filterchain
+        .getAmountOfMatchersForFilter(toFilter, type, activityContainer.getActivities());
+    filterchain
+        .getFilter(toFilter, type).ifPresent(filterchain::removeFilter);
+    return amountOfMatchersForFilter;
+  }
+
+  private void addFilter(String toFilter, String type) {
+    switch (type) {
+      case FILTER_TYPE_TAG:
+        addTagFilter(toFilter);
+        break;
+      case FILTER_TYPE_PROJECT:
+        addProjectFilter(toFilter);
+        break;
+      case FILTER_TYPE_STATUS:
+        addStatusFilter(toFilter);
+        break;
+    }
   }
 }

@@ -195,7 +195,21 @@ public class ActivityOverviewControllerIntegrationTest {
     assertThat(controller.getFilteredActivities()).hasSize(2);
     controller.addTagFilter("Two");
     assertThat(controller.getFilteredActivities()).hasSize(1);
+  }
 
+  @Test
+  public void getMatchesForFilter_onTag_multipleFilters() throws URISyntaxException {
+    reset();
+
+    ActivityModel activityOne = container.getActivity(controller.createActivity());
+    activityOne.setTags(Arrays.asList("Cone", "Two", "Dog"));
+
+    ActivityModel activityTwo = container.getActivity(controller.createActivity());
+    activityTwo.setTags(Arrays.asList("Cat", "Dog"));
+
+
+    assertThat(controller.getAmountOfMatchesForFilter("Dog", ActivityOverviewController.FILTER_TYPE_TAG)).isEqualTo(2);
+    assertThat(controller.getAmountOfMatchesForFilter("Two", ActivityOverviewController.FILTER_TYPE_TAG)).isEqualTo(1);
   }
 
 

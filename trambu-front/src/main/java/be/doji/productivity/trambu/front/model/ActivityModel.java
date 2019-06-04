@@ -21,6 +21,7 @@ package be.doji.productivity.trambu.front.model;
 
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -29,8 +30,6 @@ import lombok.Data;
 
 @Data
 public class ActivityModel {
-
-  //TODO: add timelogs
 
   private static final String BASIC_DATE_TIME_PATTERN = "dd/MM/uuuu HH:mm:ss";
   private static final DateTimeFormatter df = DateTimeFormatter
@@ -42,7 +41,7 @@ public class ActivityModel {
   private List<String> projects = new ArrayList<>();
   private List<String> tags = new ArrayList<>();
   private Date deadline;
-  private boolean completed;
+  private Status status;
   private String referenceKey;
   private List<TimeLogModel> timelogs = new ArrayList<>();
 
@@ -52,6 +51,7 @@ public class ActivityModel {
 
   public ActivityModel() {
     this.referenceKey = UUID.randomUUID().toString();
+    this.status = Status.TODO;
   }
 
   public boolean isEditable() {
@@ -126,7 +126,37 @@ public class ActivityModel {
     return this.timelogs.get(timelogs.size() - 1);
   }
 
+  public boolean isCompleted() {
+    return this.status == Status.DONE;
+  }
+
+  public void setCompleted(boolean isCompleted) {
+    this.status = isCompleted ? Status.DONE : Status.TODO;
+  }
+
   public void toggleTimelogExpanded() {
     this.timelogExpanded = !this.timelogExpanded;
   }
+
+  public List<String> getWrappedStatus() {
+    return Collections.singletonList(this.status.toString());
+  }
+
+  public enum Status {
+
+    TODO("TODO"),
+    BUSY("BUSY"),
+    DONE("DONE");
+
+    private final String stringValue;
+
+    Status(String stringValue) {
+      this.stringValue = stringValue;
+    }
+
+    public String toString() {
+      return this.stringValue;
+    }
+  }
+
 }

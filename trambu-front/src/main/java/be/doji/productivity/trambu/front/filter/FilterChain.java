@@ -19,8 +19,11 @@
  */
 package be.doji.productivity.trambu.front.filter;
 
+import be.doji.productivity.trambu.domain.activity.Activity;
+import be.doji.productivity.trambu.front.model.ActivityModel;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -84,8 +87,20 @@ public class FilterChain<T> {
     if (StringUtils.isBlank(type)) {
       return new ArrayList<>();
     }
-    
+
     return filters.stream().filter(f -> type.equals(f.getType())).collect(Collectors.toList());
+  }
+
+  public Optional<PositiveFilter> getFilter(String displayValue, String type) {
+    if (StringUtils.isBlank(displayValue) || StringUtils.isBlank(type)) {
+      return Optional.empty();
+    }
+    for (PositiveFilter filter : getFiltersForType(type)) {
+      if (filter.getName().equals(displayValue)) {
+        return Optional.of(filter);
+      }
+    }
+    return Optional.empty();
   }
 
   public void removeFilter(PositiveFilter filter) {
@@ -94,6 +109,14 @@ public class FilterChain<T> {
 
   public void clearFilters() {
     this.filters.clear();
+  }
+
+  public long getAmountOfMatchersForFilter(String toFilter, String type,
+      List<T> activities) {
+
+    return getFilter(toFilter, type)
+        .map(positiveFilter -> activities.stream().filter(positiveFilter::allows).count())
+        .orElse(0L);
   }
 
   public class PositiveFilter<T, P> {
