@@ -1138,7 +1138,12 @@ a {
 .logo-image {
   display: block;
   height: 30px;
+  width: 35px;
   margin-left: 5px;
+  background-image: url("#{resource['primefaces-trambu_dark:images/TraMBU_logo_color.png']}");
+  background-repeat: no-repeat;
+  background-color: transparent;
+  background-size: contain;
 }
 
 .logo-text {

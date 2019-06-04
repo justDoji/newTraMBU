@@ -492,7 +492,7 @@ button.ui-button::-moz-focus-inner {
 }
 
 .ui-datepicker .ui-datepicker-header {
-  background: #495462 url("#{resource['primefaces-trambu_dark:images/repeater-grad.png']}") 50% 50% repeat-x;
+  background: #495462 url("#{resource['primefaces-trambu_yellorange:images/repeater-grad.png']}") 50% 50% repeat-x;
   background-size: contain;
   padding: 3px;
   margin-bottom: 0px;
@@ -1100,15 +1100,13 @@ a {
 }
 
 .header {
-  /*background-image: linear-gradient(0deg, #07092d, #01050b);*/
-  /*background: #283957 url("#{resource['primefaces-trambu_dark:images/header-repeater.png']}") 50% 50% repeat-x;*/
-  background-color: #d2940c;
+  background-image: linear-gradient(0deg, #ffc80a, #feaf28);
   z-index: 421;
   background-size: contain;
   padding: 5px 0 5px 0;
   margin-bottom: 3px;
-  border-bottom: 2px solid #714e0c;
-  color: #fff;
+  border-bottom: 2px solid #f39b00;
+  color: #625e5e;
   display: flex;
   height: 48px;
 }
@@ -1138,7 +1136,11 @@ a {
 .logo-image {
   display: block;
   height: 30px;
+  width: 35px;
   margin-left: 5px;
+  background-image: url("#{resource['primefaces-trambu_yellorange:images/TraMBU_logo_color_dark.png']}");
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 
 .logo-text {
@@ -1150,11 +1152,11 @@ a {
   height: 40px;
   padding-left: 6px;
   padding-right: 6px;
+  color: #413d3d;
 }
 
 .logo-phrase {
   display: inline;
-
 }
 
 .navbar-element {
@@ -1177,8 +1179,8 @@ a {
 }
 
 .divider {
-  color: #0089ff;
-  border-left: 0px solid #0089ff;
+  color: #fffb00;
+  border-left: 0px solid #fffb00;
   margin-left: 5px;
   margin-right: 5px;
   height: 25px;
@@ -1274,7 +1276,7 @@ a {
   color: #bababa;
   font-weight: bold;
   font-size: small;
-  border-left: 2px solid #0089ff;
+  border-left: 2px solid #f39b00;
   padding-left: 5px;
 }
 
@@ -1327,21 +1329,21 @@ a {
   width: 100%;
   font-size: smaller !important;
   box-shadow: 3px 3px 10px #bfbfc0;
-  color: #042154;
+  color: #3c3223;
   font-weight: bold;
   border: 1px solid #a8a8a8;
 }
 
 .activity-header {
   width: 100%;
-  background: #303d54 url("#{resource['primefaces-trambu_dark:images/repeater-grad.png']}") 50% 50% repeat-x;
+  background-image: linear-gradient(180deg, #ffc80a, #feaf28);
   background-size: contain;
   padding: 0;
   margin-bottom: 0px;
-  border-bottom: 0px solid rgba(25, 36, 57, 0.64);
+  border-bottom: 0px solid rgb(236, 157, 1);
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
-  color: #fff;
+  color: #625e5e;
 }
 
 .activity-title {
@@ -1412,13 +1414,13 @@ a {
 }
 
 .done {
-  color: #4BBF73;
+  color: #55BF3AB3;
   border: 0;
-  border-left: 3px solid #4BBF73;
+  border-left: 3px solid #55BF3AB3;
   font-weight: bold;
   font-size: smaller !important;
   position: relative;
-  background: transparent;
+  background: linear-gradient(180deg, #2a2729, #151214);
   padding: 6px 12px !important;
   line-height: 1.42857143;
 }
@@ -1426,7 +1428,7 @@ a {
 .done:hover {
   color: #fff;
   font-weight: bold;
-  background: #4BBF73 50% 50% repeat-x;
+  background: #55BF3AB3 50% 50% repeat-x;
   border: 0 solid #f0ad4e;
   margin-left: 3px;
   padding: 6px 12px !important;
@@ -1438,9 +1440,9 @@ a {
 .todo {
   border: 0;
   border-left: 3px solid #f0ad4e;
-  color: #f0ad4e;
+  color: #f39b00;
   font-weight: bold;
-  background: transparent;
+  background: linear-gradient(180deg, #2a2729, #151214);
   position: relative;
   padding: 6px 12px !important;
   font-size: smaller !important;
@@ -1459,29 +1461,30 @@ a {
 }
 
 .edit {
-  border: 0px solid #e3e3e3;
-  color: #e3e3e3;
+  border: 0px solid #e7ce16;
+  color: #de8500;
   background: transparent;
   position: relative;
   padding: 6px 12px !important;
   font-size: x-small !important;
   line-height: 1.42857143;
-  text-shadow: 2px 2px 0 rgba(18, 18, 40, 0.75);
+  text-shadow: 2px 2px 0 rgba(113, 78, 12, 0.25);
 }
 
 .edit:hover {
-  color: #fff;
-  background: #819aaf 50% 50% repeat-x;
-  border: 0px solid #678095;
-  padding: 6px 12px !important;
+  border: 0px solid #e7ce16;
+  color: #d79a05;
+  background: linear-gradient(180deg, #2a2729, #151214);
+  position: relative;
+  padding: 6px 8px 6px 5px !important;
   font-size: x-small !important;
   line-height: 1.42857143;
 }
 
 .new {
-  border: 2px solid #678095;
-  color: #232e3c;
-  background: linear-gradient(180deg, #f0f0f0, #dadadb);
+  border: 2px solid #f39b00;
+  color: #f3b841;
+  background: linear-gradient(180deg, #2a2729, #151214);
   position: relative;
   margin-bottom: 12px;
   padding: 6px 12px !important;
@@ -1492,9 +1495,9 @@ a {
 
 .new:hover {
   color: #fff;
-  background: #819aaf 50% 50% repeat-x;
+  background: #f39b00 50% 50% repeat-x;
   margin-bottom: 12px;
-  border: 2px solid #678095;
+  border: 2px solid #f39b00;
   padding: 6px 12px !important;
   font-size: x-small !important;
   line-height: 1.42857143;
@@ -1503,20 +1506,20 @@ a {
 
 
 .delete {
-  border: 0px solid #e87e64;
-  color: #E87E64;
+  border: 0px solid #e74e28;
+  color: #F64E0C;
   font-weight: bold;
   background: transparent;
   position: relative;
   padding: 6px 12px !important;
   font-size: smaller !important;
   line-height: 1.42857143;
-  text-shadow: 2px 2px 0 rgba(102, 56, 41, 0.75);
+  text-shadow: 2px 2px 0 rgba(234, 130, 97, 0.75);
 }
 
 .delete:hover {
   color: #fff;
-  background: #E87E64 50% 50% repeat-x;
+  background: #e74e28 50% 50% repeat-x;
   font-weight: bold;
   border: 0px solid #E87E64;
   padding: 6px 12px !important;
@@ -1546,9 +1549,9 @@ a {
 }
 
 .project {
-  color: #0071dc;
   background-color: #fbfbfb;
-  border: 2px solid #0071dc;
+  color: #4b3617;
+  border: 2px solid #f39b00;
   padding: 6px 12px !important;
   font-size: smaller !important;
   line-height: 1.42857143;
@@ -1556,9 +1559,9 @@ a {
 }
 
 .project:hover {
-  color: #0071dc;
   background-color: #fbfbfb;
-  border: 2px solid #0071dc;
+  color: #4b3617;
+  border: 2px solid #f39b00;
   padding: 6px 12px !important;
   font-size: smaller !important;
   line-height: 1.42857143;
@@ -1566,8 +1569,8 @@ a {
 }
 
 .filter {
-  border: 2px solid #678095;
-  color: #678095;
+  border: 2px solid #3c3223;
+  color: #3c3223;
   background: linear-gradient(180deg, #ffffff85, #f3f3f3);
   position: relative;
   margin-bottom: 6px;
@@ -1579,11 +1582,11 @@ a {
 }
 
 .filter:hover {
-  color: #fff;
-  background: #678095 50% 50% repeat-x;
+  border: 2px solid #3c3223;
+  color: #3c3223;
+  background: #de8500 50% 50% repeat-x;
   margin-bottom: 6px;
   margin-top: 6px;
-  border: 2px solid #678095;
   padding: 5px 1px !important;
   font-size: x-small !important;
   line-height: 1.42857143;
@@ -1633,7 +1636,7 @@ a {
   background: linear-gradient(180deg, #fff, #f0f0f0);
   margin-top: 2px !important;
   font-size: 16px;
-  color: #0d1433;
+  color: #3c3223;
   padding: 5px;
   border-radius: 5px;
 }
@@ -1648,7 +1651,7 @@ a {
   width: 100%;
   background: #fbfbfb;
   padding: 3px;
-  color: #233046;
+  color: #3c3223;
   font-size: small !important;
   font-weight: bold;
   border-bottom: 0px solid #81a1cf80;
@@ -1656,7 +1659,7 @@ a {
 
 .time-start {
   border: 0;
-  color: #3778b7;
+  color: #de8500;
   background: transparent;
   position: relative;
   padding: 3px 1px !important;
@@ -1667,18 +1670,18 @@ a {
 }
 
 .time-start:hover {
-  color: #e3e3e3;
-  background: #67b4fe 50% 50% repeat-x;
-  border: 0px solid #67b4fe;
+  color: #d79a05;
+  background: linear-gradient(180deg, #2a2729, #151214);
+  border: 0px solid #d79a05;
   padding: 3px 1px !important;
   font-size: x-small !important;
   line-height: 1.42857143;
-  text-shadow: 2px 2px 0 #67b4fe;
+  text-shadow: 2px 2px 0 #413d3d;
 }
 
 .time-open {
   border: 0px solid #e3e3e3;
-  color: #3778b7;
+  color: #3c3223;
   background: transparent;
   position: relative;
   padding: 3px 1px !important;
@@ -1688,8 +1691,8 @@ a {
 }
 
 .time-open:hover {
-  color: #678095;
-  background: #e3e3e3 50% 50% repeat-x;
+  color: #de8500;
+  background: linear-gradient(180deg, #2a2729, #151214);
   border: 0px solid #678095;
   padding: 3px 1px !important;
   font-size: x-small !important;
@@ -1703,7 +1706,7 @@ a {
 }
 
 .timelogTable, th, tr {
-  color: #29303f;
+  color: #3c3223;
   background: #fdfdfd !important;
   border-collapse: collapse !important;
   font-size: x-small !important;
@@ -1748,7 +1751,7 @@ a {
   margin-right: 5px;
   font-size: x-small !important;
   font-weight: bold;
-  color: #3778b7;
+  color: #de8500;
   text-shadow: 1px 1px 0 rgba(104, 125, 138, 0.27);
 }
 
@@ -1771,7 +1774,7 @@ a {
 }
 
 .title-edit::selection {
-  background: #536a9d;
+  background: rgba(190, 133, 5, 0.69);
   color: #f9f9ff;
 }
 
