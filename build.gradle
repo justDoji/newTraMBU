@@ -59,8 +59,8 @@ sonarqube{
         property "sonar.junit.reportPaths", "build/test-results/test"
 
         //Ignore the front-end in the sonar analysis
-        property 'sonar.coverage.exclusions', "**/trambu/infrastructure/model/**, **be/doji/productivity/trambu/front/model/**, **/trambu/front/controller/exception/**"
-        property 'sonar.exclusions', "**/trambu/infrastructure/model/**, **be/doji/productivity/trambu/front/model/**, **/trambu/front/controller/exception/**"
+        property 'sonar.coverage.exclusions', "**/trambu/infrastructure/transfer/**, **be/doji/productivity/trambu/front/model/**, **/trambu/front/controller/exception/**"
+        property 'sonar.exclusions', "**/trambu/infrastructure/transfer/**, **be/doji/productivity/trambu/front/model/**, **/trambu/front/controller/exception/**"
     }
 }
 
