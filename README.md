@@ -17,23 +17,6 @@ You are able to customize your experience using the built-in **"Projects-and-Tag
 you are able to create your own structure in your activities. TRAMBU's **filters** make it easy to select only those tasks
 which are relevant to you at this time.
 
-<div class="gallery">
-  <figure>
-    <a href="/assets/images/trambu/screenshots/theme/trambu-dark.png" data-lity>
-      <img src="/assets/images/trambu/screenshots/theme/trambu-dark.png" alt="TRAMBU default skin" />
-    </a>
-    <figcaption>Default skin</figcaption>
-  </figure>
-  
-  <figure>
-      <a href="/assets/images/trambu/screenshots/theme/trambu-yellorange.png" data-lity>
-        <img src="/assets/images/trambu/screenshots/theme/trambu-yellorange.png" alt="TRAMBU yellorange skin" />
-      </a>
-      <figcaption>Yellorange skin</figcaption>
-    </figure>
-</div>
-
-
 # You are in control of your data
 By keeping your data in local plain text files, you are in full control of your todo list. 
 
