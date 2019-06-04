@@ -19,8 +19,6 @@
  */
 package be.doji.productivity.trambu.front.filter;
 
-import be.doji.productivity.trambu.domain.activity.Activity;
-import be.doji.productivity.trambu.front.model.ActivityModel;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;

@@ -262,6 +262,8 @@ public class ActivityOverviewController {
       case FILTER_TYPE_STATUS:
         addStatusFilter(toFilter);
         break;
+      default:
+        break;
     }
   }
 }
