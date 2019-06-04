@@ -19,18 +19,23 @@
  */
 package be.doji.productivity.trambu.infrastructure.file;
 
+import be.doji.productivity.trambu.domain.activity.Activity;
 import be.doji.productivity.trambu.infrastructure.converter.ActivityConverter;
 import be.doji.productivity.trambu.infrastructure.converter.ActivityDataConverter;
 import be.doji.productivity.trambu.infrastructure.converter.LogConverter;
 import be.doji.productivity.trambu.infrastructure.repository.ActivityDatabaseRepository;
+import be.doji.productivity.trambu.infrastructure.transfer.ActivityData;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,12 +64,19 @@ public class FileWriter {
   }
 
   public void writeActivtiesToFile(Path path) throws IOException {
-    List<String> activities = activityRepository.findAll().
-        stream()
-        .map(dataConverter::parse)
-        .map(ActivityConverter::write)
-        .collect(Collectors.toList());
-    Files.write(path, activities, StandardOpenOption.TRUNCATE_EXISTING);
+    List<String> lines = new ArrayList<>();
+    for (ActivityData data : activityRepository.findAll()) {
+      Activity parsedData = dataConverter.parse(data);
+      lines.add(ActivityConverter.write(parsedData));
+      if (StringUtils.isNotBlank(parsedData.getComments())) {
+        Path commentFile = path.resolveSibling(data.getReferenceKey() + "_comments.txt");
+        Files.deleteIfExists(commentFile);
+        Files.createFile(commentFile);
+        Files.write(commentFile, Collections.singletonList(data.getComments()),
+            StandardOpenOption.TRUNCATE_EXISTING);
+      }
+    }
+    Files.write(path, lines, StandardOpenOption.TRUNCATE_EXISTING);
   }
 
   public void writeTimeLogsToFile(File file) throws IOException {

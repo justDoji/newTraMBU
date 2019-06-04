@@ -31,6 +31,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Optional;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -59,6 +60,24 @@ public class FileLoaderIntegrationTest {
 
     assertThat(activityDatabaseRepository.findAll()).isNotEmpty();
     assertThat(activityDatabaseRepository.findAll()).hasSize(3);
+  }
+
+  @Test
+  public void loadTodoFileContents_FileWithActivities_hasComments() throws IOException, URISyntaxException {
+    ClassLoader classLoader = getClass().getClassLoader();
+    File file = new File(classLoader.getResource("reader/todo_test.txt").toURI());
+    assertThat(activityDatabaseRepository.findAll()).isEmpty();
+
+    fileLoader.loadTodoFileActivities(file);
+
+    assertThat(activityDatabaseRepository.findAll()).isNotEmpty();
+    assertThat(activityDatabaseRepository.findAll()).hasSize(3);
+    Optional<ActivityData> shouldHaveComments = activityDatabaseRepository
+        .findByReferenceKey("283b6271-b513-4e89-b757-10e98c9078ea");
+    assertThat(
+        shouldHaveComments).isPresent();
+    assertThat(shouldHaveComments.get().getComments()).isNotBlank();
+    assertThat(shouldHaveComments.get().getComments()).isEqualTo("These are" + System.lineSeparator() + "some" + System.lineSeparator() + "multiline comments" + System.lineSeparator());
   }
 
   @Test

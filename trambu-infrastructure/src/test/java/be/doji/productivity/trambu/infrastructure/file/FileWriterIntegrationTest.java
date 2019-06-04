@@ -31,6 +31,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.After;
@@ -91,6 +92,32 @@ public class FileWriterIntegrationTest {
     fileWriter.writeTimeLogsToFile(file);
 
     assertThat(Files.readAllLines(file.toPath())).hasSize(1);
+  }
+
+  @Test
+  public void writeTodoFileContents_WithWithComments() throws IOException, URISyntaxException {
+    ClassLoader classLoader = getClass().getClassLoader();
+    File file = new File(classLoader.getResource(FILE_PATH).toURI());
+    assertThat(activityDatabaseRepository.findAll()).isEmpty();
+    ActivityData data = createData();
+    data.setComments("These are comments");
+
+    activityDatabaseRepository.save(data);
+    assertThat(activityDatabaseRepository.findAll()).isNotEmpty();
+    assertThat(activityDatabaseRepository.findAll()).hasSize(1);
+
+    fileWriter.writeActivtiesToFile(file);
+
+    List<String> strings = Files.readAllLines(file.toPath());
+    assertThat(strings).isNotEmpty();
+    assertThat(strings).hasSize(1);
+
+    Path shouldBeComments = file.toPath().resolveSibling(data.getReferenceKey() + "_comments.txt");
+    assertThat(shouldBeComments.toFile()).exists();
+    assertThat(Files.readAllLines(shouldBeComments)).isNotEmpty();
+    assertThat(Files.readAllLines(shouldBeComments)).contains("These are comments");
+
+    Files.delete(shouldBeComments);
   }
 
   @Test

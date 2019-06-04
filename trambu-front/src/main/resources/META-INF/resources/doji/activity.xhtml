@@ -37,6 +37,7 @@
 <composite:implementation>
     <div class="activity" id="activity_#{cc.attrs.model.referenceKey}">
         <p:defaultCommand target="formId:saveAll"/>
+
         <div class="activity-header">
             <div class="activity-item">
                 <p:commandButton value="#{cc.attrs.model.completed ?'Done' :'Todo'}"
@@ -99,7 +100,7 @@
                        rendered="#{cc.attrs.model.expanded}">
             <p:outputLabel for="deadline" value="Deadline: "
                            rendered="#{!cc.attrs.model.editable}"
-                           styleClass="activity-label" />
+                           styleClass="activity-label"/>
             <h:outputText id="deadline"
                           value="#{cc.attrs.model.deadline != null ? cc.attrs.model.deadline :'No deadline in sight'}"
                           rendered="#{!cc.attrs.model.editable}">
@@ -116,20 +117,17 @@
             <br/>
             <div class="timelogs">
                 <p:outputLabel for="timelogs" value="Timelogs:"
-                               styleClass="activity-label" />
+                               styleClass="activity-label"/>
                 <doji:timelog id="timelogs" model="#{cc.attrs.model}"/>
             </div>
 
-            <p:outputLabel for="comment" value="Comments:"
-                           styleClass="activity-label" rendered="#{!cc.attrs.model.editable}" />
-            <p:scrollPanel id="comment" mode="native" styleClass="commentField" rendered="#{!cc.attrs.model.editable}">
-                #{cc.attrs.model.comments}
-            </p:scrollPanel>
-
             <p:outputLabel for="commentField" value="Comments:"
-                           styleClass="activity-label" rendered="#{cc.attrs.model.editable}"/>
-            <p:textEditor id="commentField" widgetVar="commentField" value="#{cc.attrs.model.comments}" height="300" style="margin-bottom:10px" rendered="#{cc.attrs.model.editable}"/>
-
+                           styleClass="activity-label"/>
+            <p:inputTextarea rows="15" cols="125" id="commentField"
+                             value="#{cc.attrs.model.comments}"
+                             style="margin-bottom:10px" disabled="#{!cc.attrs.model.editable}"
+            >
+            </p:inputTextarea>
             <div class="activity-tags">
                 <p:outputLabel value="Tags:" for="inputTags" styleClass="activity-label"/>
                 <ui:repeat value="#{cc.attrs.model.tags}"

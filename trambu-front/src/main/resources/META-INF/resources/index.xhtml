@@ -27,7 +27,6 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:doji="http://xmlns.jcp.org/jsf/composite/doji">
-
     <ui:define name="content">
 
         <div id="topbar" class="topbar">
@@ -47,12 +46,15 @@
             <div id="themeswitcher" class="themeswitcher">
                 <h:form id="themeSwitchForm">
                     <p:outputLabel for="themeswitch" value="Theme:" styleClass="filter-header"/>
-                    <p:themeSwitcher id="themeswitch" style="width:165px" effect="fade" onchange="submit()"
+                    <p:themeSwitcher id="themeswitch" style="width:165px" effect="fade"
+                                     onchange="submit()"
                                      valueChangeListener="#{themeController.onSwitch}" var="t">
-                        <f:selectItems value="#{themeController.themes}" var="theme" itemLabel="#{theme.name}" itemValue="#{theme}"/>
+                        <f:selectItems value="#{themeController.themes}" var="theme"
+                                       itemLabel="#{theme.name}" itemValue="#{theme}"/>
 
                         <p:column>
-                            <h:graphicImage name="images/themes/#{t}.png" alt="#{t}" styleClass="ui-theme" width="65px"/>
+                            <h:graphicImage name="images/themes/#{t}.png" alt="#{t}"
+                                            styleClass="ui-theme" width="65px"/>
                         </p:column>
 
                         <p:column>
@@ -85,15 +87,16 @@
 
                     <ui:repeat value="#{activityOverviewController.filterOptionsForStatus}"
                                var="status">
-                        <p:commandButton value="#{status} (#{activityOverviewController.getAmountOfMatchesForFilter(status, 'Status')})"
-                                         id="statusFilter"
-                                         action="#{activityOverviewController.addStatusFilter(status)}"
-                                         update="formId, filterForm"
-                                         styleClass="filter"
-                                         icon="fas fa-filter"/>
+                        <p:commandButton
+                                value="#{status} (#{activityOverviewController.getAmountOfMatchesForFilter(status, 'Status')})"
+                                id="statusFilter"
+                                action="#{activityOverviewController.addStatusFilter(status)}"
+                                update="formId, filterForm"
+                                styleClass="filter"
+                                icon="fas fa-filter"/>
                     </ui:repeat>
 
-                    <hr />
+                    <hr/>
 
                     <span class="filter-header">Project Filters</span>
                     <!-- Active -->
@@ -110,12 +113,13 @@
 
                     <ui:repeat value="#{activityOverviewController.filterOptionsForProjects}"
                                var="project">
-                        <p:commandButton value="#{project} (#{activityOverviewController.getAmountOfMatchesForFilter(project, 'Project')})"
-                                         id="projectFilter"
-                                         action="#{activityOverviewController.addProjectFilter(project)}"
-                                         update="formId, filterForm"
-                                         styleClass="filter"
-                                         icon="fas fa-filter"/>
+                        <p:commandButton
+                                value="#{project} (#{activityOverviewController.getAmountOfMatchesForFilter(project, 'Project')})"
+                                id="projectFilter"
+                                action="#{activityOverviewController.addProjectFilter(project)}"
+                                update="formId, filterForm"
+                                styleClass="filter"
+                                icon="fas fa-filter"/>
                     </ui:repeat>
 
                     <hr/>
@@ -135,12 +139,13 @@
 
                     <ui:repeat value="#{activityOverviewController.filterOptionsForTags}"
                                var="tag">
-                        <p:commandButton value="#{tag} (#{activityOverviewController.getAmountOfMatchesForFilter(tag, 'Tag')})"
-                                         id="tagFilter"
-                                         action="#{activityOverviewController.addTagFilter(tag)}"
-                                         update="formId, filterForm"
-                                         styleClass="filter"
-                                         icon="fas fa-filter"/>
+                        <p:commandButton
+                                value="#{tag} (#{activityOverviewController.getAmountOfMatchesForFilter(tag, 'Tag')})"
+                                id="tagFilter"
+                                action="#{activityOverviewController.addTagFilter(tag)}"
+                                update="formId, filterForm"
+                                styleClass="filter"
+                                icon="fas fa-filter"/>
                         <br/>
                     </ui:repeat>
                 </h:form>
@@ -176,9 +181,10 @@
                             value="Save All"
                             id="saveAll"
                             icon="fas fa-save"
-                            action="#{activityOverviewController.toggleSaveAll}"
+                            action="#{activityOverviewController.doNothing}"
                             update="formId"
                             styleClass="filter"
+                            style="display: none;"
                     />
                 </h:form>
             </div>

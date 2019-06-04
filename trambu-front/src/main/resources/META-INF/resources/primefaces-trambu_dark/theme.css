@@ -1792,6 +1792,14 @@ a {
 }
 
 .commentField {
-  width:100%;
-  height:255px;
+  width: 100%;
+  height: 255px;
+}
+
+.ui-editor-toolbar {
+  background: #181818;
+}
+
+.ui-texteditor {
+  background: #ededed;
 }

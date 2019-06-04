@@ -1790,6 +1790,10 @@ a {
 }
 
 .commentField {
-  width:100%;
-  height:255px;
+  width: 100%;
+  height: 255px;
+}
+
+.ui-texteditor {
+  background: #ededed;
 }

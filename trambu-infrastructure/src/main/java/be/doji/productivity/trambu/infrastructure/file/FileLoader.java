@@ -32,6 +32,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,6 +67,14 @@ public class FileLoader {
     List<String> todoFileLines = Files.readAllLines(path);
     for (String line : todoFileLines) {
       Activity parsedActivity = ActivityConverter.parse(line);
+
+      Path commentsFile = path
+          .resolveSibling(parsedActivity.getReferenceKey() + "_comments.txt");
+      if (commentsFile.toFile().exists()) {
+        parsedActivity.setComments(
+            Files.readAllLines(commentsFile).stream().map(s -> s + System.lineSeparator())
+                .collect(Collectors.joining()));
+      }
       ActivityData convertedActivityData = dataConverter.parse(parsedActivity);
       activityDatabaseRepository.save(convertedActivityData);
     }

@@ -82,6 +82,7 @@ public class ActivityDataConverter {
         .conversionStep(ActivityDataConverter::parseProjects, Activity::setProjects)
         .conversionStep(ActivityDataConverter::parseTags, Activity::setTags)
         .conversionStep(ActivityData::getReferenceKey, Activity::setReferenceKey)
+        .conversionStep(ActivityData::getComments, Activity::setComments)
         .getConvertedData();
 
   }

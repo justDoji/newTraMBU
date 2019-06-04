@@ -31,6 +31,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import javax.el.MethodExpression;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
@@ -71,10 +72,11 @@ public class ActivityOverviewController {
   }
 
   public void toggleSaveAll() {
-    for (ActivityModel model : activityContainer.getActivities()) {
-      model.setEditable(false);
-    }
     activityContainer.saveActivities();
+  }
+
+  public void doNothing() {
+    //Quick fix to disable default form behaviour
   }
 
   public void toggleExpanded(String activityKey) {
@@ -266,4 +268,5 @@ public class ActivityOverviewController {
         break;
     }
   }
+
 }

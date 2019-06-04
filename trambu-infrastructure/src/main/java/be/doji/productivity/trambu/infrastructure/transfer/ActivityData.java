@@ -21,6 +21,7 @@ package be.doji.productivity.trambu.infrastructure.transfer;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -71,6 +72,9 @@ public class ActivityData {
   @Column(name = "COMMENTS")
   private String comments;
 
+  public ActivityData() {
+    this.referenceKey = UUID.randomUUID().toString();
+  }
 
   /**
    * Extra setter for double binding
