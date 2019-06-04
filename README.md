@@ -1,4 +1,4 @@
-![Trambu Header](docs/images/trambu_header.PNG "Screenshot of Trambu")
+![Trambu Header](./docs/images/trambu_header.png "Screenshot of Trambu")
 
 |   |   |
 |---|---|
