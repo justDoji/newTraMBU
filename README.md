@@ -35,7 +35,7 @@ To run TRAMBU, navigate to the folder containing the downloaded *'.jar'* file, o
 
 You should see a bunch of lines being printed to your terminal.
 When the output line *'Started TrambuWebApplication in XXX seconds'* is displayed,
-TRAMBU will have started a web application that you can used by navigating your browser to:
+TRAMBU will have started a web application that you can use by navigating your browser to:
 
 > http://localhost:8080/index.xhtml00
 
