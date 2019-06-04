@@ -23,25 +23,46 @@ import be.doji.productivity.trambu.front.model.Theme;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.faces.event.ValueChangeEvent;
 import javax.inject.Named;
-import org.springframework.web.context.annotation.SessionScope;
+import org.springframework.web.context.annotation.ApplicationScope;
 
-@SessionScope
+@ApplicationScope
 @Named
 public class ThemeController {
 
   private List<Theme> themes;
+  private String theme;
 
   @PostConstruct
   public void init() {
+    Theme defaultTheme = new Theme(0, "Default", "trambu_dark");
+    Theme yellorangeTheme = new Theme(1, "Yellorange", "trambu_yellorange");
+
     themes = new ArrayList<>();
-    themes.add(new Theme(0, "Default", "trambu_dark"));
-    themes.add(new Theme(1, "Yellorange", "trambu_yellorange"));
+    themes.add(defaultTheme);
+    themes.add(yellorangeTheme);
+
+    this.setTheme(defaultTheme.getName());
   }
 
   public List<Theme> getThemes() {
     return themes;
   }
 
+  public void setThemes(List<Theme> themes) {
+    this.themes = themes;
+  }
 
+  public String getTheme() {
+    return theme;
+  }
+
+  public void setTheme(String theme) {
+    this.theme = theme;
+  }
+
+  public void onSwitch(ValueChangeEvent event) {
+    this.theme = (String) event.getNewValue();
+  }
 }
