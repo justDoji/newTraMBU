@@ -7,7 +7,6 @@ plugins {
 }
 
 group 'be.doji.productivity.trambu'
-version '1.0-SNAPSHOT'
 
 sourceCompatibility = 1.8
 
@@ -93,8 +92,12 @@ task buildAndAnalyze(type: DefaultTask) {
     tasks.findByName('sonarqube').mustRunAfter 'build'
 }
 
+versioning {
+    dirty = { t -> t }
+}
+
 allprojects {
-    version = versioning.info.full
+    version = versioning.info.tag+ "-" + versioning.info.display
 }
 
 buildAndAnalyze.setGroup("build")
