@@ -2,10 +2,10 @@ plugins {
     id 'java'
     id 'jacoco'
     id "com.github.hierynomus.license"
+    id 'net.nemerosa.versioning'
 }
 
 group 'be.doji.productivity.trambu'
-version '1.0-SNAPSHOT'
 
 sourceCompatibility = 1.8
 
