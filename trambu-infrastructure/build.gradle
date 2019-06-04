@@ -3,7 +3,6 @@ plugins {
     id 'jacoco'
     id "com.github.hierynomus.license"
     id "io.spring.dependency-management" version "1.0.5.RELEASE"
-    id 'net.nemerosa.versioning'
 }
 
 apply plugin: 'java'

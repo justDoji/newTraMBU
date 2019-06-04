@@ -3,7 +3,6 @@ plugins {
     id 'java'
     id 'jacoco'
     id "com.github.hierynomus.license"
-    id 'net.nemerosa.versioning'
 }
 apply plugin: 'java'
 apply plugin: 'org.springframework.boot'
