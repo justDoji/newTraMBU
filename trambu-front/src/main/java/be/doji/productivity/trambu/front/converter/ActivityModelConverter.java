@@ -103,7 +103,7 @@ public class ActivityModelConverter {
   }
 
   private Date parseDeadline(Activity activity) {
-    return activity.getDeadline().map(timePoint -> timePoint.write(EXTENDED_DATE_TIME_PATTERN))
+    return activity.getDeadline().map(timePoint -> timePoint.toString(EXTENDED_DATE_TIME_PATTERN))
         .map(this::mapStringToDate)
         .orElse(null);
   }

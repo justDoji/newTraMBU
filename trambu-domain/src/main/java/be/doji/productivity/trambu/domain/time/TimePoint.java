@@ -101,12 +101,6 @@ public class TimePoint {
     return this.internalRepresentation.toLocalDate();
   }
 
-  public String write(String pattern) {
-    DateTimeFormatter formatter = DateTimeFormatter
-        .ofPattern(pattern, Locale.FRANCE);
-    return formatter.format(this.toLocalDateTime());
-  }
-
   /* Utility Methods */
 
   public static TimePoint fromString(String timeString) {

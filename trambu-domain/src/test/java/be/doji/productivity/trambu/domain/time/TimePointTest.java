@@ -251,14 +251,14 @@ public class TimePointTest {
   @Test
   public void write_returnExpectedString() {
     TimePoint day2 = TimePoint.fromString("05/12/2018 00:00:00");
-    String output = day2.write(LEGACY_DATE_TIME_PATTERN);
+    String output = day2.toString(LEGACY_DATE_TIME_PATTERN);
     assertThat(output).isEqualTo("2018-12-05:00:00:00.000");
   }
 
   @Test
   public void write_inputNotValid_throwsException() {
     TimePoint day2 = TimePoint.fromString("05/12/2018 00:00:00");
-    assertThatThrownBy(() -> day2.write("this is not a date pattern"))
+    assertThatThrownBy(() -> day2.toString("this is not a date pattern"))
         .isInstanceOf(IllegalArgumentException.class);
   }
 

@@ -76,8 +76,8 @@ public class TimeSlot {
   }
 
   public double getTimeSpanInSeconds() {
-    TimePoint end = this.getEnd() == null ? TimePoint.now() : this.getEnd();
-    BigDecimal bigDecimal = BigDecimal.valueOf(Duration.between(this.getStart().toLocalDateTime(), end.toLocalDateTime()).getSeconds());
+    TimePoint calcEnd = this.getEnd() == null ? TimePoint.now() : this.getEnd();
+    BigDecimal bigDecimal = BigDecimal.valueOf(Duration.between(this.getStart().toLocalDateTime(), calcEnd.toLocalDateTime()).getSeconds());
     bigDecimal = bigDecimal.setScale(2, RoundingMode.HALF_UP);
     return bigDecimal.doubleValue();
   }
@@ -90,12 +90,12 @@ public class TimeSlot {
   }
 
   public TimeSlot overlapWithToday() {
-    TimePoint end =
+    TimePoint calcEnd =
         TimePoint.isBeforeOrEqual(TimePoint.now(), this.getEnd()) ? TimePoint.now() : this.getEnd();
     LocalDateTime startOfToday = LocalDateTime.now(clock).truncatedTo(ChronoUnit.DAYS).withHour(0)
         .withMinute(0).withSecond(0);
-    TimePoint start = this.getStart().toLocalDateTime().isBefore(startOfToday) ? TimePoint
+    TimePoint calcStart = this.getStart().toLocalDateTime().isBefore(startOfToday) ? TimePoint
         .fromDateTime(startOfToday) : this.getStart();
-    return new TimeSlot(start, end);
+    return new TimeSlot(calcStart, calcEnd);
   }
 }
