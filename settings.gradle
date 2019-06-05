@@ -1,3 +1,4 @@
 rootProject.name = 'newTraMBU'
 include 'trambu-domain', 'trambu-infrastructure', 'trambu-front'
+include 'trambu-aunt-zulma'
 

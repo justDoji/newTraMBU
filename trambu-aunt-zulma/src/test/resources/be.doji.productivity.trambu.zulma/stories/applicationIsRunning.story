@@ -7,4 +7,4 @@ So that I can start tracking my activities
 
 Scenario: Opening TRAMBU
 When opening TRAMBU
-Then TRAMBU is running
+Then TRAMBU logo is visible

@@ -3,6 +3,7 @@ package be.doji.productivity.trambu.zulma.features.steps;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.assertj.core.api.Assertions;
+import org.jbehave.core.annotations.AfterScenario;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 import org.openqa.selenium.By;
@@ -26,13 +27,18 @@ public class GeneralSteps {
     }
   }
 
-  @Then("TRAMBU is running")
+  @Then("TRAMBU logo is visible")
   public void assertTrambuIsRunning() {
     try {
       assertThat(driver.findElement(By.className(HEADER_LOGO_CLASS)).isDisplayed()).isTrue();
     } catch (WebDriverException e) {
       Assertions.fail("Error during test: {}", e.getMessage());
     }
+  }
+
+  @AfterScenario
+  public void close() {
+    driver.close();
   }
 
 }

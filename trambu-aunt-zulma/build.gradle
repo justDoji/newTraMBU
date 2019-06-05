@@ -1,0 +1,47 @@
+ext {
+    serenity_version = "2.0.30"
+}
+
+buildscript {
+    repositories {
+        mavenLocal()
+        jcenter()
+    }
+    dependencies {
+        classpath("net.serenity-bdd:serenity-gradle-plugin:2.0.30")
+    }
+}
+
+apply plugin: "java"
+apply plugin: "eclipse"
+apply plugin: "idea"
+apply plugin: "net.serenity-bdd.aggregator"
+
+group 'be.doji.productivity.trambu'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+
+    compile group: 'net.serenity-bdd', name: 'serenity-gradle-plugin', version: '2.0.50'
+    compile group: 'net.serenity-bdd', name: 'serenity-jbehave', version: '1.46.0'
+    compile group: 'net.serenity-bdd', name: 'serenity-junit', version: '2.0.50'
+
+    compile group: 'org.seleniumhq.selenium', name: 'selenium-firefox-driver', version: '3.141.59'
+    compile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '3.141.59'
+
+    compile group: 'org.assertj', name: 'assertj-core', version: '3.12.2'
+
+}
+test {
+    ignoreFailures = true
+}
+
+test.finalizedBy(aggregate)
+
+gradle.startParameter.continueOnFailure = true
