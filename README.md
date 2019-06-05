@@ -28,11 +28,15 @@ By keeping your data in local plain text files, you are in full control of your 
 
 # Get tracking!
 
+## Start from packaged release
+
 Go to [[our releases page]](https://github.com/justDoji/TraMBU/releases){:target="_blank"}, and download the latest version.
 Be sure you have the Java runtime environment installed on your computer.
 Try this by running
 
-> java -version
+```
+java -version
+```
 
 If the Java Runtime is installed, you should see ouput containing the version and installation location. 
 If you get a 'command not found' message, head over to the [Oracle site](https://www.oracle.com/technetwork/java/javase/downloads/index.html) and download the Java Runtime Environment.
@@ -40,13 +44,41 @@ TRAMBU works best with the Java 8 runtime environment.
 
 To run TRAMBU, navigate to the folder containing the downloaded *'.jar'* file, open a command prompt and execute:
 
-> java -jar trambu-application.jar
-
+```
+java -jar trambu-application.jar
+```
 You should see a bunch of lines being printed to your terminal.
 When the output line *'Started TrambuWebApplication in XXX seconds'* is displayed,
 TRAMBU will have started. You can access the application by navigating your favorite web browser to:
 
-> http://localhost:8080/index.xhtml
+> [http://localhost:8080/index.xhtml](http://localhost:8080/index.xhtml)
+
+## Starting from source code
+
+If you want the cuttinmg edge release, you can pull the source code directly from github.
+To do this either
+
+ - download the project sources as an archive (zip, or tar) 
+ - clone the project using your favorite git client
+ 
+When you have the source code on your local machine, you can build an executable jar using the
+provided gradle wrapper.
+Navigate to the project's root directory (the one you downloaded) and run the following command:
+
+```
+./gradlew clean build
+```
+
+This will create an executable jar in the **tTrambu/trambu-front/build/libs** directory.
+Navigate to this directory and run *java -jar <executable name>*.
+
+```
+cd trambu-front/build/libs/
+
+java -jar trambu-front-<version number>.jar
+```
+
+This will start TRAMBU.
 
 # More information
 
