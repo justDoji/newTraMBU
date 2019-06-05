@@ -26,6 +26,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import be.doji.productivity.trambu.front.controller.state.ActivityModelContainer;
 import be.doji.productivity.trambu.front.converter.TimeLogConverter;
 import be.doji.productivity.trambu.front.model.ActivityModel;
+import be.doji.productivity.trambu.front.model.ActivityModel.Status;
 import be.doji.productivity.trambu.front.model.TimeLogModel;
 import java.io.File;
 import java.io.IOException;
@@ -226,6 +227,23 @@ public class ActivityOverviewControllerIntegrationTest {
     controller.addProjectFilter("Dog");
     assertThat(controller.getFilteredActivities()).hasSize(2);
     controller.addProjectFilter("Two");
+    assertThat(controller.getFilteredActivities()).hasSize(1);
+  }
+
+  @Test
+  public void filter_onStatus_multipleFilters() throws URISyntaxException {
+    reset();
+
+    ActivityModel activityOne = container.getActivity(controller.createActivity());
+    activityOne.setProjects(Arrays.asList("Cone", "Two", "Dog"));
+
+    ActivityModel activityTwo = container.getActivity(controller.createActivity());
+    activityTwo.setProjects(Arrays.asList("Cat", "Dog"));
+
+    controller.addFilter("TODO", ActivityOverviewController.FILTER_TYPE_STATUS);
+    assertThat(controller.getFilteredActivities()).hasSize(2);
+
+    activityTwo.setStatus(Status.DONE);
     assertThat(controller.getFilteredActivities()).hasSize(1);
   }
 

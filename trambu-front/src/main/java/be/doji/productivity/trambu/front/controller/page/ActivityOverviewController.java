@@ -252,7 +252,7 @@ public class ActivityOverviewController {
     return amountOfMatchersForFilter;
   }
 
-  private void addFilter(String toFilter, String type) {
+  public void addFilter(String toFilter, String type) {
     switch (type) {
       case FILTER_TYPE_TAG:
         addTagFilter(toFilter);
