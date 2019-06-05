@@ -48,15 +48,18 @@ public class FileWriter {
   private final ActivityDatabaseRepository activityRepository;
   private final ActivityDataConverter dataConverter;
   private final LogConverter logConverter;
+  private final ActivityConverter activityConverter;
 
   private static final Logger LOG = LoggerFactory.getLogger(FileWriter.class);
 
   public FileWriter(@Autowired ActivityDatabaseRepository repository,
       @Autowired ActivityDataConverter dataConverter,
-      @Autowired LogConverter logConverter) {
+      @Autowired LogConverter logConverter,
+      @Autowired ActivityConverter activityConverter) {
     this.activityRepository = repository;
     this.dataConverter = dataConverter;
     this.logConverter = logConverter;
+    this.activityConverter = activityConverter;
   }
 
   public void writeActivtiesToFile(File file) throws IOException {
@@ -67,7 +70,7 @@ public class FileWriter {
     List<String> lines = new ArrayList<>();
     for (ActivityData data : activityRepository.findAll()) {
       Activity parsedData = dataConverter.parse(data);
-      lines.add(ActivityConverter.write(parsedData));
+      lines.add(activityConverter.write(parsedData));
       if (StringUtils.isNotBlank(parsedData.getComments())) {
         Path commentFile = path.resolveSibling(data.getReferenceKey() + "_comments.txt");
         Files.deleteIfExists(commentFile);

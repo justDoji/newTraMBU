@@ -36,23 +36,21 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Service;
 
-// TODO: make this a service for consitency
+@Service
 public final class ActivityConverter {
 
   private static final String DEFAULT_TITLE = "Unnamed activity";
 
-  /* Utility classes should not have a public or default constructor */
-  private ActivityConverter() {throw new UnsupportedOperationException();}
-
-  private static class StringToActivityConverter extends Converter<String, Activity> {
+  private class StringToActivityConverter extends Converter<String, Activity> {
 
     StringToActivityConverter(String source) {
       super(source, Activity.class);
     }
   }
 
-  public static Activity parse(String line) {
+  public Activity parse(String line) {
     if (StringUtils.isBlank(line)) {
       throw new IllegalArgumentException(
           "Failure during parsing: empty String or null value not allowed");
@@ -107,14 +105,14 @@ public final class ActivityConverter {
     return stripGroupIndicators(firstMatch).trim();
   }
 
-  private static class ActivityToStringConverter extends Converter<Activity, StringBuilder> {
+  private class ActivityToStringConverter extends Converter<Activity, StringBuilder> {
 
     ActivityToStringConverter(Activity source) {
       super(source, StringBuilder.class);
     }
   }
 
-  public static String write(Activity activityToParse) {
+  public String write(Activity activityToParse) {
     return new ActivityToStringConverter(activityToParse)
         .conversionStep(ActivityConverter::writeCompleted, StringBuilder::append)
         .conversionStep(ActivityConverter::writeTitle, StringBuilder::append)

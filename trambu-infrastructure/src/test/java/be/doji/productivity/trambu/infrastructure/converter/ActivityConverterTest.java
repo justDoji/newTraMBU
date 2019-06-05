@@ -1,59 +1,64 @@
 /**
  * TraMBU - an open time management tool
  *
- *     Copyright (C) 2019  Stijn Dejongh
+ * Copyright (C) 2019  Stijn Dejongh
  *
- *     This program is free software: you can redistribute it and/or modify
- *     it under the terms of the GNU Affero General Public License as
- *     published by the Free Software Foundation, either version 3 of the
- *     License, or (at your option) any later version.
+ * This program is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU Affero General Public License as published by the Free Software Foundation, either version 3
+ * of the License, or (at your option) any later version.
  *
- *     This program is distributed in the hope that it will be useful,
- *     but WITHOUT ANY WARRANTY; without even the implied warranty of
- *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *     GNU Affero General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Affero General Public License for more details.
  *
- *     You should have received a copy of the GNU Affero General Public License
- *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
  *
- *     For further information on usage, or licensing, contact the author
- *     through his github profile: https://github.com/justDoji
+ * For further information on usage, or licensing, contact the author through his github profile:
+ * https://github.com/justDoji
  */
 package be.doji.productivity.trambu.infrastructure.converter;
 
-import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import be.doji.productivity.trambu.domain.activity.Activity;
 import be.doji.productivity.trambu.domain.time.TimePoint;
 import java.util.Arrays;
-import org.assertj.core.api.Assertions;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
+@RunWith(SpringRunner.class)
+@SpringBootTest
 public class ActivityConverterTest {
 
   private static final String ACTIVITY_DATA_LINE = "(A) 2017-10-21:14:13.000 [TaskTitle] +[Overarching Project] @[Tag] @[Tag with multiple words] due:2017-12-21:16:15:00.000 uuid:[283b6271-b513-4e89-b757-10e98c9078ea]";
   private static final String COMPLETED_ACTIVITY = "X (B) [Buy thunderbird plugin license]";
   private static final String COMPLETED_ACTIVITY_LOWERCASE = "x (B) [Buy thunderbird plugin license]";
 
+  @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
+  @Autowired private ActivityConverter activityConverter;
+
   @Test
   public void mapStringToActivity_givesOutput() {
-    Activity parsedActivity = ActivityConverter.parse(ACTIVITY_DATA_LINE);
+    Activity parsedActivity = activityConverter.parse(ACTIVITY_DATA_LINE);
 
     assertThat(parsedActivity).isNotNull();
   }
 
   @Test
   public void mapStringToActivity_emptyString() {
-    assertThatThrownBy(() -> ActivityConverter.parse(""))
+    assertThatThrownBy(() -> activityConverter.parse(""))
         .isInstanceOf(IllegalArgumentException.class)
         .hasMessage("Failure during parsing: empty String or null value not allowed");
   }
 
   @Test
   public void mapStringToActivity_null() {
-    assertThatThrownBy(() -> ActivityConverter.parse(null))
+    assertThatThrownBy(() -> activityConverter.parse(null))
         .isInstanceOf(IllegalArgumentException.class)
         .hasMessageContaining("Failure during parsing: empty String or null value not allowed");
   }
@@ -62,31 +67,31 @@ public class ActivityConverterTest {
 
   @Test
   public void parse_ActivityCompleted_upperCaseIndicator() {
-    Activity parsedData = ActivityConverter.parse(COMPLETED_ACTIVITY);
+    Activity parsedData = activityConverter.parse(COMPLETED_ACTIVITY);
     assertThat(parsedData.isCompleted()).isTrue();
   }
 
   @Test
   public void parse_ActivityCompleted_lowerCaseIndicator() {
-    Activity parsedData = ActivityConverter.parse(COMPLETED_ACTIVITY_LOWERCASE);
+    Activity parsedData = activityConverter.parse(COMPLETED_ACTIVITY_LOWERCASE);
     assertThat(parsedData.isCompleted()).isTrue();
   }
 
   @Test
   public void parse_activityTitle_singleWordTitle() {
-    Activity parsedActivity = ActivityConverter.parse(ACTIVITY_DATA_LINE);
+    Activity parsedActivity = activityConverter.parse(ACTIVITY_DATA_LINE);
     assertThat(parsedActivity.getTitle()).isEqualTo("TaskTitle");
   }
 
   @Test
   public void parse_activityTitle_multipleWordTitle() {
-    Activity parsedActivity = ActivityConverter.parse(COMPLETED_ACTIVITY);
+    Activity parsedActivity = activityConverter.parse(COMPLETED_ACTIVITY);
     assertThat(parsedActivity.getTitle()).isEqualTo("Buy thunderbird plugin license");
   }
 
   @Test
   public void parse_activityDeadline() {
-    Activity parsedActivity = ActivityConverter.parse(ACTIVITY_DATA_LINE);
+    Activity parsedActivity = activityConverter.parse(ACTIVITY_DATA_LINE);
     assertThat(parsedActivity.getDeadline()).isPresent();
     assertThat(TimePoint.isSameDate(TimePoint.fromString("2017-12-21:16:15:00.000"),
         parsedActivity.getDeadline().get())).isTrue();
@@ -94,7 +99,7 @@ public class ActivityConverterTest {
 
   @Test
   public void parse_activityTags() {
-    Activity parsedActivity = ActivityConverter.parse(ACTIVITY_DATA_LINE);
+    Activity parsedActivity = activityConverter.parse(ACTIVITY_DATA_LINE);
     assertThat(parsedActivity.getTags()).isNotEmpty();
     assertThat(parsedActivity.getTags()).hasSize(2);
     assertThat(parsedActivity.getTags().get(0)).isEqualTo("Tag");
@@ -103,14 +108,14 @@ public class ActivityConverterTest {
 
   @Test
   public void parse_activityTags_noTags() {
-    Activity parsedActivity = ActivityConverter.parse(COMPLETED_ACTIVITY);
+    Activity parsedActivity = activityConverter.parse(COMPLETED_ACTIVITY);
 
     assertThat(parsedActivity.getTags()).isEmpty();
   }
 
   @Test
   public void parse_activityProject() {
-    Activity parsedActivity = ActivityConverter.parse(ACTIVITY_DATA_LINE);
+    Activity parsedActivity = activityConverter.parse(ACTIVITY_DATA_LINE);
     assertThat(parsedActivity.getProjects()).isNotEmpty();
     assertThat(parsedActivity.getProjects()).hasSize(1);
     assertThat(parsedActivity.getProjects().get(0)).isEqualTo("Overarching Project");
@@ -118,13 +123,13 @@ public class ActivityConverterTest {
 
   @Test
   public void parse_activityProject_noProject() {
-    Activity parsedActivity = ActivityConverter.parse(COMPLETED_ACTIVITY);
+    Activity parsedActivity = activityConverter.parse(COMPLETED_ACTIVITY);
     assertThat(parsedActivity.getProjects()).isEmpty();
   }
 
   @Test
   public void parse_activityContainsUUID() {
-    Activity parsed = ActivityConverter.parse(ACTIVITY_DATA_LINE);
+    Activity parsed = activityConverter.parse(ACTIVITY_DATA_LINE);
     assertThat(parsed.getReferenceKey()).isEqualTo("283b6271-b513-4e89-b757-10e98c9078ea");
   }
 
@@ -134,7 +139,7 @@ public class ActivityConverterTest {
         .title("name")
         .build();
 
-    String toString = ActivityConverter.write(activity);
+    String toString = activityConverter.write(activity);
     assertThat(toString).startsWith("[name]");
   }
 
@@ -145,7 +150,7 @@ public class ActivityConverterTest {
         .completed(true)
         .build();
 
-    String toString = ActivityConverter.write(activity);
+    String toString = activityConverter.write(activity);
     assertThat(toString).startsWith("x [name]");
   }
 
@@ -155,7 +160,7 @@ public class ActivityConverterTest {
         .title("name is @ cool g_y")
         .build();
 
-    String toString = ActivityConverter.write(activity);
+    String toString = activityConverter.write(activity);
     assertThat(toString).contains("[name is @ cool g_y]");
   }
 
@@ -166,7 +171,7 @@ public class ActivityConverterTest {
         .deadline("2017-10-21:14:13:00.000")
         .build();
 
-    String toString = ActivityConverter.write(activity);
+    String toString = activityConverter.write(activity);
     assertThat(toString).startsWith("[name] due:2017-10-21:14:13:00.000");
   }
 
@@ -177,7 +182,7 @@ public class ActivityConverterTest {
         .tags(Arrays.asList("tagOne", "tagTwo"))
         .build();
 
-    String toString = ActivityConverter.write(activity);
+    String toString = activityConverter.write(activity);
     assertThat(toString).startsWith("[name] @[tagOne] @[tagTwo]");
   }
 
@@ -188,7 +193,7 @@ public class ActivityConverterTest {
         .projects(Arrays.asList("projectOne", "projectTwo"))
         .build();
 
-    String toString = ActivityConverter.write(activity);
+    String toString = activityConverter.write(activity);
     assertThat(toString).startsWith("[name] +[projectOne] +[projectTwo]");
   }
 }

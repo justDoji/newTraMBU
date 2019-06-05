@@ -47,13 +47,17 @@ public class FileLoader {
   private final ActivityDatabaseRepository activityDatabaseRepository;
   private final LogConverter logConverter;
   private final ActivityDataConverter dataConverter;
+  private final ActivityConverter activityConverter;
 
 
   public FileLoader(@Autowired ActivityDatabaseRepository activityDatabaseRepository,
-      @Autowired LogConverter logConverter, @Autowired ActivityDataConverter converter) {
+      @Autowired LogConverter logConverter,
+      @Autowired ActivityDataConverter converter,
+      @Autowired ActivityConverter activityConverter) {
     this.activityDatabaseRepository = activityDatabaseRepository;
     this.logConverter = logConverter;
     this.dataConverter = converter;
+    this.activityConverter = activityConverter;
   }
 
   public void loadTodoFileActivities(File file) throws IOException {
@@ -66,7 +70,7 @@ public class FileLoader {
     activityDatabaseRepository.deleteAll();
     List<String> todoFileLines = Files.readAllLines(path);
     for (String line : todoFileLines) {
-      Activity parsedActivity = ActivityConverter.parse(line);
+      Activity parsedActivity = activityConverter.parse(line);
 
       Path commentsFile = path
           .resolveSibling(parsedActivity.getReferenceKey() + "_comments.txt");

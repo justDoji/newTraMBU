@@ -67,8 +67,6 @@ public class ExpectedEndPriorityCalculatorTest {
     assertThat(priority).isEqualTo(Priority.LOW);
   }
 
-  //TODO: exception flows
-
   @After
   public void cleanUp() {
     TimePoint.setTimePointClock(Clock.systemDefaultZone());
