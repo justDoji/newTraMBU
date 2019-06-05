@@ -28,6 +28,8 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import java.time.Clock;
 import java.time.LocalDateTime;
@@ -38,13 +40,7 @@ import java.util.GregorianCalendar;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
-@RunWith(PowerMockRunner.class)
-@PrepareForTest({TimePoint.class})
 public class TimePointTest {
 
   private static final String DOJI_BIRTHDAY = "18/12/1989";
@@ -53,10 +49,10 @@ public class TimePointTest {
 
   @Before
   public void setUp() {
-    Clock clockMock = PowerMockito.mock(Clock.class);
+    Clock clockMock = mock(Clock.class);
     TimePoint.setTimePointClock(clockMock);
-    PowerMockito.when(clockMock.instant()).thenReturn(NOW.toInstant(ZoneOffset.UTC));
-    PowerMockito.when(clockMock.getZone()).thenReturn(ZoneOffset.UTC);
+    when(clockMock.instant()).thenReturn(NOW.toInstant(ZoneOffset.UTC));
+    when(clockMock.getZone()).thenReturn(ZoneOffset.UTC);
   }
 
   @Test

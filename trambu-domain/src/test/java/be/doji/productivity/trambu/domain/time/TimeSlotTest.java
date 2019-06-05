@@ -1,26 +1,30 @@
 /**
  * TraMBU - an open time management tool
  *
- * Copyright (C) 2019  Stijn Dejongh
+ *     Copyright (C) 2019  Stijn Dejongh
  *
- * This program is free software: you can redistribute it and/or modify it under the terms of the
- * GNU Affero General Public License as published by the Free Software Foundation, either version 3
- * of the License, or (at your option) any later version.
+ *     This program is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU Affero General Public License as
+ *     published by the Free Software Foundation, either version 3 of the
+ *     License, or (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
- * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Affero General Public License for more details.
+ *     This program is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU Affero General Public License for more details.
  *
- * You should have received a copy of the GNU Affero General Public License along with this program.
- * If not, see <https://www.gnu.org/licenses/>.
+ *     You should have received a copy of the GNU Affero General Public License
+ *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *
- * For further information on usage, or licensing, contact the author through his github profile:
- * https://github.com/justDoji
+ *     For further information on usage, or licensing, contact the author
+ *     through his github profile: https://github.com/justDoji
  */
 package be.doji.productivity.trambu.domain.time;
 
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import java.time.Clock;
 import java.time.LocalDateTime;
@@ -30,24 +34,19 @@ import java.util.GregorianCalendar;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
-@RunWith(PowerMockRunner.class)
-@PrepareForTest({TimeSlot.class, TimePoint.class})
+
 public class TimeSlotTest {
 
   private static final LocalDateTime NOW = LocalDateTime.of(2019, 12, 4, 14, 30, 0);
 
   @Before
   public void setUp() {
-    Clock clockMock = PowerMockito.mock(Clock.class);
+    Clock clockMock = mock(Clock.class);
     TimeSlot.setTimePointClock(clockMock);
     TimePoint.setTimePointClock(clockMock);
-    PowerMockito.when(clockMock.instant()).thenReturn(NOW.toInstant(ZoneOffset.UTC));
-    PowerMockito.when(clockMock.getZone()).thenReturn(ZoneOffset.UTC);
+    when(clockMock.instant()).thenReturn(NOW.toInstant(ZoneOffset.UTC));
+    when(clockMock.getZone()).thenReturn(ZoneOffset.UTC);
   }
 
   @Test
