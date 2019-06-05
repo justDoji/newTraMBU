@@ -1,23 +1,21 @@
 /**
  * TraMBU - an open time management tool
  *
- *     Copyright (C) 2019  Stijn Dejongh
+ * Copyright (C) 2019  Stijn Dejongh
  *
- *     This program is free software: you can redistribute it and/or modify
- *     it under the terms of the GNU Affero General Public License as
- *     published by the Free Software Foundation, either version 3 of the
- *     License, or (at your option) any later version.
+ * This program is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU Affero General Public License as published by the Free Software Foundation, either version 3
+ * of the License, or (at your option) any later version.
  *
- *     This program is distributed in the hope that it will be useful,
- *     but WITHOUT ANY WARRANTY; without even the implied warranty of
- *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *     GNU Affero General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Affero General Public License for more details.
  *
- *     You should have received a copy of the GNU Affero General Public License
- *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
  *
- *     For further information on usage, or licensing, contact the author
- *     through his github profile: https://github.com/justDoji
+ * For further information on usage, or licensing, contact the author through his github profile:
+ * https://github.com/justDoji
  */
 package be.doji.productivity.trambu.domain.time;
 
@@ -25,12 +23,15 @@ import com.google.re2j.Pattern;
 import java.time.Clock;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalUnit;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.TimeZone;
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -129,6 +130,30 @@ public class TimePoint {
             + "] ");
   }
 
+  public String toString(String pattern) {
+    DateTimeFormatter formatter = DateTimeFormatter
+        .ofPattern(pattern, Locale.FRANCE);
+    return formatter.format(this.toLocalDateTime());
+  }
+
+  public static TimePoint fromDate(Date date) {
+    if (date == null) {
+      return null;
+    }
+    LocalDateTime localDateTime = LocalDateTime
+        .ofInstant(date.toInstant(), ZoneId.of(TimeZone.getDefault().getID()));
+    return new TimePoint(localDateTime);
+
+  }
+
+  public static TimePoint fromDateTime(LocalDateTime date) {
+    if (date == null) {
+      return null;
+    }
+    return new TimePoint(date);
+
+  }
+
   public static boolean isBefore(TimePoint toCheck, TimePoint reference) {
     return toCheck != null &&
         reference != null &&
@@ -162,4 +187,6 @@ public class TimePoint {
     LocalDateTime result = LocalDateTime.from(this.toLocalDateTime().plus(amount, unit));
     return new TimePoint(result);
   }
+
+
 }
