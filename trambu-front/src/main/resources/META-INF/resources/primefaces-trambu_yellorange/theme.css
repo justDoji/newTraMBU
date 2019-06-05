@@ -1351,6 +1351,10 @@ a {
   display: inline-block;
 }
 
+.activity-title a {
+  color: #625e5e;
+}
+
 .activity-content {
   margin-bottom: 7px;
   padding: 10px;

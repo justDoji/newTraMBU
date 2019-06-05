@@ -1354,6 +1354,10 @@ a {
   display: inline-block;
 }
 
+.activity-title a {
+  color: #fff;
+}
+
 .activity-content {
   margin-bottom: 7px;
   padding: 10px;

@@ -49,12 +49,14 @@
                                  icon="#{cc.attrs.model.completed ?'fas fa-check-square' :'far fa-square'}"/>
             </div>
             <div class="activity-title">
-                <b><h:outputText value="#{cc.attrs.model.title}"
-                                 rendered="#{!cc.attrs.model.editable}"/></b>
+                <b><h:commandLink value="#{cc.attrs.model.title}"
+                                  rendered="#{!cc.attrs.model.editable}"
+                                  action="#{activityOverviewController.toggleEditable(cc.attrs.model.referenceKey)}"/></b>
                 <p:inputText id="titleEdit" value="#{cc.attrs.model.title}"
                              rendered="#{cc.attrs.model.editable}" styleClass="title-edit"
                              ondblclick="this.setSelectionRange(0, this.value.length)"
-                             onfocus="this.setSelectionRange(0, this.value.length)" tabindex="1">
+                             onfocus="this.setSelectionRange(0, this.value.length)" tabindex="1"
+                             disabled="#{!cc.attrs.model.editable}">
                     <f:ajax execute="titleEdit" render="titleEdit"/>
                 </p:inputText>
             </div>
