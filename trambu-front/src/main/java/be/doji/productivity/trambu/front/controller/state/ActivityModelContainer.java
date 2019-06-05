@@ -51,6 +51,7 @@ import org.springframework.stereotype.Service;
 /**
  * Holds the Activities in memory
  */
+//TODO: This should be moved to the infra layer. Repositories should not be called directly from the front-end
 @Service
 public class ActivityModelContainer {
 
