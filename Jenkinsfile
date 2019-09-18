@@ -12,7 +12,7 @@ node {
     }
 
     stage('Unit Tests') {
-        gw test jacocoTestReport
+        gw 'test jacocoTestReport'
         junit '**/build/test-results/test/**/*.xml'
         milestone()
     }
