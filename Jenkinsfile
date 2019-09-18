@@ -2,6 +2,7 @@ VERSION_NUMBER = ''
 
 node {
     stage('Pull Sources') {
+        executeCommand("git config --global credential.helper cache")
         checkout scm
     }
 
@@ -24,4 +25,8 @@ def gw(goals) {
     } else {
         bat 'gradlew.bat ' + goals
     }
+}
+
+def executeCommand(command) {
+    sh(script: command, returnStdout: true).trim()
 }
