@@ -1,15 +1,10 @@
 plugins {
-    id 'java'
     id 'jacoco'
     id "com.github.hierynomus.license"
     id "io.spring.dependency-management" version "1.0.5.RELEASE"
 }
 
-apply plugin: 'java'
 apply plugin: 'io.spring.dependency-management'
-
-group = 'be.doji.productivity.trambu'
-sourceCompatibility = '1.8'
 
 repositories {
     mavenCentral()

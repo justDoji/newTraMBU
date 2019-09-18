@@ -4,10 +4,6 @@ plugins {
     id "com.github.hierynomus.license"
 }
 
-group 'be.doji.productivity.trambu'
-
-sourceCompatibility = 1.8
-
 repositories {
     mavenCentral()
 }

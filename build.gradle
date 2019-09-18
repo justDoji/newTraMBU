@@ -66,6 +66,19 @@ license {
     strictCheck true
 }
 
+subprojects {
+    apply plugin: 'java'
+
+    sourceCompatibility = 1.8
+
+    group = applicationGroup
+    version = applicationVersion
+
+    repositories {
+        mavenCentral()
+    }
+}
+
 task buildAndFormat(type: DefaultTask) {
     dependsOn 'licenseFormatTest'
     dependsOn 'licenseFormatMain'
@@ -87,19 +100,6 @@ task buildAndAnalyze(type: DefaultTask) {
     tasks.findByName('licenseFormatMain').mustRunAfter 'licenseFormatTest'
     tasks.findByName('build').mustRunAfter 'licenseFormatMain'
     tasks.findByName('sonarqube').mustRunAfter 'build'
-}
-
-def getVersionName = { ->
-    def stdout = new ByteArrayOutputStream()
-    exec {
-        commandLine 'git', 'describe', '--tags'
-        standardOutput = stdout
-    }
-    return stdout.toString().trim()
-}
-
-allprojects {
-    version = getVersionName()
 }
 
 buildAndAnalyze.setGroup("build")

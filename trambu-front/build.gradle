@@ -1,17 +1,11 @@
 plugins {
     id 'org.springframework.boot' version '2.1.4.RELEASE'
-    id 'java'
     id 'jacoco'
     id "com.github.hierynomus.license"
 }
-apply plugin: 'java'
+
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
-
-
-group 'be.doji.productivity.trambu'
-
-sourceCompatibility = 1.8
 
 repositories {
     mavenCentral()
