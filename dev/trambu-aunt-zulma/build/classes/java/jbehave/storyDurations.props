@@ -1,6 +1,0 @@
-#org.jbehave.core.embedder.StoryManager
-#Wed Jun 05 14:30:10 CEST 2019
-be.doji.productivity.trambu.zulma/stories/applicationIsRunning.story=4000
-threads=1
-total=4000
-threadAverage=4000
