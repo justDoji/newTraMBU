@@ -1,0 +1,24 @@
+version: "3.1"
+services:
+  jenkins:
+    build: .
+    image: be.doji.productivity/jenkins:lts-alpine
+    ports:
+      - 8080:8080
+    volumes:
+      - jenkins-volume:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - jenkins
+    extra_hosts:
+      - "trambu:192.168.0.1"
+
+networks:
+  jenkins:
+    driver: bridge
+    ipam:
+      config:
+      - subnet: 192.168.0.0/24
+
+volumes:
+  jenkins-volume:

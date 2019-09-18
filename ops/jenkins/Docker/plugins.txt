@@ -1,0 +1,8 @@
+workflow-aggregator
+pipeline-stage-view
+git
+ssh-slaves
+credentials-binding
+plain-credentials
+pipeline-utility-steps
+greenballs
