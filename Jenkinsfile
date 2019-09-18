@@ -8,13 +8,13 @@ node {
 
     stage('Compile') {
         gw 'clean classes testClasses'
-        milestone
+        milestone()
     }
 
     stage('Unit Tests') {
         gw test jacocoTestReport
         junit '**/build/test-results/test/**/*.xml'
-        milestone
+        milestone()
     }
 
 }
