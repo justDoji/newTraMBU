@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TimePoint.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">trambu-domain</a> &gt; <a href="index.source.html" class="el_package">be.doji.productivity.trambu.domain.time</a> &gt; <span class="el_source">TimePoint.java</span></div><h1>TimePoint.java</h1><pre class="source lang-java linenums">/**
+ * TraMBU - an open time management tool
+ *
+ *     Copyright (C) 2019  Stijn Dejongh
+ *
+ *     This program is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU Affero General Public License as
+ *     published by the Free Software Foundation, either version 3 of the
+ *     License, or (at your option) any later version.
+ *
+ *     This program is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU Affero General Public License for more details.
+ *
+ *     You should have received a copy of the GNU Affero General Public License
+ *     along with this program.  If not, see &lt;https://www.gnu.org/licenses/&gt;.
+ *
+ *     For further information on usage, or licensing, contact the author
+ *     through his github profile: https://github.com/justDoji
+ */
+package be.doji.productivity.trambu.domain.time;
+
+import com.google.re2j.Pattern;
+import java.time.Clock;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalUnit;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.TimeZone;
+import org.apache.commons.lang3.StringUtils;
+
+/**
+ * Wrapper class for date/time representation as I am very frustrated with Java's built in
+ * representations... I hate Dates, and I hate the LocalDateTime shizzle. I will wrap this, so I can
+ * express my frustration at a single point, without having to refactor my code for hours on
+ * end....
+ */
+public class TimePoint {
+
+<span class="fc" id="L47">  private static Clock clock = Clock.systemDefaultZone();</span>
+
+  private static final String BASIC_DATE_PATTERN = &quot;dd/MM/uuuu&quot;;
+  private static final String BASIC_DATE_REGEX = &quot;\\d\\d/\\d\\d/\\d\\d\\d\\d&quot;;
+
+  private static final String BASIC_DATE_TIME_PATTERN = &quot;dd/MM/uuuu HH:mm:ss&quot;;
+  private static final String BASIC_DATE_TIME_REGEX = &quot;\\d\\d/\\d\\d/\\d\\d\\d\\d \\d\\d:\\d\\d:\\d\\d&quot;;
+
+  public static final String EXTENDED_DATE_TIME_PATTERN = &quot;dd/MM/yyyy HH:mm:ss:SSS&quot;;
+  private static final String EXTENDED_DATE_TIME_REGEX = &quot;\\d\\d/\\d\\d/\\d\\d\\d\\d \\d\\d:\\d\\d:\\d\\d:\\d\\d\\d&quot;;
+
+  public static final String LEGACY_DATE_TIME_PATTERN = &quot;uuuu-MM-dd:HH:mm:ss.SSS&quot;;
+  private static final String LEGACY_DATE_TIME_REGEX = &quot;\\d\\d\\d\\d-\\d\\d-\\d\\d:\\d\\d:\\d\\d:\\d\\d.\\d\\d\\d&quot;;
+
+<span class="fc" id="L61">  private static final Map&lt;Pattern, DateTimeFormatter&gt; DATE_CONVERTERS = createDateConverters();</span>
+<span class="fc" id="L62">  private static final Map&lt;Pattern, DateTimeFormatter&gt; DATE_TIME_CONVERTERS = createDateTimeConverters();</span>
+
+
+  private final LocalDateTime internalRepresentation;
+
+
+<span class="fc" id="L68">  private TimePoint(LocalDateTime dateTime) {</span>
+<span class="fc" id="L69">    this.internalRepresentation = dateTime;</span>
+<span class="fc" id="L70">  }</span>
+
+  private static Map&lt;Pattern, DateTimeFormatter&gt; createDateConverters() {
+<span class="fc" id="L73">    Map&lt;Pattern, DateTimeFormatter&gt; converters = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L74">    converters.put(Pattern.compile(BASIC_DATE_REGEX),</span>
+<span class="fc" id="L75">        DateTimeFormatter.ofPattern(BASIC_DATE_PATTERN, Locale.FRANCE));</span>
+
+<span class="fc" id="L77">    return converters;</span>
+  }
+
+  private static Map&lt;Pattern, DateTimeFormatter&gt; createDateTimeConverters() {
+<span class="fc" id="L81">    Map&lt;Pattern, DateTimeFormatter&gt; converters = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L82">    converters.put(Pattern.compile(BASIC_DATE_TIME_REGEX),</span>
+<span class="fc" id="L83">        DateTimeFormatter.ofPattern(BASIC_DATE_TIME_PATTERN, Locale.FRANCE));</span>
+<span class="fc" id="L84">    converters.put(Pattern.compile(EXTENDED_DATE_TIME_REGEX),</span>
+<span class="fc" id="L85">        DateTimeFormatter.ofPattern(EXTENDED_DATE_TIME_PATTERN, Locale.FRANCE));</span>
+<span class="fc" id="L86">    converters.put(Pattern.compile(LEGACY_DATE_TIME_REGEX),</span>
+<span class="fc" id="L87">        DateTimeFormatter.ofPattern(LEGACY_DATE_TIME_PATTERN, Locale.FRANCE));</span>
+
+<span class="fc" id="L89">    return converters;</span>
+  }
+
+  public static TimePoint now() {
+<span class="fc" id="L93">    return new TimePoint(LocalDateTime.ofInstant(clock.instant(), clock.getZone()));</span>
+  }
+
+  public LocalDateTime toLocalDateTime() {
+<span class="fc" id="L97">    return this.internalRepresentation;</span>
+  }
+
+  public LocalDate toLocalDate() {
+<span class="fc" id="L101">    return this.internalRepresentation.toLocalDate();</span>
+  }
+
+  /* Utility Methods */
+
+  public static TimePoint fromString(String timeString) {
+<span class="pc bpc" id="L107" title="1 of 2 branches missed.">    if (StringUtils.isBlank(timeString)) {</span>
+<span class="nc" id="L108">      throw new IllegalArgumentException(</span>
+          &quot;Could not parse given Date string: No matching parsers found for string [&quot; + timeString
+              + &quot;] &quot;);
+    }
+
+<span class="fc bfc" id="L113" title="All 2 branches covered.">    for (Entry&lt;Pattern, DateTimeFormatter&gt; entry : DATE_TIME_CONVERTERS.entrySet()) {</span>
+<span class="fc bfc" id="L114" title="All 2 branches covered.">      if (entry.getKey().matcher(timeString).matches()) {</span>
+<span class="fc" id="L115">        return new TimePoint(LocalDateTime.parse(timeString, entry.getValue()));</span>
+      }
+<span class="fc" id="L117">    }</span>
+
+<span class="fc bfc" id="L119" title="All 2 branches covered.">    for (Entry&lt;Pattern, DateTimeFormatter&gt; entry : DATE_CONVERTERS.entrySet()) {</span>
+<span class="fc bfc" id="L120" title="All 2 branches covered.">      if (entry.getKey().matcher(timeString).matches()) {</span>
+<span class="fc" id="L121">        return new TimePoint(LocalDate.parse(timeString, entry.getValue()).atStartOfDay());</span>
+      }
+<span class="fc" id="L123">    }</span>
+<span class="fc" id="L124">    throw new IllegalArgumentException(</span>
+        &quot;Could not parse given Date string: No matching parsers found for string [&quot; + timeString
+            + &quot;] &quot;);
+  }
+
+  public String toString(String pattern) {
+<span class="fc" id="L130">    DateTimeFormatter formatter = DateTimeFormatter</span>
+<span class="fc" id="L131">        .ofPattern(pattern, Locale.FRANCE);</span>
+<span class="fc" id="L132">    return formatter.format(this.toLocalDateTime());</span>
+  }
+
+  public static TimePoint fromDate(Date date) {
+<span class="pc bpc" id="L136" title="1 of 2 branches missed.">    if (date == null) {</span>
+<span class="nc" id="L137">      return null;</span>
+    }
+<span class="fc" id="L139">    LocalDateTime localDateTime = LocalDateTime</span>
+<span class="fc" id="L140">        .ofInstant(date.toInstant(), ZoneId.of(TimeZone.getDefault().getID()));</span>
+<span class="fc" id="L141">    return new TimePoint(localDateTime);</span>
+
+  }
+
+  public static TimePoint fromDateTime(LocalDateTime date) {
+<span class="pc bpc" id="L146" title="1 of 2 branches missed.">    if (date == null) {</span>
+<span class="nc" id="L147">      return null;</span>
+    }
+<span class="fc" id="L149">    return new TimePoint(date);</span>
+
+  }
+
+  public static boolean isBefore(TimePoint toCheck, TimePoint reference) {
+<span class="fc bfc" id="L154" title="All 4 branches covered.">    return toCheck != null &amp;&amp;</span>
+        reference != null &amp;&amp;
+<span class="fc bfc" id="L156" title="All 2 branches covered.">        toCheck.toLocalDateTime().isBefore(reference.toLocalDateTime());</span>
+  }
+
+  public static boolean isBeforeOrEqual(TimePoint toCheck, TimePoint reference) {
+<span class="fc bfc" id="L160" title="All 4 branches covered.">    return isBefore(toCheck, reference) || isEqual(toCheck, reference);</span>
+  }
+
+  private static boolean isEqual(TimePoint toCheck, TimePoint reference) {
+<span class="fc bfc" id="L164" title="All 4 branches covered.">    return toCheck != null &amp;&amp;</span>
+        reference != null &amp;&amp;
+<span class="fc bfc" id="L166" title="All 2 branches covered.">        toCheck.toLocalDateTime().isEqual(reference.toLocalDateTime());</span>
+  }
+
+  public static boolean isSameDate(TimePoint start, TimePoint reference) {
+<span class="fc" id="L170">    LocalDate o1 = start.toLocalDate();</span>
+<span class="fc" id="L171">    LocalDate o2 = reference.toLocalDate();</span>
+<span class="fc" id="L172">    return o1.isEqual(o2);</span>
+  }
+
+  /**
+   * static setter for testing purposes
+   */
+  public static void setTimePointClock(Clock toSet) {
+<span class="fc" id="L179">    clock = toSet;</span>
+<span class="fc" id="L180">  }</span>
+
+  public TimePoint add(int amount, TemporalUnit unit) {
+<span class="nc" id="L183">    LocalDateTime result = LocalDateTime.from(this.toLocalDateTime().plus(amount, unit));</span>
+<span class="nc" id="L184">    return new TimePoint(result);</span>
+  }
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

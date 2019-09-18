@@ -1,4 +1,7 @@
+
 VERSION_NUMBER = ''
+appCode = 'dev'
+intrastructure = 'dev/trambu-infrastructure'
 
 node {
     stage('Pull Sources') {
@@ -7,16 +10,26 @@ node {
     }
 
     stage('Compile') {
-        gw 'clean classes testClasses'
+        dirgw appCode, 'clean classes testClasses'
         milestone()
     }
 
     stage('Unit Tests') {
-        gw 'test jacocoTestReport'
+        dirgw appCode,'test jacocoTestReport'
         junit '**/build/test-results/test/**/*.xml'
         milestone()
     }
 
+    stage('Integration test') {
+        dirgw intrastructure, 'integrationTest'
+        junit '**/build/test-results/integrationTest/**/*.xml'
+    }
+
+}
+def dirgw(directory, goals) {
+    dir(directory) {
+        gw(goals)
+    }
 }
 
 def gw(goals) {

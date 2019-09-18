@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="be.doji.productivity.trambu.infrastructure.converter.LogConverterTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2019-09-18T17:59:36" hostname="Raiko" time="0.113">
+  <properties/>
+  <testcase name="parse_activity" classname="be.doji.productivity.trambu.infrastructure.converter.LogConverterTest" time="0.109"/>
+  <testcase name="parse_toString_noLogpoints" classname="be.doji.productivity.trambu.infrastructure.converter.LogConverterTest" time="0.0"/>
+  <testcase name="parse_endDate" classname="be.doji.productivity.trambu.infrastructure.converter.LogConverterTest" time="0.001"/>
+  <testcase name="parse_endDate_noEnd" classname="be.doji.productivity.trambu.infrastructure.converter.LogConverterTest" time="0.001"/>
+  <testcase name="parse_toString_withReferenceKey" classname="be.doji.productivity.trambu.infrastructure.converter.LogConverterTest" time="0.001"/>
+  <testcase name="parse_startDate" classname="be.doji.productivity.trambu.infrastructure.converter.LogConverterTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

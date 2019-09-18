@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="be.doji.productivity.trambu.domain.activity.ImportanceTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2019-09-18T17:14:49" hostname="Raiko" time="0.013">
+  <properties/>
+  <testcase name="importance_hash" classname="be.doji.productivity.trambu.domain.activity.ImportanceTest" time="0.007"/>
+  <testcase name="importance_compare_transitive" classname="be.doji.productivity.trambu.domain.activity.ImportanceTest" time="0.0"/>
+  <testcase name="importance_compare_identity" classname="be.doji.productivity.trambu.domain.activity.ImportanceTest" time="0.0"/>
+  <testcase name="importance_compare_order" classname="be.doji.productivity.trambu.domain.activity.ImportanceTest" time="0.0"/>
+  <testcase name="importance_equality" classname="be.doji.productivity.trambu.domain.activity.ImportanceTest" time="0.003"/>
+  <testcase name="importance_compare_symmetry" classname="be.doji.productivity.trambu.domain.activity.ImportanceTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

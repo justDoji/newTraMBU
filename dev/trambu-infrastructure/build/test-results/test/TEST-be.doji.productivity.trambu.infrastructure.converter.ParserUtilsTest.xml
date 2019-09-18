@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="be.doji.productivity.trambu.infrastructure.converter.ParserUtilsTest" tests="19" skipped="0" failures="0" errors="0" timestamp="2019-09-18T17:59:37" hostname="Raiko" time="0.011">
+  <properties/>
+  <testcase name="findAllMatches_withMatches" classname="be.doji.productivity.trambu.infrastructure.converter.ParserUtilsTest" time="0.0"/>
+  <testcase name="escape_empty" classname="be.doji.productivity.trambu.infrastructure.converter.ParserUtilsTest" time="0.0"/>
+  <testcase name="replaceLast_doesntReplace_noMatch" classname="be.doji.productivity.trambu.infrastructure.converter.ParserUtilsTest" time="0.0"/>
+  <testcase name="findAllMatches_nullRegex" classname="be.doji.productivity.trambu.infrastructure.converter.ParserUtilsTest" time="0.001"/>
+  <testcase name="findAllMatches_noMatches" classname="be.doji.productivity.trambu.infrastructure.converter.ParserUtilsTest" time="0.0"/>
+  <testcase name="matches_noMatches" classname="be.doji.productivity.trambu.infrastructure.converter.ParserUtilsTest" time="0.0"/>
+  <testcase name="findFirstMatch_withMatches" classname="be.doji.productivity.trambu.infrastructure.converter.ParserUtilsTest" time="0.0"/>
+  <testcase name="findAllMatches_regexAttack" classname="be.doji.productivity.trambu.infrastructure.converter.ParserUtilsTest" time="0.0"/>
+  <testcase name="matches_withMatches" classname="be.doji.productivity.trambu.infrastructure.converter.ParserUtilsTest" time="0.0"/>
+  <testcase name="escape_default" classname="be.doji.productivity.trambu.infrastructure.converter.ParserUtilsTest" time="0.0"/>
+  <testcase name="replaceFirst_replacesFirstOccurence" classname="be.doji.productivity.trambu.infrastructure.converter.ParserUtilsTest" time="0.0"/>
+  <testcase name="findAllMatches_emptyData" classname="be.doji.productivity.trambu.infrastructure.converter.ParserUtilsTest" time="0.0"/>
+  <testcase name="escape_null" classname="be.doji.productivity.trambu.infrastructure.converter.ParserUtilsTest" time="0.001"/>
+  <testcase name="findAllMatches_emptyRegex" classname="be.doji.productivity.trambu.infrastructure.converter.ParserUtilsTest" time="0.0"/>
+  <testcase name="replaceLast_replacesFirstOccurence" classname="be.doji.productivity.trambu.infrastructure.converter.ParserUtilsTest" time="0.0"/>
+  <testcase name="replaceFirst_doesntReplace_noMatch" classname="be.doji.productivity.trambu.infrastructure.converter.ParserUtilsTest" time="0.0"/>
+  <testcase name="parserUtils_privateConstructor" classname="be.doji.productivity.trambu.infrastructure.converter.ParserUtilsTest" time="0.007"/>
+  <testcase name="findFirstMatch_noMatches" classname="be.doji.productivity.trambu.infrastructure.converter.ParserUtilsTest" time="0.0"/>
+  <testcase name="findAllMatches_nullData" classname="be.doji.productivity.trambu.infrastructure.converter.ParserUtilsTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

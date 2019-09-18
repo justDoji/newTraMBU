@@ -1,0 +1,52 @@
+<html>
+<head>
+<title>be.doji.productivity.trambu.zulma.stories.applicationIsRunning</title>
+<style type="text/css" media="all">
+@import url( "./style/jbehave-core.css" );
+</style>
+</head>
+<body>
+ 
+<script type="syntaxhighlighter" class="brush: xml"><![CDATA[
+<story path="be.doji.productivity.trambu.zulma/stories/applicationIsRunning.story" title="">
+<narrative keyword="Narrative:">
+  <inOrderTo keyword="As a">n EndUser</inOrderTo>
+  <asA keyword="I want to">be able to open the application</asA>
+  <iWantTo keyword="So that">I can start tracking my activities</iWantTo>
+</narrative>
+<scenario keyword="Scenario:" title="Opening TRAMBU">
+<step outcome="failed" keyword="FAILED">When opening TRAMBU<failure>java.lang.AssertionError: Error during test: {}</failure></step>
+<step outcome="notPerformed" keyword="NOT PERFORMED">Then TRAMBU logo is visible</step>
+<failure>java.lang.AssertionError: Error during test: {}
+	at be.doji.productivity.trambu.zulma.features.steps.GeneralSteps.openTrambu(GeneralSteps.java:26)
+	(reflection-invoke)
+	at org.jbehave.core.steps.StepCreator$ParametrisedStep.perform(StepCreator.java:790)
+	at org.jbehave.core.embedder.PerformableTree$FineSoFar.run(PerformableTree.java:349)
+...</failure>
+</scenario>
+</story>
+
+]]></script>
+</body>
+<!--  SyntaxHighlighter resources:  should be included at end of body -->
+<link rel="stylesheet" type="text/css" href="./style/sh-3.0.83/shCore.css"/>
+<link rel="stylesheet" type="text/css" href="./style/sh-3.0.83/shThemeRDark.css"/>
+<script language="javascript" src="./js/sh-3.0.83/shCore.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushBash.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushCss.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushDiff.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushGroovy.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushJava.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushJScript.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushPlain.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushPython.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushRuby.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushScala.js"></script>
+<script language="javascript" src="./js/sh-3.0.83/shBrushXml.js"></script>
+<script language="javascript" src="./js/shBrushBdd.js"></script>
+<script type="text/javascript">
+    SyntaxHighlighter.defaults['gutter'] = false;
+    SyntaxHighlighter.defaults['toolbar'] = false;    
+    SyntaxHighlighter.all();
+</script>
+</html>

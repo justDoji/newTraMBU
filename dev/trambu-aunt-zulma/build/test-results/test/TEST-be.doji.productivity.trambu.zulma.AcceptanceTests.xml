@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="be.doji.productivity.trambu.zulma.AcceptanceTests" tests="0" skipped="0" failures="0" errors="0" timestamp="1970-01-01T00:00:00" hostname="Raiko" time="0.0">
+  <properties/>
+  <system-out><![CDATA[Processing system properties {}
+Using controls EmbedderControls[batch=false,skip=false,generateViewAfterStories=true,ignoreFailureInStories=true,ignoreFailureInView=true,verboseFailures=false,verboseFiltering=false,storyTimeouts=300,threads=1,failOnStoryTimeout=false]
+
+(BeforeStories)
+Running story be.doji.productivity.trambu.zulma/stories/applicationIsRunning.story
+
+(be.doji.productivity.trambu.zulma/stories/applicationIsRunning.story)
+Then TRAMBU logo is visible (NOT PERFORMED)
+
+java.lang.AssertionError: Error during test: {}
+	at be.doji.productivity.trambu.zulma.features.steps.GeneralSteps.openTrambu(GeneralSteps.java:26)
+	(reflection-invoke)
+	at org.jbehave.core.steps.StepCreator$ParametrisedStep.perform(StepCreator.java:790)
+	at org.jbehave.core.embedder.PerformableTree$FineSoFar.run(PerformableTree.java:349)
+...
+
+
+(AfterStories)
+Failed to run batch 
+org.jbehave.core.embedder.PerformableTree$SomethingHappened@138566b9: java.lang.AssertionError: Error during test: {}
+Generating reports view to 'D:\Documents\_development\git\newTraMBU\trambu-aunt-zulma\build\classes\java\jbehave' using formats '[stats, console, html, xml, serenityreporter, junitscenarioreporter]' and view properties '{decorateNonHtml=true}'
+Reports view generated with 2 stories (of which 0 pending) containing 1 scenarios (of which 0 pending)
+Failures in reports view: 1 scenarios failed
+]]></system-out>
+  <system-err><![CDATA[SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
+SLF4J: Defaulting to no-operation (NOP) logger implementation
+SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
+1559737809515	Marionette	INFO	Stopped listening on port 52188
+[Parent 9920, Gecko_IOThread] WARNING: pipe error: 109: file z:/task_1559133213/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 341
+[Child 17076, Chrome_ChildThread] WARNING: pipe error: 109: file z:/task_1559133213/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 341
+[Child 17076, Chrome_ChildThread] WARNING: pipe error: 109: file z:/task_1559133213/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, l[Child 4896, Chrome_ChildThread] WARNING: pipe error: 109: file z:/task_1559133213/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 341
+[Child 4896, Chrome_ChildThread] WARNING: pipe error: 109: file z:/task_1559[Child 17124, Chrome_ChildThread] WARNING: pipe error: 109: file z:/task_1559133213/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 341
+[Child 17124, Chrome_ChildThread] WARNING: pipe error: 109: file z:/task_1559133213/build/src/ipc/chromium/src/chrome/common/ipc_channel_win.cc, line 341
+[GPU 
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+908, Chrome_ChildThread]
+###!!! [Child][MessageChannel::SendAndWait] Error: Channel error: cannot send/recv
+
+]]></system-err>
+</testsuite>

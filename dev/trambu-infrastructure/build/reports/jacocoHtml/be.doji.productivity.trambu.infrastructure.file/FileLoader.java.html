@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FileLoader.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">trambu-infrastructure</a> &gt; <a href="index.source.html" class="el_package">be.doji.productivity.trambu.infrastructure.file</a> &gt; <span class="el_source">FileLoader.java</span></div><h1>FileLoader.java</h1><pre class="source lang-java linenums">/**
+ * TraMBU - an open time management tool
+ *
+ * Copyright (C) 2019  Stijn Dejongh
+ *
+ * This program is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU Affero General Public License as published by the Free Software Foundation, either version 3
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see &lt;https://www.gnu.org/licenses/&gt;.
+ *
+ * For further information on usage, or licensing, contact the author through his github profile:
+ * https://github.com/justDoji
+ */
+package be.doji.productivity.trambu.infrastructure.file;
+
+import be.doji.productivity.trambu.domain.activity.Activity;
+import be.doji.productivity.trambu.infrastructure.converter.ActivityConverter;
+import be.doji.productivity.trambu.infrastructure.converter.ActivityDataConverter;
+import be.doji.productivity.trambu.infrastructure.converter.LogConverter;
+import be.doji.productivity.trambu.infrastructure.repository.ActivityDatabaseRepository;
+import be.doji.productivity.trambu.infrastructure.transfer.ActivityData;
+import be.doji.productivity.trambu.infrastructure.transfer.LogPointData;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
+public class FileLoader {
+
+  private static final String ERROR_LOADING_FILE = &quot;Error while loading timelog file&quot;;
+<span class="fc" id="L45">  private static final Logger LOG = LoggerFactory.getLogger(FileLoader.class);</span>
+
+  private final ActivityDatabaseRepository activityDatabaseRepository;
+  private final LogConverter logConverter;
+  private final ActivityDataConverter dataConverter;
+  private final ActivityConverter activityConverter;
+
+
+  public FileLoader(@Autowired ActivityDatabaseRepository activityDatabaseRepository,
+      @Autowired LogConverter logConverter,
+      @Autowired ActivityDataConverter converter,
+<span class="fc" id="L56">      @Autowired ActivityConverter activityConverter) {</span>
+<span class="fc" id="L57">    this.activityDatabaseRepository = activityDatabaseRepository;</span>
+<span class="fc" id="L58">    this.logConverter = logConverter;</span>
+<span class="fc" id="L59">    this.dataConverter = converter;</span>
+<span class="fc" id="L60">    this.activityConverter = activityConverter;</span>
+<span class="fc" id="L61">  }</span>
+
+  public void loadTodoFileActivities(File file) throws IOException {
+<span class="nc" id="L64">    loadTodoFileActivities(file.toPath());</span>
+<span class="nc" id="L65">  }</span>
+
+  private void loadTodoFileActivities(Path path) throws IOException {
+<span class="nc" id="L68">    throwErrorIfFileDoesNotExist(path.toFile(), ERROR_LOADING_FILE);</span>
+
+<span class="nc" id="L70">    activityDatabaseRepository.deleteAll();</span>
+<span class="nc" id="L71">    List&lt;String&gt; todoFileLines = Files.readAllLines(path);</span>
+<span class="nc bnc" id="L72" title="All 2 branches missed.">    for (String line : todoFileLines) {</span>
+<span class="nc" id="L73">      Activity parsedActivity = activityConverter.parse(line);</span>
+
+<span class="nc" id="L75">      Path commentsFile = path</span>
+<span class="nc" id="L76">          .resolveSibling(parsedActivity.getReferenceKey() + &quot;_comments.txt&quot;);</span>
+<span class="nc bnc" id="L77" title="All 2 branches missed.">      if (commentsFile.toFile().exists()) {</span>
+<span class="nc" id="L78">        parsedActivity.setComments(</span>
+<span class="nc" id="L79">            Files.readAllLines(commentsFile).stream().map(s -&gt; s + System.lineSeparator())</span>
+<span class="nc" id="L80">                .collect(Collectors.joining()));</span>
+      }
+<span class="nc" id="L82">      ActivityData convertedActivityData = dataConverter.parse(parsedActivity);</span>
+<span class="nc" id="L83">      activityDatabaseRepository.save(convertedActivityData);</span>
+<span class="nc" id="L84">    }</span>
+<span class="nc" id="L85">  }</span>
+
+
+  /**
+   * @param file the file containing timelog data
+   * @throws IllegalArgumentException when the file is not found
+   * @throws IOException when a problem occurs reading the file
+   */
+  public void loadTimeLogFile(File file) throws IOException {
+<span class="nc" id="L94">    throwErrorIfFileDoesNotExist(file, ERROR_LOADING_FILE);</span>
+
+<span class="nc bnc" id="L96" title="All 2 branches missed.">    for (String line : Files.readAllLines(file.toPath())) {</span>
+<span class="nc" id="L97">      LogPointData pointData = logConverter.parse(line);</span>
+<span class="nc" id="L98">      pointData.getActivity()</span>
+<span class="nc" id="L99">          .ifPresent(activity -&gt; updateTimePoint(pointData, activity.getReferenceKey()));</span>
+<span class="nc" id="L100">    }</span>
+<span class="nc" id="L101">    LOG.info(&quot;Timelog data loaded.&quot;);</span>
+<span class="nc" id="L102">  }</span>
+
+  private void updateTimePoint(LogPointData pointData, String referenceKey) {
+<span class="nc" id="L105">    Optional&lt;ActivityData&gt; byReferenceKey = activityDatabaseRepository</span>
+<span class="nc" id="L106">        .findByReferenceKey(referenceKey);</span>
+<span class="nc bnc" id="L107" title="All 2 branches missed.">    if (byReferenceKey.isPresent()) {</span>
+<span class="nc" id="L108">      byReferenceKey.get().addTimelog(pointData);</span>
+<span class="nc" id="L109">      activityDatabaseRepository.save(byReferenceKey.get());</span>
+    }
+<span class="nc" id="L111">  }</span>
+
+  private void throwErrorIfFileDoesNotExist(File file, String baseErrorMessage) {
+<span class="nc bnc" id="L114" title="All 2 branches missed.">    if (!file.exists()) {</span>
+<span class="nc" id="L115">      String errorMessage = baseErrorMessage + &quot;: &quot; + file.getName();</span>
+<span class="nc" id="L116">      LOG.error(errorMessage);</span>
+<span class="nc" id="L117">      throw new IllegalArgumentException(errorMessage);</span>
+    }
+<span class="nc" id="L119">  }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

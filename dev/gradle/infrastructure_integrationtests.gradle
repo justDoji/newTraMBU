@@ -1,0 +1,23 @@
+sourceSets {
+    integrationtest {
+        compileClasspath += sourceSets.main.output
+        runtimeClasspath += sourceSets.main.output
+    }
+}
+
+configurations {
+    integrationtestImplementation.extendsFrom testImplementation
+    integrationtestRuntimeOnly.extendsFrom testRuntimeOnly
+}
+
+task integrationTest(type: Test) {
+    description = 'Runs integration tests.'
+    group = 'verification'
+
+    testClassesDirs = sourceSets.integrationtest.output.classesDirs
+    classpath = sourceSets.integrationtest.runtimeClasspath
+    shouldRunAfter test
+    outputs.upToDateWhen {false}
+}
+
+check.dependsOn integrationTest

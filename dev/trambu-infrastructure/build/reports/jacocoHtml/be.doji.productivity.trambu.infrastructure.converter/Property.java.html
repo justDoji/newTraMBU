@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Property.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">trambu-infrastructure</a> &gt; <a href="index.source.html" class="el_package">be.doji.productivity.trambu.infrastructure.converter</a> &gt; <span class="el_source">Property.java</span></div><h1>Property.java</h1><pre class="source lang-java linenums">/**
+ * TraMBU - an open time management tool
+ *
+ *     Copyright (C) 2019  Stijn Dejongh
+ *
+ *     This program is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU Affero General Public License as
+ *     published by the Free Software Foundation, either version 3 of the
+ *     License, or (at your option) any later version.
+ *
+ *     This program is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU Affero General Public License for more details.
+ *
+ *     You should have received a copy of the GNU Affero General Public License
+ *     along with this program.  If not, see &lt;https://www.gnu.org/licenses/&gt;.
+ *
+ *     For further information on usage, or licensing, contact the author
+ *     through his github profile: https://github.com/justDoji
+ */
+package be.doji.productivity.trambu.infrastructure.converter;
+
+import static be.doji.productivity.trambu.domain.time.TimePoint.LEGACY_DATE_TIME_PATTERN;
+
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
+
+final class Property {
+
+  /*Utility classes should not have a public or default constructor */
+<span class="nc" id="L32">  private Property() {</span>
+<span class="nc" id="L33">    throw new UnsupportedOperationException();</span>
+  }
+
+<span class="fc" id="L36">  public static final DateTimeFormatter LEGACY_FORMATTER = DateTimeFormatter</span>
+<span class="fc" id="L37">      .ofPattern(LEGACY_DATE_TIME_PATTERN, Locale.FRANCE);</span>
+
+  final class Regex {
+
+    /*Utility classes should not have a public or default constructor */
+<span class="nc" id="L42">    private Regex() {</span>
+<span class="nc" id="L43">      throw new UnsupportedOperationException();</span>
+    }
+
+    static final String DATE = &quot;[0-9\\-\\:\\.]*&quot;;
+    static final String ANYTHING = &quot;(.*?)&quot;;
+
+    static final String TERMINATOR = &quot;(\\s|$)&quot;;
+    static final String GROUP_START = &quot;\\&quot; + Indicator.GROUP_START;
+    static final String GROUP_END = &quot;\\&quot; + Indicator.GROUP_END;
+
+    static final String COMPLETED = &quot;^[&quot; + Indicator.DONE + Indicator.DONE_UPPERCASE + &quot;]&quot;;
+
+    static final String TITLE = GROUP_START
+        + ANYTHING
+        + GROUP_END
+        + TERMINATOR;
+    static final String DEADLINE = Indicator.DEADLINE
+        + DATE
+        + TERMINATOR;
+    static final String TAG = &quot;\\&quot; + Indicator.TAG
+        + GROUP_START
+        + ANYTHING
+        + GROUP_END
+        + TERMINATOR;
+
+    static final String PROJECT = &quot;\\&quot; + Indicator.PROJECT
+        + GROUP_START
+        + ANYTHING
+        + GROUP_END
+        + TERMINATOR;
+
+    static final String REFERENCE_KEY = Indicator.REFERENCE_KEY
+        + GROUP_START
+        + &quot;.{8}-.{4}-.{4}-.{4}-.{12}&quot;
+        + GROUP_END
+        + TERMINATOR;
+
+
+    static final String LOGPOINT_START = Indicator.LOGPOINT_START + DATE + TERMINATOR;
+    static final String LOGPOINT_END = Indicator.LOGPOINT_END + DATE + TERMINATOR;
+    static final String LOGPOINT_ACTIVITY = Indicator.LOGPOINT_ACTIVITY + ANYTHING + TERMINATOR;
+  }
+
+  final class Indicator {
+
+
+    /*Utility classes should not have a public or default constructor */
+<span class="nc" id="L90">    private Indicator() {</span>
+<span class="nc" id="L91">      throw new UnsupportedOperationException();</span>
+    }
+
+    static final String DONE = &quot;x&quot;;
+    static final String DONE_UPPERCASE = &quot;X&quot;;
+    static final String GROUP_START = &quot;[&quot;;
+    static final String GROUP_END = &quot;]&quot;;
+    static final String PROJECT = &quot;+&quot;;
+    static final String TAG = &quot;@&quot;;
+    static final String DEADLINE = &quot;due:&quot;;
+    static final String REFERENCE_KEY = &quot;uuid:&quot;;
+
+    static final String LOGPOINT_ACTIVITY = &quot;ACTIVITY:&quot;;
+    static final String LOGPOINT_START = &quot;STARTTIME:&quot;;
+    static final String LOGPOINT_END = &quot;ENDTIME:&quot;;
+
+  }
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    TraMBU - an open time management tool
+
+        Copyright (C) 2019  Stijn Dejongh
+
+        This program is free software: you can redistribute it and/or modify
+        it under the terms of the GNU Affero General Public License as
+        published by the Free Software Foundation, either version 3 of the
+        License, or (at your option) any later version.
+
+        This program is distributed in the hope that it will be useful,
+        but WITHOUT ANY WARRANTY; without even the implied warranty of
+        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+        GNU Affero General Public License for more details.
+
+        You should have received a copy of the GNU Affero General Public License
+        along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+        For further information on usage, or licensing, contact the author
+        through his github profile: https://github.com/justDoji
+
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+>
+<h:head>
+    <title>TraMBU: activity and time tracking</title>
+    <meta http-equiv="Content-Type" content="application/xhtml+xml;charset=utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="description"
+          content="TraMBU is a Java powered time-management tool, that allows users to track their activities using open formats to represent data."/>
+    <meta name="keywords"
+          content=""/>
+    <meta name="author" content="Stijn Dejongh"/>
+    <meta name="robots" content="index, follow"/>
+    <meta name="revisit-after" content="7 days"/>
+    <meta name="DISTRIBUTION" content="GLOBAL"/>
+    <meta http-equiv="PRAGMA" content="NO-CACHE"/>
+    <meta http-equiv="Expires" content="604800"/>
+    <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.png"/>
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"/>
+
+    <script type="text/javascript">
+      //<![CDATA[
+      function dateTemplateFunc(date) {
+        return '<span style="background-color:' + ((date.day < 21 && date.day > 10) ? '#81C784'
+            : 'inherit')
+            + ';border-radius:50%;padding: .25em;width: 1.75em; height:1.75em; display:block;">'
+            + date.day + '</span>';
+      }
+
+      //]]>
+    </script>
+</h:head>
+
+<h:body styleClass="body" >
+
+
+
+
+    <f:view>
+
+        <div class="header">
+            <div class="navbar-inner">
+                <div class="logo">
+                    <span class="logo-text">TRAMBU</span>
+                    <div class="logo-image"/>
+
+                </div>
+                <span class="divider"/>
+                <div class="navbar-element">
+
+                </div>
+                <!--Menu goes here-->
+                <ui:insert name="menu"/>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="container">
+                <ui:insert name="content"/>
+            </div>
+        </div>
+
+        <div class="page-footer">
+            <div class="footer">
+                <div class="versionInformation">
+                    <strong>TraMBU v2</strong> - <a
+                        href="https://www.gnu.org/licenses/agpl-3.0.en.html"
+                        target="_blank">Licensed under the AGPL version 3</a><br/>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-links-container">
+                        <div class="footer-link"><a href="https://github.com/justDoji/newTraMBU"
+                                                    target="_blank">TRAMBU Source Code</a></div>
+                        <div class="footer-link"><a href="http://www.doji.be"
+                                                    target="_blank">Doji's Personal Website</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </f:view>
+</h:body>
+</html>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="be.doji.productivity.trambu.infrastructure.converter.PropertyTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2019-09-18T17:59:37" hostname="Raiko" time="0.002">
+  <properties/>
+  <testcase name="property_privateConstructor" classname="be.doji.productivity.trambu.infrastructure.converter.PropertyTest" time="0.001"/>
+  <testcase name="regex_privateConstructor" classname="be.doji.productivity.trambu.infrastructure.converter.PropertyTest" time="0.001"/>
+  <testcase name="indicator_privateConstructor" classname="be.doji.productivity.trambu.infrastructure.converter.PropertyTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

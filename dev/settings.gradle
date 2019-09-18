@@ -1,0 +1,20 @@
+// Workaround for se.transmode.gradle plugin issue
+// https://github.com/Transmode/gradle-docker/issues/103
+pluginManagement {
+    resolutionStrategy {
+        eachPlugin {
+            if ('se.transmode.gradle-docker' == requested.id.id) {
+                useModule "se.transmode.gradle:gradle-docker:$requested.version"
+            }
+        }
+    }
+    repositories {
+        gradlePluginPortal()
+        mavenCentral()
+        jcenter()
+    }
+}
+
+rootProject.name = 'newTraMBU'
+include 'trambu-domain', 'trambu-infrastructure', 'trambu-front'
+

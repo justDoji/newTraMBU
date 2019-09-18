@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ActivityModelConverter.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">trambu-front</a> &gt; <a href="index.source.html" class="el_package">be.doji.productivity.trambu.front.converter</a> &gt; <span class="el_source">ActivityModelConverter.java</span></div><h1>ActivityModelConverter.java</h1><pre class="source lang-java linenums">/**
+ * TraMBU - an open time management tool
+ *
+ * Copyright (C) 2019  Stijn Dejongh
+ *
+ * This program is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU Affero General Public License as published by the Free Software Foundation, either version 3
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see &lt;https://www.gnu.org/licenses/&gt;.
+ *
+ * For further information on usage, or licensing, contact the author through his github profile:
+ * https://github.com/justDoji
+ */
+package be.doji.productivity.trambu.front.converter;
+
+import static be.doji.productivity.trambu.domain.time.TimePoint.EXTENDED_DATE_TIME_PATTERN;
+
+import be.doji.productivity.trambu.domain.activity.Activity;
+import be.doji.productivity.trambu.domain.time.TimePoint;
+import be.doji.productivity.trambu.front.model.ActivityModel;
+import be.doji.productivity.trambu.front.model.TimeLogModel;
+import be.doji.productivity.trambu.infrastructure.converter.ActivityDataConverter;
+import be.doji.productivity.trambu.infrastructure.converter.Converter;
+import be.doji.productivity.trambu.infrastructure.transfer.ActivityData;
+import be.doji.productivity.trambu.infrastructure.transfer.LogPointData;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
+public class ActivityModelConverter {
+
+  private final TimeLogConverter logConverter;
+  private final ActivityDataConverter dataConverter;
+
+  @SuppressWarnings(&quot;SpringJavaInjectionPointsAutowiringInspection&quot;)
+  public ActivityModelConverter(@Autowired ActivityDataConverter dataConverter, @Autowired
+<span class="fc" id="L48">      TimeLogConverter logConverter) {</span>
+<span class="fc" id="L49">    this.dataConverter = dataConverter;</span>
+<span class="fc" id="L50">    this.logConverter = logConverter;</span>
+
+<span class="fc" id="L52">  }</span>
+
+  public ActivityModel parse(ActivityData db) {
+<span class="fc" id="L55">    ActivityModel activityModel = parse(dataConverter.parse(db));</span>
+
+<span class="fc bfc" id="L57" title="All 2 branches covered.">    for (LogPointData logpoint : db.getTimelogs()) {</span>
+<span class="fc" id="L58">      activityModel.addTimeLog(logConverter.parse(logpoint));</span>
+<span class="fc" id="L59">    }</span>
+
+<span class="fc" id="L61">    return activityModel;</span>
+  }
+
+  public ActivityData toDatabase(ActivityModel activityModel) {
+<span class="fc" id="L65">    Activity activity = ActivityModelConverter.toDomain(activityModel);</span>
+<span class="fc" id="L66">    ActivityData activityData = dataConverter.parse(activity);</span>
+<span class="pc bpc" id="L67" title="1 of 2 branches missed.">    if (activityModel.getReferenceKey() != null) {</span>
+<span class="fc" id="L68">      activityData.setReferenceKey(activityModel.getReferenceKey());</span>
+    }
+<span class="fc" id="L70">    activityData.setTimelogs(parseTimelogs(activityModel.getTimelogs()));</span>
+
+<span class="fc" id="L72">    return activityData;</span>
+  }
+
+  private List&lt;LogPointData&gt; parseTimelogs(List&lt;TimeLogModel&gt; timelogs) {
+<span class="fc" id="L76">    List&lt;LogPointData&gt; logPointData = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L77" title="All 2 branches covered.">    for (TimeLogModel log : timelogs) {</span>
+<span class="fc" id="L78">      logPointData.add(new LogPointData(logConverter.getDateFormat().format(log.getStart()),</span>
+<span class="fc bfc" id="L79" title="All 2 branches covered.">          log.getEnd() == null ? null :</span>
+<span class="fc" id="L80">              logConverter.getDateFormat().format(log.getEnd())));</span>
+<span class="fc" id="L81">    }</span>
+<span class="fc" id="L82">    return logPointData;</span>
+  }
+
+  private class ActivityToActivityModelConverter extends Converter&lt;Activity, ActivityModel&gt; {
+
+<span class="fc" id="L87">    ActivityToActivityModelConverter(Activity source) {</span>
+<span class="fc" id="L88">      super(source, ActivityModel.class);</span>
+<span class="fc" id="L89">    }</span>
+  }
+
+  public ActivityModel parse(Activity activity) {
+
+<span class="fc" id="L94">    return new ActivityToActivityModelConverter(activity)</span>
+<span class="fc" id="L95">        .conversionStep(Activity::getTitle, ActivityModel::setTitle)</span>
+<span class="fc" id="L96">        .conversionStep(this::parseDeadline, ActivityModel::setDeadline)</span>
+<span class="fc" id="L97">        .conversionStep(Activity::isCompleted, ActivityModel::setCompleted)</span>
+<span class="fc" id="L98">        .conversionStep(Activity::getTags, ActivityModel::setTags)</span>
+<span class="fc" id="L99">        .conversionStep(Activity::getProjects, ActivityModel::setProjects)</span>
+<span class="fc" id="L100">        .conversionStep(Activity::getReferenceKey, ActivityModel::setReferenceKey)</span>
+<span class="fc" id="L101">        .conversionStep(Activity::getComments, ActivityModel::setComments)</span>
+<span class="fc" id="L102">        .getConvertedData();</span>
+  }
+
+  private Date parseDeadline(Activity activity) {
+<span class="fc" id="L106">    return activity.getDeadline().map(timePoint -&gt; timePoint.toString(EXTENDED_DATE_TIME_PATTERN))</span>
+<span class="fc" id="L107">        .map(this::mapStringToDate)</span>
+<span class="fc" id="L108">        .orElse(null);</span>
+  }
+
+  private Date mapStringToDate(String s) {
+    try {
+<span class="fc" id="L113">      SimpleDateFormat simpleDateFormat = new SimpleDateFormat(EXTENDED_DATE_TIME_PATTERN);</span>
+<span class="fc" id="L114">      return simpleDateFormat.parse(s);</span>
+<span class="nc" id="L115">    } catch (ParseException e) {</span>
+<span class="nc" id="L116">      return null;</span>
+    }
+  }
+
+  private static String mapDateToString(Date d) {
+<span class="pc bpc" id="L121" title="1 of 2 branches missed.">    if (d == null) {</span>
+<span class="nc" id="L122">      return null;</span>
+    }
+
+<span class="fc" id="L125">    SimpleDateFormat simpleDateFormat = new SimpleDateFormat(EXTENDED_DATE_TIME_PATTERN);</span>
+<span class="fc" id="L126">    return simpleDateFormat.format(d);</span>
+  }
+
+
+  private static class ActivityModelToActivityConverter extends Converter&lt;ActivityModel, Activity&gt; {
+
+    ActivityModelToActivityConverter(ActivityModel source) {
+<span class="fc" id="L133">      super(source, Activity.class);</span>
+<span class="fc" id="L134">    }</span>
+  }
+
+  public static Activity toDomain(ActivityModel model) {
+<span class="fc" id="L138">    return new ActivityModelToActivityConverter(model)</span>
+<span class="fc" id="L139">        .conversionStep(ActivityModel::getTitle, Activity::setTitle)</span>
+<span class="fc" id="L140">        .conversionStep(ActivityModel::isCompleted, Activity::setCompleted)</span>
+<span class="fc" id="L141">        .conversionStep(ActivityModelConverter::mapDeadline, Activity::setDeadline)</span>
+<span class="fc" id="L142">        .conversionStep(ActivityModel::getTags, Activity::setTags)</span>
+<span class="fc" id="L143">        .conversionStep(ActivityModel::getProjects, Activity::setProjects)</span>
+<span class="fc" id="L144">        .conversionStep(ActivityModel::getComments, Activity::setComments)</span>
+<span class="fc" id="L145">        .getConvertedData();</span>
+  }
+
+  private static TimePoint mapDeadline(ActivityModel activityModel) {
+<span class="fc" id="L149">    Date deadline = activityModel.getDeadline();</span>
+<span class="fc bfc" id="L150" title="All 2 branches covered.">    if (deadline == null) {</span>
+<span class="fc" id="L151">      return null;</span>
+    }
+<span class="fc" id="L153">    return TimePoint.fromString(mapDateToString(deadline));</span>
+  }
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

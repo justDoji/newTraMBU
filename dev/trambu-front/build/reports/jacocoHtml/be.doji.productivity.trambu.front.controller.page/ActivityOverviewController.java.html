@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ActivityOverviewController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">trambu-front</a> &gt; <a href="index.source.html" class="el_package">be.doji.productivity.trambu.front.controller.page</a> &gt; <span class="el_source">ActivityOverviewController.java</span></div><h1>ActivityOverviewController.java</h1><pre class="source lang-java linenums">/**
+ * TraMBU - an open time management tool
+ *
+ * Copyright (C) 2019  Stijn Dejongh
+ *
+ * This program is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU Affero General Public License as published by the Free Software Foundation, either version 3
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see &lt;https://www.gnu.org/licenses/&gt;.
+ *
+ * For further information on usage, or licensing, contact the author through his github profile:
+ * https://github.com/justDoji
+ */
+package be.doji.productivity.trambu.front.controller.page;
+
+import be.doji.productivity.trambu.front.calculator.TimeSpentCalculator;
+import be.doji.productivity.trambu.front.controller.exception.InvalidReferenceException;
+import be.doji.productivity.trambu.front.controller.state.ActivityModelContainer;
+import be.doji.productivity.trambu.front.filter.FilterChain;
+import be.doji.productivity.trambu.front.model.ActivityModel;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+import javax.inject.Inject;
+import javax.inject.Named;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.context.annotation.SessionScope;
+
+@SessionScope
+@Named
+public class ActivityOverviewController {
+
+<span class="fc" id="L47">  private static final Logger LOG = LoggerFactory.getLogger(ActivityOverviewController.class);</span>
+  public static final String FILTER_TYPE_PROJECT = &quot;Project&quot;;
+  public static final String FILTER_TYPE_TAG = &quot;Tag&quot;;
+  public static final String FILTER_TYPE_STATUS = &quot;Status&quot;;
+  private final ActivityModelContainer activityContainer;
+<span class="fc" id="L52">  private final FilterChain&lt;ActivityModel&gt; filterchain = new FilterChain&lt;&gt;();</span>
+
+  private boolean autotracking;
+
+  @SuppressWarnings({&quot;CdiInjectionPointsInspection&quot;})
+  @Inject
+<span class="fc" id="L58">  ActivityOverviewController(@Autowired ActivityModelContainer activityContainer) {</span>
+<span class="fc" id="L59">    this.activityContainer = activityContainer;</span>
+<span class="fc" id="L60">  }</span>
+
+  public void toggleEditable(String activityKey) {
+<span class="fc" id="L63">    ActivityModel toToggle = activityContainer.getActivity(activityKey);</span>
+<span class="fc" id="L64">    boolean editable = toToggle.isEditable();</span>
+
+<span class="fc bfc" id="L66" title="All 2 branches covered.">    if (toToggle.isEditable()) {</span>
+<span class="fc" id="L67">      activityContainer.saveActivities();</span>
+    }
+
+<span class="fc bfc" id="L70" title="All 2 branches covered.">    toToggle.setEditable(!editable);</span>
+<span class="fc" id="L71">  }</span>
+
+  public void toggleSaveAll() {
+<span class="nc" id="L74">    activityContainer.saveActivities();</span>
+<span class="nc" id="L75">  }</span>
+
+  public void doNothing() {
+    //Quick fix to disable default form behaviour
+<span class="nc" id="L79">  }</span>
+
+  public void toggleExpanded(String activityKey) {
+<span class="fc" id="L82">    ActivityModel toToggle = activityContainer.getActivity(activityKey);</span>
+<span class="fc bfc" id="L83" title="All 2 branches covered.">    toToggle.setExpanded(!toToggle.isExpanded());</span>
+
+<span class="fc bfc" id="L85" title="All 2 branches covered.">    if (isAutotracking()) {</span>
+<span class="fc" id="L86">      LOG.debug(&quot;Autotrack for activity: {}&quot;, toToggle.getTitle());</span>
+<span class="fc" id="L87">      toggleTimelog(toToggle);</span>
+    }
+<span class="fc" id="L89">  }</span>
+
+  public void toggleCompleted(String activityKey) {
+<span class="fc" id="L92">    ActivityModel toToggle = activityContainer.getActivity(activityKey);</span>
+<span class="pc bpc" id="L93" title="1 of 2 branches missed.">    toToggle.setCompleted(!toToggle.isCompleted());</span>
+<span class="fc" id="L94">    activityContainer.saveActivities();</span>
+<span class="fc" id="L95">  }</span>
+
+  public String createActivity() {
+
+<span class="fc" id="L99">    String activityKey = activityContainer.createActivity();</span>
+<span class="fc" id="L100">    toggleEditable(activityKey);</span>
+<span class="fc" id="L101">    toggleExpanded(activityKey);</span>
+<span class="fc" id="L102">    return activityKey;</span>
+  }
+
+  public void deleteActivity(String activityKey) {
+    try {
+<span class="fc" id="L107">      activityContainer.deleteActivity(activityKey);</span>
+<span class="nc" id="L108">    } catch (InvalidReferenceException e) {</span>
+<span class="nc" id="L109">      String message = &quot;An error occured while deleting an activity&quot;;</span>
+<span class="nc" id="L110">      LOG.error(message);</span>
+<span class="nc" id="L111">      showMessage(message);</span>
+<span class="fc" id="L112">    }</span>
+<span class="fc" id="L113">  }</span>
+
+  private List&lt;String&gt; reduceStrings(List&lt;String&gt; strings, List&lt;String&gt; strings2) {
+<span class="fc" id="L116">    Set&lt;String&gt; result = new HashSet&lt;&gt;();</span>
+<span class="fc" id="L117">    result.addAll(strings);</span>
+<span class="fc" id="L118">    result.addAll(strings2);</span>
+<span class="fc" id="L119">    return new ArrayList&lt;&gt;(result);</span>
+  }
+
+
+  private void showMessage(String message) {
+<span class="nc" id="L124">    FacesContext context = FacesContext.getCurrentInstance();</span>
+
+<span class="nc bnc" id="L126" title="All 2 branches missed.">    if (context != null) {</span>
+<span class="nc" id="L127">      context.addMessage(null, new FacesMessage(&quot;Info&quot;, message));</span>
+    }
+<span class="nc" id="L129">  }</span>
+
+  public void toggleTimelog(ActivityModel model) {
+<span class="fc" id="L132">    ActivityModel toUpdate = activityContainer.getActivity(model.getReferenceKey());</span>
+<span class="fc" id="L133">    toUpdate.toggleTimeLog();</span>
+<span class="fc" id="L134">    activityContainer.saveActivities();</span>
+<span class="fc" id="L135">  }</span>
+
+  public boolean isAutotracking() {
+<span class="fc" id="L138">    return autotracking;</span>
+  }
+
+  public void setAutotracking(boolean autotracking) {
+<span class="nc" id="L142">    LOG.debug(&quot;autotrack setter: {}&quot;, autotracking);</span>
+<span class="nc" id="L143">    this.autotracking = autotracking;</span>
+<span class="nc" id="L144">  }</span>
+
+  public void toggleAutotrack() {
+<span class="fc" id="L147">    LOG.debug(&quot;Toggle autotrack&quot;);</span>
+<span class="pc bpc" id="L148" title="1 of 2 branches missed.">    this.autotracking = !this.autotracking;</span>
+<span class="fc" id="L149">  }</span>
+
+  public String hoursSpentTotal(String referenceKey) {
+<span class="fc" id="L152">    return TimeSpentCalculator.hoursSpentTotal(activityContainer.getActivity(referenceKey));</span>
+  }
+
+  public String hoursSpentToday(String referenceKey) {
+<span class="fc" id="L156">    return TimeSpentCalculator.hoursSpentToday(activityContainer.getActivity(referenceKey));</span>
+  }
+
+  public List&lt;ActivityModel&gt; getFilteredActivities() {
+<span class="fc" id="L160">    return filterchain.getFilteredData(activityContainer.getActivities());</span>
+  }
+
+  public void addTagFilter(String tagToInclude) {
+<span class="fc" id="L164">    this.filterchain</span>
+<span class="fc" id="L165">        .addPositiveFiler(tagToInclude, ActivityModel::getTags,</span>
+<span class="fc" id="L166">            tags -&gt; tags.contains(tagToInclude), FILTER_TYPE_TAG);</span>
+<span class="fc" id="L167">  }</span>
+
+  public void addStatusFilter(String status) {
+<span class="fc" id="L170">    this.filterchain</span>
+<span class="fc" id="L171">        .addPositiveFiler(status, ActivityModel::getWrappedStatus,</span>
+<span class="fc" id="L172">            statusses -&gt; statusses.contains(status), FILTER_TYPE_STATUS);</span>
+<span class="fc" id="L173">  }</span>
+
+  public void addProjectFilter(String projectToInclude) {
+<span class="fc" id="L176">    this.filterchain</span>
+<span class="fc" id="L177">        .addPositiveFiler(projectToInclude, ActivityModel::getProjects,</span>
+<span class="fc" id="L178">            projects -&gt; projects.contains(projectToInclude), FILTER_TYPE_PROJECT);</span>
+<span class="fc" id="L179">  }</span>
+
+  public FilterChain&lt;ActivityModel&gt; getFilterchain() {
+<span class="fc" id="L182">    return filterchain;</span>
+  }
+
+  public void resetFilter() {
+<span class="fc" id="L186">    this.filterchain.reset();</span>
+<span class="fc" id="L187">  }</span>
+
+  public List&lt;String&gt; getFilterOptionsForStatus() {
+<span class="nc" id="L190">    return getOpenFilterOptionsForType(ActivityModel::getWrappedStatus,</span>
+        FILTER_TYPE_STATUS);
+  }
+
+  public List&lt;String&gt; getFilterOptionsForProjects() {
+<span class="fc" id="L195">    return getOpenFilterOptionsForType(ActivityModel::getProjects,</span>
+        FILTER_TYPE_PROJECT);
+  }
+
+  public List&lt;String&gt; getFilterOptionsForTags() {
+<span class="fc" id="L200">    return getOpenFilterOptionsForType(ActivityModel::getTags,</span>
+        FILTER_TYPE_TAG);
+  }
+
+  private List&lt;String&gt; getOpenFilterOptionsForType(Function&lt;ActivityModel, List&lt;String&gt;&gt; getter,
+      String type) {
+<span class="fc" id="L206">    List&lt;String&gt; collect = getValuesFor(this.getFilteredActivities(), getter)</span>
+<span class="fc" id="L207">        .orElse(new ArrayList&lt;&gt;()).stream()</span>
+<span class="fc bfc" id="L208" title="All 2 branches covered.">        .filter(o -&gt; !filterchain.containsFilter(o, type))</span>
+<span class="fc" id="L209">        .collect(</span>
+<span class="fc" id="L210">            Collectors.toList());</span>
+<span class="fc" id="L211">    collect.sort(String.CASE_INSENSITIVE_ORDER);</span>
+<span class="fc" id="L212">    return collect;</span>
+  }
+
+  public List&lt;String&gt; completeTags(String query) {
+<span class="fc" id="L216">    return getCompletionOptions(query, ActivityModel::getTags);</span>
+  }
+
+  public List&lt;String&gt; completeProjects(String query) {
+<span class="fc" id="L220">    return getCompletionOptions(query, ActivityModel::getProjects);</span>
+  }
+
+  private List&lt;String&gt; getCompletionOptions(String query,
+      Function&lt;ActivityModel, List&lt;String&gt;&gt; getter) {
+<span class="fc" id="L225">    Optional&lt;List&lt;String&gt;&gt; reducedValues = getValuesFor(activityContainer.getActivities(), getter);</span>
+<span class="fc" id="L226">    List&lt;String&gt; options = reducedValues.orElse(new ArrayList&lt;&gt;());</span>
+
+<span class="fc" id="L228">    Set&lt;String&gt; returnOptions = new HashSet&lt;&gt;();</span>
+<span class="fc" id="L229">    returnOptions.add(query);</span>
+<span class="fc bfc" id="L230" title="All 2 branches covered.">    for (String option : options) {</span>
+<span class="fc bfc" id="L231" title="All 2 branches covered.">      if (option.toLowerCase().contains(query.toLowerCase())) {</span>
+<span class="fc" id="L232">        returnOptions.add(option);</span>
+      }
+<span class="fc" id="L234">    }</span>
+<span class="fc" id="L235">    return new ArrayList&lt;&gt;(returnOptions);</span>
+  }
+
+  private Optional&lt;List&lt;String&gt;&gt; getValuesFor(List&lt;ActivityModel&gt; toCheck,
+      Function&lt;ActivityModel, List&lt;String&gt;&gt; getter) {
+<span class="fc" id="L240">    Optional&lt;List&lt;String&gt;&gt; reduce = toCheck.stream().map(getter)</span>
+<span class="fc" id="L241">        .reduce(this::reduceStrings);</span>
+<span class="fc" id="L242">    reduce.ifPresent(strings -&gt; strings.sort(String.CASE_INSENSITIVE_ORDER));</span>
+<span class="fc" id="L243">    return reduce;</span>
+  }
+
+  public long getAmountOfMatchesForFilter(String toFilter, String type) {
+<span class="fc" id="L247">    addFilter(toFilter, type);</span>
+<span class="fc" id="L248">    long amountOfMatchersForFilter = filterchain</span>
+<span class="fc" id="L249">        .getAmountOfMatchersForFilter(toFilter, type, activityContainer.getActivities());</span>
+<span class="fc" id="L250">    filterchain</span>
+<span class="fc" id="L251">        .getFilter(toFilter, type).ifPresent(filterchain::removeFilter);</span>
+<span class="fc" id="L252">    return amountOfMatchersForFilter;</span>
+  }
+
+  public void addFilter(String toFilter, String type) {
+<span class="pc bpc" id="L256" title="2 of 4 branches missed.">    switch (type) {</span>
+      case FILTER_TYPE_TAG:
+<span class="fc" id="L258">        addTagFilter(toFilter);</span>
+<span class="fc" id="L259">        break;</span>
+      case FILTER_TYPE_PROJECT:
+<span class="nc" id="L261">        addProjectFilter(toFilter);</span>
+<span class="nc" id="L262">        break;</span>
+      case FILTER_TYPE_STATUS:
+<span class="fc" id="L264">        addStatusFilter(toFilter);</span>
+<span class="fc" id="L265">        break;</span>
+      default:
+        break;
+    }
+<span class="fc" id="L269">  }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

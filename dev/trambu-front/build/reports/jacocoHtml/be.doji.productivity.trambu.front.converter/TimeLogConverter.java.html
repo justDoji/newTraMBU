@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TimeLogConverter.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">trambu-front</a> &gt; <a href="index.source.html" class="el_package">be.doji.productivity.trambu.front.converter</a> &gt; <span class="el_source">TimeLogConverter.java</span></div><h1>TimeLogConverter.java</h1><pre class="source lang-java linenums">/**
+ * TraMBU - an open time management tool
+ *
+ * Copyright (C) 2019  Stijn Dejongh
+ *
+ * This program is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU Affero General Public License as published by the Free Software Foundation, either version 3
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see &lt;https://www.gnu.org/licenses/&gt;.
+ *
+ * For further information on usage, or licensing, contact the author through his github profile:
+ * https://github.com/justDoji
+ */
+package be.doji.productivity.trambu.front.converter;
+
+import be.doji.productivity.trambu.front.model.TimeLogModel;
+import be.doji.productivity.trambu.infrastructure.converter.Converter;
+import be.doji.productivity.trambu.infrastructure.repository.ActivityDatabaseRepository;
+import be.doji.productivity.trambu.infrastructure.transfer.ActivityData;
+import be.doji.productivity.trambu.infrastructure.transfer.LogPointData;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Optional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
+public class TimeLogConverter {
+
+  public static final String LOG_DATE_PATTERN = &quot;yyyy-MM-dd:HH:mm:ss.SSS&quot;;
+  private final SimpleDateFormat dateFormat;
+
+  private final ActivityDatabaseRepository activityRepository;
+
+  @SuppressWarnings(&quot;SpringJavaInjectionPointsAutowiringInspection&quot;)
+<span class="fc" id="L43">  public TimeLogConverter(@Autowired ActivityDatabaseRepository activityDatabaseRepository) {</span>
+<span class="fc" id="L44">    this.activityRepository = activityDatabaseRepository;</span>
+<span class="fc" id="L45">    this.dateFormat = new SimpleDateFormat(LOG_DATE_PATTERN);</span>
+<span class="fc" id="L46">  }</span>
+
+  public SimpleDateFormat getDateFormat() {
+<span class="fc" id="L49">    return this.dateFormat;</span>
+  }
+
+  public TimeLogModel parse(LogPointData data) {
+<span class="fc" id="L53">    return new LogPointDataToModelConverter(data, TimeLogModel.class)</span>
+<span class="fc" id="L54">        .conversionStep(this::mapStart, TimeLogModel::setStart)</span>
+<span class="fc" id="L55">        .conversionStep(this::mapEnd, TimeLogModel::setEnd)</span>
+<span class="fc" id="L56">        .getConvertedData();</span>
+  }
+
+  private Date mapStart(LogPointData data) {
+    try {
+<span class="fc" id="L61">      return dateFormat.parse(data.getStart());</span>
+<span class="nc" id="L62">    } catch (ParseException e) {</span>
+<span class="nc" id="L63">      return null;</span>
+    }
+  }
+
+  private Date mapEnd(LogPointData data) {
+    try {
+<span class="fc" id="L69">      return dateFormat.parse(data.getEnd());</span>
+<span class="nc" id="L70">    } catch (ParseException e) {</span>
+<span class="nc" id="L71">      return null;</span>
+    }
+  }
+
+  public LogPointData parse(TimeLogModel timeLogModel, String referenceKey) {
+
+<span class="fc" id="L77">    LogPointData convertedData = new ModelToLogPointDataConverter(timeLogModel, LogPointData.class)</span>
+<span class="fc" id="L78">        .conversionStep(this::mapStart, LogPointData::setStart)</span>
+<span class="fc" id="L79">        .conversionStep(this::mapEnd, LogPointData::setEnd)</span>
+<span class="fc" id="L80">        .getConvertedData();</span>
+<span class="fc" id="L81">    Optional&lt;ActivityData&gt; activityData = activityRepository.findByReferenceKey(referenceKey);</span>
+<span class="fc" id="L82">    activityData.ifPresent(convertedData::setActivity);</span>
+<span class="fc" id="L83">    return convertedData;</span>
+  }
+
+  private String mapStart(TimeLogModel timeLogModel) {
+<span class="fc" id="L87">    return dateFormat.format(timeLogModel.getStart());</span>
+  }
+
+  private String mapEnd(TimeLogModel timeLogModel) {
+<span class="fc" id="L91">    return dateFormat.format(timeLogModel.getEnd());</span>
+  }
+
+  private class LogPointDataToModelConverter extends Converter&lt;LogPointData, TimeLogModel&gt; {
+
+<span class="fc" id="L96">    public LogPointDataToModelConverter(LogPointData source, Class&lt;TimeLogModel&gt; aClass) {</span>
+<span class="fc" id="L97">      super(source, aClass);</span>
+<span class="fc" id="L98">    }</span>
+  }
+
+  private class ModelToLogPointDataConverter extends Converter&lt;TimeLogModel, LogPointData&gt; {
+
+<span class="fc" id="L103">    public ModelToLogPointDataConverter(TimeLogModel source, Class&lt;LogPointData&gt; aClass) {</span>
+<span class="fc" id="L104">      super(source, aClass);</span>
+<span class="fc" id="L105">    }</span>
+  }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

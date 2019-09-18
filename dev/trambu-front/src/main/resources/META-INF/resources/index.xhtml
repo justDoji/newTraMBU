@@ -1,0 +1,193 @@
+<!--
+
+    TraMBU - an open time management tool
+
+        Copyright (C) 2019  Stijn Dejongh
+
+        This program is free software: you can redistribute it and/or modify
+        it under the terms of the GNU Affero General Public License as
+        published by the Free Software Foundation, either version 3 of the
+        License, or (at your option) any later version.
+
+        This program is distributed in the hope that it will be useful,
+        but WITHOUT ANY WARRANTY; without even the implied warranty of
+        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+        GNU Affero General Public License for more details.
+
+        You should have received a copy of the GNU Affero General Public License
+        along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+        For further information on usage, or licensing, contact the author
+        through his github profile: https://github.com/justDoji
+
+-->
+<ui:composition template="/templates/base.xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:doji="http://xmlns.jcp.org/jsf/composite/doji">
+    <ui:define name="content">
+
+        <div id="topbar" class="topbar">
+            <div class="autotrack">
+                <h:form id="tracking">
+
+                    <p:outputLabel for="autotrack" value="Autotrack" style="margin-right: 5px;"
+                                   styleClass="filter-header"/>
+                    <p:selectBooleanCheckbox id="autotrack"
+                                             value="#{activityOverviewController.autotracking}"
+                                             update="formId, tracking"
+                                             valueChangeListener="#{activityOverviewController.toggleAutotrack}"
+                                             onchange="submit()"
+                    />
+                </h:form>
+            </div>
+            <div id="themeswitcher" class="themeswitcher">
+                <h:form id="themeSwitchForm">
+                    <p:outputLabel for="themeswitch" value="Theme:" styleClass="filter-header"/>
+                    <p:themeSwitcher id="themeswitch" style="width:165px" effect="fade"
+                                     onchange="submit()"
+                                     valueChangeListener="#{themeController.onSwitch}" var="t">
+                        <f:selectItems value="#{themeController.themes}" var="theme"
+                                       itemLabel="#{theme.name}" itemValue="#{theme}"/>
+
+                        <p:column>
+                            <h:graphicImage name="images/themes/#{t}.png" alt="#{t}"
+                                            styleClass="ui-theme" width="65px"/>
+                        </p:column>
+
+                        <p:column>
+                            #{t}
+                        </p:column>
+
+                        <p:ajax listener="#{themeController.onSwitch}"/>
+                    </p:themeSwitcher>
+                </h:form>
+            </div>
+        </div>
+
+        <div class="container-wrapper">
+            <div class="filterSelector" id="filters">
+                <h:form id="filterForm">
+
+                    <span class="filter-header">Status Filters</span>
+                    <!-- Active -->
+                    <ui:repeat
+                            value="#{activityOverviewController.filterchain.getFiltersForType('Status')}"
+                            var="filter">
+                        <p:commandButton value="#{filter.name}"
+                                         id="removeStatusFilter"
+                                         action="#{activityOverviewController.filterchain.removeFilter(filter)}"
+                                         update="formId, filterForm"
+                                         styleClass="active-filter"
+                                         icon="fas fa-minus-circle"/>
+
+                    </ui:repeat>
+
+                    <ui:repeat value="#{activityOverviewController.filterOptionsForStatus}"
+                               var="status">
+                        <p:commandButton
+                                value="#{status} (#{activityOverviewController.getAmountOfMatchesForFilter(status, 'Status')})"
+                                id="statusFilter"
+                                action="#{activityOverviewController.addStatusFilter(status)}"
+                                update="formId, filterForm"
+                                styleClass="filter"
+                                icon="fas fa-filter"/>
+                    </ui:repeat>
+
+                    <hr/>
+
+                    <span class="filter-header">Project Filters</span>
+                    <!-- Active -->
+                    <ui:repeat
+                            value="#{activityOverviewController.filterchain.getFiltersForType('Project')}"
+                            var="filter">
+                        <p:commandButton value="#{filter.name}"
+                                         id="removeProjectFilter"
+                                         action="#{activityOverviewController.filterchain.removeFilter(filter)}"
+                                         update="formId, filterForm"
+                                         styleClass="active-filter"
+                                         icon="fas fa-minus-circle"/>
+                    </ui:repeat>
+
+                    <ui:repeat value="#{activityOverviewController.filterOptionsForProjects}"
+                               var="project">
+                        <p:commandButton
+                                value="#{project} (#{activityOverviewController.getAmountOfMatchesForFilter(project, 'Project')})"
+                                id="projectFilter"
+                                action="#{activityOverviewController.addProjectFilter(project)}"
+                                update="formId, filterForm"
+                                styleClass="filter"
+                                icon="fas fa-filter"/>
+                    </ui:repeat>
+
+                    <hr/>
+
+                    <span class="filter-header">Tag Filters</span>
+                    <!-- Active -->
+                    <ui:repeat
+                            value="#{activityOverviewController.filterchain.getFiltersForType('Tag')}"
+                            var="filter">
+                        <p:commandButton value="#{filter.name}"
+                                         id="removeTagFilter"
+                                         action="#{activityOverviewController.filterchain.removeFilter(filter)}"
+                                         update="formId, filterForm"
+                                         styleClass="active-filter"
+                                         icon="fas fa-minus-circle"/>
+                    </ui:repeat>
+
+                    <ui:repeat value="#{activityOverviewController.filterOptionsForTags}"
+                               var="tag">
+                        <p:commandButton
+                                value="#{tag} (#{activityOverviewController.getAmountOfMatchesForFilter(tag, 'Tag')})"
+                                id="tagFilter"
+                                action="#{activityOverviewController.addTagFilter(tag)}"
+                                update="formId, filterForm"
+                                styleClass="filter"
+                                icon="fas fa-filter"/>
+                        <br/>
+                    </ui:repeat>
+                </h:form>
+
+            </div>
+
+            <div class="container" id="main">
+                <div class="activity-commands">
+                    <p:commandButton
+                            value="New"
+                            icon="far fa-calendar-plus"
+                            action="#{activityOverviewController.createActivity}"
+                            update="formId"
+                            styleClass="new"
+                    />
+                </div>
+                <h:form id="formId">
+                    <p:defaultCommand target="saveAll"/>
+                    <p:growl id="growl" showDetail="true" sticky="true"/>
+
+                    <h:panelGroup id="repeat" layout="block" styleClass="repeat-simple-list">
+
+                        <ui:repeat value="#{activityOverviewController.filteredActivities}"
+                                   var="activity"
+                                   status="status"
+                                   rendered="true">
+
+                            <doji:activity model="#{activity}"/>
+
+                        </ui:repeat>
+                    </h:panelGroup>
+                    <p:commandButton
+                            value="Save All"
+                            id="saveAll"
+                            icon="fas fa-save"
+                            action="#{activityOverviewController.doNothing}"
+                            update="formId"
+                            styleClass="filter"
+                            style="display: none;"
+                    />
+                </h:form>
+            </div>
+        </div>
+    </ui:define>
+</ui:composition>

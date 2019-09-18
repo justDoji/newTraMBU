@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FilterChain.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">trambu-front</a> &gt; <a href="index.source.html" class="el_package">be.doji.productivity.trambu.front.filter</a> &gt; <span class="el_source">FilterChain.java</span></div><h1>FilterChain.java</h1><pre class="source lang-java linenums">/**
+ * TraMBU - an open time management tool
+ *
+ * Copyright (C) 2019  Stijn Dejongh
+ *
+ * This program is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU Affero General Public License as published by the Free Software Foundation, either version 3
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see &lt;https://www.gnu.org/licenses/&gt;.
+ *
+ * For further information on usage, or licensing, contact the author through his github profile:
+ * https://github.com/justDoji
+ */
+package be.doji.productivity.trambu.front.filter;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
+import org.apache.commons.lang3.StringUtils;
+
+<span class="fc" id="L30">public class FilterChain&lt;T&gt; {</span>
+
+<span class="fc" id="L32">  private List&lt;PositiveFilter&gt; filters = new ArrayList&lt;&gt;();</span>
+
+  public &lt;P&gt; void addPositiveFiler(String displayValue, Function&lt;T, P&gt; supplier,
+      Predicate&lt;P&gt; includeWhen, String type) {
+
+<span class="pc bpc" id="L37" title="1 of 2 branches missed.">    if (!containsFilter(displayValue, type)) {</span>
+<span class="fc" id="L38">      this.filters.add(new PositiveFilter(displayValue, supplier, includeWhen, type));</span>
+    }
+<span class="fc" id="L40">  }</span>
+
+  public boolean containsFilter(String displayValue, String type) {
+<span class="fc" id="L43">    List&lt;String&gt; typeNames = this.filters.stream()</span>
+<span class="fc" id="L44">        .map(filter -&gt; createIdentifier(filter.getName(), filter.getType())).collect(</span>
+<span class="fc" id="L45">            Collectors.toList());</span>
+<span class="fc" id="L46">    return typeNames.contains(createIdentifier(displayValue, type));</span>
+  }
+
+  private String createIdentifier(String displayValue, String type) {
+<span class="fc" id="L50">    return type + &quot;:&quot; + displayValue;</span>
+  }
+
+  public void reset() {
+<span class="fc" id="L54">    this.filters = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L55">  }</span>
+
+  public List&lt;T&gt; getFilteredData(List&lt;T&gt; initialList) {
+<span class="fc bfc" id="L58" title="All 2 branches covered.">    if (filters.isEmpty()) {</span>
+<span class="fc" id="L59">      return initialList;</span>
+    }
+
+<span class="fc" id="L62">    List&lt;T&gt; results = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L63" title="All 2 branches covered.">    for (T element : initialList) {</span>
+<span class="fc bfc" id="L64" title="All 2 branches covered.">      if (shouldBeIncluded(element)) {</span>
+<span class="fc" id="L65">        results.add(element);</span>
+      }
+<span class="fc" id="L67">    }</span>
+<span class="fc" id="L68">    return results;</span>
+  }
+
+  private boolean shouldBeIncluded(T element) {
+<span class="fc bfc" id="L72" title="All 2 branches covered.">    for (PositiveFilter filter : this.filters) {</span>
+<span class="fc bfc" id="L73" title="All 2 branches covered.">      if (!filter.allows(element)) {</span>
+<span class="fc" id="L74">        return false;</span>
+      }
+<span class="fc" id="L76">    }</span>
+<span class="fc" id="L77">    return true;</span>
+  }
+
+  public List&lt;PositiveFilter&gt; getFilters() {
+<span class="fc" id="L81">    return filters;</span>
+  }
+
+  public List&lt;PositiveFilter&gt; getFiltersForType(String type) {
+<span class="pc bpc" id="L85" title="1 of 2 branches missed.">    if (StringUtils.isBlank(type)) {</span>
+<span class="nc" id="L86">      return new ArrayList&lt;&gt;();</span>
+    }
+
+<span class="fc" id="L89">    return filters.stream().filter(f -&gt; type.equals(f.getType())).collect(Collectors.toList());</span>
+  }
+
+  public Optional&lt;PositiveFilter&gt; getFilter(String displayValue, String type) {
+<span class="pc bpc" id="L93" title="2 of 4 branches missed.">    if (StringUtils.isBlank(displayValue) || StringUtils.isBlank(type)) {</span>
+<span class="nc" id="L94">      return Optional.empty();</span>
+    }
+<span class="pc bpc" id="L96" title="1 of 2 branches missed.">    for (PositiveFilter filter : getFiltersForType(type)) {</span>
+<span class="pc bpc" id="L97" title="1 of 2 branches missed.">      if (filter.getName().equals(displayValue)) {</span>
+<span class="fc" id="L98">        return Optional.of(filter);</span>
+      }
+<span class="nc" id="L100">    }</span>
+<span class="nc" id="L101">    return Optional.empty();</span>
+  }
+
+  public void removeFilter(PositiveFilter filter) {
+<span class="fc" id="L105">    this.filters.remove(filter);</span>
+<span class="fc" id="L106">  }</span>
+
+  public void clearFilters() {
+<span class="nc" id="L109">    this.filters.clear();</span>
+<span class="nc" id="L110">  }</span>
+
+  public long getAmountOfMatchersForFilter(String toFilter, String type,
+      List&lt;T&gt; activities) {
+
+<span class="fc" id="L115">    return getFilter(toFilter, type)</span>
+<span class="fc" id="L116">        .map(positiveFilter -&gt; activities.stream().filter(positiveFilter::allows).count())</span>
+<span class="fc" id="L117">        .orElse(0L);</span>
+  }
+
+  public class PositiveFilter&lt;T, P&gt; {
+
+    private final Function&lt;T, P&gt; supplier;
+    private final Predicate&lt;P&gt; isTobeAddedWhen;
+    private final String name;
+    private final String clazz;
+
+    public PositiveFilter(String displayValue, Function supplier,
+<span class="fc" id="L128">        Predicate isTobeAddedWhen, String clazz) {</span>
+<span class="fc" id="L129">      this.name = displayValue;</span>
+<span class="fc" id="L130">      this.isTobeAddedWhen = isTobeAddedWhen;</span>
+<span class="fc" id="L131">      this.supplier = supplier;</span>
+<span class="fc" id="L132">      this.clazz = clazz;</span>
+<span class="fc" id="L133">    }</span>
+
+    public boolean allows(T elementToCheck) {
+<span class="fc" id="L136">      return isTobeAddedWhen.test(supplier.apply(elementToCheck));</span>
+    }
+
+    public String getName() {
+<span class="fc" id="L140">      return name;</span>
+    }
+
+    public Predicate&lt;P&gt; getPredicate() {
+<span class="nc" id="L144">      return isTobeAddedWhen;</span>
+    }
+
+    public String getType() {
+<span class="fc" id="L148">      return clazz;</span>
+    }
+  }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>
