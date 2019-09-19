@@ -40,7 +40,7 @@ node {
     }
 
     stage('Code Quality') {
-        appgw('sonarqube')
+        sonar('sonarqube')
     }
 
 }
@@ -51,6 +51,14 @@ private void dockerHub(tasks) {
     dir('dev') {
         withCredentials([usernamePassword(credentialsId: 'DockerHub', usernameVariable: 'dockerHubUsername', passwordVariable: 'dockerHubPassword')]) {
             sh "./gradlew $tasks -PapplicationVersion=$VERSION_NUMBER -PdockerHubUsername=$dockerHubUsername -PdockerHubPassword=$dockerHubPassword"
+        }
+    }
+}
+
+private void sonar(tasks) {
+    dir('dev') {
+        withCredentials([usernamePassword(credentialsId: 'SonarCloud_Token', usernameVariable: 'sonarUsername', passwordVariable: 'sonarPassword')]) {
+            sh "./gradlew $tasks -PapplicationVersion=$VERSION_NUMBER -PsonarLogin=$sonarPassword"
         }
     }
 }
