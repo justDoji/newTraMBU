@@ -21,7 +21,7 @@ public class GeneralSteps {
     System.setProperty("webdriver.gecko.driver", "C:\\\\geckodriver.exe");
     try {
       driver = new FirefoxDriver();
-      driver.get("http://localhost:8080/index.xhtml");
+      driver.get("http://localhost:8888/index.xhtml");
     } catch (WebDriverException e) {
       Assertions.fail("Error during test: {}", e.getMessage());
     }
