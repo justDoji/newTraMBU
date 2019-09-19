@@ -35,9 +35,9 @@ node {
 
 private void dockerHub(tasks) {
     dir('dev') {
-//        withCredentials([usernamePassword(credentialsId: 'DockerHub', usernameVariable: 'dockerHubUsername', passwordVariable: 'dockerHubPassword')]) {
+        withCredentials([usernamePassword(credentialsId: 'DockerHub', usernameVariable: 'dockerHubUsername', passwordVariable: 'dockerHubPassword')]) {
             sh "./gradlew $tasks -PapplicationVersion=$VERSION_NUMBER -PdockerHubUsername=$dockerHubUsername -PdockerHubPassword=$dockerHubPassword"
-//        }
+        }
     }
 }
 
