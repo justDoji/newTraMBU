@@ -24,6 +24,21 @@ node {
         junit '**/build/test-results/integrationTest/**/*.xml'
     }
 
+    stage('Build docker image') {
+        dockerHub('buildDockerImage')
+        echo 'Docker image built and ready to roll!'
+    }
+
+}
+
+// Build utility methods
+
+private void dockerHub(tasks) {
+    dir('dev') {
+        withCredentials([usernamePassword(credentialsId: 'DockerHub', usernameVariable: 'dockerHubUsername', passwordVariable: 'dockerHubPassword')]) {
+            sh "./gradlew $tasks -PapplicationVersion=$VERSION_NUMBER -PdockerHubUsername=$dockerHubUsername -PdockerHubPassword=$dockerHubPassword"
+        }
+    }
 }
 
 def appgw(goals) {

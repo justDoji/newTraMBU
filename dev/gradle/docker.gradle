@@ -1,0 +1,17 @@
+apply plugin: 'docker'
+
+task buildDockerImage(type: Docker, dependsOn: build) {
+    applicationName = project.name
+    def projectDir = "${project.rootDir}"
+    dockerfile = file(projectDir + "/docker/Dockerfile")
+    if (project.hasProperty('dockerHubUsername')) {
+        tag = "${dockerHubUsername}/${project.name}"
+    }
+    doFirst {
+        copy {
+            from jar
+            rename { fileName -> fileName.replace(jar.getArchiveFileName().get(), 'trambu.jar') }
+            into stageDir
+        }
+    }
+}
