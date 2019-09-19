@@ -29,6 +29,14 @@ node {
         echo 'Docker image built and ready to roll!'
     }
 
+    stage('Spin up containers') {
+
+    }
+    stage('I MADE IT, CJ! -- Big Smoke') {
+        devgw('-PrequestUrl=http://bingoapp:9999 smokeTest')
+        junit '**/build/test-results/smokeTest/**/*.xml'
+    }
+
 }
 
 // Build utility methods

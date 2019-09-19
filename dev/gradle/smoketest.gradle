@@ -1,0 +1,24 @@
+sourceSets {
+    smoketest {
+        compileClasspath += sourceSets.main.output
+        runtimeClasspath += sourceSets.main.output
+    }
+}
+
+configurations {
+    smoketestImplementation.extendsFrom testImplementation
+    smoketestRuntimeOnly.extendsFrom testRuntimeOnly
+}
+
+task smokeTest(type: Test) {
+    description = 'Runs smoke tests after Docker Compose has spun up the application.'
+    group = 'verification'
+
+    testClassesDirs = sourceSets.smoketest.output.classesDirs
+    classpath = sourceSets.smoketest.runtimeClasspath
+    outputs.upToDateWhen { false }
+
+    if (project.hasProperty('requestUrl')) {
+        systemProperty 'REQUEST_URL', project.property('requestUrl')
+    }
+}

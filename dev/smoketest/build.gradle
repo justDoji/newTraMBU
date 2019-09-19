@@ -1,0 +1,15 @@
+apply from: "../gradle/smoketest.gradle"
+
+dependencies {
+    testImplementation 'junit:junit:4.12'
+    testImplementation 'io.rest-assured:rest-assured:4.1.0'
+    testImplementation 'org.awaitility:awaitility:3.1.6'
+}
+
+task dockerComposeDown(type: Exec) {
+    commandLine "docker-compose", "down"
+}
+
+task dockerComposeUp(type: Exec, dependsOn: 'dockerComposeDown') {
+    commandLine "docker-compose", "up", "-d"
+}
