@@ -31,7 +31,7 @@ node {
     }
 
     stage('Spin up containers') {
-
+        appgw('dockerComposeUp')
     }
 
     stage('I MADE IT, CJ! -- Big Smoke') {
