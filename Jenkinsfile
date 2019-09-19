@@ -6,6 +6,7 @@ node {
     stage('Pull Sources') {
         executeCommand("git config --global credential.helper cache")
         checkout scm
+        regularBuildVersionNumber()
     }
 
     stage('Compile') {
@@ -32,9 +33,14 @@ node {
     stage('Spin up containers') {
 
     }
+
     stage('I MADE IT, CJ! -- Big Smoke') {
         devgw('-PrequestUrl=http://bingoapp:9999 smokeTest')
         junit '**/build/test-results/smokeTest/**/*.xml'
+    }
+
+    stage('Code Quality') {
+        devgw('sonarqube')
     }
 
 }
@@ -69,4 +75,28 @@ def gw(goals) {
 
 def executeCommand(command) {
     sh(script: command, returnStdout: true).trim()
+}
+
+// Versioning
+def regularBuildVersionNumber() {
+    def properties = readProperties file: 'dev/gradle.properties'
+    def versionPrefix = properties['versionPrefix']
+    if (versionPrefix == null || versionPrefix == '') {
+        error 'No versionPrefix property found in the gradle.properties file. Please make sure this property is present with a correct value e.g. internalVersionPrefix=1.0'
+    }
+    def patchVersion = patchVersion(versionPrefix)
+    VERSION_NUMBER = "${versionPrefix}.${patchVersion}"
+    println "Building with version number: ${VERSION_NUMBER}"
+}
+
+def patchVersion(versionPrefix) {
+    def patchVersion
+    try {
+        executeCommand("git fetch --tags")
+        patchVersion = executeCommand("git rev-list --count ${versionPrefix}.0...HEAD")
+    } catch (e) {
+        patchVersion = '0'
+    }
+    println "Patch version is [${patchVersion}]"
+    return patchVersion
 }
