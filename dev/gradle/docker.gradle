@@ -4,9 +4,7 @@ task buildDockerImage(type: Docker, dependsOn: build) {
     applicationName = project.name
     def projectDir = "${project.rootDir}"
     dockerfile = file(projectDir + "/docker/Dockerfile")
-    if (project.hasProperty('dockerHubUsername')) {
-        tag = "be.doji.productivity/trambu"
-    }
+
     doFirst {
         copy {
             from jar
