@@ -39,10 +39,6 @@ node {
         junit '**/build/test-results/smokeTest/**/*.xml'
     }
 
-    stage('Code Quality') {
-        appgw('sonarqube')
-    }
-
 }
 
 // Build utility methods
