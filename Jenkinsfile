@@ -35,7 +35,7 @@ node {
     }
 
     stage('I MADE IT, CJ! -- Big Smoke') {
-        appgw('-PrequestUrl=http://webapp:8888/index.xhtml smokeTest')
+        appgw('-PrequestUrl=http://smoketest:8888/index.xhtml smokeTest')
         junit '**/build/test-results/smokeTest/**/*.xml'
     }
 
