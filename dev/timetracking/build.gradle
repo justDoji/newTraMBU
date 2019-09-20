@@ -1,0 +1,5 @@
+dependencies {
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.9'
+    // https://mvnrepository.com/artifact/com.google.re2j/re2j
+    compile group: 'com.google.re2j', name: 're2j', version: '1.2'
+}

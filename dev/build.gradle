@@ -3,39 +3,39 @@ plugins {
     id 'se.transmode.gradle-docker' version '1.2' apply false
     id 'org.sonarqube' version '2.7'
     id 'jacoco'
-    id "com.github.hierynomus.license" version"0.15.0"
+    id "com.github.hierynomus.license" version "0.15.0"
 }
 
 apply from: "./gradle/license.gradle"
 apply from: "./gradle/sonar.gradle"
 
-repositories {
-    mavenCentral()
-    jcenter()
-}
-
-dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
-
-    testCompile group: 'org.assertj', name: 'assertj-core', version: '3.12.2'
-    testCompile group: 'junit', name: 'junit', version: '4.12'
-    testCompile group: 'org.mockito', name: 'mockito-core', version: '2.27.0'
-
-    compileOnly 'org.projectlombok:lombok:1.18.8'
-    annotationProcessor 'org.projectlombok:lombok:1.18.8'
-}
 
 allprojects {
     apply plugin: 'java'
 
     group 'be.doji.productivity.trambu'
     sourceCompatibility = 1.8
-    
+
     version = applicationVersion
 
     repositories {
         mavenCentral()
+        jcenter()
     }
+
+    dependencies {
+        testCompile group: 'junit', name: 'junit', version: '4.12'
+
+        testCompile group: 'org.assertj', name: 'assertj-core', version: '3.12.2'
+        testCompile group: 'junit', name: 'junit', version: '4.12'
+        testCompile group: 'org.mockito', name: 'mockito-core', version: '2.27.0'
+        testCompile group: 'org.powermock', name: 'powermock-module-junit4', version: '2.0.2'
+        testCompile group: 'org.powermock', name: 'powermock-api-mockito2', version: '2.0.2'
+
+        compileOnly 'org.projectlombok:lombok:1.18.8'
+        annotationProcessor 'org.projectlombok:lombok:1.18.8'
+    }
+
 }
 
 
