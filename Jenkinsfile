@@ -38,7 +38,7 @@ node {
         appgw('-PrequestUrl=http://192.168.99.100:8888/index.xhtml smokeTest')
         junit '**/build/test-results/smokeTest/**/*.xml'
     }
-
+    
     stage('Code Quality') {
         sonar('sonarqube')
     }
