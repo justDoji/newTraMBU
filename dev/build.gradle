@@ -1,14 +1,13 @@
 plugins {
     id 'java'
-    id 'jacoco'
-    id "org.sonarqube" version "2.7"
-    id "com.github.hierynomus.license" version"0.15.0"
     id 'se.transmode.gradle-docker' version '1.2' apply false
+    id 'org.sonarqube' version '2.7'
+    id 'jacoco'
+    id "com.github.hierynomus.license" version"0.15.0"
 }
 
-group 'be.doji.productivity.trambu'
-
-sourceCompatibility = 1.8
+apply from: "./gradle/license.gradle"
+apply from: "./gradle/sonar.gradle"
 
 repositories {
     mavenCentral()
@@ -26,58 +25,12 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok:1.18.8'
 }
 
-jacocoTestReport {
-    reports {
-        xml.enabled true
-        xml.destination file("${buildDir}/reports/jacoco.xml")
-        csv.enabled false
-        html.destination file("${buildDir}/reports/jacocoHtml")
-    }
-}
-
-def gitBranch() {
-    def branch = ""
-    def proc = "git rev-parse --abbrev-ref HEAD".execute()
-    proc.in.eachLine { line -> branch = line }
-    proc.err.eachLine { line -> println line }
-    proc.waitFor()
-    branch
-}
-
-sonarqube{
-    properties {
-        property "sonar.branch.name", gitBranch()
-        property "sonar.sourceEncoding", "UTF-8"
-        property "sonar.projectKey", "be.doji.productivity:newtrambu"
-        property "sonar.language", "java"
-        property "sonar.sources", './src/main/java'
-        property "sonar.tests", './src/test/java'
-        property "sonar.coverage.jacoco.xmlReportPaths", "build/reports/jacoco.xml"
-        property "sonar.jacoco.reportPaths", "build/jacoco/test.exec"
-        property "sonar.junit.reportPaths", "build/test-results/test"
-
-        if (project.hasProperty('sonarLogin')) {
-            property "sonar.login", project.property('sonarLogin')
-        }
-        property "sonar.organization", 'justdoji-github'
-
-        //Ignore the front-end in the sonar analysis
-        property 'sonar.coverage.exclusions', "**/trambu/infrastructure/transfer/**, **be/doji/productivity/trambu/front/model/**, **/trambu/front/controller/exception/**"
-        property 'sonar.exclusions', "**/trambu/infrastructure/transfer/**, **be/doji/productivity/trambu/front/model/**, **/trambu/front/controller/exception/**"
-    }
-}
-
-license {
-    header rootProject.file('LICENSE_HEADER')
-    strictCheck true
-}
-
-subprojects {
+allprojects {
     apply plugin: 'java'
 
+    group 'be.doji.productivity.trambu'
     sourceCompatibility = 1.8
-
-    group = applicationGroup
+    
     version = applicationVersion
 
     repositories {
@@ -85,27 +38,5 @@ subprojects {
     }
 }
 
-task buildAndFormat(type: DefaultTask) {
-    dependsOn 'licenseFormatTest'
-    dependsOn 'licenseFormatMain'
-    dependsOn 'clean'
-    dependsOn 'build'
 
-    tasks.findByName('licenseFormatMain').mustRunAfter 'licenseFormatTest'
-    tasks.findByName('clean').mustRunAfter 'licenseFormatMain'
-    tasks.findByName('build').mustRunAfter 'clean'
-}
-buildAndFormat.setGroup("build")
 
-task buildAndAnalyze(type: DefaultTask) {
-    dependsOn 'licenseFormatTest'
-    dependsOn 'licenseFormatMain'
-    dependsOn 'build'
-    dependsOn 'sonarqube'
-
-    tasks.findByName('licenseFormatMain').mustRunAfter 'licenseFormatTest'
-    tasks.findByName('build').mustRunAfter 'licenseFormatMain'
-    tasks.findByName('sonarqube').mustRunAfter 'build'
-}
-
-buildAndAnalyze.setGroup("build")
