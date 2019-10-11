@@ -3,6 +3,7 @@ package be.doji.productivity.trambu.timetracking.domain;
 import static be.doji.productivity.trambu.timetracking.domain.PointInTime.TimeConverter.fromDate;
 import static be.doji.productivity.trambu.timetracking.domain.PointInTime.TimeConverter.fromDateTime;
 
+import be.doji.productivity.trambu.kernel.annotations.ValueObject;
 import com.google.re2j.Pattern;
 import java.time.Clock;
 import java.time.LocalDate;
@@ -13,7 +14,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 
-public class PointInTime {
+@ValueObject
+public final class PointInTime {
 
   private final LocalDateTime internalDateTime;
 
@@ -26,7 +28,7 @@ public class PointInTime {
 
   private static Clock sharedClock = Clock.systemDefaultZone();
 
-  public static void setTimePointClock(Clock clock) {
+  static void setTimePointClock(Clock clock) {
     sharedClock = clock;
   }
 
@@ -37,11 +39,16 @@ public class PointInTime {
     );
   }
 
+  public static PointInTime now() {
+    return new PointInTime(LocalDateTime.now(sharedClock));
+  }
+
   private static IllegalArgumentException couldNotParseException(String toParse) {
     return new IllegalArgumentException(String.format(
         "Could not parse given Date string: No matching parsers found for string [ %s] ",
         toParse));
   }
+
 
   public LocalDateTime toLocalDateTime() {
     return this.internalDateTime;
