@@ -1,3 +1,12 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'org.owasp:dependency-check-gradle:5.2.2'
+    }
+}
+
 plugins {
     id 'java'
     id 'se.transmode.gradle-docker' version '1.2' apply false
@@ -34,6 +43,12 @@ allprojects {
 
         compileOnly 'org.projectlombok:lombok:1.18.8'
         annotationProcessor 'org.projectlombok:lombok:1.18.8'
+    }
+
+    apply plugin: 'org.owasp.dependencycheck'
+
+    dependencyCheck {
+        format 'ALL'
     }
 
 }

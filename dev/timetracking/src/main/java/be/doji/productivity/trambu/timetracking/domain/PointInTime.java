@@ -8,7 +8,6 @@ import java.time.Clock;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.Temporal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -45,7 +44,7 @@ public class PointInTime {
   }
 
   public LocalDateTime toLocalDateTime() {
-    return this.internalDateTime ;
+    return this.internalDateTime;
   }
 
 
@@ -103,7 +102,8 @@ public class PointInTime {
     }
 
     private LocalDateTime getTemporal(String dateTimeString) {
-      return withTime ? LocalDateTime.parse(dateTimeString, formatter) : LocalDate.parse(dateTimeString, formatter).atStartOfDay();
+      return withTime ? LocalDateTime.parse(dateTimeString, formatter)
+          : LocalDate.parse(dateTimeString, formatter).atStartOfDay();
     }
 
     public boolean isApplicable(String dateTimeString) {

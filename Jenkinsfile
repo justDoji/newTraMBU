@@ -43,6 +43,11 @@ node {
         sonar('sonarqube')
     }
 
+    stage('Dependency check') {
+        appgw('dependencyCheckAggregate')
+        junit '**/build/reports/dependency-check-junit.xml'
+    }
+
 }
 
 // Build utility methods
