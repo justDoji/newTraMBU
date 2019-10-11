@@ -45,6 +45,7 @@ node {
 
     stage('Dependency check') {
         appgw('dependencyCheckAggregate')
+        archiveArtifacts artifacts: 'dev/build/reports/dependency-check-junit.xml', fingerprint: true
         junit '**/build/reports/dependency-check-junit.xml'
     }
 
