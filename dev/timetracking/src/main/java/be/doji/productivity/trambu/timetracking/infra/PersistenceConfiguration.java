@@ -117,29 +117,12 @@ public class PersistenceConfiguration {
   public void initializeDatabase() {
     ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
 
-    populator.addScript(getActivityDML());
-    populator.addScript(getTagDML());
-    populator.addScript(getProjectDML());
-    populator.addScript(getLogPointDML());
+    populator.addScript(new ClassPathResource("db_scripts/DML_create_occupation.sql"));
+    populator.addScript(new ClassPathResource("db_scripts/DML_create_interval.sql"));
 
     DatabasePopulatorUtils.execute(populator, dataSource());
   }
 
-  private ClassPathResource getActivityDML() {
-    return new ClassPathResource("repository/DML_create_activity.sql");
-  }
-
-  private ClassPathResource getTagDML() {
-    return new ClassPathResource("repository/DML_create_tag.sql");
-  }
-
-  private ClassPathResource getProjectDML() {
-    return new ClassPathResource("repository/DML_create_project.sql");
-  }
-
-  private ClassPathResource getLogPointDML() {
-    return new ClassPathResource("repository/DML_create_logpoint.sql");
-  }
 
   private HibernateJpaVendorAdapter vendorAdaptor() {
     HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();

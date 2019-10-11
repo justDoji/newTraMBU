@@ -1,83 +1,51 @@
 package be.doji.productivity.trambu.timetracking.domain;
 
-import be.doji.productivity.trambu.kernel.annotations.AggregateRoot;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.time.Duration;
 import java.util.UUID;
 
-@AggregateRoot
-public class Interval {
+class Interval {
 
-  private UUID identifier = UUID.randomUUID();
-  private Occupation occupation;
+  private UUID occupationId;
   private PointInTime start;
   private PointInTime end;
 
-  private Interval() {}
-
-  public static Builder builder() {
-    return new Builder();
-  }
-
-  public UUID getIdentifier() {
-    return identifier;
-  }
-
-  private Interval setIdentifier(UUID identifier) {
-    this.identifier = identifier;
-    return this;
-  }
-
-  private Interval setOccupation(
-      Occupation occupation) {
-    this.occupation = occupation;
-    return this;
-  }
-
-  private Interval setStart(PointInTime start) {
+  Interval(UUID occupationId, PointInTime start,
+      PointInTime end) {
+    this.occupationId = occupationId;
     this.start = start;
-    return this;
-  }
-
-  private Interval setEnd(PointInTime end) {
     this.end = end;
+  }
+
+  UUID getOccupationId() {
+    return occupationId;
+  }
+
+  private Interval setRootCorrelationId(UUID identifier) {
+    this.occupationId = identifier;
     return this;
   }
 
-  public String getOccupationName() {
-    return this.occupation.getName();
+  void setStart(PointInTime start) {
+    this.start = start;
   }
 
-  public static class Builder {
+  void setEnd(PointInTime end) {
+    this.end = end;
+  }
 
-    private UUID rootIdentifier;
-    private String occupationName;
-    private PointInTime start = PointInTime.now();
-    private PointInTime end;
+  public double getTimeSpanInHours() {
+    BigDecimal bigDecimal = BigDecimal.valueOf(getTimeSpanInSeconds() / (60 * 60));
+    bigDecimal = bigDecimal.setScale(2, RoundingMode.HALF_UP);
+    return bigDecimal.doubleValue();
+  }
 
-    public Builder() {
-    }
-
-    public Builder rootIdentifier(UUID rootIdentifier) {
-      this.rootIdentifier = rootIdentifier;
-      return this;
-    }
-
-    public Builder occupationName(String occupationName) {
-      this.occupationName = occupationName;
-      return this;
-    }
-
-    public Interval build() {
-      Interval interval = new Interval();
-      if (rootIdentifier != null) {
-        interval.setIdentifier(rootIdentifier);
-      }
-
-      Occupation occupation = new Occupation(interval.getIdentifier(), occupationName);
-      interval.setOccupation(occupation);
-
-      interval.setStart(start);
-      interval.setEnd(end);
-      return interval;
-    }
+  public double getTimeSpanInSeconds() {
+    PointInTime calcEnd = this.end == null ? PointInTime.now() : this.end;
+    BigDecimal bigDecimal = BigDecimal.valueOf(
+        Duration.between(this.start.toLocalDateTime(), calcEnd.toLocalDateTime()).getSeconds());
+    bigDecimal = bigDecimal.setScale(2, RoundingMode.HALF_UP);
+    return bigDecimal.doubleValue();
   }
 }
