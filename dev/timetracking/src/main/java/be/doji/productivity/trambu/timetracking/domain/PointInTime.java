@@ -13,6 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
+import ma.glasnost.orika.MappingContext;
+import ma.glasnost.orika.converter.BidirectionalConverter;
+import ma.glasnost.orika.metadata.Type;
 
 @ValueObject
 public final class PointInTime {
@@ -71,10 +74,13 @@ public final class PointInTime {
 
     static List<TimeConverter> converters = new ArrayList<>();
 
+    private static TimeConverter defaultConverter;
+
     static {
       converters.add(fromDate(BASIC_DATE_REGEX, BASIC_DATE_PATTERN));
       converters.add(fromDateTime(BASIC_DATE_TIME_REGEX, BASIC_DATE_TIME_PATTERN));
-      converters.add(fromDateTime(EXTENDED_DATE_TIME_REGEX, EXTENDED_DATE_TIME_PATTERN));
+      defaultConverter = fromDateTime(EXTENDED_DATE_TIME_REGEX, EXTENDED_DATE_TIME_PATTERN);
+      converters.add(defaultConverter);
       converters.add(fromDateTime(LEGACY_DATE_TIME_REGEX, LEGACY_DATE_TIME_PATTERN));
     }
 
@@ -85,6 +91,10 @@ public final class PointInTime {
         }
       }
       return Optional.empty();
+    }
+
+    public static String toString(PointInTime pointInTime) {
+      return defaultConverter.toString(pointInTime);
     }
   }
 
@@ -113,8 +123,27 @@ public final class PointInTime {
           : LocalDate.parse(dateTimeString, formatter).atStartOfDay();
     }
 
+    private String toString(PointInTime pointInTime) {
+      return formatter.format(pointInTime.toLocalDateTime());
+    }
+
     public boolean isApplicable(String dateTimeString) {
       return regex.matches(dateTimeString);
+    }
+  }
+
+  public static class PointInTimeConverter extends BidirectionalConverter<PointInTime,String> {
+
+    @Override
+    public String convertTo(PointInTime source, Type<String> destinationType,
+        MappingContext mappingContext) {
+      return Factory.toString(source);
+    }
+
+    @Override
+    public PointInTime convertFrom(String source, Type<PointInTime> destinationType,
+        MappingContext mappingContext) {
+      return PointInTime.fromString(source);
     }
   }
 

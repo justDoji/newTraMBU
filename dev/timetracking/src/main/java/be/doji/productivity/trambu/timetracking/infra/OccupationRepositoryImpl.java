@@ -1,11 +1,19 @@
 package be.doji.productivity.trambu.timetracking.infra;
 
+import be.doji.productivity.trambu.timetracking.domain.Interval;
 import be.doji.productivity.trambu.timetracking.domain.Occupation;
 import be.doji.productivity.trambu.timetracking.domain.OccupationRepository;
+import be.doji.productivity.trambu.timetracking.domain.PointInTime.PointInTimeConverter;
+import be.doji.productivity.trambu.timetracking.infra.dao.IntervalDAO;
 import be.doji.productivity.trambu.timetracking.infra.dao.OccupationDAO;
+import be.doji.productivity.trambu.timetracking.infra.dto.IntervalData;
 import be.doji.productivity.trambu.timetracking.infra.dto.OccupationData;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import ma.glasnost.orika.MapperFactory;
+import ma.glasnost.orika.converter.ConverterFactory;
+import ma.glasnost.orika.impl.DefaultMapperFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,49 +21,74 @@ import org.springframework.stereotype.Service;
 public class OccupationRepositoryImpl implements OccupationRepository {
 
   private OccupationDAO occupationDAO;
+  private IntervalDAO intervalDAO;
+  private static MapperFactory mapperFactory = new DefaultMapperFactory.Builder().build();
+
+  static {
+    initMapperFactory();
+  }
+
+  private static void initMapperFactory() {
+    ConverterFactory converterFactory = mapperFactory.getConverterFactory();
+    converterFactory.registerConverter(new PointInTimeConverter());
+
+    mapperFactory.classMap(Interval.class, IntervalData.class)
+        .field("start", "start")
+        .field("end", "end")
+        .field("occupationId", "correlationId")
+        .register();
+
+    mapperFactory.classMap(Occupation.class, OccupationData.class)
+        .field("name", "name")
+        .field("identifier", "correlationId")
+        .byDefault()
+        .register();
+  }
+
 
   @Autowired
-  public OccupationRepositoryImpl(OccupationDAO occupationDAO) {
+  public OccupationRepositoryImpl(OccupationDAO occupationDAO, IntervalDAO intervalDAO) {
     this.occupationDAO = occupationDAO;
+    this.intervalDAO = intervalDAO;
   }
 
   @Override
   public Optional<Occupation> occupationById(UUID rootIdentifier) {
-    Optional<OccupationData> nameData = occupationDAO.findByCorrelationId(rootIdentifier);
-    if (nameData.isPresent()) {
-      Occupation build = Occupation.builder(this)
-          .name(nameData.get().getName())
-          .build();
-      return Optional.of(build);
-    } else {
-      return Optional.empty();
-    }
+    return occupationDAO
+        .findByCorrelationId(rootIdentifier)
+        .map(this::occupationPersitenceToDomain);
+  }
+
+  private Occupation occupationPersitenceToDomain(OccupationData nameData) {
+    Occupation aggregate = mapperFactory.getMapperFacade().map(nameData, Occupation.class);
+    List<IntervalData> intervalData = intervalDAO.findByCorrelationId(nameData.getCorrelationId());
+    mapperFactory.getMapperFacade()
+        .mapAsList(intervalData, Interval.class)
+        .forEach(aggregate::addInterval);
+    return aggregate;
   }
 
   @Override
   public void save(Occupation occupation) {
     storeOccupationData(occupation);
+    storeIntervalData(occupation);
   }
 
   private void storeOccupationData(Occupation occupation) {
-    Optional<OccupationData> nameData = occupationDAO
-        .findByCorrelationId(occupation.getIdentifier());
-    if (nameData.isPresent()) {
-      updateOccupationData(occupation, nameData.get());
-    } else {
-      createNewOccupationData(occupation);
-    }
+    OccupationData mappedData = mapperFactory.getMapperFacade()
+        .map(occupation, OccupationData.class);
+    occupationDAO
+        .findByCorrelationId(occupation.getIdentifier())
+        .ifPresent(data -> mappedData.setId(data.getId()));
+    occupationDAO.save(mappedData);
   }
 
-  private void updateOccupationData(Occupation occupation, OccupationData data) {
-    data.setName(occupation.getName());
-    occupationDAO.save(data);
+  private void storeIntervalData(Occupation occupation) {
+    mapToIntervalData(occupation).forEach(data -> intervalDAO.save(data));
   }
 
-  private void createNewOccupationData(Occupation occupation) {
-    OccupationData occupationData = new OccupationData();
-    occupationData.setName(occupation.getName());
-    occupationData.setCorrelationId(occupation.getIdentifier());
-    occupationDAO.save(occupationData);
+  private List<IntervalData> mapToIntervalData(Occupation occupation) {
+    return mapperFactory.getMapperFacade()
+        .mapAsList(occupation.getIntervals(), IntervalData.class);
   }
 }

@@ -34,7 +34,8 @@ public class OccupationTest {
     // Creation in setUp method
 
     Assertions.assertThat(testOccupation.getName()).isEqualTo(EXPECTED_NAME);
-    Assertions.assertThat(testOccupation.getTimeSpent()).isEqualTo(2.0);
+    Assertions.assertThat(testOccupation.getIntervals().get(0).getOccupationId()).isEqualTo(ROOT_IDENTIFIER);
+    Assertions.assertThat(testOccupation.getTimeSpentInHours()).isEqualTo(2.0);
   }
 
 }

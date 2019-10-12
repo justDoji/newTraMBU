@@ -1,5 +1,8 @@
 package be.doji.productivity.trambu.timetracking.infra;
 
+import static be.doji.productivity.trambu.timetracking.domain.PointInTime.fromString;
+import static org.assertj.core.api.Assertions.*;
+
 import be.doji.productivity.trambu.timetracking.domain.Occupation;
 import be.doji.productivity.trambu.timetracking.domain.OccupationRepository;
 import java.util.Optional;
@@ -29,6 +32,10 @@ public class OccupationRepositoryImplTest {
   public void setUp() {
     occupation = Occupation.builder(repository)
         .rootIdentifier(ROOT_IDENTIFIER)
+        .interval(
+            fromString("05/05/2019 12:00:00"),
+            fromString("06/05/2019 12:00:00")
+        )
         .name(EXPECTED_NAME)
         .build();
   }
@@ -39,8 +46,9 @@ public class OccupationRepositoryImplTest {
 
     Optional<Occupation> fromRepository = repository.occupationById(ROOT_IDENTIFIER);
 
-    Assertions.assertThat(fromRepository).isPresent();
+    assertThat(fromRepository).isPresent();
     //noinspection OptionalGetWithoutIsPresent
-    Assertions.assertThat(fromRepository.get().getName()).isEqualTo(EXPECTED_NAME);
+    assertThat(fromRepository.get().getName()).isEqualTo(EXPECTED_NAME);
+    assertThat(fromRepository.get().getTimeSpentInHours()).isEqualTo(24.0);
   }
 }

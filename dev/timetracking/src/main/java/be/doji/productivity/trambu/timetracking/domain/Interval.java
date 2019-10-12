@@ -5,7 +5,7 @@ import java.math.RoundingMode;
 import java.time.Duration;
 import java.util.UUID;
 
-class Interval {
+public class Interval {
 
   private UUID occupationId;
   private PointInTime start;
@@ -18,22 +18,30 @@ class Interval {
     this.end = end;
   }
 
-  UUID getOccupationId() {
+  public Interval(PointInTime start, PointInTime end) {
+    this(null, start, end);
+  }
+
+  public UUID getOccupationId() {
     return occupationId;
   }
 
-  private Interval setRootCorrelationId(UUID identifier) {
+  Interval setOccupationId(UUID identifier) {
     this.occupationId = identifier;
     return this;
   }
 
-  void setStart(PointInTime start) {
+  private void setStart(PointInTime start) {
     this.start = start;
   }
 
-  void setEnd(PointInTime end) {
+  private void setEnd(PointInTime end) {
     this.end = end;
   }
+
+  public PointInTime getStart() { return start; }
+
+  public PointInTime getEnd() { return end; }
 
   public double getTimeSpanInHours() {
     BigDecimal bigDecimal = BigDecimal.valueOf(getTimeSpanInSeconds() / (60 * 60));

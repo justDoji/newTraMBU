@@ -17,6 +17,9 @@ dependencies {
     // https://mvnrepository.com/artifact/com.google.re2j/re2j
     compile group: 'com.google.re2j', name: 're2j', version: '1.2'
 
+    //Orika object mapper library
+    compile group: 'ma.glasnost.orika', name: 'orika-core', version: '1.5.1'
+
     //Spring
     implementation 'org.springframework.boot:spring-boot-starter'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'

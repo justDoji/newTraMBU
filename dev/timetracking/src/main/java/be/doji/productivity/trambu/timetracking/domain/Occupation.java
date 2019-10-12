@@ -11,23 +11,20 @@ import java.util.UUID;
 @AggregateRoot
 public class Occupation {
 
-
-  private OccupationRepository repository;
-
-  private UUID identifier = UUID.randomUUID();
+  private UUID identifier;
   private String name;
   private List<Interval> intervals = new ArrayList<>();
 
-  private Occupation(OccupationRepository repository) {
-    this.repository = repository;
+  Occupation() {
+
   }
 
   public UUID getIdentifier() {
     return identifier;
   }
 
-  private void setIdentifier(UUID identifier) {
-    if(identifier != null) {
+  public void setIdentifier(UUID identifier) {
+    if (identifier != null) {
       this.identifier = identifier;
     }
   }
@@ -36,7 +33,7 @@ public class Occupation {
     return name;
   }
 
-  private void setName(String name) {
+  public void setName(String name) {
     this.name = name;
   }
 
@@ -44,11 +41,11 @@ public class Occupation {
     this.intervals.add(new Interval(this.getIdentifier(), start, end));
   }
 
-  private void addInterval(Interval interval) {
+  public void addInterval(Interval interval) {
     this.intervals.add(interval);
   }
 
-  private void setIntervals(List<Interval> intervals) {
+  public void setIntervals(List<Interval> intervals) {
     if (intervals != null) {
       this.intervals = intervals;
     }
@@ -58,25 +55,25 @@ public class Occupation {
     return new Builder(repository);
   }
 
-  public double getTimeSpent() {
+  public double getTimeSpentInHours() {
     return intervals.stream().map(Interval::getTimeSpanInHours).mapToDouble(Double::doubleValue)
         .sum();
   }
 
-  private void persist() {
-    this.repository.save(this);
+  public final List<Interval> getIntervals() {
+    return new ArrayList<>(this.intervals);
   }
 
   public static class Builder {
 
-    private Occupation occupation;
+    private final OccupationRepository repository;
 
     private List<Interval> intervals = new ArrayList<>();
     private String occupationName;
     private UUID rootIdentifier;
 
     Builder(OccupationRepository repository) {
-      occupation = new Occupation(repository);
+      this.repository = repository;
     }
 
     public Builder rootIdentifier(UUID rootIdentifier) {
@@ -89,18 +86,20 @@ public class Occupation {
       return this;
     }
 
-    public Builder interval(PointInTime start, PointInTime firstEnd) {
-      Interval interval = new Interval(occupation.getIdentifier(), start, firstEnd);
+    public Builder interval(PointInTime start, PointInTime end) {
+      Interval interval = new Interval(start, end);
       this.intervals.add(interval);
       return this;
     }
 
     public Occupation build() {
-      occupation.setName(occupationName);
+      Occupation occupation = new Occupation();
       occupation.setIdentifier(this.rootIdentifier);
+      occupation.setName(occupationName);
+      intervals.forEach(interval -> interval.setOccupationId(this.rootIdentifier));
       occupation.setIntervals(this.intervals);
 
-      occupation.persist();
+      repository.save(occupation);
       return occupation;
     }
   }
