@@ -1,9 +1,8 @@
 package be.doji.productivity.trambu.timetracking.domain;
 
-import static be.doji.productivity.trambu.timetracking.domain.Services.time;
-
 import be.doji.productivity.trambu.kernel.annotations.AggregateRoot;
 import be.doji.productivity.trambu.timetracking.domain.time.PointInTime;
+import be.doji.productivity.trambu.timetracking.domain.time.TimeService;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -14,11 +13,13 @@ import java.util.UUID;
 @AggregateRoot
 public class Occupation {
 
+  private final TimeService timeService;
   private UUID identifier;
   private String name;
   private List<Interval> intervals = new ArrayList<>();
 
-  Occupation() {
+  Occupation(TimeService timeService) {
+    this.timeService = timeService;
   }
 
   public UUID getIdentifier() {
@@ -40,7 +41,7 @@ public class Occupation {
   }
 
   private void addInterval(PointInTime start, PointInTime end) {
-    this.intervals.add(new Interval(this.getIdentifier(), start, end));
+    this.intervals.add(new Interval(this.getIdentifier(), start, end, timeService));
   }
 
   public void addInterval(Interval toAdd) {
@@ -53,8 +54,8 @@ public class Occupation {
     }
   }
 
-  public static Builder builder(OccupationRepository repository) {
-    return new Builder(repository);
+  public static Builder builder(OccupationRepository repository, TimeService timeService) {
+    return new Builder(repository, timeService);
   }
 
   public double getTimeSpentInHours() {
@@ -68,7 +69,7 @@ public class Occupation {
 
   public void start() {
     if (this.intervals.stream().noneMatch(Interval::inProgress)) {
-      this.intervals.add(new Interval(this.identifier, time().now()));
+      this.intervals.add(new Interval(this.identifier, timeService));
     }
   }
 
@@ -79,13 +80,15 @@ public class Occupation {
   public static class Builder {
 
     private final OccupationRepository repository;
+    private final TimeService timeService;
 
     private List<Interval> intervals = new ArrayList<>();
     private String occupationName;
     private UUID rootIdentifier;
 
-    Builder(OccupationRepository repository) {
+    Builder(OccupationRepository repository, TimeService timeService) {
       this.repository = repository;
+      this.timeService = timeService;
     }
 
     public Builder rootIdentifier(UUID rootIdentifier) {
@@ -99,13 +102,13 @@ public class Occupation {
     }
 
     public Builder interval(PointInTime start, PointInTime end) {
-      Interval interval = new Interval(start, end);
+      Interval interval = new Interval(start, end, timeService);
       this.intervals.add(interval);
       return this;
     }
 
     public Occupation build() {
-      Occupation occupation = new Occupation();
+      Occupation occupation = new Occupation(timeService);
       occupation.setIdentifier(this.rootIdentifier);
       occupation.setName(occupationName);
       intervals.forEach(interval -> interval.setOccupationId(this.rootIdentifier));

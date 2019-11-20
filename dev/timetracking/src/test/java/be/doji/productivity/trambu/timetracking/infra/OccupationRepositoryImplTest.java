@@ -1,13 +1,18 @@
 package be.doji.productivity.trambu.timetracking.infra;
 
+import static be.doji.productivity.trambu.timetracking.domain.Occupation.*;
 import static be.doji.productivity.trambu.timetracking.domain.time.PointInTime.parse;
+import static java.time.LocalDateTime.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import be.doji.productivity.trambu.timetracking.domain.Occupation;
 import be.doji.productivity.trambu.timetracking.domain.OccupationRepository;
+import be.doji.productivity.trambu.timetracking.domain.TimeServiceRule;
+import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.UUID;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,9 +32,14 @@ public class OccupationRepositoryImplTest {
   @Autowired
   public OccupationRepository repository;
 
+  @Rule
+  public TimeServiceRule timeRule = new TimeServiceRule();
+
+
   @Before
   public void setUp() {
-    occupation = Occupation.builder(repository)
+    timeRule.time(of(2019, 11, 15, 12, 0));
+    occupation = builder(repository, timeRule.service())
         .rootIdentifier(ROOT_IDENTIFIER)
         .interval(
             parse("05/05/2019 12:00:00"),

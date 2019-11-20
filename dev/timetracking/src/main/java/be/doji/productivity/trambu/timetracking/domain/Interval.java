@@ -1,6 +1,5 @@
 package be.doji.productivity.trambu.timetracking.domain;
 
-import static be.doji.productivity.trambu.timetracking.domain.Services.*;
 import static java.math.BigDecimal.valueOf;
 import static java.time.Duration.between;
 
@@ -21,21 +20,31 @@ public class Interval {
   Interval(
       UUID occupationId,
       PointInTime start,
-      PointInTime end) {
+      PointInTime end,
+      TimeService timeService) {
     this.occupationId = occupationId;
     this.start = start;
     this.end = end;
+    this.timeService = timeService;
   }
 
   Interval(
       UUID occupationId,
-      PointInTime start) {
+      PointInTime start,
+      TimeService timeService) {
     this.occupationId = occupationId;
     this.start = start;
+    this.timeService = timeService;
   }
 
-  Interval(PointInTime start, PointInTime end) {
-    this(null, start, end);
+  Interval(PointInTime start,
+      PointInTime end,
+      TimeService timeService) {
+    this(null, start, end, timeService);
+  }
+
+  public Interval(UUID identifier, TimeService timeService) {
+    this(identifier, timeService.now(), timeService);
   }
 
   public UUID getOccupationId() {
@@ -66,7 +75,7 @@ public class Interval {
   }
 
   public double getTimeSpanInSeconds() {
-    PointInTime calcEnd = this.end == null ? time().now() : this.end;
+    PointInTime calcEnd = this.end == null ? timeService.now() : this.end;
     BigDecimal bigDecimal = valueOf(
         between(this.start.localDateTime(), calcEnd.localDateTime()).getSeconds());
     bigDecimal = bigDecimal.setScale(2, RoundingMode.HALF_UP);
@@ -78,6 +87,6 @@ public class Interval {
   }
 
   public void endNow() {
-    this.end = time().now();
+    this.end = timeService.now();
   }
 }
