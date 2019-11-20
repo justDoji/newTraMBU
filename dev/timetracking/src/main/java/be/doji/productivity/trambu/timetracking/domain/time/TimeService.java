@@ -1,4 +1,4 @@
-package be.doji.productivity.trambu.timetracking.domain;
+package be.doji.productivity.trambu.timetracking.domain.time;
 
 import java.time.Clock;
 import java.time.LocalDateTime;

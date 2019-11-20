@@ -4,9 +4,10 @@ import static be.doji.productivity.trambu.timetracking.domain.Services.*;
 import static java.math.BigDecimal.valueOf;
 import static java.time.Duration.between;
 
+import be.doji.productivity.trambu.timetracking.domain.time.PointInTime;
+import be.doji.productivity.trambu.timetracking.domain.time.TimeService;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.Optional;
 import java.util.UUID;
 
 public class Interval {

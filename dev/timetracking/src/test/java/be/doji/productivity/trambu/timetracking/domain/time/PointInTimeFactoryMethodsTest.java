@@ -1,18 +1,10 @@
-package be.doji.productivity.trambu.timetracking.domain;
+package be.doji.productivity.trambu.timetracking.domain.time;
 
-import static org.mockito.Mockito.when;
-
-import java.time.Clock;
 import java.time.LocalDateTime;
 import java.time.Month;
-import java.time.ZoneId;
-import java.time.ZoneOffset;
-import java.util.TimeZone;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -23,7 +15,7 @@ public class PointInTimeFactoryMethodsTest {
   @Test
   public void fromString_toLocalDateTime_dateOnly() {
 
-    PointInTime timePoint = PointInTime.fromString(DOJI_BIRTHDAY);
+    PointInTime timePoint = PointInTime.parse(DOJI_BIRTHDAY);
     LocalDateTime converted = timePoint.localDateTime();
 
     SoftAssertions assertions = new SoftAssertions();

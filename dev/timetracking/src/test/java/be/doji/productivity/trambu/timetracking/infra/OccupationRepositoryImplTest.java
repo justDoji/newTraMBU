@@ -1,6 +1,6 @@
 package be.doji.productivity.trambu.timetracking.infra;
 
-import static be.doji.productivity.trambu.timetracking.domain.PointInTime.fromString;
+import static be.doji.productivity.trambu.timetracking.domain.time.PointInTime.parse;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import be.doji.productivity.trambu.timetracking.domain.Occupation;
@@ -32,8 +32,8 @@ public class OccupationRepositoryImplTest {
     occupation = Occupation.builder(repository)
         .rootIdentifier(ROOT_IDENTIFIER)
         .interval(
-            fromString("05/05/2019 12:00:00"),
-            fromString("06/05/2019 12:00:00")
+            parse("05/05/2019 12:00:00"),
+            parse("06/05/2019 12:00:00")
         )
         .name(EXPECTED_NAME)
         .build();

@@ -1,6 +1,6 @@
 package be.doji.productivity.trambu.timetracking.infra;
 
-import be.doji.productivity.trambu.timetracking.domain.TimeService;
+import be.doji.productivity.trambu.timetracking.domain.time.TimeService;
 import java.time.Clock;
 import org.springframework.stereotype.Service;
 

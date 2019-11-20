@@ -1,5 +1,6 @@
 package be.doji.productivity.trambu.timetracking.domain;
 
+import be.doji.productivity.trambu.timetracking.domain.time.TimeService;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;

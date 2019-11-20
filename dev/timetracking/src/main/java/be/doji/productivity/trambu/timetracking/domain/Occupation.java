@@ -3,6 +3,7 @@ package be.doji.productivity.trambu.timetracking.domain;
 import static be.doji.productivity.trambu.timetracking.domain.Services.time;
 
 import be.doji.productivity.trambu.kernel.annotations.AggregateRoot;
+import be.doji.productivity.trambu.timetracking.domain.time.PointInTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;

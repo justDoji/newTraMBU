@@ -1,10 +1,12 @@
 package be.doji.productivity.trambu.timetracking.domain;
 
-import static be.doji.productivity.trambu.timetracking.domain.PointInTime.fromString;
+import static be.doji.productivity.trambu.timetracking.domain.time.PointInTime.parse;
 import static java.time.LocalDateTime.of;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
+import be.doji.productivity.trambu.timetracking.domain.time.PointInTime;
+import be.doji.productivity.trambu.timetracking.domain.time.TimeService;
 import java.time.Clock;
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -45,7 +47,7 @@ public class OccupationTest {
     Occupation testOccupation = Occupation.builder(repository)
         .rootIdentifier(ROOT_IDENTIFIER)
         .name(EXPECTED_NAME)
-        .interval(fromString("16/12/2018 12:00:00:000"), fromString("16/12/2018 14:00:00:000"))
+        .interval(parse("16/12/2018 12:00:00:000"), parse("16/12/2018 14:00:00:000"))
         .build();
 
     assertThat(testOccupation.getName()).isEqualTo(EXPECTED_NAME);
