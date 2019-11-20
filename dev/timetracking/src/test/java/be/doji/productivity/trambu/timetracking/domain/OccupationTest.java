@@ -1,7 +1,17 @@
 package be.doji.productivity.trambu.timetracking.domain;
 
+import static be.doji.productivity.trambu.timetracking.domain.PointInTime.fromString;
+import static java.time.LocalDateTime.of;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.when;
+
+import java.time.Clock;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.util.TimeZone;
 import java.util.UUID;
-import org.assertj.core.api.Assertions;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,25 +27,55 @@ public class OccupationTest {
   @Mock
   private OccupationRepository repository;
 
-  private Occupation testOccupation;
+  @Mock
+  private TimeService timeService;
+
+  @Mock
+  private Clock mockClock;
 
   @Before
-  public void setUp() throws Exception {
-    testOccupation = Occupation.builder(repository)
-        .rootIdentifier(ROOT_IDENTIFIER)
-        .name(EXPECTED_NAME)
-        .interval(PointInTime.fromString("16/12/2018 12:00:00:000"),
-            PointInTime.fromString("16/12/2018 14:00:00:000"))
-        .build();
+  public void setUp() {
+    setClock(of(2019, 12, 18, 12, 0));
+
+    Services.setTimeService(timeService);
   }
 
   @Test
   public void whenCreatingAnOccupation_compositeIsFilledIn() {
-    // Creation in setUp method
+    Occupation testOccupation = Occupation.builder(repository)
+        .rootIdentifier(ROOT_IDENTIFIER)
+        .name(EXPECTED_NAME)
+        .interval(fromString("16/12/2018 12:00:00:000"), fromString("16/12/2018 14:00:00:000"))
+        .build();
 
-    Assertions.assertThat(testOccupation.getName()).isEqualTo(EXPECTED_NAME);
-    Assertions.assertThat(testOccupation.getIntervals().get(0).getOccupationId()).isEqualTo(ROOT_IDENTIFIER);
-    Assertions.assertThat(testOccupation.getTimeSpentInHours()).isEqualTo(2.0);
+    assertThat(testOccupation.getName()).isEqualTo(EXPECTED_NAME);
+    assertThat(testOccupation.getIntervals().get(0).getOccupationId()).isEqualTo(ROOT_IDENTIFIER);
+    assertThat(testOccupation.getTimeSpentInHours()).isEqualTo(2.0);
   }
 
+  @Test
+  public void whenBusyWithAnOccupation_timeIsTracked() {
+    setClock(of(2019, 12, 18, 12, 0));
+    Occupation testOccupation = Occupation.builder(repository)
+        .rootIdentifier(ROOT_IDENTIFIER)
+        .name(EXPECTED_NAME)
+        .build();
+
+    testOccupation.start();
+
+    setClock(of(2019, 12, 18, 14, 30)); //Two hours have passed
+    testOccupation.stop();
+
+    assertThat(testOccupation.getTimeSpentInHours()).isEqualTo(2.5);
+  }
+
+  private void setClock(LocalDateTime timeToSet) {
+    Instant instantToSet = timeToSet.toInstant(ZoneOffset.of("+01:00"));
+    PointInTime pointInTime = new PointInTime(timeToSet);
+
+    when(mockClock.instant()).thenReturn(instantToSet);
+    when(mockClock.getZone()).thenReturn(ZoneId.of(TimeZone.getDefault().getID()));
+    when(timeService.getSharedClock()).thenReturn(mockClock);
+    when(timeService.now()).thenReturn(pointInTime);
+  }
 }

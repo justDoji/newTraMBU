@@ -22,6 +22,8 @@ public class OccupationRepositoryImpl implements OccupationRepository {
 
   private OccupationDAO occupationDAO;
   private IntervalDAO intervalDAO;
+
+  //TODO: move this
   private static MapperFactory mapperFactory = new DefaultMapperFactory.Builder().build();
 
   static {

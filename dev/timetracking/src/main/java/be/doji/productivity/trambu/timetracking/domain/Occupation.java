@@ -1,5 +1,7 @@
 package be.doji.productivity.trambu.timetracking.domain;
 
+import static be.doji.productivity.trambu.timetracking.domain.Services.time;
+
 import be.doji.productivity.trambu.kernel.annotations.AggregateRoot;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +18,6 @@ public class Occupation {
   private List<Interval> intervals = new ArrayList<>();
 
   Occupation() {
-
   }
 
   public UUID getIdentifier() {
@@ -41,11 +42,11 @@ public class Occupation {
     this.intervals.add(new Interval(this.getIdentifier(), start, end));
   }
 
-  public void addInterval(Interval interval) {
-    this.intervals.add(interval);
+  public void addInterval(Interval toAdd) {
+    this.intervals.add(toAdd);
   }
 
-  public void setIntervals(List<Interval> intervals) {
+  private void setIntervals(List<Interval> intervals) {
     if (intervals != null) {
       this.intervals = intervals;
     }
@@ -62,6 +63,16 @@ public class Occupation {
 
   public final List<Interval> getIntervals() {
     return new ArrayList<>(this.intervals);
+  }
+
+  public void start() {
+    if (this.intervals.stream().noneMatch(Interval::inProgress)) {
+      this.intervals.add(new Interval(this.identifier, time().now()));
+    }
+  }
+
+  public void stop() {
+    this.intervals.stream().filter(Interval::inProgress).findFirst().ifPresent(Interval::endNow);
   }
 
   public static class Builder {

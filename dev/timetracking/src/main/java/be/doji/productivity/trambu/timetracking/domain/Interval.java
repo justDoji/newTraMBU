@@ -1,8 +1,12 @@
 package be.doji.productivity.trambu.timetracking.domain;
 
+import static be.doji.productivity.trambu.timetracking.domain.Services.*;
+import static java.math.BigDecimal.valueOf;
+import static java.time.Duration.between;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.time.Duration;
+import java.util.Optional;
 import java.util.UUID;
 
 public class Interval {
@@ -11,14 +15,25 @@ public class Interval {
   private PointInTime start;
   private PointInTime end;
 
-  Interval(UUID occupationId, PointInTime start,
+  private TimeService timeService;
+
+  Interval(
+      UUID occupationId,
+      PointInTime start,
       PointInTime end) {
     this.occupationId = occupationId;
     this.start = start;
     this.end = end;
   }
 
-  public Interval(PointInTime start, PointInTime end) {
+  Interval(
+      UUID occupationId,
+      PointInTime start) {
+    this.occupationId = occupationId;
+    this.start = start;
+  }
+
+  Interval(PointInTime start, PointInTime end) {
     this(null, start, end);
   }
 
@@ -44,16 +59,24 @@ public class Interval {
   public PointInTime getEnd() { return end; }
 
   public double getTimeSpanInHours() {
-    BigDecimal bigDecimal = BigDecimal.valueOf(getTimeSpanInSeconds() / (60 * 60));
+    BigDecimal bigDecimal = valueOf(getTimeSpanInSeconds() / (60 * 60));
     bigDecimal = bigDecimal.setScale(2, RoundingMode.HALF_UP);
     return bigDecimal.doubleValue();
   }
 
   public double getTimeSpanInSeconds() {
-    PointInTime calcEnd = this.end == null ? PointInTime.now() : this.end;
-    BigDecimal bigDecimal = BigDecimal.valueOf(
-        Duration.between(this.start.toLocalDateTime(), calcEnd.toLocalDateTime()).getSeconds());
+    PointInTime calcEnd = this.end == null ? time().now() : this.end;
+    BigDecimal bigDecimal = valueOf(
+        between(this.start.localDateTime(), calcEnd.localDateTime()).getSeconds());
     bigDecimal = bigDecimal.setScale(2, RoundingMode.HALF_UP);
     return bigDecimal.doubleValue();
+  }
+
+  public boolean inProgress() {
+    return this.getEnd() == null;
+  }
+
+  public void endNow() {
+    this.end = time().now();
   }
 }

@@ -5,7 +5,6 @@ import static be.doji.productivity.trambu.timetracking.domain.PointInTime.TimeCo
 
 import be.doji.productivity.trambu.kernel.annotations.ValueObject;
 import com.google.re2j.Pattern;
-import java.time.Clock;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -22,17 +21,8 @@ public final class PointInTime {
 
   private final LocalDateTime internalDateTime;
 
-  private PointInTime(LocalDateTime temporal) {
+  PointInTime(LocalDateTime temporal) {
     this.internalDateTime = temporal;
-  }
-
-
-  /* --- Utility and factory methods --- */
-
-  private static Clock sharedClock = Clock.systemDefaultZone();
-
-  static void setTimePointClock(Clock clock) {
-    sharedClock = clock;
   }
 
   public static PointInTime fromString(String toParse) {
@@ -42,10 +32,6 @@ public final class PointInTime {
     );
   }
 
-  public static PointInTime now() {
-    return new PointInTime(LocalDateTime.now(sharedClock));
-  }
-
   private static IllegalArgumentException couldNotParseException(String toParse) {
     return new IllegalArgumentException(String.format(
         "Could not parse given Date string: No matching parsers found for string [ %s] ",
@@ -53,12 +39,12 @@ public final class PointInTime {
   }
 
 
-  public LocalDateTime toLocalDateTime() {
+  public LocalDateTime localDateTime() {
     return this.internalDateTime;
   }
 
-
   private static class Factory {
+    //TODO: use mapper here? Rename converter to Specification
 
     static final String BASIC_DATE_PATTERN = "dd/MM/uuuu";
     static final String BASIC_DATE_REGEX = "\\d\\d/\\d\\d/\\d\\d\\d\\d";
@@ -76,6 +62,7 @@ public final class PointInTime {
 
     private static TimeConverter defaultConverter;
 
+
     static {
       converters.add(fromDate(BASIC_DATE_REGEX, BASIC_DATE_PATTERN));
       converters.add(fromDateTime(BASIC_DATE_TIME_REGEX, BASIC_DATE_TIME_PATTERN));
@@ -83,6 +70,7 @@ public final class PointInTime {
       converters.add(defaultConverter);
       converters.add(fromDateTime(LEGACY_DATE_TIME_REGEX, LEGACY_DATE_TIME_PATTERN));
     }
+
 
     public static Optional<LocalDateTime> fromString(String toParse) {
       for (TimeConverter converter : converters) {
@@ -124,7 +112,7 @@ public final class PointInTime {
     }
 
     private String toString(PointInTime pointInTime) {
-      return formatter.format(pointInTime.toLocalDateTime());
+      return formatter.format(pointInTime.localDateTime());
     }
 
     public boolean isApplicable(String dateTimeString) {
@@ -132,7 +120,7 @@ public final class PointInTime {
     }
   }
 
-  public static class PointInTimeConverter extends BidirectionalConverter<PointInTime,String> {
+  public static class PointInTimeConverter extends BidirectionalConverter<PointInTime, String> {
 
     @Override
     public String convertTo(PointInTime source, Type<String> destinationType,
