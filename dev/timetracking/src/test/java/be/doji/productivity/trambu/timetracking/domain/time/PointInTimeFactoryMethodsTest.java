@@ -16,7 +16,7 @@ public class PointInTimeFactoryMethodsTest {
   public void fromString_toLocalDateTime_dateOnly() {
 
     PointInTime timePoint = PointInTime.parse(DOJI_BIRTHDAY);
-    LocalDateTime converted = timePoint.localDateTime();
+    LocalDateTime converted = timePoint.dateTime();
 
     SoftAssertions assertions = new SoftAssertions();
     assertions.assertThat(converted.getYear()).isEqualTo(1989);

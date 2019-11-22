@@ -32,6 +32,6 @@ public class OccupationConverter extends
 
   private Pair<LocalDateTime, LocalDateTime> intervalToPair(Interval interval) {
     return Pair
-        .of(interval.getStart().localDateTime(), interval.getEnd().localDateTime());
+        .of(interval.getStart().dateTime(), interval.getEnd().dateTime());
   }
 }

@@ -77,7 +77,7 @@ public class Interval {
   public double getTimeSpanInSeconds() {
     PointInTime calcEnd = this.end == null ? timeService.now() : this.end;
     BigDecimal bigDecimal = valueOf(
-        between(this.start.localDateTime(), calcEnd.localDateTime()).getSeconds());
+        between(this.start.dateTime(), calcEnd.dateTime()).getSeconds());
     bigDecimal = bigDecimal.setScale(2, RoundingMode.HALF_UP);
     return bigDecimal.doubleValue();
   }

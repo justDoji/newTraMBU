@@ -5,6 +5,7 @@ import static be.doji.productivity.trambu.timetracking.infra.access.ControllerMa
 import be.doji.productivity.trambu.timetracking.api.TimeTracked;
 import be.doji.productivity.trambu.timetracking.domain.Occupation;
 import be.doji.productivity.trambu.timetracking.domain.OccupationRepository;
+import be.doji.productivity.trambu.timetracking.infra.exception.OccupationUnknown;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -39,9 +40,9 @@ public class OccupationController {
     return timeTracked(occupation);
   }
 
-  public IllegalArgumentException noKnownOccupation(
+  public OccupationUnknown noKnownOccupation(
       @PathVariable String occupationReference) {
-    return new IllegalArgumentException(
+    return new OccupationUnknown(
         String.format("No Occupation tied to reference: {%s}", occupationReference));
   }
 

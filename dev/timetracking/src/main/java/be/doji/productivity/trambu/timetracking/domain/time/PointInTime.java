@@ -16,7 +16,7 @@ public final class PointInTime {
     return TimeFormatSpecification.parse(toParse);
   }
 
-  public LocalDateTime localDateTime() {
+  public LocalDateTime dateTime() {
     return this.internalDateTime;
   }
 }

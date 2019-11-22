@@ -76,7 +76,7 @@ class TimeFormatSpecification {
   }
 
   public String string(PointInTime pointInTime) {
-    return formatter.format(pointInTime.localDateTime());
+    return formatter.format(pointInTime.dateTime());
   }
 
   private boolean isApplicable(String dateTimeString) {
