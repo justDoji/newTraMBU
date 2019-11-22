@@ -1,11 +1,11 @@
-package be.doji.productivity.trambu.timetracking.infra;
+package be.doji.productivity.trambu.timetracking.infra.persistence;
 
 import be.doji.productivity.trambu.timetracking.domain.Interval;
 import be.doji.productivity.trambu.timetracking.domain.Occupation;
 import be.doji.productivity.trambu.timetracking.domain.OccupationRepository;
 import be.doji.productivity.trambu.timetracking.domain.time.PointInTimeConverter;
-import be.doji.productivity.trambu.timetracking.infra.dao.IntervalDAO;
-import be.doji.productivity.trambu.timetracking.infra.dao.OccupationDAO;
+import be.doji.productivity.trambu.timetracking.infra.persistence.dao.IntervalDAO;
+import be.doji.productivity.trambu.timetracking.infra.persistence.dao.OccupationDAO;
 import be.doji.productivity.trambu.timetracking.infra.dto.IntervalData;
 import be.doji.productivity.trambu.timetracking.infra.dto.OccupationData;
 import java.util.List;

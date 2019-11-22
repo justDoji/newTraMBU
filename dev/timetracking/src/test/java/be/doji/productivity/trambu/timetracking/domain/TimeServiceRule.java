@@ -25,15 +25,15 @@ public class TimeServiceRule extends JUnitRule {
   private LocalDateTime timeToSet = LocalDateTime.now();
 
   public TimeServiceRule() {
-    super(Plugins.getMockitoLogger(), Strictness.LENIENT);
+    super(Plugins.getMockitoLogger(), Strictness.WARN);
     mockClock = Mockito.mock(Clock.class);
     timeService = Mockito.mock(TimeService.class);
-
   }
 
 
   public void time(LocalDateTime timeToSet) {
     this.timeToSet = timeToSet;
+    setClock(timeToSet);
   }
 
   public TimeService service() {
@@ -53,7 +53,7 @@ public class TimeServiceRule extends JUnitRule {
           statement.evaluate();
         } catch (
             Throwable throwable) {
-          throwable.printStackTrace();
+          throw throwable;
         }
       }
     };

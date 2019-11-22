@@ -19,6 +19,7 @@
  */
 package be.doji.productivity.trambu.timetracking.infra;
 
+import be.doji.productivity.trambu.timetracking.infra.persistence.PersistenceConfiguration;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.boot.SpringBootConfiguration;

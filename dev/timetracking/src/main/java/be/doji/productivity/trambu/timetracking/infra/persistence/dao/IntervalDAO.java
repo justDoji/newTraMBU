@@ -1,4 +1,4 @@
-package be.doji.productivity.trambu.timetracking.infra.dao;
+package be.doji.productivity.trambu.timetracking.infra.persistence.dao;
 
 import be.doji.productivity.trambu.timetracking.infra.dto.IntervalData;
 import java.util.List;

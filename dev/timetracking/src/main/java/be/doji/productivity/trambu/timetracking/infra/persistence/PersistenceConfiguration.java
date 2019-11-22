@@ -19,7 +19,7 @@
  *     For further information on usage, or licensing, contact the author
  *     through his github profile: https://github.com/justDoji
  */
-package be.doji.productivity.trambu.timetracking.infra;
+package be.doji.productivity.trambu.timetracking.infra.persistence;
 
 import java.util.Properties;
 import javax.annotation.PostConstruct;

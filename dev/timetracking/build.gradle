@@ -1,14 +1,11 @@
 plugins {
-    id "io.spring.dependency-management" version "1.0.5.RELEASE"
+    id 'org.springframework.boot' version '2.2.1.RELEASE'
 }
 
 apply plugin: 'io.spring.dependency-management'
 
-ext { springBootVersion = '2.1.4.RELEASE' }
+ext { springBootVersion = '2.2.1.RELEASE' }
 
-dependencyManagement {
-    imports { mavenBom("org.springframework.boot:spring-boot-dependencies:${springBootVersion}") }
-}
 
 dependencies {
     compile project(':kernel')
@@ -22,6 +19,8 @@ dependencies {
 
     //Spring
     implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-json'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
     //Database

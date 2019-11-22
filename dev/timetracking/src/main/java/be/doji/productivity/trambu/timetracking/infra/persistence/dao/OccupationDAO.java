@@ -17,7 +17,7 @@
  * For further information on usage, or licensing, contact the author through his github profile:
  * https://github.com/justDoji
  */
-package be.doji.productivity.trambu.timetracking.infra.dao;
+package be.doji.productivity.trambu.timetracking.infra.persistence.dao;
 
 import be.doji.productivity.trambu.timetracking.infra.dto.OccupationData;
 import java.util.List;
