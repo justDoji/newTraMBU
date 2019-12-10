@@ -26,5 +26,5 @@ import org.springframework.http.ResponseEntity;
 public interface OccupationModule {
 
   ResponseEntity<TimeTracked> getTrackedInformation();
-  
+
 }

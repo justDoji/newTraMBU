@@ -14,9 +14,11 @@ dependencies {
     compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.9'
     // https://mvnrepository.com/artifact/com.google.re2j/re2j
     compile group: 'com.google.re2j', name: 're2j', version: '1.2'
-
-    //Orika object mapper library
-    compile group: 'ma.glasnost.orika', name: 'orika-core', version: '1.5.1'
+    
+    //MapStruct
+    implementation "org.mapstruct:mapstruct:1.3.1.Final"
+    annotationProcessor "org.mapstruct:mapstruct-processor:1.3.1.Final"
+    testAnnotationProcessor "org.mapstruct:mapstruct-processor:1.3.1.Final"
 
     //Spring
     implementation 'org.springframework.boot:spring-boot-starter'
@@ -28,6 +30,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation group: 'com.h2database', name: 'h2', version: '1.3.148'
     compile group: 'org.hibernate', name: 'hibernate-core', version: '5.4.2.Final'
+
 }
 
 license {

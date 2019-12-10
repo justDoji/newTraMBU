@@ -31,7 +31,7 @@ import lombok.NoArgsConstructor;
 public class Pair<T, S> {
 
   private T first;
-  private S seccond;
+  private S second;
 
   public static <L, R> Pair<L, R> of(final L left, final R right) {
     return new Pair<>(left, right);

@@ -38,6 +38,9 @@ public class Interval {
 
   private TimeService timeService;
 
+  public Interval() {
+  }
+
   Interval(
       UUID occupationId,
       PointInTime start,
@@ -72,16 +75,16 @@ public class Interval {
     return occupationId;
   }
 
-  Interval setOccupationId(UUID identifier) {
+  public Interval setOccupationId(UUID identifier) {
     this.occupationId = identifier;
     return this;
   }
 
-  private void setStart(PointInTime start) {
+  public void setStart(PointInTime start) {
     this.start = start;
   }
 
-  private void setEnd(PointInTime end) {
+  public void setEnd(PointInTime end) {
     this.end = end;
   }
 

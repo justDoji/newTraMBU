@@ -39,7 +39,9 @@ public class Occupation {
   private String name;
   private List<Interval> intervals = new ArrayList<>();
 
-  Occupation(TimeService timeService) {
+
+
+  public Occupation(TimeService timeService) {
     this.timeService = timeService;
   }
 
@@ -97,6 +99,7 @@ public class Occupation {
   public void stop() {
     this.intervals.stream().filter(Interval::inProgress).findFirst().ifPresent(Interval::endNow);
   }
+
 
   public static class Builder {
 

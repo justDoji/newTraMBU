@@ -56,7 +56,6 @@ public class OccupationRepositoryImplTest {
   @Rule
   public TimeServiceRule timeRule = new TimeServiceRule();
 
-
   @Before
   public void setUp() {
     timeRule.time(of(2019, 11, 15, 12, 0));
