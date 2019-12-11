@@ -30,7 +30,7 @@ import org.springframework.test.web.servlet.MockMvc;
 @RunWith(SpringRunner.class)
 @WebMvcTest(TrackingController.class)
 @ContextConfiguration(classes = TimetrackingApplication.class)
-public class TimeTrackingFlowTest {
+public class TimeTrackingIntegrationTest {
 
   private static final LocalDateTime DECEMER_12_NOON = of(2019, 12, 12, 12, 0);
   private static final LocalDateTime DECEMBER_10_NOON = of(2019, 12, 10, 12, 0);
