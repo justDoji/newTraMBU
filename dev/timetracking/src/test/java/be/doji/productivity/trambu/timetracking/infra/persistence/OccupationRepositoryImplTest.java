@@ -19,7 +19,7 @@
  *     For further information on usage, or licensing, contact the author
  *     through his github profile: https://github.com/justDoji
  */
-package be.doji.productivity.trambu.timetracking.infra;
+package be.doji.productivity.trambu.timetracking.infra.persistence;
 
 import static be.doji.productivity.trambu.timetracking.domain.Occupation.*;
 import static be.doji.productivity.trambu.timetracking.domain.time.PointInTime.parse;
@@ -29,6 +29,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import be.doji.productivity.trambu.timetracking.domain.Occupation;
 import be.doji.productivity.trambu.timetracking.domain.OccupationRepository;
 import be.doji.productivity.trambu.timetracking.domain.TimeServiceRule;
+import be.doji.productivity.trambu.timetracking.infra.TimetrackingApplication;
 import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.UUID;
@@ -38,10 +39,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest
+@ContextConfiguration(classes = TimetrackingApplication.class)
 public class OccupationRepositoryImplTest {
 
   public static final String EXPECTED_NAME = "Coding TRAMBU";

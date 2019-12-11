@@ -35,10 +35,10 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/timespent")
 public class TimeSpentController {
 
   private final OccupationRepository repository;
@@ -48,8 +48,8 @@ public class TimeSpentController {
   }
 
 
-  @GetMapping("/{occupationReference}")
-  public TimeTracked getTracking(@PathVariable String occupationReference) {
+  @GetMapping("/timespent")
+  public TimeTracked getTracking(@RequestParam("reference") String occupationReference) {
     Occupation occupation = repository
         .occupationById(UUID.fromString(occupationReference))
         .orElseThrow(() -> noKnownOccupation(occupationReference));

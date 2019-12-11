@@ -23,10 +23,8 @@ import static be.doji.productivity.trambu.timetracking.domain.time.PointInTime.p
 import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 import be.doji.productivity.trambu.timetracking.api.Pair;
 import be.doji.productivity.trambu.timetracking.api.TimeTracked;
@@ -34,6 +32,7 @@ import be.doji.productivity.trambu.timetracking.domain.Occupation;
 import be.doji.productivity.trambu.timetracking.domain.OccupationRepository;
 import be.doji.productivity.trambu.timetracking.domain.TimeServiceRule;
 import be.doji.productivity.trambu.timetracking.domain.time.PointInTime;
+import be.doji.productivity.trambu.timetracking.infra.TimetrackingApplication;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -46,7 +45,6 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.json.JacksonTester;
@@ -54,10 +52,9 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 
 /**
  * Tests the inner logic and application functionality from the external endpoint down. To be used
@@ -67,6 +64,7 @@ import org.springframework.util.MultiValueMap;
  */
 @RunWith(SpringRunner.class)
 @WebMvcTest(TimeSpentController.class)
+@ContextConfiguration(classes = TimetrackingApplication.class)
 public class TimeSpentControllerTest {
 
 
@@ -128,7 +126,9 @@ public class TimeSpentControllerTest {
 
   public MockHttpServletResponse whenCallingTimespentForReference(UUID reference) throws Exception {
     return mvc.perform(
-        get("/timespent/" + reference).accept(MediaType.APPLICATION_JSON))
+        get("/timespent")
+            .param("reference", reference.toString())
+            .accept(MediaType.APPLICATION_JSON))
         .andReturn()
         .getResponse();
   }
