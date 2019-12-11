@@ -29,4 +29,6 @@ public interface OccupationRepository {
   Optional<Occupation> occupationById(UUID rootIdentifier);
 
   void save(Occupation occupation);
+
+  void clear();
 }

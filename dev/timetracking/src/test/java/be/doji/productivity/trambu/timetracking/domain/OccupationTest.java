@@ -1,23 +1,21 @@
 /**
  * TraMBU - an open time management tool
  *
- *     Copyright (C) 2019  Stijn Dejongh
+ * Copyright (C) 2019  Stijn Dejongh
  *
- *     This program is free software: you can redistribute it and/or modify
- *     it under the terms of the GNU Affero General Public License as
- *     published by the Free Software Foundation, either version 3 of the
- *     License, or (at your option) any later version.
+ * This program is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU Affero General Public License as published by the Free Software Foundation, either version 3
+ * of the License, or (at your option) any later version.
  *
- *     This program is distributed in the hope that it will be useful,
- *     but WITHOUT ANY WARRANTY; without even the implied warranty of
- *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *     GNU Affero General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Affero General Public License for more details.
  *
- *     You should have received a copy of the GNU Affero General Public License
- *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
  *
- *     For further information on usage, or licensing, contact the author
- *     through his github profile: https://github.com/justDoji
+ * For further information on usage, or licensing, contact the author through his github profile:
+ * https://github.com/justDoji
  */
 package be.doji.productivity.trambu.timetracking.domain;
 
@@ -25,6 +23,7 @@ import static be.doji.productivity.trambu.timetracking.domain.time.PointInTime.p
 import static java.time.LocalDateTime.of;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.Arrays;
 import java.util.UUID;
 import org.junit.Before;
 import org.junit.Rule;
@@ -64,10 +63,7 @@ public class OccupationTest {
   @Test
   public void whenBusyWithAnOccupation_timeIsTracked() {
     timeRule.time(of(2019, 12, 18, 12, 0));
-    Occupation testOccupation = Occupation.builder(repository, timeRule.service())
-        .rootIdentifier(ROOT_IDENTIFIER)
-        .name(EXPECTED_NAME)
-        .build();
+    Occupation testOccupation = createOccupation();
 
     testOccupation.start();
 
@@ -75,6 +71,28 @@ public class OccupationTest {
     testOccupation.stop();
 
     assertThat(testOccupation.getTimeSpentInHours()).isEqualTo(2.5);
+  }
+
+  @Test
+  public void startedAt_usesProvidedTimestamp() {
+    timeRule.time(of(2019, 12, 18, 12, 0));
+    Occupation testOccupation = createOccupation();
+
+    testOccupation.startedAt(of(2019, 12, 18, 10, 30));
+    testOccupation.stop();
+
+
+    assertThat(testOccupation.getIntervals()).hasSize(1);
+    assertThat(testOccupation.getTimeSpentInHours()).isEqualTo(1.5);
+  }
+
+  public Occupation createOccupation(Interval... intervals) {
+    Occupation testOccupation = Occupation.builder(repository, timeRule.service())
+        .rootIdentifier(ROOT_IDENTIFIER)
+        .name(EXPECTED_NAME)
+        .build();
+    Arrays.stream(intervals).forEach(testOccupation::addInterval);
+    return testOccupation;
   }
 
 }

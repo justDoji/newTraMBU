@@ -19,31 +19,21 @@
  *     For further information on usage, or licensing, contact the author
  *     through his github profile: https://github.com/justDoji
  */
-package be.doji.productivity.trambu.timetracking.api;
+package be.doji.productivity.trambu.timetracking.api.dto;
 
-import java.time.LocalDateTime;
-import java.util.List;
-import lombok.Builder;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
-@Builder
-public class TimeTracked {
+@NoArgsConstructor
+@AllArgsConstructor
+public class Pair<T, S> {
 
-  public TimeTracked() {
+  private T first;
+  private S second;
+
+  public static <L, R> Pair<L, R> of(final L left, final R right) {
+    return new Pair<>(left, right);
   }
-
-  public TimeTracked(String reference, String title, double timeSpentInHours,
-      List<Pair<LocalDateTime, LocalDateTime>> timeEntries) {
-    this.reference = reference;
-    this.title = title;
-    this.timeSpentInHours = timeSpentInHours;
-    this.timeEntries = timeEntries;
-  }
-
-  public String reference;
-  public String title;
-  public double timeSpentInHours;
-  public List<Pair<LocalDateTime, LocalDateTime>> timeEntries;
-
 }

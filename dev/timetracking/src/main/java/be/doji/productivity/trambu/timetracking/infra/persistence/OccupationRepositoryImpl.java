@@ -22,12 +22,12 @@ package be.doji.productivity.trambu.timetracking.infra.persistence;
 import be.doji.productivity.trambu.timetracking.domain.Occupation;
 import be.doji.productivity.trambu.timetracking.domain.OccupationRepository;
 import be.doji.productivity.trambu.timetracking.domain.time.TimeService;
-import be.doji.productivity.trambu.timetracking.infra.dto.IntervalData;
-import be.doji.productivity.trambu.timetracking.infra.dto.IntervalMapper;
-import be.doji.productivity.trambu.timetracking.infra.dto.OccupationData;
-import be.doji.productivity.trambu.timetracking.infra.dto.OccupationMapper;
 import be.doji.productivity.trambu.timetracking.infra.persistence.dao.IntervalDAO;
 import be.doji.productivity.trambu.timetracking.infra.persistence.dao.OccupationDAO;
+import be.doji.productivity.trambu.timetracking.infra.persistence.dto.IntervalData;
+import be.doji.productivity.trambu.timetracking.infra.persistence.dto.IntervalMapper;
+import be.doji.productivity.trambu.timetracking.infra.persistence.dto.OccupationData;
+import be.doji.productivity.trambu.timetracking.infra.persistence.dto.OccupationMapper;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -38,17 +38,26 @@ import org.springframework.stereotype.Service;
 @Service
 public class OccupationRepositoryImpl implements OccupationRepository {
 
-  private TimeService timeservice;
-  private OccupationDAO occupationDAO;
-  private IntervalDAO intervalDAO;
+  private final IntervalMapper intervalMapper;
+  private final TimeService timeservice;
+  private final OccupationDAO occupationDAO;
+  private final IntervalDAO intervalDAO;
+  private final OccupationMapper occupationMapper;
 
 
   @Autowired
-  public OccupationRepositoryImpl(OccupationDAO occupationDAO, IntervalDAO intervalDAO,
-      TimeService timeService) {
+  public OccupationRepositoryImpl(
+      OccupationDAO occupationDAO,
+      IntervalDAO intervalDAO,
+      TimeService timeService,
+      OccupationMapper occupationMapper,
+      IntervalMapper intervalMapper
+  ) {
     this.occupationDAO = occupationDAO;
     this.intervalDAO = intervalDAO;
     this.timeservice = timeService;
+    this.occupationMapper = occupationMapper;
+    this.intervalMapper = intervalMapper;
   }
 
   @Override
@@ -59,10 +68,10 @@ public class OccupationRepositoryImpl implements OccupationRepository {
   }
 
   private Occupation occupationPersitenceToDomain(OccupationData nameData) {
-    Occupation aggregate = OccupationMapper.instance().occupationDataToOccupation(nameData);
+    Occupation aggregate = occupationMapper.occupationDataToOccupation(nameData, this);
     List<IntervalData> intervalData = intervalDAO.findByCorrelationId(nameData.getCorrelationId());
     intervalData.stream()
-        .map(i -> IntervalMapper.instance().intervalDataToInterval(i))
+        .map(intervalMapper::intervalDataToInterval)
         .forEach(aggregate::addInterval);
     return aggregate;
   }
@@ -73,21 +82,28 @@ public class OccupationRepositoryImpl implements OccupationRepository {
     storeIntervalData(occupation);
   }
 
+  @Override
+  public void clear() {
+    intervalDAO.deleteAll();
+    occupationDAO.deleteAll();
+  }
+
   private void storeOccupationData(Occupation occupation) {
-    OccupationData mappedData = OccupationMapper.instance().occupationToOccupationData(occupation);
+    OccupationData mappedData = occupationMapper.occupationToOccupationData(occupation);
     occupationDAO
         .findByCorrelationId(occupation.getIdentifier())
         .ifPresent(data -> mappedData.setId(data.getId()));
+
     occupationDAO.save(mappedData);
   }
 
   private void storeIntervalData(Occupation occupation) {
-    mapToIntervalData(occupation).forEach(data -> intervalDAO.save(data));
+    mapToIntervalData(occupation).forEach(intervalDAO::save);
   }
 
   private List<IntervalData> mapToIntervalData(Occupation occupation) {
     return occupation.getIntervals().stream()
-        .map(i -> IntervalMapper.instance().intervalToIntervalData(i))
+        .map(intervalMapper::intervalToIntervalData)
         .collect(Collectors.toList());
   }
 }

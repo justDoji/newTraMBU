@@ -19,11 +19,13 @@
  */
 package be.doji.productivity.trambu.timetracking.infra.access;
 
-import be.doji.productivity.trambu.timetracking.api.TimeTracked;
+import be.doji.productivity.trambu.timetracking.api.dto.TimeTracked;
+import be.doji.productivity.trambu.timetracking.api.events.TrackingStarted;
+import be.doji.productivity.trambu.timetracking.api.events.TrackingStopped;
 import be.doji.productivity.trambu.timetracking.domain.Occupation;
 import be.doji.productivity.trambu.timetracking.domain.OccupationRepository;
-import be.doji.productivity.trambu.timetracking.infra.dto.OccupationMapper;
 import be.doji.productivity.trambu.timetracking.infra.exception.OccupationUnknown;
+import be.doji.productivity.trambu.timetracking.infra.persistence.dto.OccupationMapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -34,17 +36,20 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class TimeSpentController {
+public class TrackingController {
 
   private final OccupationRepository repository;
+  private final OccupationMapper mapper;
 
-  public TimeSpentController(@Autowired OccupationRepository repository) {
+  public TrackingController(@Autowired OccupationRepository repository, @Autowired OccupationMapper mapper) {
     this.repository = repository;
+    this.mapper = mapper;
   }
 
 
@@ -53,7 +58,23 @@ public class TimeSpentController {
     Occupation occupation = repository
         .occupationById(UUID.fromString(occupationReference))
         .orElseThrow(() -> noKnownOccupation(occupationReference));
-    return OccupationMapper.instance().occupationToTimeTracked(occupation);
+    return mapper.occupationToTimeTracked(occupation);
+  }
+
+  @PostMapping(value = "/startTracking" , consumes = "application/json", produces = "application/json")
+  public void trackingStarted(@RequestBody TrackingStarted startedEvent) {
+    UUID reference = startedEvent.getReference();
+    Occupation occupation = repository.occupationById(reference)
+        .orElseThrow(() -> noKnownOccupation(reference == null ? null : reference.toString()));
+    occupation.startedAt(startedEvent.getTimeStarted());
+  }
+
+  @PostMapping(value = "/stopTracking" , consumes = "application/json", produces = "application/json")
+  public void trackingStopped(@RequestBody TrackingStopped stoppedEvent) {
+    UUID reference = stoppedEvent.getReference();
+    Occupation occupation = repository.occupationById(reference)
+        .orElseThrow(() -> noKnownOccupation(reference == null ? null : reference.toString()));
+    occupation.stoppedAt(stoppedEvent.getTimeStopped());
   }
 
   public OccupationUnknown noKnownOccupation(

@@ -21,6 +21,8 @@ package be.doji.productivity.trambu.timetracking.domain.time;
 
 import be.doji.productivity.trambu.kernel.annotations.ValueObject;
 import java.time.LocalDateTime;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 @ValueObject
 public final class PointInTime {
@@ -35,11 +37,33 @@ public final class PointInTime {
     return TimeFormatSpecification.parse(toParse);
   }
 
+  public static PointInTime fromDateTime(LocalDateTime dateTime) {return new PointInTime(dateTime);}
+
   public String toString() {
     return TimeFormatSpecification.EXTENDED_DATE_TIME.string(this);
   }
 
   public LocalDateTime dateTime() {
     return this.internalDateTime;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) { return true; }
+
+    if (o == null || getClass() != o.getClass()) { return false; }
+
+    PointInTime that = (PointInTime) o;
+
+    return new EqualsBuilder()
+        .append(internalDateTime, that.internalDateTime)
+        .isEquals();
+  }
+
+  @Override
+  public int hashCode() {
+    return new HashCodeBuilder(17, 37)
+        .append(internalDateTime)
+        .toHashCode();
   }
 }

@@ -20,14 +20,14 @@
 package be.doji.productivity.trambu.timetracking.infra.access;
 
 import static be.doji.productivity.trambu.timetracking.domain.time.PointInTime.parse;
+import static java.time.LocalDateTime.of;
 import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
-import be.doji.productivity.trambu.timetracking.api.Pair;
-import be.doji.productivity.trambu.timetracking.api.TimeTracked;
+import be.doji.productivity.trambu.timetracking.api.dto.Pair;
+import be.doji.productivity.trambu.timetracking.api.dto.TimeTracked;
 import be.doji.productivity.trambu.timetracking.domain.Occupation;
 import be.doji.productivity.trambu.timetracking.domain.OccupationRepository;
 import be.doji.productivity.trambu.timetracking.domain.TimeServiceRule;
@@ -50,7 +50,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.json.JacksonTester;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -63,10 +62,9 @@ import org.springframework.test.web.servlet.MockMvc;
  * Scope: Endpoint + Domain logic Not In Scope: Persistence layer
  */
 @RunWith(SpringRunner.class)
-@WebMvcTest(TimeSpentController.class)
+@WebMvcTest(TrackingController.class)
 @ContextConfiguration(classes = TimetrackingApplication.class)
-public class TimeSpentControllerTest {
-
+public class TrackingControllerTest {
 
   @Autowired
   private MockMvc mvc;
@@ -87,6 +85,7 @@ public class TimeSpentControllerTest {
   public static final String EXPECTED_TITLE = "Coding a layered application";
 
   private JacksonTester<TimeTracked> jsonOccupation;
+  private TestFlow flow;
 
   @Before
   public void setUp() {
@@ -94,6 +93,8 @@ public class TimeSpentControllerTest {
     when(occupationRepository.occupationById(REFERENCE_NOT_FOUND)).thenReturn(Optional.empty());
 
     occupation = createOccupation(EXPECTED_TITLE, REFERENCE, START_TIME, END_TIME);
+
+    this.flow = new TestFlow(mvc);
   }
 
   @Test
@@ -102,7 +103,7 @@ public class TimeSpentControllerTest {
 
     //when
     MockHttpServletResponse result =
-        whenCallingTimespentForReference(REFERENCE);
+        flow.whenCallingTimespentForReference(REFERENCE);
 
     //then
     assertThat(result.getStatus()).isEqualTo(HttpStatus.OK.value());
@@ -113,24 +114,53 @@ public class TimeSpentControllerTest {
   }
 
   @Test
+  public void retrieveTimeTracked_returnCorrectHours_WhenOccupationReferenceIsKnown()
+      throws Exception {
+    Occupation testOccupation = Occupation.builder(occupationRepository, timeRule.service())
+        .name(EXPECTED_TITLE)
+        .rootIdentifier(REFERENCE)
+        .build();
+    given(occupationRepository.occupationById(REFERENCE)).willReturn(Optional.of(testOccupation));
+    testOccupation.startedAt(of(2019, 12, 10, 12, 0));
+
+    timeRule.time(of(2019, 12, 12, 12, 0));
+    //when
+    MockHttpServletResponse result =
+        flow.whenCallingTimespentForReference(REFERENCE);
+
+    //then
+    assertThat(result.getStatus()).isEqualTo(HttpStatus.OK.value());
+    TimeTracked parsedData = jsonOccupation
+        .parseObject(result.getContentAsByteArray());
+    assertThat(parsedData.timeSpentInHours).isEqualTo(48.0);
+  }
+
+  @Test
   public void retrieveTimeTracked_throwsError_whenReferenceUnknown() throws Exception {
     given(occupationRepository.occupationById(REFERENCE_NOT_FOUND)).willReturn(Optional.empty());
 
     //when
     MockHttpServletResponse result =
-        whenCallingTimespentForReference(REFERENCE_NOT_FOUND);
+        flow.whenCallingTimespentForReference(REFERENCE_NOT_FOUND);
 
     //then
     assertThat(result.getStatus()).isEqualTo(HttpStatus.NOT_FOUND.value());
   }
 
-  public MockHttpServletResponse whenCallingTimespentForReference(UUID reference) throws Exception {
-    return mvc.perform(
-        get("/timespent")
-            .param("reference", reference.toString())
-            .accept(MediaType.APPLICATION_JSON))
-        .andReturn()
-        .getResponse();
+  @Test
+  public void trackingStarted_startsTrackingTimeForOccupation() throws Exception {
+    given(occupationRepository.occupationById(REFERENCE)).willReturn(Optional.of(occupation));
+
+    //when
+    LocalDateTime startTime = of(2019, 10, 10, 12, 0);
+    MockHttpServletResponse result =
+        flow.whenCallingTrackingStartedForReference(REFERENCE, startTime);
+
+    //then
+    assertThat(result.getStatus()).isEqualTo(HttpStatus.OK.value());
+    assertThat(occupation.getIntervals()).hasSize(2);
+    assertThat(occupation.getIntervals().get(1).getStart())
+        .isEqualTo(PointInTime.fromDateTime(startTime));
   }
 
   public Occupation createOccupation(String title, UUID reference, PointInTime startTime,

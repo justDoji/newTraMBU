@@ -21,7 +21,7 @@
  */
 package be.doji.productivity.trambu.timetracking.infra.persistence.dao;
 
-import be.doji.productivity.trambu.timetracking.infra.dto.IntervalData;
+import be.doji.productivity.trambu.timetracking.infra.persistence.dto.IntervalData;
 import java.util.List;
 import java.util.UUID;
 import org.springframework.data.repository.CrudRepository;
@@ -31,5 +31,7 @@ import org.springframework.stereotype.Repository;
 public interface IntervalDAO extends CrudRepository<IntervalData, Long> {
 
   List<IntervalData> findByCorrelationId(UUID correlationID);
+
+  IntervalData findByIntervalId(UUID intervalId);
 
 }

@@ -1,42 +1,36 @@
-package be.doji.productivity.trambu.timetracking.infra.dto;
+package be.doji.productivity.trambu.timetracking.infra.persistence.dto;
 
-import be.doji.productivity.trambu.timetracking.api.Pair;
-import be.doji.productivity.trambu.timetracking.api.TimeTracked;
+import be.doji.productivity.trambu.timetracking.api.dto.Pair;
+import be.doji.productivity.trambu.timetracking.api.dto.TimeTracked;
 import be.doji.productivity.trambu.timetracking.domain.Interval;
 import be.doji.productivity.trambu.timetracking.domain.Occupation;
+import be.doji.productivity.trambu.timetracking.domain.OccupationRepository;
 import be.doji.productivity.trambu.timetracking.domain.time.PointInTime;
 import be.doji.productivity.trambu.timetracking.domain.time.TimeService;
 import java.time.LocalDateTime;
 import java.util.UUID;
-import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 
-@Mapper(componentModel = "spring", uses = TimeService.class, injectionStrategy = InjectionStrategy.CONSTRUCTOR)
+@Mapper(componentModel = "spring")
 public abstract class OccupationMapper {
 
-  @Autowired TimeService timeService;
-
-  private static OccupationMapper INSTANCE = Mappers.getMapper(OccupationMapper.class);
+  @Autowired
+  TimeService timeService;
 
   @Mapping(source = "name", target = "name")
   @Mapping(source = "identifier", target = "correlationId")
   @Mapping(target = "id", ignore = true)
   public abstract OccupationData occupationToOccupationData(Occupation source);
 
-  public Occupation occupationDataToOccupation(OccupationData source) {
-    Occupation occupation = new Occupation(timeService);
+  public Occupation occupationDataToOccupation(OccupationData source,
+      OccupationRepository repository) {
+    Occupation occupation = new Occupation(timeService, repository);
     occupation.setName(source.getName());
     occupation.setIdentifier(source.getCorrelationId());
     return occupation;
   }
-
-  public static OccupationMapper instance() {
-    return INSTANCE;
-  }
-
 
   @Mapping(source = "name", target = "title")
   @Mapping(source = "identifier", target = "reference")
@@ -53,7 +47,8 @@ public abstract class OccupationMapper {
   }
 
   LocalDateTime pointInTimeToDateTime(PointInTime source) {
-    return source.dateTime();
+    return source == null ? null : source.dateTime();
   }
+
 
 }

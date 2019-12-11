@@ -19,17 +19,14 @@
  *     For further information on usage, or licensing, contact the author
  *     through his github profile: https://github.com/justDoji
  */
-package be.doji.productivity.trambu.timetracking.infra.dto;
+package be.doji.productivity.trambu.timetracking.infra.persistence.dto;
 
-import java.util.Optional;
 import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import lombok.Data;
 
@@ -47,10 +44,8 @@ public class IntervalData {
   }
 
   @Id
-  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "interval_seq")
-  @SequenceGenerator(name = "interval_seq", sequenceName = "SEQ_INTERVAL")
-  private Long id;
-
+  @Column(name = "INTERVAL_ID", nullable = false)
+  private UUID intervalId;
 
   @Column(name = "START", nullable = false)
   private String start;

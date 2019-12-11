@@ -19,7 +19,7 @@
  */
 package be.doji.productivity.trambu.timetracking.infra.persistence.dao;
 
-import be.doji.productivity.trambu.timetracking.infra.dto.OccupationData;
+import be.doji.productivity.trambu.timetracking.infra.persistence.dto.OccupationData;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;

@@ -19,12 +19,30 @@
  *     For further information on usage, or licensing, contact the author
  *     through his github profile: https://github.com/justDoji
  */
-package be.doji.productivity.trambu.timetracking.api;
+package be.doji.productivity.trambu.timetracking.infra.persistence.dto;
 
-import org.springframework.http.ResponseEntity;
+import java.util.UUID;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+import lombok.Data;
 
-public interface OccupationModule {
+@Data
+@Entity(name = "OCCUPATION")
+public class OccupationData {
 
-  ResponseEntity<TimeTracked> getTrackedInformation();
+  @Id
+  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "occupation_seq")
+  @SequenceGenerator(name = "occupation_seq", sequenceName = "SEQ_OCCUPATION")
+  private Long id;
+
+  @Column(name = "CORRELATION_ID", nullable = false)
+  private UUID correlationId;
+
+  @Column(name = "NAME", nullable = false)
+  private String name;
 
 }
