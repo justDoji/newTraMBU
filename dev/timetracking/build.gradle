@@ -53,3 +53,19 @@ bootJar {
     }
 }
 
+test.finalizedBy jacocoTestReport
+
+jacocoTestReport {
+    reports {
+        xml.enabled true
+        xml.destination file("${buildDir}/reports/jacoco.xml")
+        csv.enabled false
+        html.destination file("${buildDir}/reports/jacocoHtml")
+    }
+}
+
+license {
+    header rootProject.file('LICENSE_HEADER')
+    strictCheck true
+}
+

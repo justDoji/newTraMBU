@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="2ad8e5fb-21dc-482f-91ba-131497399bd6" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ops/jenkins/Docker/jenkins.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../ops/jenkins/Docker/jenkins.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/timetracking/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/timetracking/build.gradle" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,6 +50,13 @@
                 <item name="newTraMBU" type="f1a62948:ProjectNode" />
                 <item name="timetracking" type="2d1252cf:ModuleNode" />
                 <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="newTraMBU" type="f1a62948:ProjectNode" />
+                <item name="timetracking" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="build" type="c8890929:TasksNode$1" />
               </path>
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
@@ -113,7 +120,7 @@
       <recent name="$PROJECT_DIR$/gradle" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.dev:timetracking [buildDockerImage]">
+  <component name="RunManager" selected="Gradle.dev:timetracking [clean build]">
     <configuration default="true" type="Applet" factoryName="Applet">
       <option name="WIDTH" value="400" />
       <option name="HEIGHT" value="300" />
@@ -167,6 +174,26 @@
       <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
       <method v="2" />
     </configuration>
+    <configuration name="dev:timetracking [clean build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/timetracking" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="clean" />
+            <option value="build" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
+      <method v="2" />
+    </configuration>
     <configuration name="dev:timetracking [jar build bootJar]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -181,25 +208,6 @@
             <option value="jar" />
             <option value="build" />
             <option value="bootJar" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
-      <method v="2" />
-    </configuration>
-    <configuration name="dev:timetracking [jar]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/timetracking" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="jar" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -267,11 +275,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.dev:timetracking [clean build]" />
         <item itemvalue="Gradle.dev:timetracking [buildDockerImage]" />
         <item itemvalue="Gradle.dev:timetracking [jar build bootJar]" />
         <item itemvalue="Gradle.dev:timetracking [licenseFormat]" />
         <item itemvalue="Gradle.dev:timetracking [clean build bootJar]" />
-        <item itemvalue="Gradle.dev:timetracking [jar]" />
       </list>
     </recent_temporary>
   </component>
@@ -299,7 +307,7 @@
       <updated>1576766100061</updated>
       <workItem from="1576766103152" duration="155000" />
       <workItem from="1576766329799" duration="4938000" />
-      <workItem from="1576774162433" duration="2422000" />
+      <workItem from="1576774162433" duration="2444000" />
     </task>
     <servers />
   </component>
