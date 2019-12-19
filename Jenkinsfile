@@ -33,7 +33,8 @@ node {
     }
 
     stage('Spin up containers') {
-        app('timetracking:dockerComposeUp')
+        appgw('timetracking:dockerComposeUp')
+        echo 'TimeTracking container Running!'
     }
 
     stage("Acceptance testing - Aunt Zulma") {
