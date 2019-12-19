@@ -6,3 +6,4 @@ credentials-binding
 plain-credentials
 pipeline-utility-steps
 greenballs
+htmlpublisher

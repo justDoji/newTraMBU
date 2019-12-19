@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2ad8e5fb-21dc-482f-91ba-131497399bd6" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../Jenkinsfile" beforeDir="false" afterPath="$PROJECT_DIR$/../Jenkinsfile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/aunt-zulma/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/aunt-zulma/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timetracking/gradle/docker.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/timetracking/gradle/docker.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ops/jenkins/Docker/plugins.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../ops/jenkins/Docker/plugins.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -300,7 +300,7 @@
       <updated>1576766100061</updated>
       <workItem from="1576766103152" duration="155000" />
       <workItem from="1576766329799" duration="4938000" />
-      <workItem from="1576774162433" duration="1823000" />
+      <workItem from="1576774162433" duration="2422000" />
     </task>
     <servers />
   </component>

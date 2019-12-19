@@ -42,6 +42,7 @@ node {
       appgw('aunt-zulma:aggregate')
       junit zulma + '/build/test-results/**/*.xml'
       archiveArtifacts artifacts: zulma+'/target/site/**/*.*'
+      publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: ‘coverage’, reportFiles: ‘index.html’, reportName: ‘HTML Report’, reportTitles: ‘Serenity Report’])
     }
 
     stage('Code Quality') {
