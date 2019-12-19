@@ -61,3 +61,11 @@ task cleanUpAfterSerenity(type: Delete) {
     delete 'target'
 }
 clean.dependsOn cleanUpAfterSerenity
+
+task dockerComposeDown(type: Exec) {
+    commandLine "docker-compose", "down"
+}
+
+task dockerComposeUp(type: Exec, dependsOn: 'dockerComposeDown') {
+    commandLine "docker-compose", "up", "-d"
+}

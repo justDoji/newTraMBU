@@ -32,12 +32,12 @@ node {
         echo 'Docker image built and ready to roll!'
     }
 
-    stage('Spin up containers') {
-        appgw('timetracking:dockerComposeUp')
+    stage('Aunt Zulma - Spin up containers') {
+        appgw('aunt-zulma:dockerComposeUp')
         echo 'TimeTracking container Running!'
     }
 
-    stage("Acceptance testing - Aunt Zulma") {
+    stage("Aunt Zulma - Acceptance testing") {
       appgw('aunt-zulma:clean aunt-zulma:test')
       appgw('aunt-zulma:aggregate')
       junit zulma + '/build/test-results/**/*.xml'
