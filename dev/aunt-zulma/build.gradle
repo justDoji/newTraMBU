@@ -1,0 +1,63 @@
+defaultTasks 'clean', 'test', 'aggregate'
+
+repositories {
+    mavenLocal()
+    jcenter()
+}
+
+buildscript {
+    repositories {
+        mavenLocal()
+        jcenter()
+    }
+    dependencies {
+        classpath("net.serenity-bdd:serenity-gradle-plugin:2.0.70")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'net.serenity-bdd.aggregator'
+apply from: "../gradle/zulma_libraries.gradle"
+
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+/**
+ * This is needed to make sure there are no Cucumber 2 dependencies in the classpath.
+ */
+configurations.all {
+    resolutionStrategy {
+        force "io.cucumber:cucumber-core:${cucumberVersion}"
+    }
+}
+dependencies {
+
+    compile libs.logback,
+            libs.test.cucumber.java,
+            libs.test.cucumber.core,
+            libs.test.cucumber.junit,
+            libs.test.serenity.core,
+            libs.test.serenity.screenplay,
+            libs.test.serenity.junit,
+            libs.test.serenity.screenplayWebdriver,
+            libs.test.serenity.cucumber,
+            libs.test.junit
+
+}
+
+test {
+    testLogging.showStandardStreams = true
+    systemProperties System.getProperties()
+}
+
+gradle.startParameter.continueOnFailure = true
+
+test.finalizedBy(aggregate)
+
+task cleanUpAfterSerenity(type: Delete) {
+    delete 'target'
+}
+clean.dependsOn cleanUpAfterSerenity

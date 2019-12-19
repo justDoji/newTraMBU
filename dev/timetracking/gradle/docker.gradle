@@ -1,0 +1,15 @@
+apply plugin: 'docker'
+
+task buildDockerImage(type: Docker, dependsOn: build) {
+    applicationName = project.name
+    def projectDir = "${project.projectDir}"
+    dockerfile = file(projectDir + "/docker/Dockerfile")
+
+    doFirst {
+        copy {
+            from jar
+            rename { fileName -> fileName.replace(jar.getArchiveFileName().get(), 'timetracking.jar') }
+            into stageDir
+        }
+    }
+}

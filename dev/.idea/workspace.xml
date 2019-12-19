@@ -1,0 +1,386 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="2ad8e5fb-21dc-482f-91ba-131497399bd6" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/aunt-zulma/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aunt-zulma/build.gradle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aunt-zulma/settings.gradle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aunt-zulma/src/main/java/be/doji/productivity/trambu/ManualMockMain.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aunt-zulma/src/main/java/be/doji/productivity/trambu/messages/XmlFormatter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aunt-zulma/src/main/java/be/doji/productivity/trambu/soap/Capture.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aunt-zulma/src/main/java/be/doji/productivity/trambu/soap/SoapListener.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aunt-zulma/src/main/java/be/doji/productivity/trambu/soap/SoapSender.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aunt-zulma/src/test/java/be/doji/productivity/trambu/TestSuite.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aunt-zulma/src/test/java/be/doji/productivity/trambu/listeners/HttpCaptorListener.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aunt-zulma/src/test/java/be/doji/productivity/trambu/listeners/MarkdownListener.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aunt-zulma/src/test/resources/META-INF/services/net.thucydides.core.steps.StepListener" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/aunt-zulma/src/test/resources/be/doji/productivity/trambu/features/timetracking/creating_action.feature" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gradle/zulma_libraries.gradle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/timetracking/docker/Dockerfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/timetracking/gradle/docker.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Jenkinsfile" beforeDir="false" afterPath="$PROJECT_DIR$/../Jenkinsfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/timetracking/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/timetracking/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/timetracking/src/main/java/be/doji/productivity/trambu/timetracking/api/events/Event.java" beforeDir="false" afterPath="$PROJECT_DIR$/timetracking/src/main/java/be/doji/productivity/trambu/timetracking/api/events/Event.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/timetracking/src/main/java/be/doji/productivity/trambu/timetracking/api/events/TrackingStarted.java" beforeDir="false" afterPath="$PROJECT_DIR$/timetracking/src/main/java/be/doji/productivity/trambu/timetracking/api/events/TrackingStarted.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/timetracking/src/main/java/be/doji/productivity/trambu/timetracking/api/events/TrackingStopped.java" beforeDir="false" afterPath="$PROJECT_DIR$/timetracking/src/main/java/be/doji/productivity/trambu/timetracking/api/events/TrackingStopped.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/timetracking/src/main/java/be/doji/productivity/trambu/timetracking/infra/TimetrackingApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/timetracking/src/main/java/be/doji/productivity/trambu/timetracking/infra/TimetrackingApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/timetracking/src/main/java/be/doji/productivity/trambu/timetracking/infra/access/CreateOccupationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/timetracking/src/main/java/be/doji/productivity/trambu/timetracking/infra/access/CreateOccupationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/timetracking/src/main/java/be/doji/productivity/trambu/timetracking/infra/persistence/dto/IntervalMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/timetracking/src/main/java/be/doji/productivity/trambu/timetracking/infra/persistence/dto/IntervalMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/timetracking/src/main/java/be/doji/productivity/trambu/timetracking/infra/persistence/dto/OccupationMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/timetracking/src/main/java/be/doji/productivity/trambu/timetracking/infra/persistence/dto/OccupationMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/timetracking/src/test/java/be/doji/productivity/trambu/timetracking/infra/access/CreateOccupationControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/timetracking/src/test/java/be/doji/productivity/trambu/timetracking/infra/access/CreateOccupationControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/timetracking/src/test/java/be/doji/productivity/trambu/timetracking/infra/access/TestFlow.java" beforeDir="false" afterPath="$PROJECT_DIR$/timetracking/src/test/java/be/doji/productivity/trambu/timetracking/infra/access/TestFlow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/timetracking/src/test/java/be/doji/productivity/trambu/timetracking/infra/access/TimeTrackingIntegrationTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/timetracking/src/test/java/be/doji/productivity/trambu/timetracking/infra/access/TimeTrackingIntegrationTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/trambu-aunt-zulma/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trambu-aunt-zulma/serentiy.properties" beforeDir="false" afterPath="$PROJECT_DIR$/aunt-zulma/serentiy.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/trambu-aunt-zulma/settings.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trambu-aunt-zulma/src/test/java/be/doji/productivity/trambu/zulma/AcceptanceTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trambu-aunt-zulma/src/test/java/be/doji/productivity/trambu/zulma/features/steps/GeneralSteps.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/trambu-aunt-zulma/src/test/resources/be.doji.productivity.trambu.zulma/stories/applicationIsRunning.story" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/ARCHITECTURE.md" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/ARCHITECTURE.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ops/jenkins/Docker/jenkins.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../ops/jenkins/Docker/jenkins.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ops/startJenkins.sh" beforeDir="false" afterPath="$PROJECT_DIR$/../ops/startJenkins.sh" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CodeStyleSettingsInfer">
+    <option name="done" value="true" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <task path="$PROJECT_DIR$/aunt-zulma">
+          <activation />
+        </task>
+        <task path="$PROJECT_DIR$/timetracking">
+          <activation />
+        </task>
+        <task path="$PROJECT_DIR$">
+          <activation />
+        </task>
+        <task path="$PROJECT_DIR$/trambu-front">
+          <activation />
+        </task>
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="newTraMBU" type="f1a62948:ProjectNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="newTraMBU" type="f1a62948:ProjectNode" />
+                <item name="timetracking" type="2d1252cf:ModuleNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="newTraMBU" type="f1a62948:ProjectNode" />
+                <item name="timetracking" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="newTraMBU" type="f1a62948:ProjectNode" />
+                <item name="timetracking" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="other" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="newTraMBU" type="f1a62948:ProjectNode" />
+                <item name="trambu-front" type="2d1252cf:ModuleNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="newTraMBU" type="f1a62948:ProjectNode" />
+                <item name="trambu-front" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="IgnoredFileRootStore">
+    <option name="generatedRoots">
+      <set>
+        <option value="$PROJECT_DIR$/.idea" />
+      </set>
+    </option>
+  </component>
+  <component name="ProjectCodeStyleSettingsMigration">
+    <option name="version" value="1" />
+  </component>
+  <component name="ProjectId" id="1VCnmB2NfuPIvdpXEyax9X0FI7v" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="abbreviatePackageNames" value="true" />
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/aunt-zulma" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="project.structure.last.edited" value="SDKs" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="show.unlinked.gradle.project.popup" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/aunt-zulma" />
+      <recent name="$PROJECT_DIR$/gradle" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Gradle.dev:timetracking [buildDockerImage]">
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <module />
+      <method />
+    </configuration>
+    <configuration default="true" type="Application" factoryName="Application">
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="dev:timetracking [buildDockerImage]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/timetracking" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="buildDockerImage" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="dev:timetracking [clean build bootJar]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/timetracking" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="clean" />
+            <option value="build" />
+            <option value="bootJar" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="dev:timetracking [jar build bootJar]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/timetracking" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="jar" />
+            <option value="build" />
+            <option value="bootJar" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="dev:timetracking [jar]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/timetracking" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="jar" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="dev:timetracking [licenseFormat]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/timetracking" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="licenseFormat" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="JUnit" factoryName="JUnit">
+      <option name="TEST_OBJECT" value="class" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TimetrackingApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="newTraMBU.timetracking.main" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="be.doji.productivity.trambu.timetracking.infra.TimetrackingApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TrambuWebApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="newTraMBU.trambu-front.main" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="be.doji.productivity.trambu.front.TrambuWebApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="TestNG">
+      <option name="TEST_OBJECT" value="CLASS" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <properties />
+      <listeners />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType">
+      <module name="" />
+      <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m -ea" />
+      <option name="PROGRAM_PARAMETERS" />
+      <predefined_log_file enabled="true" id="idea.log" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Gradle.dev:timetracking [buildDockerImage]" />
+        <item itemvalue="Gradle.dev:timetracking [jar build bootJar]" />
+        <item itemvalue="Gradle.dev:timetracking [licenseFormat]" />
+        <item itemvalue="Gradle.dev:timetracking [clean build bootJar]" />
+        <item itemvalue="Gradle.dev:timetracking [jar]" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="2ad8e5fb-21dc-482f-91ba-131497399bd6" name="Default Changelist" comment="" />
+      <created>1576766100061</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1576766100061</updated>
+      <workItem from="1576766103152" duration="155000" />
+      <workItem from="1576766329799" duration="4938000" />
+      <workItem from="1576774162433" duration="668000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="527" y="215" key="#Project_Structure" timestamp="1576766583592">
+      <screen x="49" y="27" width="1871" height="1053" />
+    </state>
+    <state x="527" y="215" key="#Project_Structure/49.27.1871.1053/1920.0.1920.1200@49.27.1871.1053" timestamp="1576766583592" />
+    <state x="708" y="311" key="FileChooserDialogImpl" timestamp="1576767176726">
+      <screen x="49" y="27" width="1871" height="1053" />
+    </state>
+    <state x="708" y="311" key="FileChooserDialogImpl/49.27.1871.1053/1920.0.1920.1200@49.27.1871.1053" timestamp="1576767176726" />
+    <state width="1819" height="400" key="GridCell.Tab.0.bottom" timestamp="1576772778878">
+      <screen x="49" y="27" width="1871" height="1053" />
+    </state>
+    <state width="1819" height="400" key="GridCell.Tab.0.bottom/49.27.1871.1053/1920.0.1920.1200@49.27.1871.1053" timestamp="1576772778878" />
+    <state width="1819" height="400" key="GridCell.Tab.0.center" timestamp="1576772778878">
+      <screen x="49" y="27" width="1871" height="1053" />
+    </state>
+    <state width="1819" height="400" key="GridCell.Tab.0.center/49.27.1871.1053/1920.0.1920.1200@49.27.1871.1053" timestamp="1576772778878" />
+    <state width="1819" height="400" key="GridCell.Tab.0.left" timestamp="1576772778878">
+      <screen x="49" y="27" width="1871" height="1053" />
+    </state>
+    <state width="1819" height="400" key="GridCell.Tab.0.left/49.27.1871.1053/1920.0.1920.1200@49.27.1871.1053" timestamp="1576772778878" />
+    <state width="1819" height="400" key="GridCell.Tab.0.right" timestamp="1576772778878">
+      <screen x="49" y="27" width="1871" height="1053" />
+    </state>
+    <state width="1819" height="400" key="GridCell.Tab.0.right/49.27.1871.1053/1920.0.1920.1200@49.27.1871.1053" timestamp="1576772778878" />
+    <state x="592" y="259" width="785" height="588" key="find.popup" timestamp="1576770988113">
+      <screen x="49" y="27" width="1871" height="1053" />
+    </state>
+    <state x="592" y="259" width="785" height="588" key="find.popup/49.27.1871.1053/1920.0.1920.1200@49.27.1871.1053" timestamp="1576770988113" />
+    <state x="641" y="259" width="684" height="678" key="search.everywhere.popup" timestamp="1576766629603">
+      <screen x="49" y="27" width="1871" height="1053" />
+    </state>
+    <state x="641" y="259" width="684" height="678" key="search.everywhere.popup/49.27.1871.1053/1920.0.1920.1200@49.27.1871.1053" timestamp="1576766629603" />
+  </component>
+</project>

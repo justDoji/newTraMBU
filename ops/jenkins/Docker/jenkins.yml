@@ -8,17 +8,9 @@ services:
     volumes:
       - jenkins-volume:/var/jenkins_home
       - /var/run/docker.sock:/var/run/docker.sock
-    networks:
-      - jenkins
     extra_hosts:
       - "trambu:192.168.0.1"
 
-networks:
-  jenkins:
-    driver: bridge
-    ipam:
-      config:
-      - subnet: 192.168.0.0/24
 
 volumes:
   jenkins-volume:

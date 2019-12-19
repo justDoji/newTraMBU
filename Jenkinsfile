@@ -1,6 +1,8 @@
 
 VERSION_NUMBER = ''
 appCode = 'dev'
+timeTracking = appCode + '/timetracking'
+zulma = appCode + "/aunt-zulma"
 
 node {
     stage('Pull Sources') {
@@ -25,24 +27,25 @@ node {
         junit '**/build/test-results/integrationTest/**/*.xml'
     }
 
-    stage('Build docker image') {
-        dockerHub('buildDockerImage')
+    stage('Build docker images') {
+        dirgw(timeTracking, 'buildDockerImage')
         echo 'Docker image built and ready to roll!'
     }
 
     stage('Spin up containers') {
-        appgw('dockerComposeUp')
+        dirgw(timeTracking, 'dockerComposeUp')
     }
 
-    stage('I MADE IT, CJ! -- Big Smoke') {
-        appgw('-PrequestUrl=http://192.168.99.100:8888/index.xhtml smokeTest')
-        junit '**/build/test-results/smokeTest/**/*.xml'
+    stage("Acceptance testing - Aunt Zulma") {
+      dirgw(zulma, 'clean test')
+      dirgw(zulma, 'aggregate')
+      junit zulma + '/build/test-results/**/*.xml'
+      archiveArtifacts artifacts: zulma+'/target/site/**/*.*'
     }
 
     stage('Code Quality') {
         sonar('sonarqube')
     }
-
 }
 
 // Build utility methods

@@ -4,6 +4,7 @@ plugins {
 }
 
 apply plugin: 'io.spring.dependency-management'
+apply from: "./gradle/docker.gradle"
 
 ext { springBootVersion = '2.2.1.RELEASE' }
 
@@ -40,5 +41,15 @@ license {
     header rootProject.file('LICENSE_HEADER')
     strictCheck false
     exclude('**/*.txt')
+}
+
+springBoot {
+    mainClassName = 'be.doji.productivity.trambu.timetracking.infra.TimetrackingApplication'
+}
+
+bootJar {
+    manifest {
+        attributes 'Start-Class': 'be.doji.productivity.trambu.timetracking.infra.TimetrackingApplication'
+    }
 }
 
