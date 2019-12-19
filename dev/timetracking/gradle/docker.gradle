@@ -13,3 +13,11 @@ task buildDockerImage(type: Docker, dependsOn: build) {
         }
     }
 }
+
+task dockerComposeDown(type: Exec) {
+    commandLine "docker-compose", "down"
+}
+
+task dockerComposeUp(type: Exec, dependsOn: 'dockerComposeDown') {
+    commandLine "docker-compose", "up", "-d"
+}
