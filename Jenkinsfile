@@ -28,17 +28,17 @@ node {
     }
 
     stage('Build docker images') {
-        dirgw(timeTracking, 'buildDockerImage')
+        appgw('timetracking:buildDockerImage')
         echo 'Docker image built and ready to roll!'
     }
 
     stage('Spin up containers') {
-        dirgw(timeTracking, 'dockerComposeUp')
+        app('timetracking:dockerComposeUp')
     }
 
     stage("Acceptance testing - Aunt Zulma") {
-      dirgw(zulma, 'clean test')
-      dirgw(zulma, 'aggregate')
+      appgw('aunt-zulma:clean aunt-zulma:test')
+      appgw('aunt-zulma:aggregate')
       junit zulma + '/build/test-results/**/*.xml'
       archiveArtifacts artifacts: zulma+'/target/site/**/*.*'
     }

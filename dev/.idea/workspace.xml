@@ -2,44 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2ad8e5fb-21dc-482f-91ba-131497399bd6" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/aunt-zulma/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/aunt-zulma/build.gradle" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/aunt-zulma/settings.gradle" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/aunt-zulma/src/main/java/be/doji/productivity/trambu/ManualMockMain.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/aunt-zulma/src/main/java/be/doji/productivity/trambu/messages/XmlFormatter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/aunt-zulma/src/main/java/be/doji/productivity/trambu/soap/Capture.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/aunt-zulma/src/main/java/be/doji/productivity/trambu/soap/SoapListener.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/aunt-zulma/src/main/java/be/doji/productivity/trambu/soap/SoapSender.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/aunt-zulma/src/test/java/be/doji/productivity/trambu/TestSuite.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/aunt-zulma/src/test/java/be/doji/productivity/trambu/listeners/HttpCaptorListener.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/aunt-zulma/src/test/java/be/doji/productivity/trambu/listeners/MarkdownListener.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/aunt-zulma/src/test/resources/META-INF/services/net.thucydides.core.steps.StepListener" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/aunt-zulma/src/test/resources/be/doji/productivity/trambu/features/timetracking/creating_action.feature" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gradle/zulma_libraries.gradle" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/timetracking/docker/Dockerfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/timetracking/gradle/docker.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Jenkinsfile" beforeDir="false" afterPath="$PROJECT_DIR$/../Jenkinsfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timetracking/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/timetracking/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timetracking/src/main/java/be/doji/productivity/trambu/timetracking/api/events/Event.java" beforeDir="false" afterPath="$PROJECT_DIR$/timetracking/src/main/java/be/doji/productivity/trambu/timetracking/api/events/Event.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timetracking/src/main/java/be/doji/productivity/trambu/timetracking/api/events/TrackingStarted.java" beforeDir="false" afterPath="$PROJECT_DIR$/timetracking/src/main/java/be/doji/productivity/trambu/timetracking/api/events/TrackingStarted.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timetracking/src/main/java/be/doji/productivity/trambu/timetracking/api/events/TrackingStopped.java" beforeDir="false" afterPath="$PROJECT_DIR$/timetracking/src/main/java/be/doji/productivity/trambu/timetracking/api/events/TrackingStopped.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timetracking/src/main/java/be/doji/productivity/trambu/timetracking/infra/TimetrackingApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/timetracking/src/main/java/be/doji/productivity/trambu/timetracking/infra/TimetrackingApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timetracking/src/main/java/be/doji/productivity/trambu/timetracking/infra/access/CreateOccupationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/timetracking/src/main/java/be/doji/productivity/trambu/timetracking/infra/access/CreateOccupationController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timetracking/src/main/java/be/doji/productivity/trambu/timetracking/infra/persistence/dto/IntervalMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/timetracking/src/main/java/be/doji/productivity/trambu/timetracking/infra/persistence/dto/IntervalMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timetracking/src/main/java/be/doji/productivity/trambu/timetracking/infra/persistence/dto/OccupationMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/timetracking/src/main/java/be/doji/productivity/trambu/timetracking/infra/persistence/dto/OccupationMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timetracking/src/test/java/be/doji/productivity/trambu/timetracking/infra/access/CreateOccupationControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/timetracking/src/test/java/be/doji/productivity/trambu/timetracking/infra/access/CreateOccupationControllerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timetracking/src/test/java/be/doji/productivity/trambu/timetracking/infra/access/TestFlow.java" beforeDir="false" afterPath="$PROJECT_DIR$/timetracking/src/test/java/be/doji/productivity/trambu/timetracking/infra/access/TestFlow.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timetracking/src/test/java/be/doji/productivity/trambu/timetracking/infra/access/TimeTrackingIntegrationTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/timetracking/src/test/java/be/doji/productivity/trambu/timetracking/infra/access/TimeTrackingIntegrationTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/trambu-aunt-zulma/build.gradle" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/trambu-aunt-zulma/serentiy.properties" beforeDir="false" afterPath="$PROJECT_DIR$/aunt-zulma/serentiy.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/trambu-aunt-zulma/settings.gradle" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/trambu-aunt-zulma/src/test/java/be/doji/productivity/trambu/zulma/AcceptanceTests.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/trambu-aunt-zulma/src/test/java/be/doji/productivity/trambu/zulma/features/steps/GeneralSteps.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/trambu-aunt-zulma/src/test/resources/be.doji.productivity.trambu.zulma/stories/applicationIsRunning.story" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../docs/ARCHITECTURE.md" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/ARCHITECTURE.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ops/jenkins/Docker/jenkins.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../ops/jenkins/Docker/jenkins.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ops/startJenkins.sh" beforeDir="false" afterPath="$PROJECT_DIR$/../ops/startJenkins.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -86,13 +49,6 @@
                 <item name="newTraMBU" type="f1a62948:ProjectNode" />
                 <item name="timetracking" type="2d1252cf:ModuleNode" />
                 <item name="Tasks" type="e4a08cd1:TasksNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="newTraMBU" type="f1a62948:ProjectNode" />
-                <item name="timetracking" type="2d1252cf:ModuleNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-                <item name="other" type="c8890929:TasksNode$1" />
               </path>
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
@@ -342,7 +298,7 @@
       <updated>1576766100061</updated>
       <workItem from="1576766103152" duration="155000" />
       <workItem from="1576766329799" duration="4938000" />
-      <workItem from="1576774162433" duration="668000" />
+      <workItem from="1576774162433" duration="1823000" />
     </task>
     <servers />
   </component>
