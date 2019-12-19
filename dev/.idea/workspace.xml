@@ -48,19 +48,6 @@
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="newTraMBU" type="f1a62948:ProjectNode" />
-                <item name="timetracking" type="2d1252cf:ModuleNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="newTraMBU" type="f1a62948:ProjectNode" />
-                <item name="timetracking" type="2d1252cf:ModuleNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-                <item name="build" type="c8890929:TasksNode$1" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="newTraMBU" type="f1a62948:ProjectNode" />
                 <item name="trambu-front" type="2d1252cf:ModuleNode" />
               </path>
               <path>
@@ -307,7 +294,7 @@
       <updated>1576766100061</updated>
       <workItem from="1576766103152" duration="155000" />
       <workItem from="1576766329799" duration="4938000" />
-      <workItem from="1576774162433" duration="2444000" />
+      <workItem from="1576774162433" duration="2624000" />
     </task>
     <servers />
   </component>
@@ -323,22 +310,26 @@
       <screen x="49" y="27" width="1871" height="1053" />
     </state>
     <state x="708" y="311" key="FileChooserDialogImpl/49.27.1871.1053/1920.0.1920.1200@49.27.1871.1053" timestamp="1576767176726" />
-    <state width="1819" height="400" key="GridCell.Tab.0.bottom" timestamp="1576772778878">
+    <state width="1819" height="400" key="GridCell.Tab.0.bottom" timestamp="1576780832825">
       <screen x="49" y="27" width="1871" height="1053" />
     </state>
     <state width="1819" height="400" key="GridCell.Tab.0.bottom/49.27.1871.1053/1920.0.1920.1200@49.27.1871.1053" timestamp="1576772778878" />
-    <state width="1819" height="400" key="GridCell.Tab.0.center" timestamp="1576772778878">
+    <state width="1819" height="400" key="GridCell.Tab.0.bottom/49.27.1871.1053/1920.53.1920.1200@49.27.1871.1053" timestamp="1576780832825" />
+    <state width="1819" height="400" key="GridCell.Tab.0.center" timestamp="1576780832825">
       <screen x="49" y="27" width="1871" height="1053" />
     </state>
     <state width="1819" height="400" key="GridCell.Tab.0.center/49.27.1871.1053/1920.0.1920.1200@49.27.1871.1053" timestamp="1576772778878" />
-    <state width="1819" height="400" key="GridCell.Tab.0.left" timestamp="1576772778878">
+    <state width="1819" height="400" key="GridCell.Tab.0.center/49.27.1871.1053/1920.53.1920.1200@49.27.1871.1053" timestamp="1576780832825" />
+    <state width="1819" height="400" key="GridCell.Tab.0.left" timestamp="1576780832825">
       <screen x="49" y="27" width="1871" height="1053" />
     </state>
     <state width="1819" height="400" key="GridCell.Tab.0.left/49.27.1871.1053/1920.0.1920.1200@49.27.1871.1053" timestamp="1576772778878" />
-    <state width="1819" height="400" key="GridCell.Tab.0.right" timestamp="1576772778878">
+    <state width="1819" height="400" key="GridCell.Tab.0.left/49.27.1871.1053/1920.53.1920.1200@49.27.1871.1053" timestamp="1576780832825" />
+    <state width="1819" height="400" key="GridCell.Tab.0.right" timestamp="1576780832825">
       <screen x="49" y="27" width="1871" height="1053" />
     </state>
     <state width="1819" height="400" key="GridCell.Tab.0.right/49.27.1871.1053/1920.0.1920.1200@49.27.1871.1053" timestamp="1576772778878" />
+    <state width="1819" height="400" key="GridCell.Tab.0.right/49.27.1871.1053/1920.53.1920.1200@49.27.1871.1053" timestamp="1576780832825" />
     <state x="592" y="259" width="785" height="588" key="find.popup" timestamp="1576770988113">
       <screen x="49" y="27" width="1871" height="1053" />
     </state>

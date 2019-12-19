@@ -1,5 +1,6 @@
 plugins {
     id 'org.springframework.boot' version '2.2.1.RELEASE'
+    id 'jacoco'
     id "com.github.hierynomus.license"
 }
 
