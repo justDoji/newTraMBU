@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2ad8e5fb-21dc-482f-91ba-131497399bd6" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/aunt-zulma/src/test/java/be/doji/productivity/trambu/zulma/TestSuite.java" beforeDir="false" afterPath="$PROJECT_DIR$/aunt-zulma/src/test/java/be/doji/productivity/trambu/zulma/TestSuite.java" afterDir="false" />
-    </list>
+    <list default="true" id="2ad8e5fb-21dc-482f-91ba-131497399bd6" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -47,8 +45,27 @@
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="newTraMBU" type="f1a62948:ProjectNode" />
+                <item name="aunt-zulma" type="2d1252cf:ModuleNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="newTraMBU" type="f1a62948:ProjectNode" />
+                <item name="aunt-zulma" type="2d1252cf:ModuleNode" />
                 <item name="Tasks" type="e4a08cd1:TasksNode" />
-                <item name="other" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="newTraMBU" type="f1a62948:ProjectNode" />
+                <item name="aunt-zulma" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="build" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="newTraMBU" type="f1a62948:ProjectNode" />
+                <item name="aunt-zulma" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="verification" type="c8890929:TasksNode$1" />
               </path>
             </expand>
             <select />
@@ -102,7 +119,7 @@
       <recent name="$PROJECT_DIR$/gradle" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.dev [sonarqube]">
+  <component name="RunManager" selected="Gradle.dev:aunt-zulma [test]">
     <configuration default="true" type="Applet" factoryName="Applet">
       <option name="WIDTH" value="400" />
       <option name="HEIGHT" value="300" />
@@ -192,10 +209,10 @@
       <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="dev:timetracking [clean build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="dev:aunt-zulma [test]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/timetracking" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/aunt-zulma" />
         <option name="externalSystemIdString" value="GRADLE" />
         <option name="scriptParameters" />
         <option name="taskDescriptions">
@@ -203,8 +220,7 @@
         </option>
         <option name="taskNames">
           <list>
-            <option value="clean" />
-            <option value="build" />
+            <option value="test" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -267,11 +283,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.dev:aunt-zulma [test]" />
         <item itemvalue="Gradle.dev [sonarqube]" />
         <item itemvalue="Gradle.dev [jacocoRootReport]" />
         <item itemvalue="Gradle.dev [jacocoTestReport]" />
         <item itemvalue="Gradle.dev [test]" />
-        <item itemvalue="Gradle.dev:timetracking [clean build]" />
       </list>
     </recent_temporary>
   </component>
@@ -301,7 +317,7 @@
       <workItem from="1576766329799" duration="4938000" />
       <workItem from="1576774162433" duration="2815000" />
       <workItem from="1576781034848" duration="7000" />
-      <workItem from="1576832491060" duration="4647000" />
+      <workItem from="1576832491060" duration="4928000" />
     </task>
     <servers />
   </component>
@@ -317,26 +333,26 @@
       <screen x="49" y="27" width="1871" height="1053" />
     </state>
     <state x="708" y="311" key="FileChooserDialogImpl/49.27.1871.1053/1920.0.1920.1200@49.27.1871.1053" timestamp="1576767176726" />
-    <state width="1819" height="334" key="GridCell.Tab.0.bottom" timestamp="1576834887463">
+    <state width="1819" height="334" key="GridCell.Tab.0.bottom" timestamp="1576837872637">
       <screen x="49" y="27" width="1871" height="1053" />
     </state>
     <state width="1819" height="400" key="GridCell.Tab.0.bottom/49.27.1871.1053/1920.0.1920.1200@49.27.1871.1053" timestamp="1576772778878" />
-    <state width="1819" height="334" key="GridCell.Tab.0.bottom/49.27.1871.1053/1920.53.1920.1200@49.27.1871.1053" timestamp="1576834887463" />
-    <state width="1819" height="334" key="GridCell.Tab.0.center" timestamp="1576834887463">
+    <state width="1819" height="334" key="GridCell.Tab.0.bottom/49.27.1871.1053/1920.53.1920.1200@49.27.1871.1053" timestamp="1576837872637" />
+    <state width="1819" height="334" key="GridCell.Tab.0.center" timestamp="1576837872636">
       <screen x="49" y="27" width="1871" height="1053" />
     </state>
     <state width="1819" height="400" key="GridCell.Tab.0.center/49.27.1871.1053/1920.0.1920.1200@49.27.1871.1053" timestamp="1576772778878" />
-    <state width="1819" height="334" key="GridCell.Tab.0.center/49.27.1871.1053/1920.53.1920.1200@49.27.1871.1053" timestamp="1576834887463" />
-    <state width="1819" height="334" key="GridCell.Tab.0.left" timestamp="1576834887463">
+    <state width="1819" height="334" key="GridCell.Tab.0.center/49.27.1871.1053/1920.53.1920.1200@49.27.1871.1053" timestamp="1576837872636" />
+    <state width="1819" height="334" key="GridCell.Tab.0.left" timestamp="1576837872636">
       <screen x="49" y="27" width="1871" height="1053" />
     </state>
     <state width="1819" height="400" key="GridCell.Tab.0.left/49.27.1871.1053/1920.0.1920.1200@49.27.1871.1053" timestamp="1576772778878" />
-    <state width="1819" height="334" key="GridCell.Tab.0.left/49.27.1871.1053/1920.53.1920.1200@49.27.1871.1053" timestamp="1576834887463" />
-    <state width="1819" height="334" key="GridCell.Tab.0.right" timestamp="1576834887463">
+    <state width="1819" height="334" key="GridCell.Tab.0.left/49.27.1871.1053/1920.53.1920.1200@49.27.1871.1053" timestamp="1576837872636" />
+    <state width="1819" height="334" key="GridCell.Tab.0.right" timestamp="1576837872636">
       <screen x="49" y="27" width="1871" height="1053" />
     </state>
     <state width="1819" height="400" key="GridCell.Tab.0.right/49.27.1871.1053/1920.0.1920.1200@49.27.1871.1053" timestamp="1576772778878" />
-    <state width="1819" height="334" key="GridCell.Tab.0.right/49.27.1871.1053/1920.53.1920.1200@49.27.1871.1053" timestamp="1576834887463" />
+    <state width="1819" height="334" key="GridCell.Tab.0.right/49.27.1871.1053/1920.53.1920.1200@49.27.1871.1053" timestamp="1576837872636" />
     <state x="503" y="188" key="SettingsEditor" timestamp="1576834648423">
       <screen x="49" y="27" width="1871" height="1053" />
     </state>
