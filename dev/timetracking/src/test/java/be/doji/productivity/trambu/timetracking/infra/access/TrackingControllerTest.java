@@ -100,7 +100,7 @@ public class TrackingControllerTest {
     this.flow = new TestFlow(mvc);
   }
 
-  @Testeee
+  @Test
   public void retrieveTimeTracked_canRetrieve_WhenOccupationReferenceIsKnown() throws Exception {
     given(occupationRepository.occupationById(REFERENCE)).willReturn(Optional.of(occupation));
 
