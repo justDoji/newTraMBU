@@ -7,7 +7,7 @@ import org.junit.runner.RunWith;
 @RunWith(CucumberWithSerenity.class)
 @CucumberOptions(
     plugin = {"pretty"},
-    features = "be.doji.productivity.trambu"
+    features = "be.doji.productivity.trambu.zulma"
 
 )
 public class TestSuite {}
