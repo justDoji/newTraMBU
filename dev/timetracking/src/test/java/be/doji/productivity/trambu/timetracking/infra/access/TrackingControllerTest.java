@@ -181,7 +181,7 @@ public class TrackingControllerTest {
       UUID reference, double expectedHoursSpent,
       List<Pair<LocalDateTime, LocalDateTime>> intervals) {
     assertThat(parsedData.getTitle()).isEqualTo(expectedTitle);
-    assertThat(parsedData).isEqualTo(reference.toString());
+    assertThat(parsedData.getReference()).isEqualTo(reference.toString());
     assertThat(parsedData.getTimeSpentInHours()).isEqualTo(expectedHoursSpent);
     assertThat(parsedData.getTimeEntries()).containsAll(intervals);
   }
