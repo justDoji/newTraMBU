@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2ad8e5fb-21dc-482f-91ba-131497399bd6" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/timetracking/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/timetracking/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,18 +45,13 @@
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="newTraMBU" type="f1a62948:ProjectNode" />
-                <item name="timetracking" type="2d1252cf:ModuleNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="newTraMBU" type="f1a62948:ProjectNode" />
-                <item name="trambu-front" type="2d1252cf:ModuleNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="newTraMBU" type="f1a62948:ProjectNode" />
-                <item name="trambu-front" type="2d1252cf:ModuleNode" />
                 <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="newTraMBU" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="other" type="c8890929:TasksNode$1" />
               </path>
             </expand>
             <select />
@@ -89,7 +86,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/aunt-zulma" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -99,6 +96,7 @@
     <property name="project.structure.last.edited" value="SDKs" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.project.gradle" />
     <property name="show.unlinked.gradle.project.popup" value="true" />
   </component>
   <component name="RecentsManager">
@@ -107,7 +105,7 @@
       <recent name="$PROJECT_DIR$/gradle" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.dev:timetracking [clean build]">
+  <component name="RunManager" selected="Gradle.dev [sonarqube]">
     <configuration default="true" type="Applet" factoryName="Applet">
       <option name="WIDTH" value="400" />
       <option name="HEIGHT" value="300" />
@@ -121,10 +119,10 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="dev:timetracking [buildDockerImage]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="dev [jacocoRootReport]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/timetracking" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="externalSystemIdString" value="GRADLE" />
         <option name="scriptParameters" />
         <option name="taskDescriptions">
@@ -132,7 +130,7 @@
         </option>
         <option name="taskNames">
           <list>
-            <option value="buildDockerImage" />
+            <option value="jacocoRootReport" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -140,10 +138,10 @@
       <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="dev:timetracking [clean build bootJar]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="dev [jacocoTestReport]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/timetracking" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="externalSystemIdString" value="GRADLE" />
         <option name="scriptParameters" />
         <option name="taskDescriptions">
@@ -151,9 +149,45 @@
         </option>
         <option name="taskNames">
           <list>
-            <option value="clean" />
-            <option value="build" />
-            <option value="bootJar" />
+            <option value="jacocoTestReport" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="dev [sonarqube]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="sonarqube" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="dev [test]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="test" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -174,46 +208,6 @@
           <list>
             <option value="clean" />
             <option value="build" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
-      <method v="2" />
-    </configuration>
-    <configuration name="dev:timetracking [jar build bootJar]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/timetracking" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="jar" />
-            <option value="build" />
-            <option value="bootJar" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
-      <method v="2" />
-    </configuration>
-    <configuration name="dev:timetracking [licenseFormat]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/timetracking" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="licenseFormat" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -262,11 +256,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.dev [sonarqube]" />
+        <item itemvalue="Gradle.dev [jacocoRootReport]" />
+        <item itemvalue="Gradle.dev [jacocoTestReport]" />
+        <item itemvalue="Gradle.dev [test]" />
         <item itemvalue="Gradle.dev:timetracking [clean build]" />
-        <item itemvalue="Gradle.dev:timetracking [buildDockerImage]" />
-        <item itemvalue="Gradle.dev:timetracking [jar build bootJar]" />
-        <item itemvalue="Gradle.dev:timetracking [licenseFormat]" />
-        <item itemvalue="Gradle.dev:timetracking [clean build bootJar]" />
       </list>
     </recent_temporary>
   </component>
@@ -294,7 +288,9 @@
       <updated>1576766100061</updated>
       <workItem from="1576766103152" duration="155000" />
       <workItem from="1576766329799" duration="4938000" />
-      <workItem from="1576774162433" duration="2624000" />
+      <workItem from="1576774162433" duration="2815000" />
+      <workItem from="1576781034848" duration="7000" />
+      <workItem from="1576832491060" duration="2570000" />
     </task>
     <servers />
   </component>
@@ -310,26 +306,30 @@
       <screen x="49" y="27" width="1871" height="1053" />
     </state>
     <state x="708" y="311" key="FileChooserDialogImpl/49.27.1871.1053/1920.0.1920.1200@49.27.1871.1053" timestamp="1576767176726" />
-    <state width="1819" height="400" key="GridCell.Tab.0.bottom" timestamp="1576780832825">
+    <state width="1819" height="334" key="GridCell.Tab.0.bottom" timestamp="1576834887463">
       <screen x="49" y="27" width="1871" height="1053" />
     </state>
     <state width="1819" height="400" key="GridCell.Tab.0.bottom/49.27.1871.1053/1920.0.1920.1200@49.27.1871.1053" timestamp="1576772778878" />
-    <state width="1819" height="400" key="GridCell.Tab.0.bottom/49.27.1871.1053/1920.53.1920.1200@49.27.1871.1053" timestamp="1576780832825" />
-    <state width="1819" height="400" key="GridCell.Tab.0.center" timestamp="1576780832825">
+    <state width="1819" height="334" key="GridCell.Tab.0.bottom/49.27.1871.1053/1920.53.1920.1200@49.27.1871.1053" timestamp="1576834887463" />
+    <state width="1819" height="334" key="GridCell.Tab.0.center" timestamp="1576834887463">
       <screen x="49" y="27" width="1871" height="1053" />
     </state>
     <state width="1819" height="400" key="GridCell.Tab.0.center/49.27.1871.1053/1920.0.1920.1200@49.27.1871.1053" timestamp="1576772778878" />
-    <state width="1819" height="400" key="GridCell.Tab.0.center/49.27.1871.1053/1920.53.1920.1200@49.27.1871.1053" timestamp="1576780832825" />
-    <state width="1819" height="400" key="GridCell.Tab.0.left" timestamp="1576780832825">
+    <state width="1819" height="334" key="GridCell.Tab.0.center/49.27.1871.1053/1920.53.1920.1200@49.27.1871.1053" timestamp="1576834887463" />
+    <state width="1819" height="334" key="GridCell.Tab.0.left" timestamp="1576834887463">
       <screen x="49" y="27" width="1871" height="1053" />
     </state>
     <state width="1819" height="400" key="GridCell.Tab.0.left/49.27.1871.1053/1920.0.1920.1200@49.27.1871.1053" timestamp="1576772778878" />
-    <state width="1819" height="400" key="GridCell.Tab.0.left/49.27.1871.1053/1920.53.1920.1200@49.27.1871.1053" timestamp="1576780832825" />
-    <state width="1819" height="400" key="GridCell.Tab.0.right" timestamp="1576780832825">
+    <state width="1819" height="334" key="GridCell.Tab.0.left/49.27.1871.1053/1920.53.1920.1200@49.27.1871.1053" timestamp="1576834887463" />
+    <state width="1819" height="334" key="GridCell.Tab.0.right" timestamp="1576834887463">
       <screen x="49" y="27" width="1871" height="1053" />
     </state>
     <state width="1819" height="400" key="GridCell.Tab.0.right/49.27.1871.1053/1920.0.1920.1200@49.27.1871.1053" timestamp="1576772778878" />
-    <state width="1819" height="400" key="GridCell.Tab.0.right/49.27.1871.1053/1920.53.1920.1200@49.27.1871.1053" timestamp="1576780832825" />
+    <state width="1819" height="334" key="GridCell.Tab.0.right/49.27.1871.1053/1920.53.1920.1200@49.27.1871.1053" timestamp="1576834887463" />
+    <state x="503" y="188" key="SettingsEditor" timestamp="1576834648423">
+      <screen x="49" y="27" width="1871" height="1053" />
+    </state>
+    <state x="503" y="188" key="SettingsEditor/49.27.1871.1053/1920.53.1920.1200@49.27.1871.1053" timestamp="1576834648423" />
     <state x="592" y="259" width="785" height="588" key="find.popup" timestamp="1576770988113">
       <screen x="49" y="27" width="1871" height="1053" />
     </state>

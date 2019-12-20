@@ -41,3 +41,5 @@ N
 timetracking/docker/Dockerfile,5/6/56bedc4eda6d35abb025e8853f379489ce467f94
 Q
 !timetracking/gradle/docker.gradle,a/8/a8521799afccb28e79c6de0a886f3fa10dde169c
+J
+trambu-domain/build.gradle,6/0/60c73e4a2bd5ad3ad366604bf022d3b358834d10

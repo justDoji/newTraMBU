@@ -50,8 +50,8 @@ allprojects {
     dependencyCheck {
         format 'ALL'
     }
-
 }
+
 
 
 

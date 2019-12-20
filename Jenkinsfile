@@ -53,9 +53,6 @@ node {
 
     }
 
-    stage('Code Quality') {
-        sonar('sonarqube')
-    }
 }
 
 // Build utility methods
