@@ -100,7 +100,7 @@ public class TrackingControllerTest {
     this.flow = new TestFlow(mvc);
   }
 
-  @Test
+  @Testeee
   public void retrieveTimeTracked_canRetrieve_WhenOccupationReferenceIsKnown() throws Exception {
     given(occupationRepository.occupationById(REFERENCE)).willReturn(Optional.of(occupation));
 
@@ -135,7 +135,7 @@ public class TrackingControllerTest {
     assertThat(result.getStatus()).isEqualTo(HttpStatus.OK.value());
     TimeTracked parsedData = jsonOccupation
         .parseObject(result.getContentAsByteArray());
-    assertThat(parsedData.timeSpentInHours).isEqualTo(48.0);
+    assertThat(parsedData.getTimeSpentInHours()).isEqualTo(48.0);
   }
 
   @Test
@@ -180,10 +180,10 @@ public class TrackingControllerTest {
   public void assertTimeTrackedContains(TimeTracked parsedData, String expectedTitle,
       UUID reference, double expectedHoursSpent,
       List<Pair<LocalDateTime, LocalDateTime>> intervals) {
-    assertThat(parsedData.title).isEqualTo(expectedTitle);
-    assertThat(parsedData.reference).isEqualTo(reference.toString());
-    assertThat(parsedData.timeSpentInHours).isEqualTo(expectedHoursSpent);
-    assertThat(parsedData.timeEntries).containsAll(intervals);
+    assertThat(parsedData.getTitle()).isEqualTo(expectedTitle);
+    assertThat(parsedData).isEqualTo(reference.toString());
+    assertThat(parsedData.getTimeSpentInHours()).isEqualTo(expectedHoursSpent);
+    assertThat(parsedData.getTimeEntries()).containsAll(intervals);
   }
 
   public ObjectMapper geObjMapper() {

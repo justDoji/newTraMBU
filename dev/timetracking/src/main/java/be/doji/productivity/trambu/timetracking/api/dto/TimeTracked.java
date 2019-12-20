@@ -41,9 +41,9 @@ public class TimeTracked {
     this.timeEntries = timeEntries;
   }
 
-  public String reference;
-  public String title;
-  public double timeSpentInHours;
-  public List<Pair<LocalDateTime, LocalDateTime>> timeEntries;
+  private String reference;
+  private String title;
+  private double timeSpentInHours;
+  private List<Pair<LocalDateTime, LocalDateTime>> timeEntries;
 
 }
