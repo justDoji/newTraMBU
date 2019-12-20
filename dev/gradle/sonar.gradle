@@ -26,8 +26,8 @@ sonarqube {
         property "sonar.organization", 'justdoji-github'
 
         //Ignore the front-end in the sonar analysis
-        property 'sonar.coverage.exclusions', "**/trambu/infrastructure/transfer/**, **be/doji/productivity/trambu/front/model/**, **/trambu/front/controller/exception/**, **/aunt-zulma"
-        property 'sonar.exclusions', "**/trambu/infrastructure/transfer/**, **be/doji/productivity/trambu/front/model/**, **/trambu/front/controller/exception/**, **/aunt-zulma"
+        property 'sonar.coverage.exclusions', "**/trambu/infrastructure/transfer/**, **be/doji/productivity/trambu/front/model/**, **/trambu/front/controller/exception/**, **be/doji/productivity/trambu/zulma/**, **be/doji/productivity/trambu/zulma/soap/**, **be/doji/productivity/trambu/zulma/messages/**"
+        property 'sonar.exclusions', "**/trambu/infrastructure/transfer/**, **be/doji/productivity/trambu/front/model/**, **/trambu/front/controller/exception/**, **be/doji/productivity/trambu/zulma/**, **be/doji/productivity/trambu/zulma/soap/**, **be/doji/productivity/trambu/zulma/messages/**"
     }
 }
 

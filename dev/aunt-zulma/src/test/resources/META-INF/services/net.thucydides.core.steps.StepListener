@@ -1,2 +1,2 @@
-be.doji.productivity.trambu.listeners.MarkdownListener
-be.doji.productivity.trambu.listeners.HttpCaptorListener
+be.doji.productivity.trambu.zulma.listeners.MarkdownListener
+be.doji.productivity.trambu.zulma.listeners.HttpCaptorListener
