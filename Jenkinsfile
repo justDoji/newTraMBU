@@ -44,7 +44,7 @@ node {
 
       publishHTML(target: [
               reportName : 'Serenity',
-              reportDir:   zulma+'target/site/serenity',
+              reportDir:   zulma+'/target/site/serenity',
               reportFiles: 'index.html',
               keepAll:     true,
               alwaysLinkToLastBuild: true,
