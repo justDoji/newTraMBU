@@ -216,7 +216,7 @@
       <recent name="$PROJECT_DIR$/gradle" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.dev [build]">
+  <component name="RunManager" selected="Gradle.dev [license]">
     <configuration default="true" type="Applet" factoryName="Applet">
       <option name="WIDTH" value="400" />
       <option name="HEIGHT" value="300" />
@@ -268,6 +268,44 @@
       <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
       <method v="2" />
     </configuration>
+    <configuration name="dev [licenseFormat]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="licenseFormat" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="dev [license]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="license" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
+      <method v="2" />
+    </configuration>
     <configuration name="dev:aunt-zulma [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -280,44 +318,6 @@
         <option name="taskNames">
           <list>
             <option value="build" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
-      <method v="2" />
-    </configuration>
-    <configuration name="dev:aunt-zulma [clean]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/aunt-zulma" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="clean" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
-      <method v="2" />
-    </configuration>
-    <configuration name="dev:aunt-zulma [test]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/aunt-zulma" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="test" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -380,11 +380,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.dev [licenseFormat]" />
+        <item itemvalue="Gradle.dev [license]" />
         <item itemvalue="Gradle.dev [build]" />
         <item itemvalue="Gradle.dev [clean]" />
         <item itemvalue="Gradle.dev:aunt-zulma [build]" />
-        <item itemvalue="Gradle.dev:aunt-zulma [clean]" />
-        <item itemvalue="Gradle.dev:aunt-zulma [test]" />
       </list>
     </recent_temporary>
   </component>
@@ -434,26 +434,26 @@
       <screen x="49" y="27" width="1871" height="1053" />
     </state>
     <state x="708" y="311" key="FileChooserDialogImpl/49.27.1871.1053/1920.0.1920.1200@49.27.1871.1053" timestamp="1576767176726" />
-    <state width="1819" height="334" key="GridCell.Tab.0.bottom" timestamp="1576838516108">
+    <state width="1819" height="334" key="GridCell.Tab.0.bottom" timestamp="1576839125383">
       <screen x="49" y="27" width="1871" height="1053" />
     </state>
     <state width="1819" height="400" key="GridCell.Tab.0.bottom/49.27.1871.1053/1920.0.1920.1200@49.27.1871.1053" timestamp="1576772778878" />
-    <state width="1819" height="334" key="GridCell.Tab.0.bottom/49.27.1871.1053/1920.53.1920.1200@49.27.1871.1053" timestamp="1576838516108" />
-    <state width="1819" height="334" key="GridCell.Tab.0.center" timestamp="1576838516107">
+    <state width="1819" height="334" key="GridCell.Tab.0.bottom/49.27.1871.1053/1920.53.1920.1200@49.27.1871.1053" timestamp="1576839125383" />
+    <state width="1819" height="334" key="GridCell.Tab.0.center" timestamp="1576839125383">
       <screen x="49" y="27" width="1871" height="1053" />
     </state>
     <state width="1819" height="400" key="GridCell.Tab.0.center/49.27.1871.1053/1920.0.1920.1200@49.27.1871.1053" timestamp="1576772778878" />
-    <state width="1819" height="334" key="GridCell.Tab.0.center/49.27.1871.1053/1920.53.1920.1200@49.27.1871.1053" timestamp="1576838516107" />
-    <state width="1819" height="334" key="GridCell.Tab.0.left" timestamp="1576838516107">
+    <state width="1819" height="334" key="GridCell.Tab.0.center/49.27.1871.1053/1920.53.1920.1200@49.27.1871.1053" timestamp="1576839125383" />
+    <state width="1819" height="334" key="GridCell.Tab.0.left" timestamp="1576839125383">
       <screen x="49" y="27" width="1871" height="1053" />
     </state>
     <state width="1819" height="400" key="GridCell.Tab.0.left/49.27.1871.1053/1920.0.1920.1200@49.27.1871.1053" timestamp="1576772778878" />
-    <state width="1819" height="334" key="GridCell.Tab.0.left/49.27.1871.1053/1920.53.1920.1200@49.27.1871.1053" timestamp="1576838516107" />
-    <state width="1819" height="334" key="GridCell.Tab.0.right" timestamp="1576838516108">
+    <state width="1819" height="334" key="GridCell.Tab.0.left/49.27.1871.1053/1920.53.1920.1200@49.27.1871.1053" timestamp="1576839125383" />
+    <state width="1819" height="334" key="GridCell.Tab.0.right" timestamp="1576839125383">
       <screen x="49" y="27" width="1871" height="1053" />
     </state>
     <state width="1819" height="400" key="GridCell.Tab.0.right/49.27.1871.1053/1920.0.1920.1200@49.27.1871.1053" timestamp="1576772778878" />
-    <state width="1819" height="334" key="GridCell.Tab.0.right/49.27.1871.1053/1920.53.1920.1200@49.27.1871.1053" timestamp="1576838516108" />
+    <state width="1819" height="334" key="GridCell.Tab.0.right/49.27.1871.1053/1920.53.1920.1200@49.27.1871.1053" timestamp="1576839125383" />
     <state x="503" y="188" key="SettingsEditor" timestamp="1576834648423">
       <screen x="49" y="27" width="1871" height="1053" />
     </state>
