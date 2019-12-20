@@ -5,6 +5,10 @@ timeTracking = appCode + '/timetracking'
 zulma = appCode + "/aunt-zulma"
 
 node {
+    options {
+         buildDiscarder(logRotator(numToKeepStr: '5'))
+    }
+
     stage('Pull Sources') {
         executeCommand("git config --global credential.helper cache")
         checkout scm
