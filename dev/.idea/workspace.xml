@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2ad8e5fb-21dc-482f-91ba-131497399bd6" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../Jenkinsfile" beforeDir="false" afterPath="$PROJECT_DIR$/../Jenkinsfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle/sonar.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/sonar.gradle" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -287,7 +288,7 @@
       <workItem from="1576766329799" duration="4938000" />
       <workItem from="1576774162433" duration="2815000" />
       <workItem from="1576781034848" duration="7000" />
-      <workItem from="1576832491060" duration="3141000" />
+      <workItem from="1576832491060" duration="3266000" />
     </task>
     <servers />
   </component>
