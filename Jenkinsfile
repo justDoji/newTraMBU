@@ -4,9 +4,12 @@ appCode = 'dev'
 timeTracking = appCode + '/timetracking'
 zulma = appCode + "/aunt-zulma"
 
-options {
-   buildDiscarder(logRotator(numToKeepStr: '5'))
+pipeline {
+  options {
+     buildDiscarder(logRotator(numToKeepStr: '5'))
+  }
 }
+
 
 node {
 
