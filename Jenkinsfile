@@ -50,7 +50,10 @@ node {
               alwaysLinkToLastBuild: true,
               allowMissing: false
           ])
+    }
 
+    stage('Code Quality') {
+      sonar('sonarqube')
     }
 
 }
