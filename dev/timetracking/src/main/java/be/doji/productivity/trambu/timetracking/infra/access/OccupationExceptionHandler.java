@@ -33,6 +33,7 @@ public class OccupationExceptionHandler {
   @ExceptionHandler(OccupationUnknown.class)
   @ResponseStatus(HttpStatus.NOT_FOUND)
   public void handleOccupationUnknown() {
+    // Response status is handled by Annotation
   }
 
 }
