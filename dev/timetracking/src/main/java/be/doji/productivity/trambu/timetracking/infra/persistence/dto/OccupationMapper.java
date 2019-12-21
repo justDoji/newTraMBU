@@ -21,10 +21,10 @@
  */
 package be.doji.productivity.trambu.timetracking.infra.persistence.dto;
 
-import be.doji.productivity.trambu.timetracking.domain.Occupation;
-import be.doji.productivity.trambu.timetracking.api.dto.Pair;
-import be.doji.productivity.trambu.timetracking.api.dto.TimeTracked;
+import be.doji.productivity.trambu.events.timetracking.dto.Pair;
+import be.doji.productivity.trambu.events.timetracking.dto.TimeTracked;
 import be.doji.productivity.trambu.timetracking.domain.Interval;
+import be.doji.productivity.trambu.timetracking.domain.Occupation;
 import be.doji.productivity.trambu.timetracking.domain.OccupationRepository;
 import be.doji.productivity.trambu.timetracking.domain.time.PointInTime;
 import be.doji.productivity.trambu.timetracking.domain.time.TimeService;

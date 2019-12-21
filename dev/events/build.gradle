@@ -1,0 +1,46 @@
+plugins {
+    id 'jacoco'
+    id "com.github.hierynomus.license"
+}
+
+group 'be.doji.productivity.trambu'
+version 'latest'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+
+    //JACKSON
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.10.1'
+    runtime group: 'com.fasterxml.jackson.module', name: 'jackson-modules-java8', version: '2.10.1', ext: 'pom'
+    compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.10.1'
+    compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jdk8', version: '2.10.1'
+    compile group: 'com.fasterxml.jackson.module', name: 'jackson-module-parameter-names', version: '2.10.1'
+
+    compile 'org.projectlombok:lombok:1.18.10'
+    annotationProcessor 'org.projectlombok:lombok:1.18.10'
+
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.9'
+}
+
+license {
+    header rootProject.file('LICENSE_HEADER')
+    strictCheck false
+    exclude('**/*.txt')
+}
+
+test.finalizedBy jacocoTestReport
+
+jacocoTestReport {
+    reports {
+        xml.enabled true
+        xml.destination file("${buildDir}/reports/jacoco.xml")
+        csv.enabled false
+        html.destination file("${buildDir}/reports/jacocoHtml")
+    }
+}

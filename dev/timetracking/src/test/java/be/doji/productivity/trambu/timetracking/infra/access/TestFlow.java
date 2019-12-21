@@ -24,8 +24,8 @@ package be.doji.productivity.trambu.timetracking.infra.access;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
-import be.doji.productivity.trambu.timetracking.api.events.TrackingStarted;
-import be.doji.productivity.trambu.timetracking.api.events.TrackingStopped;
+import be.doji.productivity.trambu.events.timetracking.TrackingStarted;
+import be.doji.productivity.trambu.events.timetracking.TrackingStopped;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.time.LocalDateTime;
 import java.util.UUID;

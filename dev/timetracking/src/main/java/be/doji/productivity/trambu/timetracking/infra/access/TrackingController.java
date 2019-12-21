@@ -21,13 +21,13 @@
  */
 package be.doji.productivity.trambu.timetracking.infra.access;
 
+import be.doji.productivity.trambu.events.timetracking.TrackingStarted;
+import be.doji.productivity.trambu.events.timetracking.TrackingStopped;
+import be.doji.productivity.trambu.events.timetracking.dto.TimeTracked;
 import be.doji.productivity.trambu.timetracking.domain.Occupation;
+import be.doji.productivity.trambu.timetracking.domain.OccupationRepository;
 import be.doji.productivity.trambu.timetracking.infra.exception.OccupationUnknown;
 import be.doji.productivity.trambu.timetracking.infra.persistence.dto.OccupationMapper;
-import be.doji.productivity.trambu.timetracking.api.dto.TimeTracked;
-import be.doji.productivity.trambu.timetracking.api.events.TrackingStarted;
-import be.doji.productivity.trambu.timetracking.api.events.TrackingStopped;
-import be.doji.productivity.trambu.timetracking.domain.OccupationRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -49,7 +49,8 @@ public class TrackingController {
   private final OccupationRepository repository;
   private final OccupationMapper mapper;
 
-  public TrackingController(@Autowired OccupationRepository repository, @Autowired OccupationMapper mapper) {
+  public TrackingController(@Autowired OccupationRepository repository,
+      @Autowired OccupationMapper mapper) {
     this.repository = repository;
     this.mapper = mapper;
   }
@@ -63,7 +64,7 @@ public class TrackingController {
     return mapper.occupationToTimeTracked(occupation);
   }
 
-  @PostMapping(value = "/startTracking" , consumes = "application/json", produces = "application/json")
+  @PostMapping(value = "/startTracking", consumes = "application/json", produces = "application/json")
   public void trackingStarted(@RequestBody TrackingStarted startedEvent) {
     UUID reference = startedEvent.getReference();
     Occupation occupation = repository.occupationById(reference)
@@ -71,7 +72,7 @@ public class TrackingController {
     occupation.startedAt(startedEvent.getTimeStarted());
   }
 
-  @PostMapping(value = "/stopTracking" , consumes = "application/json", produces = "application/json")
+  @PostMapping(value = "/stopTracking", consumes = "application/json", produces = "application/json")
   public void trackingStopped(@RequestBody TrackingStopped stoppedEvent) {
     UUID reference = stoppedEvent.getReference();
     Occupation occupation = repository.occupationById(reference)
@@ -87,7 +88,7 @@ public class TrackingController {
 
   @Bean
   @Primary
-  public ObjectMapper geObjMapper() {
+  public ObjectMapper getObjMapper() {
     return new ObjectMapper()
         .registerModule(new ParameterNamesModule())
         .registerModule(new Jdk8Module())
