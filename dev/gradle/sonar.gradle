@@ -26,8 +26,8 @@ sonarqube {
         property "sonar.organization", 'justdoji-github'
 
         //Ignore the front-end in the sonar analysis
-        property 'sonar.coverage.exclusions', "**be/doji/productivity/trambu/zulma/**, **be/doji/productivity/trambu/zulma/soap/**, **be/doji/productivity/trambu/zulma/messages/**, **be/doji/productivity/trambu/events/timetracking/**, **be/doji/productivity/trambu/events/timetracking/dto/**"
-        property 'sonar.exclusions', "**be/doji/productivity/trambu/zulma/**, **be/doji/productivity/trambu/zulma/soap/**, **be/doji/productivity/trambu/zulma/messages/**, **be/doji/productivity/trambu/events/timetracking/**, **be/doji/productivity/trambu/events/timetracking/dto/**"
+        property 'sonar.coverage.exclusions', "**be/doji/productivity/trambu/zulma/**, **be/doji/productivity/trambu/zulma/soap/**, **be/doji/productivity/trambu/zulma/messages/**, **be/doji/productivity/trambu/events/timetracking/**, **be/doji/productivity/trambu/events/timetracking/dto/**, **be/doji/productivity/trambu/timetracking/infra/persistence/dto/**"
+        property 'sonar.exclusions', "**be/doji/productivity/trambu/zulma/**, **be/doji/productivity/trambu/zulma/soap/**, **be/doji/productivity/trambu/zulma/messages/**, **be/doji/productivity/trambu/events/timetracking/**, **be/doji/productivity/trambu/events/timetracking/dto/**, **be/doji/productivity/trambu/timetracking/infra/persistence/dto/**"
     }
 }
 
