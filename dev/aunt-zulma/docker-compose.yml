@@ -3,6 +3,6 @@ services:
   webapp:
     image: be.doji.productivity.trambu/timetracking:latest
     ports:
-      - "8069:8069"
+      - "8069:8080"
 volumes:
   trambuvolume:
