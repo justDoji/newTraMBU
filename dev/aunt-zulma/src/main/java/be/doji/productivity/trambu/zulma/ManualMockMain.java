@@ -1,6 +1,7 @@
-package be.doji.productivity.trambu;
+package be.doji.productivity.trambu.zulma;
 
-import be.doji.productivity.trambu.soap.SoapListener;
+
+import be.doji.productivity.trambu.zulma.soap.SoapListener;
 
 /**
  * Class used to manually start a Capture HTTP listener for debugging and exploratory purposes.

@@ -1,4 +1,4 @@
-package be.doji.productivity.trambu.messages;
+package be.doji.productivity.trambu.zulma.messages;
 
 import java.io.ByteArrayInputStream;
 import java.io.StringWriter;

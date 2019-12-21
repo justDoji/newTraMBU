@@ -1,4 +1,4 @@
-package be.doji.productivity.trambu.soap;
+package be.doji.productivity.trambu.zulma.soap;
 
 import java.time.LocalDateTime;
 

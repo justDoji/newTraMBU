@@ -1,4 +1,4 @@
-package be.doji.productivity.trambu.soap;
+package be.doji.productivity.trambu.zulma.soap;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -11,10 +11,11 @@ import java.net.URLConnection;
 
 public class SoapSender {
 
-  public String sendRequest(String endpoint, String soapAction, String fullMessage) throws IOException {
-      URL url = new URL(endpoint);
-      URLConnection connection = url.openConnection();
-      HttpURLConnection httpConn = (HttpURLConnection) connection;
+  public String sendRequest(String endpoint, String soapAction, String fullMessage)
+      throws IOException {
+    URL url = new URL(endpoint);
+    URLConnection connection = url.openConnection();
+    HttpURLConnection httpConn = (HttpURLConnection) connection;
 
     sendHttpRequest(httpConn, toBytes(fullMessage), soapAction);
     InputStreamReader isr =
