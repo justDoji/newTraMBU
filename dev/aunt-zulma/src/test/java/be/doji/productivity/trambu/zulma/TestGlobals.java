@@ -1,6 +1,6 @@
-package be.doji.productivity.trambu;
+package be.doji.productivity.trambu.zulma;
 
-import be.doji.productivity.trambu.soap.SoapListener;
+import be.doji.productivity.trambu.zulma.soap.SoapListener;
 import java.util.Optional;
 import org.seleniumhq.jetty9.server.Server;
 

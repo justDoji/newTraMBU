@@ -1,4 +1,4 @@
-package be.doji.productivity.trambu;
+package be.doji.productivity.trambu.zulma;
 
 import io.cucumber.junit.CucumberOptions;
 import net.serenitybdd.cucumber.CucumberWithSerenity;
