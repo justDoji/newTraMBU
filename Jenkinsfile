@@ -24,11 +24,6 @@ node {
         milestone()
     }
 
-    stage('Integration test') {
-        appgw 'integrationTest'
-        junit '**/build/test-results/integrationTest/**/*.xml'
-    }
-
     stage('Build docker images') {
         appgw('timetracking:buildDockerImage')
         echo 'Docker image built and ready to roll!'
