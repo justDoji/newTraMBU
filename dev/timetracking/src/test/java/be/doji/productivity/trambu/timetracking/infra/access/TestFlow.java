@@ -52,7 +52,7 @@ class TestFlow {
   MockHttpServletResponse whenCallingCreateOccupation(String title, UUID reference)
       throws Exception {
     return mvc.perform(
-        post("/create/")
+        post("/create")
             .param("title", title)
             .param("reference", reference.toString())
             .accept(MediaType.APPLICATION_JSON)
