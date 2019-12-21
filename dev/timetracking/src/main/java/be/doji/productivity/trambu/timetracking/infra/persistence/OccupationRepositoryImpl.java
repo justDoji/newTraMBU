@@ -41,7 +41,6 @@ import org.springframework.stereotype.Service;
 public class OccupationRepositoryImpl implements OccupationRepository {
 
   private final IntervalMapper intervalMapper;
-  private final TimeService timeservice;
   private final OccupationDAO occupationDAO;
   private final IntervalDAO intervalDAO;
   private final OccupationMapper occupationMapper;
@@ -51,13 +50,11 @@ public class OccupationRepositoryImpl implements OccupationRepository {
   public OccupationRepositoryImpl(
       OccupationDAO occupationDAO,
       IntervalDAO intervalDAO,
-      TimeService timeService,
       OccupationMapper occupationMapper,
       IntervalMapper intervalMapper
   ) {
     this.occupationDAO = occupationDAO;
     this.intervalDAO = intervalDAO;
-    this.timeservice = timeService;
     this.occupationMapper = occupationMapper;
     this.intervalMapper = intervalMapper;
   }
