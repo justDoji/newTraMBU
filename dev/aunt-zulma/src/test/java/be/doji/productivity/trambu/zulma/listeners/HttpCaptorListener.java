@@ -1,6 +1,6 @@
-package be.doji.productivity.trambu.listeners;
+package be.doji.productivity.trambu.zulma.listeners;
 
-import be.doji.productivity.trambu.TestGlobals;
+import be.doji.productivity.trambu.zulma.TestGlobals;
 import java.util.Map;
 import net.thucydides.core.model.DataTable;
 import net.thucydides.core.model.Story;

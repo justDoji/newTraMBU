@@ -1,4 +1,4 @@
-package be.doji.productivity.trambu.listeners;
+package be.doji.productivity.trambu.zulma.listeners;
 
 import java.io.File;
 import java.io.IOException;
@@ -32,7 +32,7 @@ public class MarkdownListener implements StepListener {
     try {
       Files.createDirectories(new File("target/manual").toPath());
       outputFile = new File("target/manual/" + story.getName() + "-testcases.md");
-      if(Files.notExists(outputFile.toPath())) {
+      if (Files.notExists(outputFile.toPath())) {
         Files.createFile(outputFile.toPath());
       }
     } catch (IOException e) {
@@ -76,7 +76,8 @@ public class MarkdownListener implements StepListener {
   public void testFinished(TestOutcome result) {
 
     try {
-      Files.write(outputFile.toPath(), Arrays.asList(System.lineSeparator() ,"***", " END OF TESTCASE ", "***"),
+      Files.write(outputFile.toPath(),
+          Arrays.asList(System.lineSeparator(), "***", " END OF TESTCASE ", "***"),
           StandardOpenOption.APPEND);
     } catch (IOException e) {
       e.printStackTrace();
@@ -92,7 +93,8 @@ public class MarkdownListener implements StepListener {
   @Override
   public void stepStarted(ExecutedStepDescription description) {
     try {
-      if (StringUtils.startsWithIgnoreCase(description.getTitle(), "then") || StringUtils.startsWithIgnoreCase(description.getTitle(), "and")) {
+      if (StringUtils.startsWithIgnoreCase(description.getTitle(), "then") || StringUtils
+          .startsWithIgnoreCase(description.getTitle(), "and")) {
         formatAssert(description);
       } else {
         formatAction(description);
