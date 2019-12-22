@@ -1,7 +1,8 @@
-version: "3.1"
+version: "3.4"
 services:
   jenkins:
     build: .
+    network_mode: host
     image: be.doji.productivity/jenkins:lts-alpine
     ports:
       - 8080:8080
@@ -13,3 +14,4 @@ services:
 
 volumes:
   jenkins-volume:
+
