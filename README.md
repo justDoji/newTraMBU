@@ -85,6 +85,15 @@ This will start TRAMBU.
 ## Bug Reports
 In the event of a sneaky crawly making it's nest in our code, we welcome you to open a ticket on our [[Github issue tracker]](https://github.com/justDoji/TraMBU/issues){:target="_blank"}
 
+## Technical set-up
+
+This repository is split into two parts: 'dev' and 'ops'. The **dev** directory contains all the code and tests that you might need.
+If you just want to jump into the code, that is all you will need.
+The **ops** directory gives you the possibility to set up your own build pipeline, helping you to automate your
+local development.
+
+For in-depth information, take a look at our [[Technical Guide]](TECHNICAL.md){:target="_blank"}.
+
 ## Contributing
 Thank you for considering contributing to TraMBU. We really appreciate your interest in our project,  
 and would love to welcome you as a contributor.  

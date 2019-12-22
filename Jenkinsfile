@@ -1,8 +1,12 @@
 
 VERSION_NUMBER = ''
 appCode = 'dev'
+timeTracking = appCode + '/timetracking'
+zulma = appCode + "/aunt-zulma"
+
 
 node {
+
     stage('Pull Sources') {
         executeCommand("git config --global credential.helper cache")
         checkout scm
@@ -20,27 +24,33 @@ node {
         milestone()
     }
 
-    stage('Integration test') {
-        appgw 'integrationTest'
-        junit '**/build/test-results/integrationTest/**/*.xml'
-    }
-
-    stage('Build docker image') {
-        dockerHub('buildDockerImage')
+    stage('Build docker images') {
+        appgw('timetracking:buildDockerImage')
         echo 'Docker image built and ready to roll!'
     }
 
-    stage('Spin up containers') {
-        appgw('dockerComposeUp')
+    stage('Aunt Zulma - Spin up containers') {
+        appgw('aunt-zulma:dockerComposeUp')
+        echo 'TimeTracking container Running!'
     }
 
-    stage('I MADE IT, CJ! -- Big Smoke') {
-        appgw('-PrequestUrl=http://192.168.99.100:8888/index.xhtml smokeTest')
-        junit '**/build/test-results/smokeTest/**/*.xml'
+    stage("Aunt Zulma - Acceptance testing") {
+      appgw('aunt-zulma:clean aunt-zulma:test')
+      appgw('aunt-zulma:aggregate')
+      junit zulma + '/build/test-results/**/*.xml'
+
+      publishHTML(target: [
+              reportName : 'Serenity',
+              reportDir:   zulma+'/target/site/serenity',
+              reportFiles: 'index.html',
+              keepAll:     true,
+              alwaysLinkToLastBuild: true,
+              allowMissing: false
+          ])
     }
 
     stage('Code Quality') {
-        sonar('sonarqube')
+      sonar('sonarqube')
     }
 
 }

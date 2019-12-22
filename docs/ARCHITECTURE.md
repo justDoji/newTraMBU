@@ -17,7 +17,22 @@ The extended "Getting things done" productivity model will be used as a referenc
 ![Extended GTD Model](./design/personal_flow_and_trambu_domains.png "Screenshot of Trambu"){width="50%"}
 
 
-# Views
+# Philosophy
+
+All development on this project is done following these principles:
+
+> We value loose coupling and modularity over anything else.
+> The architecture of the system will evolve, technical changes will be made, and libraries will be swapped out.
+> By extension, we will design our system to as be adaptable as possible. 
+> The application as a whole will be small, sharp tools that can be combined as needed.
+
+> We value automating manual actions as much as possible, even if the short-term gain is minimal.
+
+> Our definition of done for a task is: "All acceptance tests pass." 
+
+> All essential documentation should be version controlled and preferably contained within the repository.
+
+# Technical Views
 
 ## Component/Context View
 
@@ -41,7 +56,6 @@ This boundary is to be protected at all costs. **Shortcuts taken to share data b
 ### As is:
 
 * Self-contained deployables per context
-* 
 
 # References
 

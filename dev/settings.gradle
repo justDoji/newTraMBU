@@ -16,5 +16,8 @@ pluginManagement {
 }
 
 rootProject.name = 'newTraMBU'
-include 'trambu-domain', 'trambu-infrastructure', 'trambu-front', 'smoketest'
+include 'events'
+include 'timetracking'
+include 'kernel'
+include 'aunt-zulma'
 

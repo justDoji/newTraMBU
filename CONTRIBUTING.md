@@ -13,7 +13,7 @@ There are many ways you can help TraMBU to become better. Even if you do not fee
 You can help by writing tutorials or blog posts, improving the documentation, submitting bug reports and feature requests or writing code which can be incorporated into TraMBU.
 
 
-### Explain contributions you are NOT looking for (if any).
+### What not to do
 
 Please, don't use the issue tracker for support questions. If you have a question about setting up or running the code,
 check whether our documentation provides an answer for you. If you are still struggling, feel free to send a message to TraMBU's maintainers.
