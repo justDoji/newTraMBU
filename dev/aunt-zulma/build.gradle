@@ -46,6 +46,9 @@ dependencies {
             libs.test.serenity.cucumber,
             libs.test.junit
 
+    compileOnly 'org.projectlombok:lombok:1.18.8'
+    annotationProcessor 'org.projectlombok:lombok:1.18.8'
+
 }
 
 test {

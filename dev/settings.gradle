@@ -19,5 +19,4 @@ rootProject.name = 'newTraMBU'
 include 'events'
 include 'timetracking'
 include 'kernel'
-include 'aunt-zulma'
 

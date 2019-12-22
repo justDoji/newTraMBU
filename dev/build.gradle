@@ -52,10 +52,6 @@ allprojects {
     }
 }
 
-test {
-    exclude 'be/doji/productivity/trambu/zulma/**'
-}
-
 
 
 
