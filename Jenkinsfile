@@ -30,13 +30,13 @@ node {
     }
 
     stage('Aunt Zulma - Spin up containers') {
-        appgw('aunt-zulma:dockerComposeUp')
+        dirgw('aunt-zulma','dockerComposeUp')
         echo 'TimeTracking container Running!'
     }
 
     stage("Aunt Zulma - Acceptance testing") {
-      appgw('aunt-zulma:clean aunt-zulma:test')
-      appgw('aunt-zulma:aggregate')
+      dirgw('aunt-zulma','clean test')
+      dirgw('aunt-zulma','aggregate')
       junit zulma + '/build/test-results/**/*.xml'
 
       publishHTML(target: [
