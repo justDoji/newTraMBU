@@ -50,6 +50,10 @@ allprojects {
     dependencyCheck {
         format 'ALL'
     }
+
+    test {
+        exclude 'be/doji/productivity/trambu/zulma/**'
+    }
 }
 
 
