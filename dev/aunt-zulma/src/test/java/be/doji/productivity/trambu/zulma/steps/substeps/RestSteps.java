@@ -11,10 +11,12 @@ import java.net.URL;
 import java.net.URLDecoder;
 import java.util.Arrays;
 import net.serenitybdd.core.Serenity;
+import net.thucydides.core.annotations.Step;
 
 public class RestSteps {
 
-  public void sendMessage(String endpoint, String content, String action) {
+  @Step("Send message to endpoint")
+  public String sendMessage(String endpoint, String content, String action) {
     try {
       RestSender restSender = new RestSender();
       String response = restSender.sendRequest(encode(endpoint), "", action);
@@ -23,6 +25,7 @@ public class RestSteps {
       Serenity.recordReportData().withTitle("Message content:").andContents(content);
       Serenity.recordReportData().withTitle("Service answered with: ").andContents(response);
 
+      return response;
     } catch (IOException | URISyntaxException e) {
       Serenity.recordReportData().withTitle("Message send failed:")
           .andContents(e.getMessage() + " - " + Arrays.toString(e.getStackTrace()));

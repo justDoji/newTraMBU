@@ -48,6 +48,7 @@ dependencies {
 
     compileOnly 'org.projectlombok:lombok:1.18.8'
     annotationProcessor 'org.projectlombok:lombok:1.18.8'
+    testCompile group: 'org.assertj', name: 'assertj-core', version: '3.12.2'
 
 }
 
