@@ -21,7 +21,7 @@ public class RestSteps {
   public String sendMessage(String endpoint, String content, String action) {
     try {
       RestSender restSender = new RestSender();
-      String response = restSender.sendRequest(encode(endpoint), "", action);
+      String response = restSender.sendRequest(encode(endpoint), content, action);
 
       Serenity.recordReportData().withTitle("Message sent to endpoint:").andContents(endpoint);
       Serenity.recordReportData().withTitle("Message content:").andContents(content);

@@ -4,11 +4,17 @@ import static be.doji.productivity.trambu.zulma.messages.HttpActions.GET;
 import static be.doji.productivity.trambu.zulma.messages.HttpActions.POST;
 
 import be.doji.productivity.trambu.events.timetracking.TrackingStarted;
+import be.doji.productivity.trambu.events.timetracking.TrackingStopped;
+import be.doji.productivity.trambu.events.timetracking.dto.TimeTracked;
+import be.doji.productivity.trambu.zulma.exception.MessageSendException;
+import be.doji.productivity.trambu.zulma.rest.JsonFormatter;
 import be.doji.productivity.trambu.zulma.steps.substeps.RestSteps;
-import io.cucumber.java.en.And;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.UUID;
 import net.serenitybdd.core.Serenity;
 import net.thucydides.core.annotations.Steps;
@@ -16,7 +22,6 @@ import org.assertj.core.api.Assertions;
 import org.jetbrains.annotations.NotNull;
 
 public class TimetrackingSteps {
-
 
 
   @Steps
@@ -64,24 +69,109 @@ public class TimetrackingSteps {
     );
 
     Assertions.assertThat(response)
-        .contains((String) Serenity.sessionVariableCalled(OCCUPATION_TITLE));
+        .contains(getTitleFromStrack());
     Assertions.assertThat(response)
-        .contains((String) Serenity.sessionVariableCalled(OCCUPATION_REFERENCE));
+        .contains(getReferenceFromStack());
   }
+
 
   @NotNull
   private String trackingEndpoint(String reference) {
     return TRACKING_BASE_URL + "?reference=" + reference;
   }
 
+  @When("starting the occupation at {int}\\/{int}\\/{int} {int}:{int}:{int}")
+  public void startingTheOccupationAt(int day, int month, int year, int hour, int minute,
+      int second) {
+    try {
+      TrackingStarted event = startEvent(day, month, year, hour, minute, second);
+      restSteps.sendMessage(
+          startEndpoint(),
+          JsonFormatter.objectMapper().writeValueAsString(event),
+          POST
+      );
+    } catch (JsonProcessingException e) {
+      Serenity.recordReportData().withTitle("JSON creation failed:")
+          .andContents(e.getMessage() + " - " + Arrays.toString(e.getStackTrace()));
 
-  @When("starting the occupation at {int} {string} {int}:{int}:{int}")
- public void startingTheOccupationtDecember(int day, String month, int hour, int minute, int second) {
+      throw new MessageSendException("SON creation failed", e);
+    }
+  }
 
+  @NotNull
+  private TrackingStarted startEvent(int day, int month, int year, int hour, int minute,
+      int second) {
+    TrackingStarted event = new TrackingStarted();
+    event.setReference(UUID.fromString(getReferenceFromStack()));
+    event.setTimestamp(LocalDateTime.now());
+    event.setTimeStarted(LocalDateTime.of(year, month, day, hour, minute, second));
+    return event;
+  }
+
+  @When("stopping the occupation at {int}\\/{int}\\/{int} {int}:{int}:{int}")
+  public void stoppingTheOccupationAt(int day, int month, int year, int hour, int minute,
+      int second) {
+    try {
+      TrackingStopped event = stopEvent(day, month, year, hour, minute, second);
+      restSteps.sendMessage(
+          stopEndpoint(),
+          JsonFormatter.objectMapper().writeValueAsString(event),
+          POST
+      );
+    } catch (JsonProcessingException e) {
+      Serenity.recordReportData().withTitle("JSON creation failed:")
+          .andContents(e.getMessage() + " - " + Arrays.toString(e.getStackTrace()));
+
+      throw new MessageSendException("JSON creation failed", e);
+    }
+  }
+
+  @NotNull
+  private String stopEndpoint() {
+    return STOP_BASE_URL;
+  }
+
+  @NotNull
+  private TrackingStopped stopEvent(int day, int month, int year, int hour, int minute,
+      int second) {
+    TrackingStopped event = new TrackingStopped();
+    event.setReference(UUID.fromString(getReferenceFromStack()));
+    event.setTimestamp(LocalDateTime.now());
+    event.setTimeStopped(LocalDateTime.of(year, month, day, hour, minute, second));
+    return event;
   }
 
   @NotNull
   private String startEndpoint() {
     return START_BASE_URL;
+  }
+
+  private String getReferenceFromStack() {
+    return (String) Serenity.sessionVariableCalled(OCCUPATION_REFERENCE);
+  }
+
+  private String getTitleFromStrack() {
+    return (String) Serenity.sessionVariableCalled(OCCUPATION_TITLE);
+  }
+
+  @Then("I have spent {double} hours on the occupation")
+  public void iHaveSpentHoursOnTheOccupation(double timeSpent) {
+    try {
+      String response = restSteps.sendMessage(
+          trackingEndpoint(Serenity.sessionVariableCalled(OCCUPATION_REFERENCE)),
+          EMPTY_CONTENT,
+          GET
+      );
+
+      TimeTracked timeTracked = JsonFormatter.objectMapper().readValue(response, TimeTracked.class);
+
+      Assertions.assertThat(timeTracked.getTimeEntries()).hasSize(1);
+      Assertions.assertThat(timeTracked.getTimeSpentInHours()).isEqualTo(timeSpent);
+    } catch(JsonProcessingException e) {
+      Serenity.recordReportData().withTitle("JSON read failed:")
+          .andContents(e.getMessage() + " - " + Arrays.toString(e.getStackTrace()));
+
+      throw new MessageSendException("JSON read failed", e);
+    }
   }
 }

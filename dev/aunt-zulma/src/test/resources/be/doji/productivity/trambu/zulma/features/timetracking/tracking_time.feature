@@ -7,8 +7,8 @@ Feature: Tracking time
 Scenario: Track time with one interval
   Given the timetracking service is alive
   And an occupation "Watching youtube videos" exists
-  When starting the occupation at 18 December 20:00:00
-  And stopping the occupation at 18 December 23:30:00
+  When starting the occupation at 18/12/2019 20:00:00
+  And stopping the occupation at 18/12/2019 23:30:00
   Then I have spent 3.5 hours on the occupation
 
 
