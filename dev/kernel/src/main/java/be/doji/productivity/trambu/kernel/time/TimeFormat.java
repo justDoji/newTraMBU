@@ -19,12 +19,20 @@
  *     For further information on usage, or licensing, contact the author
  *     through his github profile: https://github.com/justDoji
  */
-package be.doji.productivity.trambu.events.timetracking;
+package be.doji.productivity.trambu.kernel.time;
 
-import java.io.Serializable;
-import java.time.LocalDateTime;
+public final class TimeFormat {
 
-public interface Event extends Serializable {
+  static final String BASIC_DATE_PATTERN = "dd/MM/uuuu";
+  static final String BASIC_DATE_REGEX = "\\d\\d/\\d\\d/\\d\\d\\d\\d";
+  static final String BASIC_DATE_TIME_PATTERN = "dd/MM/uuuu HH:mm:ss";
+  static final String BASIC_DATE_TIME_REGEX = "\\d\\d/\\d\\d/\\d\\d\\d\\d \\d\\d:\\d\\d:\\d\\d";
+  static final String EXTENDED_DATE_TIME_PATTERN = "dd/MM/yyyy HH:mm:ss:SSS";
+  static final String EXTENDED_DATE_TIME_REGEX = "\\d\\d/\\d\\d/\\d\\d\\d\\d \\d\\d:\\d\\d:\\d\\d:\\d\\d\\d";
+  static final String LEGACY_DATE_TIME_PATTERN = "uuuu-MM-dd:HH:mm:ss.SSS";
+  static final String LEGACY_DATE_TIME_REGEX = "\\d\\d\\d\\d-\\d\\d-\\d\\d:\\d\\d:\\d\\d:\\d\\d.\\d\\d\\d";
 
-  LocalDateTime timestamp();
+  private TimeFormat() {
+    throw new UnsupportedOperationException("Utility classes should not be instantiated");
+  }
 }

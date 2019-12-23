@@ -26,7 +26,7 @@ import be.doji.productivity.trambu.events.timetracking.dto.TimeTracked;
 import be.doji.productivity.trambu.timetracking.domain.Interval;
 import be.doji.productivity.trambu.timetracking.domain.Occupation;
 import be.doji.productivity.trambu.timetracking.domain.OccupationRepository;
-import be.doji.productivity.trambu.timetracking.domain.time.PointInTime;
+import be.doji.productivity.trambu.kernel.time.PointInTime;
 import be.doji.productivity.trambu.timetracking.domain.time.TimeService;
 import java.time.LocalDateTime;
 import java.util.UUID;

@@ -21,7 +21,7 @@
  */
 package be.doji.productivity.trambu.timetracking.infra.access;
 
-import static be.doji.productivity.trambu.timetracking.domain.time.PointInTime.parse;
+import static be.doji.productivity.trambu.kernel.time.PointInTime.parse;
 import static java.time.LocalDateTime.of;
 import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -33,7 +33,7 @@ import be.doji.productivity.trambu.events.timetracking.dto.TimeTracked;
 import be.doji.productivity.trambu.timetracking.domain.Occupation;
 import be.doji.productivity.trambu.timetracking.domain.OccupationRepository;
 import be.doji.productivity.trambu.timetracking.domain.TimeServiceRule;
-import be.doji.productivity.trambu.timetracking.domain.time.PointInTime;
+import be.doji.productivity.trambu.kernel.time.PointInTime;
 import be.doji.productivity.trambu.timetracking.infra.TimetrackingApplication;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;

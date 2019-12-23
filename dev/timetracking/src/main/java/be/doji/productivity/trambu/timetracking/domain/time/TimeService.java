@@ -21,6 +21,7 @@
  */
 package be.doji.productivity.trambu.timetracking.domain.time;
 
+import be.doji.productivity.trambu.kernel.time.PointInTime;
 import java.time.Clock;
 import java.time.LocalDateTime;
 

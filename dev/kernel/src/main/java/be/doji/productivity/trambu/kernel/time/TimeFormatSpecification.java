@@ -19,7 +19,7 @@
  *     For further information on usage, or licensing, contact the author
  *     through his github profile: https://github.com/justDoji
  */
-package be.doji.productivity.trambu.timetracking.domain.time;
+package be.doji.productivity.trambu.kernel.time;
 
 import com.google.re2j.Pattern;
 import java.time.LocalDate;

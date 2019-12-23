@@ -1,4 +1,4 @@
-/**
+package be.doji.productivity.trambu.kernel.time; /**
  * TraMBU - an open time management tool
  *
  *     Copyright (C) 2019  Stijn Dejongh
@@ -19,8 +19,8 @@
  *     For further information on usage, or licensing, contact the author
  *     through his github profile: https://github.com/justDoji
  */
-package be.doji.productivity.trambu.timetracking.domain.time;
 
+import be.doji.productivity.trambu.kernel.time.PointInTime;
 import java.time.LocalDateTime;
 import java.time.Month;
 import org.assertj.core.api.SoftAssertions;

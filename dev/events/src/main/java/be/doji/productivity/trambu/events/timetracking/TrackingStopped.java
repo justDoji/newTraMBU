@@ -39,6 +39,7 @@ package be.doji.productivity.trambu.events.timetracking; /**
  * https://github.com/justDoji
  */
 
+import be.doji.productivity.trambu.events.Event;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;

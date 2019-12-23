@@ -18,5 +18,7 @@ pluginManagement {
 rootProject.name = 'newTraMBU'
 include 'events'
 include 'timetracking'
+include 'planning'
 include 'kernel'
+include 'planning'
 

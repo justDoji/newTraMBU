@@ -23,7 +23,7 @@ package be.doji.productivity.trambu.timetracking.domain;
 
 import static org.mockito.Mockito.when;
 
-import be.doji.productivity.trambu.timetracking.domain.time.PointInTime;
+import be.doji.productivity.trambu.kernel.time.PointInTime;
 import be.doji.productivity.trambu.timetracking.domain.time.TimeService;
 import java.time.Clock;
 import java.time.Instant;

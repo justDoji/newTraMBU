@@ -22,7 +22,7 @@
 package be.doji.productivity.trambu.timetracking.infra.persistence.dto;
 
 import be.doji.productivity.trambu.timetracking.domain.Interval;
-import be.doji.productivity.trambu.timetracking.domain.time.PointInTime;
+import be.doji.productivity.trambu.kernel.time.PointInTime;
 import be.doji.productivity.trambu.timetracking.domain.time.TimeService;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

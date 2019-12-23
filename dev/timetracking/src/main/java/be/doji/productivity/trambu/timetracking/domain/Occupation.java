@@ -22,7 +22,7 @@
 package be.doji.productivity.trambu.timetracking.domain;
 
 import be.doji.productivity.trambu.kernel.annotations.AggregateRoot;
-import be.doji.productivity.trambu.timetracking.domain.time.PointInTime;
+import be.doji.productivity.trambu.kernel.time.PointInTime;
 import be.doji.productivity.trambu.timetracking.domain.time.TimeService;
 import java.time.LocalDateTime;
 import java.util.ArrayList;

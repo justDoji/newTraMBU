@@ -24,7 +24,7 @@ package be.doji.productivity.trambu.timetracking.domain;
 import static java.time.LocalDateTime.of;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import be.doji.productivity.trambu.timetracking.domain.time.PointInTime;
+import be.doji.productivity.trambu.kernel.time.PointInTime;
 import java.util.Arrays;
 import java.util.UUID;
 import org.assertj.core.api.Assertions;

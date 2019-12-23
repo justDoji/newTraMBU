@@ -19,7 +19,7 @@
  *     For further information on usage, or licensing, contact the author
  *     through his github profile: https://github.com/justDoji
  */
-package be.doji.productivity.trambu.timetracking.domain.time;
+package be.doji.productivity.trambu.kernel.time;
 
 import be.doji.productivity.trambu.kernel.annotations.ValueObject;
 import java.time.LocalDateTime;

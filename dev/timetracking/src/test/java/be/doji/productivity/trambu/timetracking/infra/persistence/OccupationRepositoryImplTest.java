@@ -21,7 +21,7 @@
  */
 package be.doji.productivity.trambu.timetracking.infra.persistence;
 
-import static be.doji.productivity.trambu.timetracking.domain.time.PointInTime.parse;
+import static be.doji.productivity.trambu.kernel.time.PointInTime.parse;
 import static java.time.LocalDateTime.*;
 import static org.assertj.core.api.Assertions.assertThat;
 

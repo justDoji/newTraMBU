@@ -24,7 +24,7 @@ package be.doji.productivity.trambu.timetracking.domain;
 import static java.math.BigDecimal.valueOf;
 import static java.time.Duration.between;
 
-import be.doji.productivity.trambu.timetracking.domain.time.PointInTime;
+import be.doji.productivity.trambu.kernel.time.PointInTime;
 import be.doji.productivity.trambu.timetracking.domain.time.TimeService;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
