@@ -39,7 +39,7 @@ node {
     }
 
     stage('Hold your horses') {
-      sleep time: 5000, unit: 'MILLISECONDS'
+      sleep time: 6500, unit: 'MILLISECONDS'
     }
 
     stage("Aunt Zulma - Acceptance testing") {
