@@ -1,5 +1,7 @@
 package be.doji.productivity.trambu.zulma.steps.substeps;
 
+import static be.doji.productivity.trambu.zulma.rest.JsonFormatter.prettyPrintJSON;
+
 import be.doji.productivity.trambu.zulma.exception.MessageSendException;
 import be.doji.productivity.trambu.zulma.rest.RestSender;
 import java.io.IOException;
@@ -23,7 +25,8 @@ public class RestSteps {
 
       Serenity.recordReportData().withTitle("Message sent to endpoint:").andContents(endpoint);
       Serenity.recordReportData().withTitle("Message content:").andContents(content);
-      Serenity.recordReportData().withTitle("Service answered with: ").andContents(response);
+      Serenity.recordReportData().withTitle("Service answered with: ").andContents(
+          prettyPrintJSON(response));
 
       return response;
     } catch (IOException | URISyntaxException e) {
