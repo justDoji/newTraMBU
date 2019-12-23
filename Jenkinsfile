@@ -38,6 +38,10 @@ node {
         echo 'TimeTracking container Running!'
     }
 
+    stage('Hold your horses') {
+      sleep time: 5000, unit: 'MILLISECONDS'
+    }
+
     stage("Aunt Zulma - Acceptance testing") {
       dirgw('dev/aunt-zulma','clean test')
       dirgw('dev/aunt-zulma','aggregate')

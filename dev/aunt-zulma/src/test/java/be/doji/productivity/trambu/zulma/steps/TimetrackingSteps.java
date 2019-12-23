@@ -94,7 +94,7 @@ public class TimetrackingSteps {
       Serenity.recordReportData().withTitle("JSON creation failed:")
           .andContents(e.getMessage() + " - " + Arrays.toString(e.getStackTrace()));
 
-      throw new MessageSendException("SON creation failed", e);
+      throw new MessageSendException("JSON creation failed", e);
     }
   }
 
