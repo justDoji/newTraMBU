@@ -31,7 +31,6 @@ import java.util.UUID;
 @AggregateRoot
 public class Action {
 
-  private final EventBroadcaster broadcaster;
   private UUID reference;
   private String name;
   private boolean completed;
@@ -42,7 +41,6 @@ public class Action {
   public Action(UUID referenceId, String name, EventBroadcaster broadcaster) {
     this.name = name;
     this.reference = referenceId;
-    this.broadcaster = broadcaster;
     broadcaster.broadcast(new ActionCreated(this.reference, this.name));
   }
 
