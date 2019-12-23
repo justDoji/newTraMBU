@@ -51,6 +51,8 @@ dependencies {
     testCompile group: 'org.assertj', name: 'assertj-core', version: '3.12.2'
     implementation 'com.google.code.gson:gson:2.8.6'
 
+    compile group: 'be.doji.productivity.trambu', name:'events', version: 'latest'
+
 }
 
 test {

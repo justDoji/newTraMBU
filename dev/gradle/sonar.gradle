@@ -10,7 +10,7 @@ jacocoTestReport {
 
 sonarqube {
     properties {
-        property "sonar.branch.name", gitBranch()
+        property "sonar.branch.name", getWorkingBranch()
         property "sonar.sourceEncoding", "UTF-8"
         property "sonar.projectKey", "be.doji.productivity:newtrambu"
         property "sonar.language", "java"
@@ -31,14 +31,15 @@ sonarqube {
     }
 }
 
-def gitBranch() {
-    def branch = ""
-    def proc = "git rev-parse --abbrev-ref HEAD".execute()
-    proc.in.eachLine { line -> branch = line }
-    proc.err.eachLine { line -> println line }
-    proc.waitFor()
-    branch
+def getWorkingBranch() {
+    // Triple double-quotes for the breaklines
+    def workingBranch = """git --git-dir=${rootDir}/git
+                               --work-tree=${rootDir}/..
+                               rev-parse --abbrev-ref HEAD""".execute().text.trim()
+    print "Working branch: " + workingBranch
+    return workingBranch
 }
+
 
 task buildAndAnalyze(type: DefaultTask) {
     dependsOn 'licenseFormatTest'

@@ -21,6 +21,7 @@ apply from: "./gradle/sonar.gradle"
 
 allprojects {
     apply plugin: 'java'
+    apply plugin: 'maven-publish'
 
     group 'be.doji.productivity.trambu'
     sourceCompatibility = 1.8
@@ -49,6 +50,14 @@ allprojects {
 
     dependencyCheck {
         format 'ALL'
+    }
+
+    publishing {
+        publications {
+            mavenJava(MavenPublication) {
+                from components.java
+            }
+        }
     }
 }
 

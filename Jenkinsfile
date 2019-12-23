@@ -18,6 +18,10 @@ node {
         milestone()
     }
 
+    stage('Publish events') {
+      appgw 'events:events:publishToMavenLocal'
+    }
+
     stage('Unit Tests') {
         appgw 'test jacocoTestReport'
         junit '**/build/test-results/test/**/*.xml'
