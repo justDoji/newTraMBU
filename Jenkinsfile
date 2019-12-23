@@ -19,7 +19,7 @@ node {
     }
 
     stage('Publish events') {
-      appgw 'events:events:publishToMavenLocal'
+      appgw 'events:publishToMavenLocal'
     }
 
     stage('Unit Tests') {

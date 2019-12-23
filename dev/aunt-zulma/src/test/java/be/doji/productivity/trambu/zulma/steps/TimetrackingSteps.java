@@ -77,7 +77,7 @@ public class TimetrackingSteps {
 
   @When("starting the occupation at {int} {string} {int}:{int}:{int}")
  public void startingTheOccupationtDecember(int day, String month, int hour, int minute, int second) {
-    
+
   }
 
   @NotNull
