@@ -10,6 +10,7 @@ import java.net.HttpURLConnection;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.NonNull;
+import org.apache.commons.lang3.StringUtils;
 
 public class RestSender {
 
@@ -17,11 +18,12 @@ public class RestSender {
       throws IOException {
     HttpURLConnection httpConn = createHttpConnection(endpoint);
 
+    byte[] message = StringUtils.isBlank(fullMessage) ? null : toBytes(fullMessage);
     sendHttpRequest(
         httpConn,
-        createRestHeader(toBytes(fullMessage)),
+        createRestHeader(message),
         messageAction,
-        toBytes(fullMessage)
+        message
     );
 
     return readHttpResponse(httpConn);
@@ -32,7 +34,9 @@ public class RestSender {
     Map<String, String> connectionProperties = new HashMap<>();
     connectionProperties.put("Content-Type", "application/json; charset=utf-8");
     connectionProperties.put("Transfer-Encoding", "chunked");
-    connectionProperties.put("Content-Length", String.valueOf(bytesToWrite.length));
+    if(bytesToWrite != null ) {
+      connectionProperties.put("Content-Length", String.valueOf(bytesToWrite.length));
+    }
     return connectionProperties;
   }
 }

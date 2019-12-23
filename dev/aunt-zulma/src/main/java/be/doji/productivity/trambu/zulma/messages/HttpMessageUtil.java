@@ -42,10 +42,12 @@ public final class HttpMessageUtil {
     httpConn.setDoOutput(true);
     httpConn.setDoInput(true);
 
-    OutputStream out = httpConn.getOutputStream();
+    if (bytesToSend != null) {
+      OutputStream out = httpConn.getOutputStream();
+      out.write(bytesToSend);
+      out.close();
+    }
 
-    out.write(bytesToSend);
-    out.close();
   }
 
   public static String readHttpResponse(HttpURLConnection httpConn) throws IOException {
