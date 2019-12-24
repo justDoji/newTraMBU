@@ -5,6 +5,8 @@ import static org.mockito.Mockito.verify;
 
 import be.doji.productivity.trambu.events.planning.ActionCreated;
 import be.doji.productivity.trambu.planning.domain.events.EventBroadcaster;
+import java.util.UUID;
+import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
@@ -46,14 +48,37 @@ public class ActionTest {
   }
 
   @Test
+  public void afterCreation_tagsCanBeAdded() {
+    Action action = new Action("Do Something", broadcaster);
+
+    String tagTitle = "coding";
+    action.addTag(new Tag(tagTitle));
+
+    assertThat(action.getTags()).extracting(Tag::getName).containsExactly(tagTitle);
+  }
+
+  @Test
+  public void afterCreation_referenceCanBeOverwritten() {
+    Action action = new Action("Do Something", broadcaster);
+    Assertions.assertThat(action.getReference()).isNotNull();
+
+    UUID newReference = UUID.randomUUID();
+    action.setReference(newReference);
+
+    assertThat(action.getReference()).isEqualTo(newReference);
+  }
+
+  @Test
   public void creation_triggersEventBroadcast() {
     Action action = new Action("Inform other modules", broadcaster);
 
     ArgumentCaptor<ActionCreated> captor = ArgumentCaptor.forClass(ActionCreated.class);
 
     verify(broadcaster).broadcast(captor.capture());
-    assertThat(captor.getValue()).extracting(ActionCreated::getActionName).isEqualTo("Inform other modules");
-    assertThat(captor.getValue()).extracting(ActionCreated::getReference).isEqualTo(action.getReference());
+    assertThat(captor.getValue()).extracting(ActionCreated::getActionName)
+        .isEqualTo("Inform other modules");
+    assertThat(captor.getValue()).extracting(ActionCreated::getReference)
+        .isEqualTo(action.getReference());
     assertThat(captor.getValue()).extracting(ActionCreated::getTimestamp).isNotNull();
   }
 
