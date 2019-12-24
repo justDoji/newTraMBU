@@ -58,6 +58,17 @@ public class ActionTest {
   }
 
   @Test
+  public void tagsCanBeAdded_onlyOnce() {
+    Action action = new Action("Do Something", broadcaster);
+
+    String tagTitle = "coding";
+    action.addTag(new Tag(tagTitle));
+    action.addTag(new Tag(tagTitle));
+
+    assertThat(action.getTags()).extracting(Tag::getName).containsExactly(tagTitle);
+  }
+
+  @Test
   public void afterCreation_referenceCanBeOverwritten() {
     Action action = new Action("Do Something", broadcaster);
     Assertions.assertThat(action.getReference()).isNotNull();
