@@ -19,9 +19,11 @@
  */
 package be.doji.productivity.trambu.planning.domain;
 
+import be.doji.productivity.trambu.kernel.annotations.ValueObject;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
+@ValueObject
 public class Tag {
 
   private String name;

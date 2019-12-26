@@ -19,6 +19,10 @@
  */
 package be.doji.productivity.trambu.planning.domain;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
 public class Project {
 
   private String name;

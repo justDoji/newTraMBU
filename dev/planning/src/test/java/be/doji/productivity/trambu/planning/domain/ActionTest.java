@@ -3,7 +3,7 @@ package be.doji.productivity.trambu.planning.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
 
-import be.doji.productivity.trambu.events.planning.ActionCreated;
+import be.doji.productivity.trambu.events.planning.global.ActionCreated;
 import be.doji.productivity.trambu.planning.domain.events.EventBroadcaster;
 import java.util.UUID;
 import org.assertj.core.api.Assertions;
@@ -41,10 +41,10 @@ public class ActionTest {
   public void afterCreation_projectsCanBeAdded() {
     Action action = new Action("Do Something", broadcaster);
 
-    String projectTitle = "TRAMBU development";
-    action.assingToProject(new Project(projectTitle));
+    UUID projectID = UUID.randomUUID();
+    action.assingToProject(projectID);
 
-    assertThat(action.getProject()).extracting(Project::getName).isEqualTo(projectTitle);
+    assertThat(action.getProject()).isEqualTo(projectID);
   }
 
   @Test

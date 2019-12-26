@@ -1,8 +1,0 @@
-version: "3.3"
-services:
-  webapp:
-    image: be.doji.productivity.trambu/trambu-front:latest
-    ports:
-      - "8888:8888"
-volumes:
-  trambuvolume:

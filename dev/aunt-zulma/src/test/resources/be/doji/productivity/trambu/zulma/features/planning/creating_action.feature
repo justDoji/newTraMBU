@@ -30,6 +30,6 @@ Scenario: Assign multiple actions to a project
   And retrieving the "Household" project
   Then I retrieve actions "Cleaning my room" and "Take out the garbage"
 
-  
+
 
 

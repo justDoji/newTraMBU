@@ -22,10 +22,12 @@
 package be.doji.productivity.trambu.planning.domain;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface ActionRepository {
 
-  public List<Action> findByProject(Project project);
-  public List<Action> findByTag(Tag tag);
+  Action findById(UUID actionId);
+  List<Action> findByProject(UUID projectId);
+  List<Action> findByTag(Tag tag);
 
 }

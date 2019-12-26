@@ -19,20 +19,18 @@
  */
 package be.doji.productivity.trambu.planning.domain;
 
-import be.doji.productivity.trambu.events.planning.ActionCreated;
-import be.doji.productivity.trambu.kernel.annotations.AggregateRoot;
+import be.doji.productivity.trambu.events.planning.global.ActionCreated;
 import be.doji.productivity.trambu.planning.domain.events.EventBroadcaster;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-@AggregateRoot
 public class Action {
 
   private UUID reference;
   private String name;
   private boolean completed;
-  private Project parentProject;
+  private UUID projectID;
   private List<Tag> tags = new ArrayList<>();
   private List<Comment> comments = new ArrayList<>();
 
@@ -62,12 +60,12 @@ public class Action {
     this.completed = completed;
   }
 
-  public Project getProject() {
-    return parentProject;
+  public UUID getProject() {
+    return projectID;
   }
 
-  public void assingToProject(Project parentProject) {
-    this.parentProject = parentProject;
+  public void assingToProject(UUID parentProject) {
+    this.projectID = parentProject;
   }
 
   public UUID getReference() {

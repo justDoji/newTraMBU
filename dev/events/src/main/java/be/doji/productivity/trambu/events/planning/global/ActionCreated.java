@@ -19,7 +19,7 @@
  *     For further information on usage, or licensing, contact the author
  *     through his github profile: https://github.com/justDoji
  */
-package be.doji.productivity.trambu.events.planning;
+package be.doji.productivity.trambu.events.planning.global;
 
 import be.doji.productivity.trambu.events.Event;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
