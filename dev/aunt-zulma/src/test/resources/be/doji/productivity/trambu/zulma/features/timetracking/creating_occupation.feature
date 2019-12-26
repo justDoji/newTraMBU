@@ -1,4 +1,6 @@
-Feature: Creating an action
+@component=backend
+
+Feature: Creating an occupation
 
     In order to keep track of the time I spend on doing things
     As a busy person

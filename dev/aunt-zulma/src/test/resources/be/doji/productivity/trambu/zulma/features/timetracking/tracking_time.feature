@@ -1,3 +1,5 @@
+@component=backend
+
 Feature: Tracking time
 
   As a busy person,
