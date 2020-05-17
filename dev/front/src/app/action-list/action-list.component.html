@@ -1,0 +1,27 @@
+<div class="actionMatrix">
+    <mat-grid-list [cols]="2"  rowHeight="500px">
+        <mat-grid-tile class="actionTile">
+            <mat-grid-tile-header>
+                Do ASAP
+            </mat-grid-tile-header>
+            <app-action-item *ngFor="let action of actions" [action]="action"></app-action-item>
+        </mat-grid-tile>
+        <mat-grid-tile class="actionTile">
+            <mat-grid-tile-header>
+                Do Later
+            </mat-grid-tile-header>
+            <app-action-item *ngFor="let action of actions" [action]="action"></app-action-item>
+        </mat-grid-tile>
+        <mat-grid-tile class="actionTile">
+            <mat-grid-tile-header>
+                Delegate if possible
+            </mat-grid-tile-header>
+        </mat-grid-tile>
+        <mat-grid-tile class="actionTile">
+            <mat-grid-tile-header>
+                Eliminate or reevaluate
+            </mat-grid-tile-header>
+        </mat-grid-tile>
+
+    </mat-grid-list>
+</div>

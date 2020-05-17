@@ -1,0 +1,22 @@
+<mat-card class="action-card">
+    <mat-card-header class="action-card">
+        <mat-card-title>{{ action.name }}</mat-card-title>
+        <mat-card-subtitle>{{ action.deadline }}</mat-card-subtitle>
+        <mat-icon mat-card-avatar>home</mat-icon>
+    </mat-card-header>
+    <mat-card-content>
+        <mat-expansion-panel class="mat-elevation-z0">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    This is the expansion title
+                </mat-panel-title>
+                <mat-panel-description>
+                    This is a summary of the content
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+
+            <p>{{ action.description }}</p>
+
+        </mat-expansion-panel>
+    </mat-card-content>
+</mat-card>
